@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function FooterHome() {
     return (
-        <div>FooterHome</div>
+        <div style={{ height: "1000px" }}>FooterHome</div>
     )
 }

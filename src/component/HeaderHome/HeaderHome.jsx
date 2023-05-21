@@ -1,4 +1,5 @@
 import React from 'react'
+import './HeaderHome.scss'
 export default function HeaderHome() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
