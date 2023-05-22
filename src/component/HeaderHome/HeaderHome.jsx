@@ -1,40 +1,31 @@
-import React from 'react'
-import './HeaderHome.scss'
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Button } from "react-bootstrap";
+import "./HeaderHome.scss";
 export default function HeaderHome() {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div className="container">
-                <a className="navbar-brand" href="index.html"><span className="flaticon-lotus" />Yogalax</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="oi oi-menu" /> Menu
-                </button>
-                <div className="collapse navbar-collapse" id="ftco-nav">
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item active">
-                            <a href="index.html" className="nav-link">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="classes.html" className="nav-link">Classes</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="schedule.html" className="nav-link">Schedule</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="about.html" className="nav-link">About</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="blog.html" className="nav-link">Blog</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="contact.html" className="nav-link">Contact</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="logreg.html" className="nav-link">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    )
+        <Navbar
+            expand="lg"
+            className="justify-content-center header"
+            id='bg-header' >
+            <Container className="header-container">
+                <Navbar.Brand href="/" className="header-brand">Yoga Center</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" className="header-toggle" />
+                <Navbar.Collapse
+                    id="basic-navbar-nav"
+                    className="flex justify-content-end"
+                >
+                    <Nav className="">
+                        <Nav.Link href="/" className="px-4 nav-item">Home</Nav.Link>
+                        <Nav.Link href="/" className="px-4 nav-item">Course</Nav.Link>
+                        <Nav.Link href="/" className="px-4 nav-item">Blog</Nav.Link>
+                        <Nav.Link href="/login" className="px-4 nav-item">Log in</Nav.Link>
+                        <Nav.Link href="/register" className="px-4 nav-item">Register</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
 }

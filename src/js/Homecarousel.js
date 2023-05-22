@@ -56,3 +56,12 @@ window.onload = function () {
   css.innerHTML = ".typewrite > .wrap { border-right: 2px solid #000;";
   document.body.appendChild(css);
 };
+
+document.addEventListener("scroll", () => {
+  let header = document.getElementById("bg-header");
+  if (window.scrollY > 150) {
+    header.classList.add("bg-header-scrolled");
+  } else {
+    header.classList.remove("bg-header-scrolled");
+  }
+});
