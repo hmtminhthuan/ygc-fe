@@ -8,8 +8,8 @@ export default function HeaderHome() {
     return (
         <Navbar
             expand="lg"
-            className="justify-content-center py-1 header"
-        >
+            className="justify-content-center header"
+            id='bg-header' >
             <Container className="header-container">
                 <Navbar.Brand href="/" className="header-brand">Yoga Center</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="header-toggle" />

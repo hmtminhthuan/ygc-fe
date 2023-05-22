@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;500;600;700&display=swap");
+.bg-header-scrolled {
+  background-color: #000 !important;
+  width: 100% !important;
+  .nav-item {
+    color: white;
+  }
+}
+
 .header {
   position: fixed !important;
   z-index: 100 !important;
