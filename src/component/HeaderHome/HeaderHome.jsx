@@ -22,7 +22,7 @@ export default function HeaderHome() {
         />
         <Navbar.Collapse
           id="basic-navbar-nav"
-          className="flex justify-content-end"
+          className="flex justify-content-end header-small"
         >
           <Nav className="">
             <Nav.Link href="/" className="px-4 nav-item">

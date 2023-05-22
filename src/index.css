@@ -78,3 +78,20 @@ ul {
     background-color: #f9f9f9;
   }
 } */
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+.container {
+  margin: 0 auto !important;
+  padding: 0 32px !important;
+  height: auto !important;
+}
+a {
+  text-decoration: none !important;
+}
+ul {
+  padding-left: 0 !important;
+  list-style: none !important;
+}
