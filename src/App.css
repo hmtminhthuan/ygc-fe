@@ -1,8 +1,8 @@
-#root {
-  /* max-width: 1280px; */
+/* #root {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0;
-  /* text-align: center; */
+  text-align: center;
 }
 
 .logo {
@@ -12,7 +12,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #b0b1c8aa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
@@ -39,4 +39,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */

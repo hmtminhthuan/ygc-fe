@@ -1,91 +1,91 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./Login.scss";
-import "../../App.scss";
+// import "../../App.scss";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 import video from "../../assets/video.mp4";
 
 export default function Login() {
-  const [phoneNumber, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  // const [phoneNumber, setPhone] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const loginUser = () => {
-    const response = axios.post("http://localhost:5000/Account/CheckLogin", {
-      phoneNumber: phoneNumber,
-      password: password,
-    });
-    if (response.status === 200) {
-      window.location.href = "/";
-    }
-  };
+  // const loginUser = () => {
+  //   const response = axios.post("http://localhost:5000/Account/CheckLogin", {
+  //     phoneNumber: phoneNumber,
+  //     password: password,
+  //   });
+  //   if (response.status === 200) {
+  //     window.location.href = "/";
+  //   }
+  // };
   return (
-    <div className="loginPage flex">
-      <div className="container flex">
-        <div className="videoDiv">
-          <video src={video} autoPlay muted loop></video>
+    <main>
+      <div className="box">
+        <div className="inner-box">
+          <div className="container flex">
+            <div className="videoDiv">
+              <video src={video} autoPlay muted loop></video>
 
-          <div className="textDiv">
-            <h2 className="title">Yogacenter</h2>
-            <p>abcdjlk</p>
-          </div>
+              <div className="textDiv">
+                <h2 className="title">YogaCenter</h2>
+                <p>Do Yoga today for a better tomorrow</p>
+              </div>
 
-          <div className="footerDiv flex">
-            <span className="text">Don't have account?</span>
-            <Link to={"/register"}>
-              <button className="btn flex">Register</button>
-            </Link>
-          </div>
-        </div>
-
-        <div className="formDiv flex">
-          <div className="headerDiv">
-            <img src="" alt="" />
-            <h3>Welcome Back!</h3>
-          </div>
-
-          <form className="form grid">
-            {/* <span className="showMessage">Login Status will go here</span> */}
-
-            <div className="inputDiv">
-              <label htmlFor="phoneNumber">Phone</label>
-              <div className="input flex">
-                <input
-                  type="text"
-                  id="phoneNumber"
-                  placeholder="Phone"
-                  onChange={(event) => {
-                    setPhone(event.target.value);
-                  }}
-                />
+              <div className="footerDiv flex">
+                <span className="text">Don't have account?</span>
+                <Link to={"/register"}>
+                  <button className="btn flex">Register</button>
+                </Link>
               </div>
             </div>
 
-            <div className="inputDiv">
-              <label htmlFor="password">Password</label>
-              <div className="input flex">
-                <input
-                  type="text"
-                  id="password"
-                  placeholder="Password"
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                  }}
-                />
+            <form className="form">
+              <div className="heading">
+                <h2>Welcome Back!</h2>
               </div>
-            </div>
 
-            <button type="button" className="btn flex" onClick={loginUser}>
-              <span>Login</span>
-            </button>
+              <div>
+                <div className="input-wrap">
+                  <input
+                    id="phoneNumber"
+                    type="text"
+                    minlength="10"
+                    maxlength="11"
+                    className="inputfield"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Phone</label>
+                </div>
 
-            <span className="forgotPassword">
-              Forgot your password? <a href="">Click Here</a>
-            </span>
-          </form>
+                <div className="input-wrap">
+                  <input
+                    id="password"
+                    type="password"
+                    minlength="6"
+                    className="inputfield"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+
+                <input
+                  onclick="handleRegister()"
+                  type="button"
+                  value="Sign Up"
+                  className="sign-btn"
+                />
+
+                <a href="/">Home</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

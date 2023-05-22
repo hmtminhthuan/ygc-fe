@@ -1,123 +1,132 @@
 import React from "react";
 
+import "./Register.scss";
+// import "../../App.scss";
+import { Link } from "react-router-dom";
+// import axios from "axios";
+
+import video from "../../assets/video.mp4";
+
 export default function Register() {
   return (
-    <div>
-      <form autoComplete="off" className="sign-up-form" method="post">
-        <div className="logo">
-          <img src="" alt="easyclass" />
-          <h4>yogacenter</h4>
-        </div>
-        <div className="heading">
-          <h2>Get Started</h2>
-        </div>
-        <div className="actual-form">
-          <div className="input-wrap">
-            <input
-              id="firstname"
-              type="text"
-              minLength="{4}"
-              className="input-field"
-              autoComplete="off"
-              required
-            />
-            <label>FirstName</label>
-          </div>
-          <div className="input-wrap">
-            <input
-              id="lastname"
-              type="text"
-              minLength="{4}"
-              className="input-field"
-              autoComplete="off"
-              required
-            />
-            <label>LastName</label>
-          </div>
-          <div className="input-wrap">
-            <p>Gender</p>
-            <div className="gender">
-              <input
-                id="gender-male"
-                type="radio"
-                name="gender"
-                defaultValue="male"
-              />
-              Male
-              <input
-                id="gender-female"
-                type="radio"
-                name="gender"
-                defaultValue="female"
-              />
-              Female
+    <main>
+      <div className="box">
+        <div className="inner-box">
+          <div className="container flex">
+            <form className="form">
+              <div className="heading">
+                <h2>Get Started</h2>
+              </div>
+
+              <div className="actual-form">
+                <div className="input-wrap">
+                  <input
+                    id="firstname"
+                    type="text"
+                    minlength="4"
+                    className="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>FirstName</label>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    id="lastname"
+                    type="text"
+                    minlength="4"
+                    className="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>LastName</label>
+                </div>
+
+                <div className="input-wrap">
+                  <p>Gender</p>
+                  <div className="gender">
+                    <input
+                      id="gender-male"
+                      type="radio"
+                      name="gender"
+                      value="male"
+                    />
+                    Male
+                    <input
+                      id="gender-female"
+                      type="radio"
+                      name="gender"
+                      value="female"
+                    />
+                    Female
+                  </div>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    id="email"
+                    type="email"
+                    className="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    id="phoneNumber"
+                    type="text"
+                    minlength="10"
+                    maxlength="11"
+                    className="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Phone</label>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    id="password"
+                    type="password"
+                    minlength="6"
+                    className="input-field"
+                    autocomplete="off"
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+
+                <input
+                  onclick="handleRegister()"
+                  type="button"
+                  value="Sign Up"
+                  className="sign-btn"
+                />
+              </div>
+              <a href="/">Home</a>
+            </form>
+
+            <div className="videoDiv">
+              <video src={video} autoPlay muted loop></video>
+
+              <div className="textDiv">
+                <h2 className="title">Yogacenter</h2>
+                <p>Do Yoga today for a better tomorrow</p>
+              </div>
+
+              <div className="footerDiv flex">
+                <span className="text">Have already an account?</span>
+                <Link to={"/login"}>
+                  <button className="btn flex">Log In</button>
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className="input-wrap">
-            <input
-              id="email"
-              type="email"
-              className="input-field"
-              autoComplete="off"
-              required
-            />
-            <label>Email</label>
-          </div>
-          <div className="input-wrap">
-            <input
-              id="phone"
-              type="text"
-              minLength="{10}"
-              maxLength="{11}"
-              className="input-field"
-              autoComplete="off"
-              required
-            />
-            <label>Phone</label>
-          </div>
-          <div className="input-wrap">
-            <input
-              id="password"
-              type="password"
-              minLength="{6}"
-              className="input-field"
-              autoComplete="off"
-              required
-            />
-            <label>Password</label>
-          </div>
-          <input type="button" defaultValue="Sign Up" className="sign-btn" />
-          <div className="heading">
-            <h6>Already have an account?</h6>
-            <a href="/login" className="toggle">
-              Sign in
-            </a>
-          </div>
-        </div>
-      </form>
-      <div className="carousel">
-        <div className="images-wrapper">
-          <img src="" className="image img-1 show" alt="" />
-          <img src="" className="image img-2" alt="" />
-          <img src="" className="image img-3" alt="" />
-        </div>
-        <div className="text-slider">
-          <div className="text-wrap">
-            <div className="text-group">
-              <h2>Create your own courses</h2>
-              <h2>Customize as you like</h2>
-              <h2>Invite students to your class</h2>
-            </div>
-          </div>
-          <div className="bullets">
-            <span className="active" data-value="{1}">
-              <span data-value="{2}">
-                <span data-value="{3}"></span>
-              </span>
-            </span>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
