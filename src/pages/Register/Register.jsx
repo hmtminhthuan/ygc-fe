@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
+import axios from "axios";
 import "./Register.scss";
 // import "../../App.scss";
 import { Link } from "react-router-dom";
@@ -8,6 +8,34 @@ import { Link } from "react-router-dom";
 import video from "../../assets/video.mp4";
 
 export default function Register() {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/Account/TraineeRegister",
+        {
+          firstname,
+          lastname,
+          gender,
+          email,
+          phoneNumber,
+          password,
+        }
+      );
+      console.log(response.data);
+      // Xử lý đăng ký thành công ở đây
+    } catch (error) {
+      console.error(error);
+      // Xử lý lỗi ở đây
+    }
+  };
+
   return (
     <main>
       <div className="box">
@@ -26,6 +54,8 @@ export default function Register() {
                     minlength="4"
                     className="input-field"
                     autocomplete="off"
+                    value={firstname}
+                    onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
                   <label>FirstName</label>
@@ -38,6 +68,8 @@ export default function Register() {
                     minlength="4"
                     className="input-field"
                     autocomplete="off"
+                    value={lastname}
+                    onChange={(e) => setLastName(e.target.value)}
                     required
                   />
                   <label>LastName</label>
@@ -50,14 +82,18 @@ export default function Register() {
                       id="gender-male"
                       type="radio"
                       name="gender"
-                      value="male"
+                      value="0"
+                      checked={gender === "0"}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                     Male
                     <input
                       id="gender-female"
                       type="radio"
                       name="gender"
-                      value="female"
+                      value="1"
+                      checked={gender === "1"}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                     Female
                   </div>
@@ -69,6 +105,8 @@ export default function Register() {
                     type="email"
                     className="input-field"
                     autocomplete="off"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                   <label>Email</label>
@@ -82,6 +120,8 @@ export default function Register() {
                     maxlength="11"
                     className="input-field"
                     autocomplete="off"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     required
                   />
                   <label>Phone</label>
@@ -94,13 +134,15 @@ export default function Register() {
                     minlength="6"
                     className="input-field"
                     autocomplete="off"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <label>Password</label>
                 </div>
 
                 <input
-                  onclick="handleRegister()"
+                  onClick={handleRegister}
                   type="button"
                   value="Sign Up"
                   className="sign-btn"

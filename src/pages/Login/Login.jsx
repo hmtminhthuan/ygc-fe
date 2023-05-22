@@ -1,26 +1,48 @@
-import React from "react";
-
+import React, { useState } from "react";
+import axios from "axios";
 import "./Login.scss";
 // import "../../App.scss";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-// import axios from "axios";
 
 import video from "../../assets/video.mp4";
 
 export default function Login() {
-  // const [phoneNumber, setPhone] = useState("");
-  // const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
-  // const loginUser = () => {
-  //   const response = axios.post("http://localhost:5000/Account/CheckLogin", {
-  //     phoneNumber: phoneNumber,
-  //     password: password,
-  //   });
-  //   if (response.status === 200) {
-  //     window.location.href = "/";
-  //   }
-  // };
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/Account/CheckLogin",
+        {
+          phoneNumber,
+          password,
+        }
+      );
+      console.log(response.data);
+      // Xử lý đăng ký thành công ở đây
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Log in successfully!",
+        showConfirmButton: true,
+        timer: 1500,
+      }).then(function () {
+        window.location.href = "/";
+      });
+    } catch (error) {
+      console.error(error);
+      // Xử lý lỗi ở đây
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="">Why do I have this issue?</a>',
+      });
+    }
+  };
   return (
     <main>
       <div className="box">
@@ -56,6 +78,8 @@ export default function Login() {
                     maxlength="11"
                     className="inputfield"
                     autocomplete="off"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     required
                   />
                   <label>Phone</label>
@@ -68,13 +92,15 @@ export default function Login() {
                     minlength="6"
                     className="inputfield"
                     autocomplete="off"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <label>Password</label>
                 </div>
 
                 <input
-                  onclick="handleRegister()"
+                  onClick={handleLogin}
                   type="button"
                   value="Sign Up"
                   className="sign-btn"
