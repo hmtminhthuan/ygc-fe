@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 import video from "../../assets/video.mp4";
+import HeaderHome from "../../component/HeaderHome/HeaderHome"
 
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -45,6 +46,8 @@ export default function Login() {
   };
   return (
     <main>
+      {/* <div><HeaderHome className="header-login" /></div> */}
+
       <div className="box">
         <div className="inner-box">
           <div className="container flex">

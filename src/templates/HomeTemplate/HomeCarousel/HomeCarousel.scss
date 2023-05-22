@@ -55,12 +55,12 @@ $black: #000;
 .hero-wrap {
   font-family: "Work Sans", sans-serif;
   width: 100%;
-  height: 700px;
+  height: 710px;
   position: relative;
   background-image: url(../../../assets/images/carousel-1.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top;
   background-attachment: scroll;
   @media only screen and (max-width: 768px) {
     background-size: cover;
