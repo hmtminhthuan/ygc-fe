@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./Login.scss";
 import "../../App.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import video from "../../assets/video.mp4";
 
 export default function Login() {
+  const [phoneNumber, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginUser = () => {
+    const response = axios.post("http://localhost:5000/Account/CheckLogin", {
+      phoneNumber: phoneNumber,
+      password: password,
+    });
+    if (response.status === 200) {
+      window.location.href = "/";
+    }
+  };
   return (
     <div className="loginPage flex">
       <div className="container flex">
@@ -38,18 +51,32 @@ export default function Login() {
             <div className="inputDiv">
               <label htmlFor="phoneNumber">Phone</label>
               <div className="input flex">
-                <input type="text" id="phoneNumber" placeholder="Phone" />
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  placeholder="Phone"
+                  onChange={(event) => {
+                    setPhone(event.target.value);
+                  }}
+                />
               </div>
             </div>
 
             <div className="inputDiv">
               <label htmlFor="password">Password</label>
               <div className="input flex">
-                <input type="text" id="password" placeholder="Password" />
+                <input
+                  type="text"
+                  id="password"
+                  placeholder="Password"
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                />
               </div>
             </div>
 
-            <button type="button" className="btn flex">
+            <button type="button" className="btn flex" onClick={loginUser}>
               <span>Login</span>
             </button>
 
