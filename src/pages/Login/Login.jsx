@@ -112,6 +112,7 @@ export default function Login() {
                         required: true,
                         message: "Password cannot be blank",
                       },
+                      { min: 6, message: "Password must be at least 6 characters" },
                     ]}
                     hasFeedback
                   >
