@@ -270,3 +270,19 @@ label {
     }
   }
 }
+
+.header-top {
+  .nav-item {
+    color: white !important;
+    &:hover {
+      color: rgba(210, 145, 188, 1) !important;
+    }
+  }
+}
+
+.text-forget-password {
+  &:hover {
+    transform: scale(1.03);
+    font-weight: 500;
+  }
+}

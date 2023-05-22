@@ -3,7 +3,9 @@
   background-color: #000 !important;
   position: fixed !important;
   width: 100% !important;
-
+  .header-container {
+    width: 72% !important;
+  }
   .nav-item {
     color: white;
   }
@@ -40,7 +42,7 @@
   .header-brand {
     color: rgba(210, 145, 188, 1);
     font-weight: 500;
-    font-size: 30px;
+    font-size: 25px;
     &:hover {
       color: rgba(210, 145, 188, 1);
       font-weight: 500;
