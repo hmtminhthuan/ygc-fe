@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Register.scss";
 // import "../../App.scss";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import Swal from "sweetalert2";
 
 import video from "../../assets/video.mp4";
 
@@ -11,8 +11,9 @@ export default function Register() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [gender, setGender] = useState("");
-  const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
@@ -23,13 +24,23 @@ export default function Register() {
           firstname,
           lastname,
           gender,
-          email,
           phoneNumber,
+          email,
+          address,
           password,
         }
       );
       console.log(response.data);
       // Xử lý đăng ký thành công ở đây
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Register successfully!",
+        showConfirmButton: true,
+        timer: 1500,
+      }).then(function () {
+        window.location.href = "/";
+      });
     } catch (error) {
       console.error(error);
       // Xử lý lỗi ở đây
@@ -82,21 +93,36 @@ export default function Register() {
                       id="gender-male"
                       type="radio"
                       name="gender"
-                      value="0"
-                      checked={gender === "0"}
-                      onChange={(e) => setGender(e.target.value)}
+                      value={true}
+                      checked={gender === true}
+                      onChange={() => setGender(true)}
                     />
                     Male
                     <input
                       id="gender-female"
                       type="radio"
                       name="gender"
-                      value="1"
-                      checked={gender === "1"}
-                      onChange={(e) => setGender(e.target.value)}
+                      value={false}
+                      checked={gender === false}
+                      onChange={() => setGender(false)}
                     />
                     Female
                   </div>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    id="phoneNumber"
+                    type="text"
+                    minlength="10"
+                    maxlength="11"
+                    className="input-field"
+                    autocomplete="off"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required
+                  />
+                  <label>Phone</label>
                 </div>
 
                 <div className="input-wrap">
@@ -114,17 +140,15 @@ export default function Register() {
 
                 <div className="input-wrap">
                   <input
-                    id="phoneNumber"
+                    id="address"
                     type="text"
-                    minlength="10"
-                    maxlength="11"
                     className="input-field"
                     autocomplete="off"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                     required
                   />
-                  <label>Phone</label>
+                  <label>Address</label>
                 </div>
 
                 <div className="input-wrap">
