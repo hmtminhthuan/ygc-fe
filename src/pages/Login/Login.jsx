@@ -23,21 +23,21 @@ export default function Login() {
 
     onSubmit: (values) => {
       console.log("values", values);
-      // axios
-      //   .post("http://localhost:5000/Account/TraineeRegister", values)
-      //   .then((res) => {
-      //     console.log(res);
-      //     Swal.fire({
-      //       position: "center",
-      //       icon: "success",
-      //       title: "Register successfully!",
-      //       showConfirmButton: true,
-      //       timer: 1500,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      axios
+        .post("http://localhost:5000/Account/CheckLogin", values)
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Log in successfully!",
+            showConfirmButton: true,
+            timer: 1500,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
 
@@ -49,14 +49,16 @@ export default function Login() {
 
       <main>
         <div className="box mt-5">
-          <div className="inner-box">
+          <div className="inner-box flex justify-content-cente">
             <div className="container flex">
               <div className="videoDiv">
                 <video src={video} autoPlay muted loop></video>
 
                 <div className="textDiv py-2">
                   <h2 className="title">Log In</h2>
-                  <p className="py-2">YogaCenter - Do Yoga today for a better tomorrow</p>
+                  <p className="py-2">
+                    YogaCenter - Do Yoga today for a better tomorrow
+                  </p>
                 </div>
 
                 <div className="footerDiv flex">
@@ -129,7 +131,10 @@ export default function Login() {
                   >
                     Log In
                   </button>
-                  <Link to={"/"} className="mt-3 text-center text-decoration-none text-danger text-forget-password">
+                  <Link
+                    to={"/"}
+                    className="mt-3 text-center text-decoration-none text-danger text-forget-password"
+                  >
                     Forget Password?
                   </Link>
                 </Form>
