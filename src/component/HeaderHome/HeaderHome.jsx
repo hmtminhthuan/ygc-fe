@@ -31,7 +31,7 @@ export default function HeaderHome() {
             <Nav.Link href="/" className="px-4 nav-item">
               Course
             </Nav.Link>
-            <Nav.Link href="/" className="px-4 nav-item">
+            <Nav.Link href="/blog" className="px-4 nav-item">
               Blog
             </Nav.Link>
             <Nav.Link href="/login" className="px-4 nav-item">
