@@ -59,9 +59,9 @@ window.onload = function () {
 
 document.addEventListener("scroll", () => {
   let header = document.getElementById("bg-header");
-  if (window.scrollY > 120) {
+  if (window.scrollY > 50 && !(header == null)) {
     header.classList.add("bg-header-scrolled");
-  } else {
+  } else if (header != null) {
     header.classList.remove("bg-header-scrolled");
   }
 });
