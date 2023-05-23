@@ -4,6 +4,7 @@ import { HomeTemplate } from "../templates/HomeTemplate/HomeTemplate";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Blog from "../pages/Blogs/Blog";
 
 export default function Routers() {
     const routing = useRoutes([
@@ -12,6 +13,7 @@ export default function Routers() {
             element: <HomeTemplate />,
             children: [
                 { path: "/", element: <Home /> },
+                { path: "/blog", element: <Blog /> },
                 { path: "/login", element: <Login /> },
                 { path: "/register", element: <Register /> },
             ],
