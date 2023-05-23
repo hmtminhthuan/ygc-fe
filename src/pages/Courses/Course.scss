@@ -1,0 +1,28 @@
+.course-contaier {
+  margin: 0 auto;
+  width: 90%;
+  .card {
+    overflow: hidden;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.27);
+    &:hover {
+      transform: scale(1.05);
+      .card-img-top {
+        transform: scale(1.02);
+      }
+    }
+    .card-img-top {
+      box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.27);
+    }
+    .card-title {
+      //   background-color: red;
+      display: flex;
+      align-items: center;
+    }
+    .card-text {
+      //   background-color: aqua;
+      height: 70px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
