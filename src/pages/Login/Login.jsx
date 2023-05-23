@@ -32,11 +32,20 @@ export default function Login() {
             icon: "success",
             title: "Log in successfully!",
             showConfirmButton: true,
-            timer: 1500,
+            timer: 1000,
+          }).then(function () {
+            window.location.href = "/";
           });
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Log in failed!</br> Your phone number or password is not correct. </br> Please check again",
+            showConfirmButton: true,
+            timer: 10000,
+          });
         });
     },
   });

@@ -575,6 +575,7 @@ form {
 }
 
 .header-top {
+  z-index: 100;
   .nav-item {
     color: white !important;
     &:hover {

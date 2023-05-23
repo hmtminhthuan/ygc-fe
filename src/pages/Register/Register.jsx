@@ -4,7 +4,7 @@ import "./Register.scss";
 import Swal from "sweetalert2";
 import video from "../../assets/video.mp4";
 import { Form, Input, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Await, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 
@@ -26,23 +26,89 @@ export default function Register() {
       password: "",
     },
 
-    onSubmit: (values) => {
-      console.log("values", values);
+    onSubmit: async (values) => {
       axios
-        .post("http://localhost:5000/Account/TraineeRegister", values)
-        .then((res) => {
-          console.log(res);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Register successfully!",
+        .get("http://localhost:5000/Account/SendCodeRegister", {
+          params: { email: values.email },
+        })
+        .then(async (res) => {
+          await Swal.fire({
+            title: `Verify your Email`,
+            html: `We send a code to your Email: ${values.email}. <br/>
+          Please check and enter this code here. <br/> This will close in <b></b> seconds.`,
+            input: "text",
+            timer: 180000,
+            timerProgressBar: true,
+            inputAttributes: {
+              autocapitalize: "off",
+            },
+            showCancelButton: true,
             showConfirmButton: true,
-            timer: 1500,
+            confirmButtonText: "Look up",
+            showLoaderOnConfirm: true,
+            didOpen: () => {
+              const b = Swal.getHtmlContainer().querySelector("b");
+              let timerInterval = setInterval(() => {
+                b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+              }, 1000);
+            },
+            preConfirm: (login) => {
+              // console.log(login);
+            },
+            allowOutsideClick: () => !Swal.isLoading(),
+          }).then((result) => {
+            console.log(result);
+            if (result.isDenied === true || result.isDismissed === true) {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Register failed! </br> Please try again",
+                showConfirmButton: true,
+                timer: 2500,
+              });
+            } else if (result.isConfirmed === true) {
+              if (result.value === res.data) {
+
+                console.log("values", values);
+                axios.post("http://localhost:5000/Account/TraineeRegister", values)
+                  .then((res) => {
+                    console.log(res);
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Register successfully!",
+                      showConfirmButton: true,
+                      timer: 2500,
+                    });
+                  })
+                  .catch((err) => {
+                    Swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: "This Email or Phone number has been registered! </br> Please try again",
+                      showConfirmButton: true,
+                      timer: 10000,
+                    });
+                  });
+
+              } else {
+
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "Wrong verify code! </br> Please try again",
+                  showConfirmButton: true,
+                  timer: 2500,
+                });
+
+              }
+            }
           });
         })
         .catch((err) => {
           console.log(err);
         });
+
     },
   });
   const handleChangeGender = (gender) => {
@@ -51,7 +117,9 @@ export default function Register() {
 
   return (
     <div>
-      <div className="header-top m-4 mx-0 mt-0"><HeaderHome /></div>
+      <div className="header-top m-4 mx-0 mt-0">
+        <HeaderHome />
+      </div>
       <main>
         <div className="box mt-5">
           <div className="inner-box flex align-items-center">
@@ -143,7 +211,10 @@ export default function Register() {
                         required: true,
                         message: "Email cannot be blank",
                       },
-                      { type: "email", message: "Email is not in correct form" },
+                      {
+                        type: "email",
+                        message: "Email is not in correct form",
+                      },
                     ]}
                     hasFeedback
                   >
@@ -162,7 +233,11 @@ export default function Register() {
                       {
                         required: true,
                         message: "Password cannot be blank",
-                      }, { min: 6, message: "Password must be at least 6 characters" },
+                      },
+                      {
+                        min: 6,
+                        message: "Password must be at least 6 characters",
+                      },
                     ]}
                     hasFeedback
                   >
