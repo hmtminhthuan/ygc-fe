@@ -57,8 +57,8 @@ export default function Login() {
       </div>
 
       <main>
-        <div className="box mt-5">
-          <div className="inner-box flex justify-content-cente">
+        <div className="box">
+          <div className="inner-box flex justify-content-center">
             <div className="container flex">
               <div className="videoDiv">
                 <video src={video} autoPlay muted loop></video>

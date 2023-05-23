@@ -1,0 +1,55 @@
+.card {
+  overflow: hidden;
+  box-shadow: 0 10px 10px -5px rgb(0, 0, 0);
+  background-color: #252525 !important;
+  color: #fff;
+  border-radius: 20px !important;
+  border: none;
+  &:hover {
+    // transform: scale(1.05);
+    .card-img-top {
+      //   transform: scale(1.02);
+    }
+  }
+  .card-img-top {
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.27);
+    width: 90%;
+    border-radius: 10px;
+  }
+  .card-title {
+    //   background-color: red;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+  }
+  .card-text {
+    //   background-color: aqua;
+    display: flex;
+    align-items: center;
+    color: gray;
+  }
+  .course-level {
+    font-size: 16px;
+  }
+  .course-view-detail {
+    background-color: #fff;
+    color: #000;
+    font-weight: 500;
+    &:hover {
+      transform: scale(1.02);
+      background-color: #fff;
+      color: #f288af;
+      font-weight: 500;
+    }
+  }
+  .course-register-now {
+    background-color: #f288af;
+    font-weight: 500;
+    &:hover {
+      transform: scale(1.02);
+      background-color: #000;
+      color: #f288af;
+      font-weight: 500;
+    }
+  }
+}

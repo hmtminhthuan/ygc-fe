@@ -121,7 +121,7 @@ export default function Register() {
         <HeaderHome />
       </div>
       <main>
-        <div className="box mt-5">
+        <div className="box">
           <div className="inner-box flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
               <div className="form-container flex justify-content-center">

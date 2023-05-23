@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import Banner from "../../component/Banner/Banner";
 import { Button, Card } from "react-bootstrap";
@@ -8,14 +8,13 @@ import CourseDetail from "./CourseDetail";
 import axios from "axios";
 import { stringify } from "postcss";
 export default function Course() {
-    let courseList = [];
+    let [courseList, setCourseList] = useState([]);
 
     useEffect(() => {
         axios
             .get("http://localhost:5000/Course/GetCourseList")
             .then((res) => {
-                courseList = res.data;
-                console.log(courseList);
+                setCourseList(res.data)
             })
             .catch((err) => {
                 console.log(err);
@@ -26,28 +25,26 @@ export default function Course() {
         <div>
             <HeaderHome />
             <Banner title={"Yoga Courses"} descripton={"Yoga Healthy Courses"} />
-            <section className="w-100">
+            <section className="w-100 courlist-area">
                 <div className="course-contaier flex justify-content-center align-content-center">
                     <div className="row">
-                        {courseList.map(
-                            (courseName, description, levelName, price, index) => {
-                                console.log(courseName, description, levelName, price, "asfaf");
-                                return (
-                                    <div key={index}>
-                                        <CourseDetail
-                                            courseName={courseName}
-                                            description={description}
-                                            levelName={levelName}
-                                            price={price.toString()}
-                                        />{" "}
-                                    </div>
-                                );
-                            }
-                        )}
-                        <CourseDetail />
+                        {
+                            courseList.map(
+                                (course, index) => {
+                                    return (
+                                        <CourseDetail key={index}
+                                            courseName={course.courseName}
+                                            description={course.description}
+                                            levelName={course.levelName}
+                                            price={course.price.toString()}
+                                        />
+                                    );
+                                }
+                            )
+                        }
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     );
 }
