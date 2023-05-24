@@ -64,7 +64,7 @@ export default function CourseDetail() {
                 <HeaderHome />
             </div>
             <main>
-                <div className="box course-detail-area">
+                <div className="box course-detail-area mt-5">
                     {/* <div className="inner-box flex"> */}
                     {/* <div className="container flex"> */}
                     <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">

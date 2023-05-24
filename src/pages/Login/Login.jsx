@@ -57,7 +57,7 @@ export default function Login() {
       </div>
 
       <main>
-        <div className="box">
+        <div className="box m-0 mt-5" style={{ height: "90vh" }}>
           <div className="inner-box flex justify-content-center">
             <div className="container flex">
               <div className="videoDiv">

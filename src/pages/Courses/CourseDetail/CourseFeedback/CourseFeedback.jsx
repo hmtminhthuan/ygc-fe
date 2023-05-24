@@ -64,23 +64,23 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                                     Rating:
                                                 </span>{" "}
                                                 <i
-                                                    class="fa-solid fa-star"
+                                                    className="fa-solid fa-star"
                                                     style={{ color: "#e69b00" }}
                                                 ></i>
                                                 <i
-                                                    class="fa-solid fa-star"
+                                                    className="fa-solid fa-star"
                                                     style={{ color: "#e69b00" }}
                                                 ></i>
                                                 <i
-                                                    class="fa-solid fa-star"
+                                                    className="fa-solid fa-star"
                                                     style={{ color: "#e69b00" }}
                                                 ></i>
                                                 <i
-                                                    class="fa-solid fa-star"
+                                                    className="fa-solid fa-star"
                                                     style={{ color: "#e69b00" }}
                                                 ></i>
                                                 <i
-                                                    class="fa-solid fa-star"
+                                                    className="fa-solid fa-star"
                                                     style={{ color: "#e69b00" }}
                                                 ></i>
                                             </p>

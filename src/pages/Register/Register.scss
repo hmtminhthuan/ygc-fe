@@ -39,6 +39,10 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media (max-width: 1024px) {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 }
 
 .forms-wrap {

@@ -5,7 +5,7 @@
   border-radius: 10px !important;
   border: none;
   padding: 0 !important;
-  height: 500px !important;
+  height: 540px !important;
   position: relative;
   .course-tag-discount {
     position: absolute;
@@ -42,7 +42,7 @@
 
   .card-title {
     //   background-color: red;
-    font-size: 25px;
+    font-size: 28px;
     display: flex;
     align-items: center;
     color: rgb(208, 143, 186);
@@ -52,7 +52,7 @@
     height: 70px;
     color: #757575;
     text-align: justify;
-    font-size: 14px;
+    font-size: 16px;
     a {
       font-weight: 500;
       color: #565555;
@@ -65,25 +65,32 @@
     color: #7d7d7d;
     font-weight: bolder;
   }
-
+  .course-des {
+    height: 70px;
+    // background-color: red;
+  }
   .course-price {
     color: #ee593b;
     font-size: 22px;
+    font-weight: bold !important;
   }
   .course-price-before-discount {
     font-size: 22px;
     color: #7d7d7d;
     text-decoration: line-through;
+    font-weight: bold;
   }
   .course-price-after-discount {
     font-size: 22px;
     color: #ee593b;
+    font-weight: bold;
     text-decoration: none !important;
   }
   .course-view-detail {
     background-color: #515151;
     color: #fff;
     font-weight: 500;
+    font-size: 18px;
     cursor: pointer;
 
     &:hover {
@@ -98,6 +105,7 @@
     background-color: rgb(208, 143, 186);
     color: #000;
     font-weight: 500;
+    font-size: 18px;
     cursor: pointer;
 
     &:hover {

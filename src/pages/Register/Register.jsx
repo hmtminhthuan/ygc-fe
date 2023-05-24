@@ -121,7 +121,7 @@ export default function Register() {
         <HeaderHome />
       </div>
       <main>
-        <div className="box">
+        <div className="box m-0 mt-5" style={{ height: "90vh" }}>
           <div className="inner-box flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
               <div className="form-container flex justify-content-center">
