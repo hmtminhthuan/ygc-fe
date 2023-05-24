@@ -6,16 +6,9 @@ import image from "../../../assets/images/img-demo.jpg";
 import { Link } from "react-router-dom";
 import "./CourseDetail.scss";
 import { Button } from "react-bootstrap";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import moment from "moment/moment";
-// import Moment from "react-moment";
+import CourseClasses from "./CourseClasses/CourseClasses";
+import CourseFeedback from "./CourseFeedback/CourseFeedback";
+
 export default function CourseDetail() {
     const param = useParams();
     const [courseDetail, setCourseDetail] = useState([]);
@@ -51,38 +44,6 @@ export default function CourseDetail() {
     }, []);
     let { courseName, levelName, description, price, discount, ...restParams } =
         courseDetail;
-    discount = 10;
-
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-        [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        [`&.${tableCellClasses.body}`]: {
-            fontSize: 14,
-        },
-    }));
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        "&:nth-of-type(odd)": {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        "&:last-child td, &:last-child th": {
-            border: 0,
-        },
-    }));
-
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
-
-    const rows = [
-        createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-        createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-        createData("Eclair", 262, 16.0, 24, 6.0),
-        createData("Cupcake", 305, 3.7, 67, 4.3),
-        createData("Gingerbread", 356, 16.0, 49, 3.9),
-    ];
 
     return (
         <div>
@@ -94,10 +55,19 @@ export default function CourseDetail() {
                     {/* <div className="inner-box flex"> */}
                     {/* <div className="container flex"> */}
                     <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
-                        <h2 className="course-detail-title">{courseName}</h2>
+                        <h2 className="course-detail-title m-4 mt-3">{courseName}
+                        </h2>
                         <div className="row d-lg-flex align-items-stretch justify-content-center">
                             <div className="course-detail-img col-lg-5 col-10 flex justify-content-start">
                                 <img className="h-100" style={{ width: "100%" }} src={image} />
+                                {discount != null && discount != "" && discount >= 0 ? (
+                                    <div className="course-tag-discount py-2 pt-1 px-2">
+                                        <p>{discount}&#37;</p>
+                                        <p>Discount</p>
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
                             </div>
                             <div className="course-detail-des col-lg-5 col-10 mt-lg-0 mt-sm-4 px-4 h-10">
                                 <p className="course-detail-des-level">
@@ -133,79 +103,10 @@ export default function CourseDetail() {
                                 </div>
                             </div>
                         </div>
-                        <h2 className="sub-title course-detail-title mt-5">
-                            Available Classes
-                        </h2>
-                        <div className="row flex align-items-stretch justify-content-center">
-                            <div className="course-detail-classes col-10">
-                                {courseClasses.length <= 0 ? (
-                                    <p>No available class yet!</p>
-                                ) : (
-                                    <TableContainer component={Paper}>
-                                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    {/* <StyledTableCell>Class No.</StyledTableCell> */}
-                                                    <StyledTableCell align="left">
-                                                        Start Date
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="left">
-                                                        End Date
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="left">
-                                                        Trainer
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="left">
-                                                        Schedule
-                                                    </StyledTableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {courseClasses.map(
-                                                    (
-                                                        {
-                                                            classId,
-                                                            trainerId,
-                                                            startDate,
-                                                            endDate,
-                                                            firstname,
-                                                            lastname,
-                                                            schedule,
-                                                        },
-                                                        index
-                                                    ) => {
-                                                        return (
-                                                            <StyledTableRow key={index}>
-                                                                <StyledTableCell align="left">
-                                                                    {moment(new Date(`${startDate}`)).format(
-                                                                        "MMM Do YYYY"
-                                                                    )}
-                                                                </StyledTableCell>
-                                                                <StyledTableCell align="left">
-                                                                    {moment(new Date(`${endDate}`)).format(
-                                                                        "MMM Do YYYY"
-                                                                    )}
-                                                                </StyledTableCell>
-                                                                <StyledTableCell align="left">
-                                                                    {firstname} {lastname}
-                                                                </StyledTableCell>
-                                                                <StyledTableCell align="left">
-                                                                    {schedule.map(({ date, time }, index) => (
-                                                                        <p className="p-0 m-0 py-1" key={index}>
-                                                                            {date}, {time}
-                                                                        </p>
-                                                                    ))}
-                                                                </StyledTableCell>
-                                                            </StyledTableRow>
-                                                        );
-                                                    }
-                                                )}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                )}
-                            </div>
-                        </div>
+                        <h2 className="sub-title course-detail-title mt-5">Available Classes</h2>
+                        <CourseClasses courseClasses={courseClasses} />
+                        <h2 className="sub-title course-detail-title mt-5">Feedbacks</h2>
+                        <CourseFeedback />
                     </div>
                     {/* </div> */}
                     {/* </div> */}

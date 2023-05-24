@@ -38,6 +38,7 @@ export default function Course() {
                                             description={course.description}
                                             levelName={course.levelName}
                                             price={course.price.toString()}
+                                            discount={course.discount}
                                         />
                                     );
                                 }

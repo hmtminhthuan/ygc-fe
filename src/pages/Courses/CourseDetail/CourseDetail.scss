@@ -16,11 +16,37 @@
     }
   }
   .course-detail-img {
+    position: relative;
+    padding-right: 0;
     img {
       border-radius: 10px;
       box-shadow: 0 15px 10px -5px rgba(0, 0, 0, 0.27);
     }
+    .course-tag-discount {
+      position: absolute;
+      border-radius: 10px !important;
+      background-color: #fbdc5de6;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border-radius: 3px 0px 5px 8px;
+      p {
+        font-size: 16px;
+        padding: 0;
+        margin: 0;
+        font-weight: 500;
+        &:first-child {
+          color: #ee593b;
+          font-weight: 500;
+          font-size: 22px;
+        }
+      }
+    }
   }
+
   .course-detail-des {
     display: flex;
     flex-direction: column;
