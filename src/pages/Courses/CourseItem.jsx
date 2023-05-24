@@ -22,7 +22,7 @@ export default function CourseDetail({
         }).format(price);
     };
     return (
-        <div className="col-lg-4 col-md-6 col-sm-12 flex justify-content-center">
+        <div className="col-lg-4 col-sm-12 col-md-6 flex justify-content-center">
             <Card style={{ width: "85%" }} className="my-4">
                 <div className="w-100 text-center">
                     <Card.Img variant="top" src={image} />

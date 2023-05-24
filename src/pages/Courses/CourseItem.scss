@@ -5,7 +5,7 @@
   border-radius: 10px !important;
   border: none;
   padding: 0 !important;
-  height: 540px !important;
+  // height: 540px !important;
   position: relative;
   .course-tag-discount {
     position: absolute;
@@ -46,6 +46,9 @@
     display: flex;
     align-items: center;
     color: rgb(208, 143, 186);
+    @media screen and (max-width: 768px) {
+      font-size: 22px;
+    }
   }
 
   .card-text {
@@ -67,25 +70,49 @@
   }
   .course-des {
     height: 70px;
-    // background-color: red;
+    font-size: 16px;
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    @media screen and (max-width: 500px) {
+      margin-bottom: 0px;
+    }
   }
   .course-price {
     color: #ee593b;
-    font-size: 22px;
+    font-size: 23px;
     font-weight: bold !important;
   }
   .course-price-before-discount {
-    font-size: 22px;
+    font-size: 23px;
     color: #7d7d7d;
     text-decoration: line-through;
     font-weight: bold;
   }
   .course-price-after-discount {
-    font-size: 22px;
+    font-size: 23px;
     color: #ee593b;
     font-weight: bold;
     text-decoration: none !important;
   }
+
+  .course-price {
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+  .course-price-before-discount {
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+  .course-price-after-discount {
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+
   .course-view-detail {
     background-color: #515151;
     color: #fff;
@@ -98,6 +125,9 @@
       background-color: #000;
       color: #fff;
       font-weight: 500;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 12px;
     }
   }
 
@@ -112,6 +142,9 @@
       transform: scale(1.03);
       color: #000;
       background-color: rgb(205, 114, 175);
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 12px;
     }
   }
 }

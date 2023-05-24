@@ -107,11 +107,11 @@ export default function CourseDetail() {
                                         Price:
                                     </span>
                                     {discount != null && discount != "" && discount >= 0 ? (
-                                        <div className="d-flex">
+                                        <div className="d-lg-flex">
                                             <p className="course-price-before-discount p-0">
                                                 {formatPrice(price)}
                                             </p>
-                                            <p className="course-price-after-discount mx-2 p-0">
+                                            <p className="course-price-after-discount mx-lg-2 p-0">
                                                 {formatPrice(price - (price * discount) / 100)}
                                             </p>
                                         </div>
