@@ -2,6 +2,7 @@ import React from "react";
 import maleImg from "../../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../../assets/images/avt-female.jpg";
 import axios from "axios";
+import "./CourseFeedback.scss";
 export default function CourseFeedback({ courseFeedback, ...restParams }) {
     const getTraineeInfo = async (id) => {
         await axios
@@ -64,24 +65,24 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                                     Rating:
                                                 </span>{" "}
                                                 <i
-                                                    className="fa-solid fa-star"
-                                                    style={{ color: "#e69b00" }}
+                                                    className={`fa-solid fa-star ${rating >= 1 ? "star-active" : ""
+                                                        }`}
                                                 ></i>
                                                 <i
-                                                    className="fa-solid fa-star"
-                                                    style={{ color: "#e69b00" }}
+                                                    className={`fa-solid fa-star ${rating >= 2 ? "star-active" : ""
+                                                        }`}
                                                 ></i>
                                                 <i
-                                                    className="fa-solid fa-star"
-                                                    style={{ color: "#e69b00" }}
+                                                    className={`fa-solid fa-star ${rating >= 3 ? "star-active" : ""
+                                                        }`}
                                                 ></i>
                                                 <i
-                                                    className="fa-solid fa-star"
-                                                    style={{ color: "#e69b00" }}
+                                                    className={`fa-solid fa-star ${rating >= 4 ? "star-active" : ""
+                                                        }`}
                                                 ></i>
                                                 <i
-                                                    className="fa-solid fa-star"
-                                                    style={{ color: "#e69b00" }}
+                                                    className={`fa-solid fa-star ${rating >= 5 ? "star-active" : ""
+                                                        }`}
                                                 ></i>
                                             </p>
                                             <p className="p-0 m-0 mt-1">{description}</p>
