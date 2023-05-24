@@ -8,11 +8,13 @@ import "./CourseDetail.scss";
 import { Button } from "react-bootstrap";
 import CourseClasses from "./CourseClasses/CourseClasses";
 import CourseFeedback from "./CourseFeedback/CourseFeedback";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CourseDetail() {
     const param = useParams();
     const [courseDetail, setCourseDetail] = useState([]);
     const [courseClasses, setCourseClasses] = useState([]);
+    const [courseFeedback, setCourseFeedback] = useState([]);
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -41,6 +43,17 @@ export default function CourseDetail() {
             .catch((err) => {
                 // console.log(err);
             });
+
+        axios
+            .get("http://localhost:5000/Feedback/GetCourseFeedbackbyId", {
+                params: { courseid: param.id },
+            })
+            .then((res) => {
+                setCourseFeedback(res.data);
+            })
+            .catch((err) => {
+                // console.log(err);
+            });
     }, []);
     let { courseName, levelName, description, price, discount, ...restParams } =
         courseDetail;
@@ -55,8 +68,16 @@ export default function CourseDetail() {
                     {/* <div className="inner-box flex"> */}
                     {/* <div className="container flex"> */}
                     <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
-                        <h2 className="course-detail-title m-4 mt-3">{courseName}
-                        </h2>
+                        <div className="row justify-content-center">
+                            <div className="col-10 mt-3">
+                                <Link to={"/course"} className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                                    style={{ "fontSize": "18px", "fontWeight": "500" }}>
+                                    <i className="fa-solid fa-arrow-left"></i>
+                                    <span className="mx-2">Come Back</span>
+                                </Link>
+                            </div>{" "}
+                        </div>
+                        <h2 className="course-detail-title course-detail-name m-4 mt-0">{courseName}</h2>
                         <div className="row d-lg-flex align-items-stretch justify-content-center">
                             <div className="course-detail-img col-lg-5 col-10 flex justify-content-start">
                                 <img className="h-100" style={{ width: "100%" }} src={image} />
@@ -95,7 +116,7 @@ export default function CourseDetail() {
                                             </p>
                                         </div>
                                     ) : (
-                                        <p className="course-price my-2">{formatPrice(price)} </p>
+                                        <p className="course-price course-price-after-discount">{formatPrice(price)} </p>
                                     )}
                                 </div>
                                 <div className="flex justify-content-center mt-2">
@@ -103,15 +124,17 @@ export default function CourseDetail() {
                                 </div>
                             </div>
                         </div>
-                        <h2 className="sub-title course-detail-title mt-5">Available Classes</h2>
+                        <h2 className="sub-title course-detail-title mt-4">
+                            Available Classes
+                        </h2>
                         <CourseClasses courseClasses={courseClasses} />
-                        <h2 className="sub-title course-detail-title mt-5">Feedbacks</h2>
-                        <CourseFeedback />
+                        <h2 className="sub-title course-detail-title mt-4">Rating &amp; Feedbacks</h2>
+                        <CourseFeedback courseFeedback={courseFeedback} />
                     </div>
                     {/* </div> */}
                     {/* </div> */}
                 </div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }
