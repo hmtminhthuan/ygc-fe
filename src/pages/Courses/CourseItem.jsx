@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import image from "../../assets/images/img-demo.jpg";
 import "./CourseItem.scss";
 import { Link } from "react-router-dom";
+import image from "../../assets/images/img-demo.jpg";
 export default function CourseDetail({
     courseID,
     courseName,
@@ -14,8 +14,9 @@ export default function CourseDetail({
 }) {
     discount = 10;
     description =
-        "Lorem ipx praesentium debitis, quidem eaque distinctio saepe fugiat dolor laborum velit quis, obcaecati quibusdam.Voluptate fugiat maxime recusandae voluptatibus!";
-    // description = description.length >= 120 ? description.substring(0, 110).trim() + '...' : description;
+        `Lorem ipx praesentium debitis, quidem eaque distinctio 
+        saepe fugiat dolor laborum velit quis, obcaecati quibusdam. 
+        Voluptate fugiat maxime recusandae voluptatibus!`;
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -24,7 +25,7 @@ export default function CourseDetail({
     };
     return (
         <div className="col-lg-4 col-md-6 flex justify-content-center">
-            <Card style={{ width: "85%" }} className="my-5">
+            <Card style={{ width: "85%" }} className="my-4">
                 <div className="w-100 text-center">
                     <Card.Img variant="top" src={image} />
                 </div>
@@ -39,7 +40,7 @@ export default function CourseDetail({
                         {description.length >= 120
                             ? description.substring(0, 120).trim() + "..."
                             : description}{" "}
-                        {description.length >= 120 ? <Link className="text-decoration-none">View More</Link> : <></>}
+                        {description.length >= 120 ? <Link to={`/courseDetail/${courseID}`} className="text-decoration-none">View More</Link> : <></>}
                     </Card.Text>
                     {discount != null && discount != "" && discount >= 0 ? (
                         <p className="my-2 mt-0">

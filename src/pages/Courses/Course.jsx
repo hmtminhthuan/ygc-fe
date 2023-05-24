@@ -8,7 +8,7 @@ import CourseDetail from "./CourseItem";
 import axios from "axios";
 import { stringify } from "postcss";
 export default function Course() {
-    let [courseList, setCourseList] = useState([]);
+    const [courseList, setCourseList] = useState([]);
 
     useEffect(() => {
         axios
