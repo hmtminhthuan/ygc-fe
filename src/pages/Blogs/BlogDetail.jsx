@@ -2,13 +2,12 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import "./BlogDetail.scss";
 import image from "../../assets/images/img_blog.jpg";
+// import BlogSingle from "../pages/Blogs/BlogSingle/BlogSingle";
 export default function BlogDetail({
-  date,
+  id,
   header,
-
   content,
   firstName,
-
   ...restParams
 }) {
   return (
@@ -42,7 +41,7 @@ export default function BlogDetail({
 
           <Card.Text>
             <h3 className="heading mt-2">
-              <a href="" style={{ textDecoration: "none" }}>
+              <a href={`/blogSingle/${id}`} style={{ textDecoration: "none" }}>
                 {header}
               </a>
             </h3>

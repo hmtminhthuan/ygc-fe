@@ -6,10 +6,6 @@ import axios from "axios";
 import "./Blog.scss";
 import "./BlogDetail.scss";
 
-// import Container from "react-bootstrap/Container";
-// import Nav from "react-bootstrap/Nav";
-// import Navbar from "react-bootstrap/Navbar";
-
 function Blog() {
   let [blogList, setBlogList] = useState([]);
 
@@ -46,6 +42,7 @@ function Blog() {
               return (
                 <BlogDetail
                   key={index}
+                  id={blog.id}
                   header={blog.header}
                   // content={blog.content}
                   // date={formattedDate}
@@ -97,12 +94,6 @@ function Blog() {
             Praesent tincidunt sed tellus ut rutrum. Sed vitae justo
             condimentum, porta lectus vitae, ultricies congue gravida diam non
             fringilla.
-          </p>
-          <p>
-            Made with{" "}
-            <a href="https://www.w3schools.com/spaces" target="_blank">
-              W3Schools Spaces
-            </a>
           </p>
         </div>
 
