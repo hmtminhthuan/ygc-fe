@@ -7,7 +7,7 @@
     width: 72% !important;
   }
   .nav-item {
-    color: white;
+    color: white !important;
   }
 }
 
@@ -57,13 +57,14 @@
   }
   .nav-item {
     font-size: 18px;
+    color: #000;
     @media only screen and (max-width: 768px) {
-      color: white;
+      color: white !important;
       margin: 0 !important;
       padding: 0 10px !important;
     }
     &:hover {
-      color: rgba(210, 145, 188, 1);
+      color: rgba(210, 145, 188, 1) !important;
       font-weight: 500;
       transform: scale(1.2);
     }
