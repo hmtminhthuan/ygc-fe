@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import Banner from "../../component/Banner/Banner";
+import BlogDetail from "./BlogDetail";
+import axios from "axios";
 import "./Blog.scss";
 import "./Template.scss";
 // import Container from "react-bootstrap/Container";
@@ -6,17 +10,42 @@ import "./Template.scss";
 // import Navbar from "react-bootstrap/Navbar";
 
 function Blog() {
-  const w3_open = () => {
-    document.getElementById("mySidebar").style.display = "block";
-  };
+  let [blogList, setBlogList] = useState([]);
 
-  const w3_close = () => {
-    document.getElementById("mySidebar").style.display = "none";
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/Blog/GetBlogList")
+      .then((res) => {
+        setBlogList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
+      <HeaderHome />
+      <Banner title={"Our Blog"} descripton={"Yoga Blog Series"} />
+      <section className="w-100 bloglist-area">
+        <div className="blog-contaier flex justify-content-center align-content-center">
+          <div className="row">
+            {blogList.map((blog, index) => {
+              return (
+                <BlogDetail
+                  key={index}
+                  header={blog.header}
+                  content={blog.content}
+                  firstName={blog.firstName}
+                  lastName={blog.lastName}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
       {/* Sidebar (hidden by default) */}
-      <nav
+      {/* <nav
         className="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
         id="mySidebar"
       >
@@ -41,10 +70,10 @@ function Blog() {
         >
           About
         </a>
-      </nav>
+      </nav> */}
 
       {/* Top menu */}
-      <div className="w3-top">
+      {/* <div className="w3-top">
         <div className="w3-white w3-xlarge">
           <div
             className="w3-button w3-padding-16 w3-left"
@@ -55,12 +84,12 @@ function Blog() {
 
           <div className="w3-center w3-padding-16">Our Blog</div>
         </div>
-      </div>
+      </div> */}
 
       {/* PAGE CONTENT */}
-      <div className="w3-main w3-content w3-padding">
-        {/* First Photo Grid */}
-        <div className="w3-row-padding w3-padding-16 w3-center" id="food">
+      {/* <div className="w3-main w3-content w3-padding"> */}
+      {/* First Photo Grid */}
+      {/* <div className="w3-row-padding w3-padding-16 w3-center" id="food">
           <div className="w3-quarter">
             <img
               src="https://www.w3schools.com/w3images/sandwich.jpg"
@@ -100,10 +129,10 @@ function Blog() {
             <h3>Once Again, Robust Wine and Vegetable Pasta</h3>
             <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
           </div>
-        </div>
+        </div> */}
 
-        {/* Second Photo Grid */}
-        <div className="w3-row-padding w3-padding-16 w3-center">
+      {/* Second Photo Grid */}
+      {/* <div className="w3-row-padding w3-padding-16 w3-center">
           <div className="w3-quarter">
             <img
               src="https://www.w3schools.com/w3images/popsicle.jpg"
@@ -145,10 +174,10 @@ function Blog() {
               lipsum.
             </p>
           </div>
-        </div>
+        </div> */}
 
-        {/* Pagination */}
-        <div className="w3-center w3-padding-32">
+      {/* Pagination */}
+      {/* <div className="w3-center w3-padding-32">
           <div className="w3-bar">
             <a href="#" className="w3-bar-item w3-button w3-hover-black">
               «
@@ -171,10 +200,10 @@ function Blog() {
           </div>
         </div>
 
-        <hr id="about" />
+        <hr id="about" /> */}
 
-        {/* About Section */}
-        <div className="w3-container w3-padding-32 w3-center">
+      {/* About Section */}
+      {/* <div className="w3-container w3-padding-32 w3-center">
           <h3>About Me, The Food Man</h3>
           <br />
           <img
@@ -204,97 +233,97 @@ function Blog() {
             </p>
           </div>
         </div>
-        <hr />
+        <hr /> */}
 
-        {/* Footer */}
-        <footer className="w3-row-padding w3-padding-32">
-          <div className="w3-third">
-            <h3>FOOTER</h3>
-            <p>
-              Praesent tincidunt sed tellus ut rutrum. Sed vitae justo
-              condimentum, porta lectus vitae, ultricies congue gravida diam non
-              fringilla.
-            </p>
-            <p>
-              Made with{" "}
-              <a href="https://www.w3schools.com/spaces" target="_blank">
-                W3Schools Spaces
-              </a>
-            </p>
-          </div>
+      {/* Footer */}
+      <footer className="w3-row-padding w3-padding-32">
+        <div className="w3-third">
+          <h3>FOOTER</h3>
+          <p>
+            Praesent tincidunt sed tellus ut rutrum. Sed vitae justo
+            condimentum, porta lectus vitae, ultricies congue gravida diam non
+            fringilla.
+          </p>
+          <p>
+            Made with{" "}
+            <a href="https://www.w3schools.com/spaces" target="_blank">
+              W3Schools Spaces
+            </a>
+          </p>
+        </div>
 
-          <div className="w3-third">
-            <h3>BLOG POSTS</h3>
-            <ul className="w3-ul w3-hoverable">
-              <li className="w3-padding-16">
-                <img
-                  src="https://www.w3schools.com/w3images/workshop.jpg"
-                  className="w3-left w3-margin-right"
-                  style={{ width: "50px" }}
-                />
-                <span className="w3-large">Lorem</span>
-                <br />
-                <span>Sed mattis nunc</span>
-              </li>
-              <li className="w3-padding-16">
-                <img
-                  src="https://www.w3schools.com/w3images/gondol.jpg"
-                  className="w3-left w3-margin-right"
-                  style={{ width: "50px" }}
-                />
-                <span className="w3-large">Ipsum</span>
-                <br />
-                <span>Praes tinci sed</span>
-              </li>
-            </ul>
-          </div>
-          <div className="w3-third w3-serif">
-            <h3>POPULAR TAGS</h3>
-            <p>
-              <span className="w3-tag w3-black w3-margin-bottom">Travel</span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                New York
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Dinner
-              </span>
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Salmon
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                France
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Drinks
-              </span>
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Ideas
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Flavors
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Cuisine
-              </span>
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Chicken
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Dressing
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Fried
-              </span>
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Fish
-              </span>{" "}
-              <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
-                Duck
-              </span>
-            </p>
-          </div>
-        </footer>
-      </div>
+        <div className="w3-third">
+          <h3>BLOG POSTS</h3>
+          <ul className="w3-ul w3-hoverable">
+            <li className="w3-padding-16">
+              <img
+                src="https://www.w3schools.com/w3images/workshop.jpg"
+                className="w3-left w3-margin-right"
+                style={{ width: "50px" }}
+              />
+              <span className="w3-large">Lorem</span>
+              <br />
+              <span>Sed mattis nunc</span>
+            </li>
+            <li className="w3-padding-16">
+              <img
+                src="https://www.w3schools.com/w3images/gondol.jpg"
+                className="w3-left w3-margin-right"
+                style={{ width: "50px" }}
+              />
+              <span className="w3-large">Ipsum</span>
+              <br />
+              <span>Praes tinci sed</span>
+            </li>
+          </ul>
+        </div>
+        <div className="w3-third w3-serif">
+          <h3>POPULAR TAGS</h3>
+          <p>
+            <span className="w3-tag w3-black w3-margin-bottom">Travel</span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              New York
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Dinner
+            </span>
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Salmon
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              France
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Drinks
+            </span>
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Ideas
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Flavors
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Cuisine
+            </span>
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Chicken
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Dressing
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Fried
+            </span>
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Fish
+            </span>{" "}
+            <span className="w3-tag w3-dark-grey w3-small w3-margin-bottom">
+              Duck
+            </span>
+          </p>
+        </div>
+      </footer>
+      {/* </div> */}
     </div>
   );
 }
