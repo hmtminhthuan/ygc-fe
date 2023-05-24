@@ -1,0 +1,116 @@
+.card {
+  overflow: hidden;
+  box-shadow: 0 8px 15px -2px rgb(48, 44, 47);
+  background-color: #fff !important;
+  border-radius: 10px !important;
+  border: none;
+  padding: 0 !important;
+  height: 500px !important;
+  position: relative;
+  .course-tag-discount {
+    position: absolute;
+    background-color: #fbdc5de6;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 3px 0px 5px 8px;
+    p {
+      font-size: 16px;
+      padding: 0;
+      margin: 0;
+      font-weight: 500;
+      &:first-child {
+        color: #ee593b;
+        font-weight: 500;
+        font-size: 22px;
+      }
+    }
+  }
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover {
+    // transform: scale(1.05);
+    .card-img-top {
+      //   transform: scale(1.02);
+    }
+  }
+
+  .card-img-top {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px 0px rgba(48, 44, 47, 0.871);
+  }
+
+  .card-title {
+    //   background-color: red;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    color: rgb(208, 143, 186);
+  }
+
+  .card-text {
+    height: 70px;
+    color: #757575;
+    text-align: justify;
+    font-size: 14px;
+    a {
+      font-weight: 500;
+      color: #565555;
+    }
+  }
+
+  .course-level {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #7d7d7d;
+    font-weight: bolder;
+  }
+
+  .course-price {
+    color: #ee593b;
+    font-size: 22px;
+  }
+  .course-price-before-discount {
+    font-size: 22px;
+    color: #7d7d7d;
+    text-decoration: line-through;
+  }
+  .course-price-after-discount {
+    font-size: 22px;
+    color: #ee593b;
+    text-decoration: none !important;
+  }
+  .course-view-detail {
+    background-color: #515151;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.02);
+      background-color: #000;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+
+  .course-register-now {
+    background-color: rgb(208, 143, 186);
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.03);
+      color: #000;
+      background-color: rgb(205, 114, 175);
+    }
+  }
+}

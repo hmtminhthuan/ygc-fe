@@ -4,7 +4,7 @@ import Banner from "../../component/Banner/Banner";
 import { Button, Card } from "react-bootstrap";
 import image from "../../assets/images/banner-1.jpg";
 import "./Course.scss";
-import CourseDetail from "./CourseDetail";
+import CourseDetail from "./CourseItem";
 import axios from "axios";
 import { stringify } from "postcss";
 export default function Course() {
@@ -33,6 +33,7 @@ export default function Course() {
                                 (course, index) => {
                                     return (
                                         <CourseDetail key={index}
+                                            courseID={course.courseID}
                                             courseName={course.courseName}
                                             description={course.description}
                                             levelName={course.levelName}
