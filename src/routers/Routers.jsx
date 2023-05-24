@@ -19,7 +19,7 @@ export default function Routers() {
         { path: "/course", element: <Course /> },
         { path: "/courseDetail/:id", element: <CourseDetail /> },
         { path: "/blog", element: <Blog /> },
-        { path: "/blogSingle", element: <BlogSingle /> },
+        { path: "/blogSingle/:id", element: <BlogSingle /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
       ],

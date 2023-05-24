@@ -42,7 +42,7 @@ function Blog() {
               return (
                 <BlogDetail
                   key={index}
-                  id={blog.id}
+                  id={1}
                   header={blog.header}
                   // content={blog.content}
                   // date={formattedDate}
