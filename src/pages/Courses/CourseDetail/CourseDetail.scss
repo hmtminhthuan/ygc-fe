@@ -107,16 +107,16 @@
   }
 }
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
   background: rgb(197, 196, 196);
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(104, 104, 104);
+  background: rgb(73, 73, 73);
   border-radius: 10px;
 }
 
