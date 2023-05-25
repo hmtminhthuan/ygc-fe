@@ -7,6 +7,7 @@ import axios from "axios";
 import "./BlogPage.scss";
 import { Link } from "react-router-dom";
 import { api } from "../../../constants/api";
+import FooterHome from "../../../component/FooterHome/FooterHome";
 
 function BlogPage() {
   const param = useParams();
@@ -139,6 +140,7 @@ function BlogPage() {
           </div>
         </div>
       </main>
+      <FooterHome />
     </div>
   );
 }

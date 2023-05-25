@@ -8,6 +8,7 @@ import CourseDetail from "./CourseItem";
 import axios from "axios";
 import { Select } from "antd";
 import { api } from "../../constants/api";
+import FooterHome from "../../component/FooterHome/FooterHome";
 export default function Course() {
     const [courseList, setCourseList] = useState([]);
     const [renderCourseList, setRenderCourseList] = useState([]);
@@ -127,7 +128,7 @@ export default function Course() {
         <div>
             <HeaderHome />
             <Banner title={"Yoga Courses"} descripton={"Yoga Healthy Courses"} />
-            <section className="w-100 courlist-area flex-column justify-content-center align-items-center">
+            <section className="w-100 py-5 pt-2 courlist-area flex-column justify-content-center align-items-center">
                 <div
                     className="row flex justify-content-center pt-4"
                     style={{ margin: "0 auto", width: "85%" }}
@@ -207,6 +208,7 @@ export default function Course() {
                     </div>
                 </div>
             </section>
+            <FooterHome />
         </div>
     );
 }
