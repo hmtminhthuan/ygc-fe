@@ -34,7 +34,7 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
     }, [count]);
 
     return (
-        <div className="row flex align-items-center justify-content-center">
+        <div className="course-detail-fb row flex align-items-center justify-content-center">
             <div className="col-10">
                 {courseFeedback.length <= 0 ? (
                     <p

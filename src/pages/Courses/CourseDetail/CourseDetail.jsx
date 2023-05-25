@@ -63,8 +63,8 @@ export default function CourseDetail() {
             <div className="header-top m-4 mx-0 mt-0">
                 <HeaderHome />
             </div>
-            <main>
-                <div className="box course-detail-area mt-5">
+            <main className="pt-5">
+                <div className="box course-detail-area mt-5 my-5">
                     {/* <div className="inner-box flex"> */}
                     {/* <div className="container flex"> */}
                     <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
@@ -90,7 +90,7 @@ export default function CourseDetail() {
                                     <></>
                                 )}
                             </div>
-                            <div className="course-detail-des col-lg-5 col-10 mt-lg-0 mt-sm-4 px-4 h-10">
+                            <div className="course-detail-des col-lg-5 col-10 mt-lg-0 mt-sm-3 mt-sm-4 px-4 h-10">
                                 <p className="course-detail-des-level">
                                     {" "}
                                     <span className="sub-title">Level: </span> {levelName}

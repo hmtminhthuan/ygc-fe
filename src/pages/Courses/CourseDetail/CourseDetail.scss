@@ -1,9 +1,10 @@
 .course-detail-area {
   overflow-x: hidden;
-  overflow-y: scroll;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-  height: 90vh;
+  overflow-y: hidden;
+  // border-top-right-radius: 12px;
+  // border-bottom-right-radius: 12px;
+  // height: 90vh;
+  height: auto !important;
 }
 .course-detail-info {
   font-family: "Work Sans", sans-serif !important;
