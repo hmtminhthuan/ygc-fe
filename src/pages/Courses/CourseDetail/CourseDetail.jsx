@@ -10,6 +10,7 @@ import CourseClasses from "./CourseClasses/CourseClasses";
 import CourseFeedback from "./CourseFeedback/CourseFeedback";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "../../../constants/api";
+import FooterHome from "../../../component/FooterHome/FooterHome";
 
 export default function CourseDetail() {
     const param = useParams();
@@ -129,6 +130,9 @@ export default function CourseDetail() {
                     </div>
                 </div>
             </main >
+            <div>
+                <FooterHome />
+            </div>
         </div >
     );
 }

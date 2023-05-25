@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
+import FooterHome from "../../component/FooterHome/FooterHome";
 
 export default function Login() {
   const formItemLayout = {
@@ -154,6 +155,10 @@ export default function Login() {
           </div>
         </div>
       </main>
+
+      <div className="0">
+        <FooterHome />
+      </div>
     </div>
   );
 }
