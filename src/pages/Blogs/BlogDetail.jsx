@@ -41,7 +41,7 @@ export default function BlogDetail({
           </Card.Title>
 
           <Card.Text>
-            <h3 className="heading mt-2">
+            <h3 className="heading mt-2 mb-2">
               <a
                 href={`/blogPage/${blogID}`}
                 style={{ textDecoration: "none" }}
@@ -56,7 +56,7 @@ export default function BlogDetail({
             </p>
           </Card.Text>
 
-          <p className="blogger mt-2">{firstName}</p>
+          <p className="blogger mt-5">{firstName}</p>
         </Card.Body>
       </Card>
     </div>

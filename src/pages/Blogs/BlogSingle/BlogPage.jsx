@@ -77,7 +77,7 @@ function BlogPage() {
                 )}
               </a>
             </div>
-            <div className="title text-center my-3 mb-4">
+            <div className="title align-items-center justify-content-center text-center my-3 mb-4">
               <h1 style={{ fontWeight: "800" }}>{header}</h1>
             </div>
 
@@ -86,7 +86,7 @@ function BlogPage() {
                 <img src={user} alt="" />
               </a>
 
-              <div className="info ">
+              <div className="info">
                 <a href="">{firstName}</a>
                 <p className="time"> {formattedDate}</p>
               </div>
@@ -94,21 +94,6 @@ function BlogPage() {
 
             <div className="content">
               <p>{content}</p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus vel nam possimus aperiam ea ut aliquid mollitia
-                labore? Dignissimos quo, voluptates quae corporis quos saepe
-                exercitationem. Voluptatibus quod non ab nesciunt mollitia ad
-                assumenda corrupti maiores repudiandae quis fuga dolore,
-                officiis voluptatem blanditiis nam, provident quisquam totam,
-                iste accusamus ipsa alias. Accusantium autem officiis provident
-                totam magni facere eveniet voluptates soluta? Modi libero animi
-                nesciunt impedit rem tempore nemo, corporis perspiciatis
-                quaerat, aliquid debitis adipisci minima inventore et. Numquam,
-                tenetur et quas ipsam molestiae velit quo sequi mollitia, fugiat
-                doloremque eaque deleniti vero, assumenda accusantium optio
-                officiis! Atque, quas accusamus?
-              </p>
 
               <p>
                 <img
