@@ -8,6 +8,7 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
     let traineeInfoArr = [];
     let [traineeInfo, setTraineeInfo] = useState([]);
     let [count, setCount] = useState(0);
+
     useEffect(() => {
         courseFeedback.forEach(({ id, ...restParams }) => {
             api
@@ -68,7 +69,25 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                     >
                                         <div className="col-2 flex justify-content-end align-items-start px-3">
                                             <img
-                                                className="feedback-trainee-img"
+                                                className={`course-feedback-trainee-img-null-${traineeInfo.length == courseFeedback.length &&
+                                                    traineeInfo[pos].img == null
+                                                    }`}
+                                                style={{
+                                                    width: "50px",
+                                                    height: "50px",
+                                                    borderRadius: "50%",
+                                                }}
+                                                src={
+                                                    traineeInfo.length == courseFeedback.length &&
+                                                        traineeInfo[pos].img != null
+                                                        ? traineeInfo[pos].img
+                                                        : ""
+                                                }
+                                            />
+                                            <img
+                                                className={`course-feedback-trainee-img-null-${traineeInfo.length == courseFeedback.length &&
+                                                    traineeInfo[pos].img != null
+                                                    }`}
                                                 style={{
                                                     width: "50px",
                                                     height: "50px",
@@ -77,7 +96,7 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                                 src={
                                                     traineeInfo.length == courseFeedback.length &&
                                                         traineeInfo[pos].img != null &&
-                                                        traineeInfo[pos].img.toLowerCase().includes("female")
+                                                        traineeInfo[pos].img.toLowerCase().trim() == "female"
                                                         ? femaleImg
                                                         : maleImg
                                                 }
