@@ -193,6 +193,7 @@ export default function Course() {
                 <div className="course-contaier flex justify-content-center align-content-center">
                     <div className="row w-100">
                         {renderCourseList.map((course, index) => {
+                            console.log(course);
                             return (
                                 <CourseDetail
                                     key={index}
@@ -202,6 +203,7 @@ export default function Course() {
                                     levelName={course.levelName}
                                     price={course.price.toString()}
                                     discount={course.discount}
+                                    courseImg={course.courseImg}
                                 />
                             );
                         })}

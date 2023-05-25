@@ -10,6 +10,7 @@ export default function CourseDetail({
     levelName,
     price,
     discount,
+    courseImg,
     ...restParams
 }) {
     const formatPrice = (price) => {
@@ -21,8 +22,11 @@ export default function CourseDetail({
     return (
         <div className="col-lg-4 col-sm-12 col-md-6 flex justify-content-center">
             <Card style={{ width: "85%" }} className="my-4">
-                <div className="w-100 text-center">
-                    <Card.Img variant="top" src={image} />
+                <div className="w-100 text-center" style={{ height: "250px" }}>
+                    <Card.Img
+                        variant="top"
+                        src={courseImg == null || courseImg == "" ? image : courseImg}
+                    />
                 </div>
                 {discount != null && discount != "" && discount >= 0 ? (
                     <div className="course-tag-discount py-2 pt-1 px-2">
@@ -51,7 +55,7 @@ export default function CourseDetail({
                         )}
                     </Card.Text>
                     {discount != null && discount != "" && discount >= 0 ? (
-                        <p className="my-2" style={{ "fontWeight": "600" }}>
+                        <p className="my-2" style={{ fontWeight: "600" }}>
                             <span className="course-price-before-discount p-0">
                                 {formatPrice(price)}
                             </span>
@@ -60,7 +64,9 @@ export default function CourseDetail({
                             </span>
                         </p>
                     ) : (
-                        <p className="course-price my-2" style={{ "fontWeight": "600" }}>{formatPrice(price)} </p>
+                        <p className="course-price my-2" style={{ fontWeight: "600" }}>
+                            {formatPrice(price)}{" "}
+                        </p>
                     )}
 
                     <div className="button text-center pt-1">
