@@ -422,7 +422,6 @@ main.sign-up-mode .carousel {
   margin: auto;
   justify-content: space-between;
   border-radius: 10px;
-
   padding: 0;
 
   .videoDiv {
@@ -585,5 +584,14 @@ form {
     &:hover {
       color: rgba(210, 145, 188, 1) !important;
     }
+  }
+}
+
+.form-register-container {
+  @media screen and (max-width: 800px) {
+    // margin-top: 100px !important;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 100% !important;
   }
 }

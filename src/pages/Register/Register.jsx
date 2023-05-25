@@ -125,7 +125,7 @@ export default function Register() {
         <div className="box m-0 mt-5" style={{ height: "90vh" }}>
           <div className="inner-box flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
-              <div className="form-container flex justify-content-center">
+              <div className="form-container form-register-container flex justify-content-center">
                 <Form
                   onFinish={formik.handleSubmit}
                   {...formItemLayout}
@@ -333,7 +333,7 @@ export default function Register() {
                   </Form.Item>
                 </Form>
               </div>
-              <div className="videoDiv">
+              <div className="videoDiv d-none d-lg-flex d-md-none d-sm-none">
                 <video src={video} autoPlay muted loop></video>
 
                 <div className="textDiv py-2">

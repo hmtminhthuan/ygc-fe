@@ -60,8 +60,8 @@ export default function Login() {
       <main>
         <div className="box m-0 mt-5" style={{ height: "90vh" }}>
           <div className="inner-box flex justify-content-center">
-            <div className="container flex">
-              <div className="videoDiv">
+            <div className="container flex justify-content-center">
+              <div className="videoDiv d-none d-lg-flex d-md-none d-sm-none">
                 <video src={video} autoPlay muted loop></video>
 
                 <div className="textDiv py-2">
@@ -78,7 +78,7 @@ export default function Login() {
                   </Link>
                 </div>
               </div>
-              <div className="form-container flex justify-content-center">
+              <div className="form-container form-login-container flex justify-content-center">
                 <Form
                   onFinish={formik.handleSubmit}
                   {...formItemLayout}
