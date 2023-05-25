@@ -14,20 +14,22 @@ export default function Dashboard() {
       mainContent.classList.toggle("active");
     };
   }, []);
-
+  //
   return (
     <div>
       {/* Header */}
       <section className="header">
-        <div className="logo">
-          <i className="ri-menu-line icon icon-0 menu" />
+        <div className="logo mt-2">
+          <h2>
+            <i className="ri-menu-line icon icon-0 menu mx-2" />
+          </h2>
           <h2>
             Yoga<span>Center</span>
           </h2>
         </div>
         <div className="search--notification--profile">
           <div className="search">
-            <input type="text" placeholder="Search Scdule.." />
+            <input type="text" placeholder="Search..." />
             <button>
               <i className="ri-search-2-line" />
             </button>
@@ -43,7 +45,10 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
+
+      {/* Main */}
       <section className="main">
+        {/* Sidebar */}
         <div className="sidebar">
           <ul className="sidebar--items">
             <li>
@@ -86,7 +91,7 @@ export default function Dashboard() {
             <li>
               <a href="#">
                 <span className="icon icon-5">
-                  <i className="ri-line-chart-line" />
+                  <i className="ri-folder-open-fill" />
                 </span>
                 <span className="sidebar--item">Courses</span>
               </a>
@@ -94,7 +99,15 @@ export default function Dashboard() {
             <li>
               <a href="#">
                 <span className="icon icon-6">
-                  <i className="ri-customer-service-line" />
+                  <i className=" ri-community-line" />
+                </span>
+                <span className="sidebar--item">Classes</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span className="icon icon-6">
+                  <i className="  ri-terminal-window-fill" />
                 </span>
                 <span className="sidebar--item">Blogs</span>
               </a>
@@ -119,7 +132,9 @@ export default function Dashboard() {
             </li>
           </ul>
         </div>
+
         <div className="main--content">
+          {/* Overview */}
           <div className="overview">
             <div className="title">
               <h2 className="section--title">Overview</h2>
@@ -132,7 +147,7 @@ export default function Dashboard() {
               </select>
             </div>
             <div className="cards">
-              <div className="card card-1">
+              <div className="card card-1 text-center">
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainers</h5>
@@ -151,13 +166,13 @@ export default function Dashboard() {
                   </span>
                 </div>
               </div>
-              <div className="card card-2">
+              <div className="card card-2 text-center">
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainees</h5>
                     <h1>100</h1>
                   </div>
-                  <i className="ri-user-line card--icon--lg" />
+                  <i className=" mr-4 ri-user-line card--icon--lg " />
                 </div>
                 <div className="card--stats">
                   <span>
@@ -170,22 +185,22 @@ export default function Dashboard() {
                   </span>
                 </div>
               </div>
-              <div className="card card-3">
+              <div className="card card-3 text-center">
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Courses</h5>
                     <h1>9</h1>
                   </div>
-                  <i className="ri-calendar-2-line card--icon--lg" />
+                  <i className="mr-4 ri-book-open-fill card--icon--lg" />
                 </div>
               </div>
-              <div className="card card-4">
+              <div className="card card-4 text-center">
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Classes</h5>
                     <h1>15</h1>
                   </div>
-                  <i className="ri-hotel-bed-line card--icon--lg" />
+                  <i className="mr-4 ri-community-line card--icon--lg" />
                 </div>
               </div>
             </div>
@@ -215,7 +230,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor2.jpg" alt />
                   </div>
                 </div>
-                <p className="scheduled">Scheduled</p>
+                <p className="scheduled">Trainer1</p>
               </a>
               <a href="#" className="doctor--card">
                 <div className="img--box--cover">
@@ -223,7 +238,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor3.jpg" alt />
                   </div>
                 </div>
-                <p className="scheduled">Scheduled</p>
+                <p className="scheduled">Trainer2</p>
               </a>
               <a href="#" className="doctor--card">
                 <div className="img--box--cover">
@@ -231,7 +246,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor4.jpg" alt />
                   </div>
                 </div>
-                <p className="free">Free</p>
+                <p className="free">Trainer3</p>
               </a>
               <a href="#" className="doctor--card">
                 <div className="img--box--cover">
@@ -239,7 +254,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor5.jpg" alt />
                   </div>
                 </div>
-                <p className="scheduled">Scheduled</p>
+                <p className="scheduled">Trainer4</p>
               </a>
               <a href="#" className="doctor--card">
                 <div className="img--box--cover">
@@ -247,7 +262,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor6.jpg" alt />
                   </div>
                 </div>
-                <p className="free">Free</p>
+                <p className="free">Trainer5</p>
               </a>
               <a href="#" className="doctor--card">
                 <div className="img--box--cover">
@@ -255,7 +270,7 @@ export default function Dashboard() {
                     <img src="assets/images/doctor7.jpg" alt />
                   </div>
                 </div>
-                <p className="scheduled">Scheduled</p>
+                <p className="scheduled">Trainer6</p>
               </a>
             </div>
           </div>
@@ -274,89 +289,50 @@ export default function Dashboard() {
                     <th>Name</th>
                     <th>Date in</th>
                     <th>Gender</th>
-                    <th>Age</th>
                     <th>Status</th>
-                    <th>Settings</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Cameron Williamson</td>
-                    <td>30/07/2022</td>
-                    <td>Male</td>
-                    <td>61kg</td>
+                    <td>30/04/2023</td>
+                    <td>Female</td>
+
                     <td className="pending">pending</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                   <tr>
                     <td>George Washington</td>
-                    <td>30/07/2022</td>
-                    <td>Male</td>
-                    <td>54kg</td>
+                    <td>30/04/2023</td>
+                    <td>Female</td>
+
                     <td className="confirmed">Confirmed</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                   <tr>
                     <td>John Adams</td>
-                    <td>29/07/2022</td>
-                    <td>Male</td>
-                    <td>56kg</td>
+                    <td>29/04/2023</td>
+                    <td>Female</td>
                     <td className="confirmed">Confirmed</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                   <tr>
                     <td>Thomas Jefferson</td>
-                    <td>29/07/2022</td>
-                    <td>Male</td>
-                    <td>11kg</td>
+                    <td>29/04/2023</td>
+                    <td>Female</td>
+
                     <td className="rejected">Rejected</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                   <tr>
                     <td>James Madison</td>
-                    <td>29/07/2022</td>
-                    <td>Male</td>
-                    <td>69kg</td>
+                    <td>29/04/2023</td>
+                    <td>Female</td>
+
                     <td className="confirmed">Confirmed</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                   <tr>
                     <td>Andrew Jackson</td>
-                    <td>28/07/2022</td>
-                    <td>Male</td>
-                    <td>88kg</td>
+                    <td>28/04/2023</td>
+                    <td>Female</td>
+
                     <td className="confirmed">Confirmed</td>
-                    <td>
-                      <span>
-                        <i className="ri-edit-line edit" />
-                        <i className="ri-delete-bin-line delete" />
-                      </span>
-                    </td>
                   </tr>
                 </tbody>
               </table>
