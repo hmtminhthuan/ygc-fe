@@ -69,25 +69,14 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                     >
                                         <div className="col-2 flex justify-content-end align-items-start px-3">
                                             <img
-                                                className={`course-feedback-trainee-img-null-${traineeInfo.length == courseFeedback.length &&
-                                                    traineeInfo[pos].img == null
-                                                    }`}
-                                                style={{
-                                                    width: "50px",
-                                                    height: "50px",
-                                                    borderRadius: "50%",
-                                                }}
-                                                src={
-                                                    traineeInfo.length == courseFeedback.length &&
-                                                        traineeInfo[pos].img != null
-                                                        ? traineeInfo[pos].img
-                                                        : ""
-                                                }
-                                            />
-                                            <img
-                                                className={`course-feedback-trainee-img-null-${traineeInfo.length == courseFeedback.length &&
-                                                    traineeInfo[pos].img != null
-                                                    }`}
+                                                className={`course-feedback-trainee-img-null-
+                                                    `}
+                                                // ${traineeInfo.length != courseFeedback.length &&
+                                                //     traineeInfo[pos].img != null &&
+                                                //     !(traineeInfo[pos].img.toLowerCase().trim() ==
+                                                //         "male" ||
+                                                //         traineeInfo[pos].img.toLowerCase().trim() == "female")
+                                                //     }
                                                 style={{
                                                     width: "50px",
                                                     height: "50px",
@@ -97,8 +86,8 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                                     traineeInfo.length == courseFeedback.length &&
                                                         traineeInfo[pos].img != null &&
                                                         traineeInfo[pos].img.toLowerCase().trim() == "female"
-                                                        ? femaleImg
-                                                        : maleImg
+                                                        ? maleImg
+                                                        : femaleImg
                                                 }
                                             />
                                         </div>
