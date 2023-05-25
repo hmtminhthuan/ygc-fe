@@ -5,7 +5,8 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Blog from "../pages/Blogs/Blog";
-import BlogSingle from "../pages/Blogs/BlogSingle/BlogSingle";
+
+import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
 import Course from "../pages/Courses/Course";
 import CourseDetail from "../pages/Courses/CourseDetail/CourseDetail";
 
@@ -19,7 +20,7 @@ export default function Routers() {
         { path: "/course", element: <Course /> },
         { path: "/courseDetail/:id", element: <CourseDetail /> },
         { path: "/blog", element: <Blog /> },
-        { path: "/blogSingle/:id", element: <BlogSingle /> },
+        { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
       ],

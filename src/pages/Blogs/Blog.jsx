@@ -11,7 +11,7 @@ function Blog() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/Blog/GetBlogList")
+      .get("http://monne0312-001-site1.etempurl.com/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
       })
@@ -20,15 +20,15 @@ function Blog() {
       });
   }, []);
 
-  // const formatDate = (dateString) => {
-  //   const dateObj = new Date(dateString);
+  const formatDate = (dateString) => {
+    const dateObj = new Date(dateString);
 
-  //   const day = dateObj.getDate();
-  //   const month = dateObj.getMonth() + 1;
-  //   const year = dateObj.getFullYear();
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("default", { month: "long" });
+    const year = dateObj.getFullYear();
 
-  //   return `${day}-${month}-${year}`;
-  // };
+    return `${day}-${month}-${year}`;
+  };
 
   return (
     <div>
@@ -38,14 +38,14 @@ function Blog() {
         <div className="blog-contaier flex justify-content-center align-content-center">
           <div className="row">
             {blogList.map((blog, index) => {
-              // const formattedDate = formatDate(blog.date);
+              const formattedDate = formatDate(blog.date);
               return (
                 <BlogDetail
                   key={index}
-                  id={1}
+                  blogID={blog.blogID}
                   header={blog.header}
-                  // content={blog.content}
-                  // date={formattedDate}
+                  content={blog.content}
+                  date={formattedDate}
                   firstName={blog.firstName}
                 />
               );
