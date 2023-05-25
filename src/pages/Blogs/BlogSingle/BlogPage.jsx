@@ -13,7 +13,7 @@ function BlogPage() {
 
   useEffect(() => {
     axios
-      .get("http://monne0312-001-site1.etempurl.com/Blog/GetBlogById", {
+      .get("http://localhost:5000/Blog/GetBlogById", {
         params: { id: param.id },
       })
       .then((res) => {

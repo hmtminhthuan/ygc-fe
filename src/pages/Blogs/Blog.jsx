@@ -11,7 +11,7 @@ function Blog() {
 
   useEffect(() => {
     axios
-      .get("http://monne0312-001-site1.etempurl.com/Blog/GetBlogList")
+      .get("http://localhost:5000/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
       })
