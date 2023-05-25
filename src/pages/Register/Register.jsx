@@ -27,10 +27,14 @@ export default function Register() {
     },
 
     onSubmit: async (values) => {
+      console.log(values);
       axios
-        .get("http://localhost:5000/Account/SendCodeRegister", {
-          params: { email: values.email },
-        })
+        .get(
+          `http://monne0312-001-site1.etempurl.com/Account/SendCodeRegister`,
+          {
+            params: { email: values.email },
+          }
+        )
         .then(async (res) => {
           await Swal.fire({
             title: `Verify your Email`,
@@ -44,7 +48,7 @@ export default function Register() {
             },
             showCancelButton: true,
             showConfirmButton: true,
-            confirmButtonText: "Look up",
+            confirmButtonText: "Confirm",
             showLoaderOnConfirm: true,
             didOpen: () => {
               const b = Swal.getHtmlContainer().querySelector("b");
@@ -68,9 +72,12 @@ export default function Register() {
               });
             } else if (result.isConfirmed === true) {
               if (result.value === res.data) {
-
                 console.log("values", values);
-                axios.post("http://localhost:5000/Account/TraineeRegister", values)
+                axios
+                  .post(
+                    "http://monne0312-001-site1.etempurl.com/Account/TraineeRegister",
+                    values
+                  )
                   .then((res) => {
                     console.log(res);
                     Swal.fire({
@@ -85,14 +92,13 @@ export default function Register() {
                     Swal.fire({
                       position: "center",
                       icon: "error",
-                      title: "This Email or Phone number has been registered! </br> Please try again",
+                      title:
+                        "This Email or Phone number has been registered! </br> Please try again",
                       showConfirmButton: true,
                       timer: 10000,
                     });
                   });
-
               } else {
-
                 Swal.fire({
                   position: "center",
                   icon: "error",
@@ -100,7 +106,6 @@ export default function Register() {
                   showConfirmButton: true,
                   timer: 2500,
                 });
-
               }
             }
           });
@@ -108,7 +113,6 @@ export default function Register() {
         .catch((err) => {
           console.log(err);
         });
-
     },
   });
   const handleChangeGender = (gender) => {
@@ -313,7 +317,7 @@ export default function Register() {
                     hasFeedback
                   >
                     <Input
-                      name="email"
+                      name="address"
                       value={formik.values.address}
                       onChange={formik.handleChange}
                       placeholder="Enter Address (Optional)"

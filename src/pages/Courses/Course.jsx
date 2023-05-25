@@ -18,10 +18,10 @@ export default function Course() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/Course/GetCourseList")
+            .get("http://monne0312-001-site1.etempurl.com/Course/GetCourseList")
             .then(async (res) => {
                 setCourseList(res.data);
-                setRenderCourseList(res.data);
+                setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
             })
             .catch((err) => {
                 console.log(err);

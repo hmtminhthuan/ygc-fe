@@ -24,7 +24,7 @@ export default function Login() {
     onSubmit: (values) => {
       console.log("values", values);
       axios
-        .post("http://localhost:5000/Account/CheckLogin", values)
+        .post("http://monne0312-001-site1.etempurl.com/Account/CheckLogin", values)
         .then((res) => {
           console.log(res);
           Swal.fire({
