@@ -9,6 +9,7 @@ import { Button } from "react-bootstrap";
 import CourseClasses from "./CourseClasses/CourseClasses";
 import CourseFeedback from "./CourseFeedback/CourseFeedback";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { api } from "../../../constants/api";
 
 export default function CourseDetail() {
     const param = useParams();
@@ -22,8 +23,8 @@ export default function CourseDetail() {
         }).format(price);
     };
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/Course/GetCourseByID", {
+        api
+            .get("/Course/GetCourseByID", {
                 params: { id: param.id },
             })
             .then((res) => {
@@ -33,8 +34,8 @@ export default function CourseDetail() {
                 // console.log(err);
             });
 
-        axios
-            .get("http://localhost:5000/Class/GetClassByCourseID", {
+        api
+            .get("/Class/GetClassByCourseID", {
                 params: { courseid: param.id },
             })
             .then((res) => {
@@ -44,8 +45,8 @@ export default function CourseDetail() {
                 // console.log(err);
             });
 
-        axios
-            .get("http://localhost:5000/Feedback/GetCourseFeedbackbyId", {
+        api
+            .get("/Feedback/GetCourseFeedbackbyId", {
                 params: { courseid: param.id },
             })
             .then((res) => {

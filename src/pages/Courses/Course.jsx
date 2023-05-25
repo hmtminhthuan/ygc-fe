@@ -6,19 +6,17 @@ import image from "../../assets/images/banner-1.jpg";
 import "./Course.scss";
 import CourseDetail from "./CourseItem";
 import axios from "axios";
-import { stringify } from "postcss";
 import { Select } from "antd";
+import { api } from "../../constants/api";
 export default function Course() {
     const [courseList, setCourseList] = useState([]);
     const [renderCourseList, setRenderCourseList] = useState([]);
     const [levelSort, setLevelSort] = useState("All");
     const [price, setPrice] = useState("All");
     const [discount, setDiscount] = useState("All");
-    const staticVar = 1;
 
     useEffect(() => {
-        axios
-            .get("http://monne0312-001-site1.etempurl.com/Course/GetCourseList")
+        api.get("/Course/GetCourseList")
             .then(async (res) => {
                 setCourseList(res.data);
                 setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));

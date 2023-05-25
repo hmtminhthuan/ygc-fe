@@ -6,14 +6,15 @@ import user from "../../../assets/images/user.jpg";
 import axios from "axios";
 import "./BlogPage.scss";
 import { Link } from "react-router-dom";
+import { api } from "../../../constants/api";
 
 function BlogPage() {
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/Blog/GetBlogById", {
+    api
+      .get("/Blog/GetBlogById", {
         params: { id: param.id },
       })
       .then((res) => {

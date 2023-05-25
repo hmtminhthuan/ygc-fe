@@ -7,6 +7,7 @@ import { Form, Input, Select } from "antd";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import { api } from "../../constants/api";
 
 export default function Login() {
   const formItemLayout = {
@@ -23,8 +24,8 @@ export default function Login() {
 
     onSubmit: (values) => {
       console.log("values", values);
-      axios
-        .post("http://monne0312-001-site1.etempurl.com/Account/CheckLogin", values)
+      api
+        .post("/Account/CheckLogin", values)
         .then((res) => {
           console.log(res);
           Swal.fire({

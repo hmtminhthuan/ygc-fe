@@ -3,6 +3,7 @@ import maleImg from "../../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../../assets/images/avt-female.jpg";
 import axios from "axios";
 import "./CourseFeedback.scss";
+import { api } from "../../../../constants/api";
 export default function CourseFeedback({ courseFeedback, ...restParams }) {
     let traineeInfoArr = [];
     let [traineeInfo, setTraineeInfo] = useState([]);
@@ -10,8 +11,8 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
 
     useEffect(() => {
         courseFeedback.forEach(({ id, ...restParams }) => {
-            axios
-                .get("http://localhost:5000/Feedback/GetFeedbackDetailForTrainee", {
+            api
+                .get("/Feedback/GetFeedbackDetailForTrainee", {
                     params: {
                         feedbackId: id,
                     },

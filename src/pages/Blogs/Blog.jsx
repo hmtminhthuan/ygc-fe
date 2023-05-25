@@ -5,13 +5,14 @@ import BlogDetail from "./BlogDetail";
 import axios from "axios";
 import "./Blog.scss";
 import "./BlogDetail.scss";
+import { api } from "../../constants/api";
 
 function Blog() {
   let [blogList, setBlogList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/Blog/GetBlogList")
+    api
+      .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
       })

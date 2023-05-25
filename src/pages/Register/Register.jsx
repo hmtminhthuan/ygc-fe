@@ -7,6 +7,7 @@ import { Form, Input, Select } from "antd";
 import { Await, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import { api } from "../../constants/api";
 
 export default function Register() {
   const formItemLayout = {
@@ -28,13 +29,11 @@ export default function Register() {
 
     onSubmit: async (values) => {
       console.log(values);
-      axios
-        .get(
-          `http://monne0312-001-site1.etempurl.com/Account/SendCodeRegister`,
-          {
-            params: { email: values.email },
-          }
-        )
+      api.get("/Account/SendCodeRegister"
+        , {
+          params: { email: values.email }
+        }
+      )
         .then(async (res) => {
           await Swal.fire({
             title: `Verify your Email`,
@@ -73,11 +72,9 @@ export default function Register() {
             } else if (result.isConfirmed === true) {
               if (result.value === res.data) {
                 console.log("values", values);
-                axios
-                  .post(
-                    "http://monne0312-001-site1.etempurl.com/Account/TraineeRegister",
-                    values
-                  )
+                api.post("/Account/TraineeRegister",
+                  values
+                )
                   .then((res) => {
                     console.log(res);
                     Swal.fire({
