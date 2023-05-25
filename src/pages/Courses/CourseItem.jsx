@@ -12,9 +12,6 @@ export default function CourseDetail({
     discount,
     ...restParams
 }) {
-    description = `Lorem ipx praesentium debitis, quidem eaque distinctio 
-        saepe fugiat dolor laborum velit quis, obcaecati quibusdam. 
-        Voluptate fugiat maxime recusandae voluptatibus!`;
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
             style: "currency",

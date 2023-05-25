@@ -8,7 +8,6 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
     let traineeInfoArr = [];
     let [traineeInfo, setTraineeInfo] = useState([]);
     let [count, setCount] = useState(0);
-
     useEffect(() => {
         courseFeedback.forEach(({ id, ...restParams }) => {
             api
@@ -59,7 +58,9 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                 },
                                 index
                             ) => {
-                                let pos = traineeInfo.findIndex(obj => { return obj.id == id });
+                                let pos = traineeInfo.findIndex((obj) => {
+                                    return obj.id == id;
+                                });
                                 return (
                                     <div
                                         className="row m-3 mx-0 mx-lg-5 mt-0 flex justify-content-center align-items-start"
@@ -73,14 +74,20 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
                                                     height: "50px",
                                                     borderRadius: "50%",
                                                 }}
-                                                src={maleImg}
+                                                src={
+                                                    traineeInfo.length == courseFeedback.length &&
+                                                        traineeInfo[pos].img != null &&
+                                                        traineeInfo[pos].img.toLowerCase().includes("female")
+                                                        ? femaleImg
+                                                        : maleImg
+                                                }
                                             />
                                         </div>
                                         <div className="col-9">
                                             {traineeInfo.length == courseFeedback.length ? (
                                                 <p className="p-0 m-0" style={{ fontWeight: "600" }}>
                                                     <span> {traineeInfo[pos].firstname}</span>{" "}
-                                                    <span>  {traineeInfo[pos].lastname}</span>{" "}
+                                                    <span> {traineeInfo[pos].lastname}</span>{" "}
                                                 </p>
                                             ) : (
                                                 <></>

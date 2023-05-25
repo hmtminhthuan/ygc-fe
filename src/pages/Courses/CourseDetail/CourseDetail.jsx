@@ -66,8 +66,6 @@ export default function CourseDetail() {
             </div>
             <main className="pt-5">
                 <div className="box course-detail-area mt-5 my-5">
-                    {/* <div className="inner-box flex"> */}
-                    {/* <div className="container flex"> */}
                     <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
                         <div className="row justify-content-center">
                             <div className="col-10 mt-3">
@@ -98,10 +96,7 @@ export default function CourseDetail() {
                                 </p>
                                 <p className="course-detail-des-description">
                                     <span className="sub-title">Description: </span>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                                    aut rem vel debitis incidunt necessitatibus, enim iure eum quo
-                                    veniam voluptatibus accusantium sapiente optio ipsum? Natus
-                                    doloribus hic amet ducimus.{" "}
+                                    {description}
                                 </p>
                                 <div className="course-detail-des-price d-flex">
                                     <span className="sub-title" style={{ margin: "0 10px 0 0" }}>
@@ -132,8 +127,6 @@ export default function CourseDetail() {
                         <h2 className="sub-title course-detail-title mt-4">Rating &amp; Feedbacks</h2>
                         <CourseFeedback courseFeedback={courseFeedback} />
                     </div>
-                    {/* </div> */}
-                    {/* </div> */}
                 </div>
             </main >
         </div >
