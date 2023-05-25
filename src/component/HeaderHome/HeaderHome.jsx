@@ -3,20 +3,25 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
-
+import logo from "../../assets/images/logo.png"
 import "./HeaderHome.scss";
 export default function HeaderHome() {
   return (
     <header>
       <Navbar
         expand="lg"
-        className="justify-content-center header"
+        className="justify-content-center header border-0"
         id="bg-header"
       >
         <Container className="header-container">
-          <Navbar.Brand href="/" className="header-brand">
-            Yoga Center
-          </Navbar.Brand>
+          <div className="flex align-items-center">
+            <img src={logo}
+              style={{ height: "40px", width: "40px", marginRight: "10px" }}
+            />
+            <Navbar.Brand href="/" className="header-brand">
+              Yoga Center
+            </Navbar.Brand>
+          </div>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="header-toggle"
