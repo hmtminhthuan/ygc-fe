@@ -64,10 +64,10 @@ export default function HomeContent() {
                         </ul>
                     </div>
                     <div className="right col-span-6 d-md-none d-sm-none d-lg-block">
-                        <img src="https://www.yogapedia.com/images/uploads/istock-825005442.jpg" alt="..." onClick={showModal}
+                        <img src="https://www.meghantelpner.com/wp-content/uploads/2011/09/Yoga_Thailand_Resort_Anantara.jpg" alt="..." onClick={showModal}
                             style={{
                                 cursor: "pointer", width: "600px", borderRadius: "5px",
-                                boxShadow: "-10px 10px 15px -2px #000"
+                                boxShadow: "-10px 10px 15px -2px #000", height: "450px"
                             }} />
                         <i className="fa-solid fa-play" onClick={showModal} ></i>
                         <Modal
