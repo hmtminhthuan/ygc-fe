@@ -57,7 +57,7 @@ export default function CourseDetail() {
                 // console.log(err);
             });
     }, []);
-    let { courseName, levelName, description, price, discount, ...restParams } =
+    let { courseName, levelName, description, price, discount, courseImg, ...restParams } =
         courseDetail;
 
     return (
@@ -80,7 +80,7 @@ export default function CourseDetail() {
                         <h2 className="course-detail-title course-detail-name m-4 mt-0">{courseName}</h2>
                         <div className="row d-lg-flex align-items-stretch justify-content-center">
                             <div className="course-detail-img col-lg-5 col-10 flex justify-content-start">
-                                <img className="h-100" style={{ width: "100%" }} src={image} />
+                                <img className="h-100" style={{ width: "100%" }} src={courseImg} />
                                 {discount != null && discount != "" && discount >= 0 ? (
                                     <div className="course-tag-discount py-2 pt-1 px-2">
                                         <p>{discount}&#37;</p>

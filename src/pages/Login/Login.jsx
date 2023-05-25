@@ -44,7 +44,8 @@ export default function Login() {
           Swal.fire({
             position: "center",
             icon: "error",
-            title: "Log in failed!</br> Your phone number or password is not correct. </br> Please check again",
+            title:
+              "Log in failed!</br> Your phone number or password is not correct. </br> Please check again",
             showConfirmButton: true,
             timer: 10000,
           });
@@ -52,6 +53,172 @@ export default function Login() {
     },
   });
 
+  const handleChangePassword = (accountID) => {
+    Swal.fire({
+      title: `Enter your new Password`,
+      html: `Your Password must be at least 6 chacracters`,
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Confirm",
+      allowOutsideClick: () => !Swal.isLoading(),
+    })
+      .then(async (result) => {
+        if (result.isDenied === true || result.isDismissed === true) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Reset Password failed!",
+            showConfirmButton: true,
+            timer: 2500,
+          });
+        } else if (result.isConfirmed === true) {
+          if (result.value.trim().length < 6) {
+            await Swal.fire({
+              position: "center",
+              icon: "error",
+              title:
+                "Your password must be at least 6 chacracters. </br> Please enter again!",
+              showConfirmButton: true,
+              timer: 2500,
+              preConfirm: (login) => {
+                // console.log(login);
+              },
+            });
+            setTimeout(handleChangePassword(accountID), 2800);
+          } else {
+            api
+              .put(`/Account/UpdateAccount?id=${accountID}`, {
+                password: result.value.trim(),
+              })
+              .then((res) => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Reset Password successfully!",
+                  showConfirmButton: true,
+                  timer: 2500,
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleResetPassword = (validationCode, email, accountID) => {
+    Swal.fire({
+      title: `Verify your Email`,
+      html: `We send a code to your Email: ${email}. <br/>
+  Please check and enter this code here. <br/> This will close in <b></b> seconds.`,
+      input: "text",
+      timer: 180000,
+      timerProgressBar: true,
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Confirm",
+      showLoaderOnConfirm: true,
+      didOpen: () => {
+        const b = Swal.getHtmlContainer().querySelector("b");
+        let timerInterval = setInterval(() => {
+          b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+        }, 1000);
+      },
+      preConfirm: (login) => {
+        // console.log(login);
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    })
+      .then((result) => {
+        if (result.isDenied === true || result.isDismissed === true) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Reset Password failed! </br> Please try again",
+            showConfirmButton: true,
+            timer: 2500,
+          });
+        } else if (result.isConfirmed === true) {
+          if (result.value === validationCode) {
+            handleChangePassword(accountID);
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Wrong verify code! </br> Please try again",
+              showConfirmButton: true,
+              timer: 2500,
+            });
+          }
+        }
+      })
+      .catch((err) => { });
+  };
+
+  const handleForgetPassword = () => {
+    Swal.fire({
+      title: `Enter your Email`,
+      html: `Please enter Email you have registered`,
+      input: "email",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Confirm",
+      allowOutsideClick: () => !Swal.isLoading(),
+    })
+      .then(async (result) => {
+        if (result.isConfirmed === true) {
+          let checkEmail = false;
+          await api
+            .get("/Account/CheckResetEmail", {
+              params: { email: result.value },
+            })
+            .then((res) => {
+              checkEmail = res.data;
+            })
+            .catch((err) => { });
+          if (checkEmail) {
+            api
+              .post(`/Account/CreateValidationCode?email=${result.value}`)
+              .then((res) => {
+                handleResetPassword(
+                  res.data.validationCode,
+                  result.value,
+                  res.data.accountID
+                );
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title:
+                "This Email has not been registered! </br> Please try again",
+              showConfirmButton: true,
+              timer: 10000,
+            });
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <div className="header-top m-4 mx-0 mt-0">
@@ -123,7 +290,10 @@ export default function Login() {
                         required: true,
                         message: "Password cannot be blank",
                       },
-                      { min: 6, message: "Password must be at least 6 characters" },
+                      {
+                        min: 6,
+                        message: "Password must be at least 6 characters",
+                      },
                     ]}
                     hasFeedback
                   >
@@ -144,7 +314,7 @@ export default function Login() {
                     Log In
                   </button>
                   <Link
-                    to={"/"}
+                    onClick={handleForgetPassword}
                     className="mt-3 text-center text-decoration-none text-danger text-forget-password"
                   >
                     Forget Password?

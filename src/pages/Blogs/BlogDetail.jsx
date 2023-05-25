@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import "./BlogDetail.scss";
 import image from "../../assets/images/img_blog.jpg";
+import { Link } from "react-router-dom";
 // /import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
 export default function BlogDetail({
   blogID,
@@ -49,10 +50,21 @@ export default function BlogDetail({
                 {header}
               </a>
             </h3>
-            {/* {content} */}
+
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum,
-              explicabo?
+              {content.length >= 80
+                ? content.substring(0, 80).trim() + "..."
+                : content}{" "}
+              {content.length >= 80 ? (
+                <Link
+                  to={`/blogPage/${blogID}`}
+                  className="text-decoration-none"
+                >
+                  View More
+                </Link>
+              ) : (
+                <></>
+              )}
             </p>
           </Card.Text>
 

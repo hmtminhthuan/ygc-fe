@@ -29,29 +29,29 @@ export default function HomeContent() {
         <div className='HomeContent'>
             <div className="container">
                 <div className="grid grid-cols-12 flex items-center">
-                    <div className="left col-span-6  w-5/6 px-2">
-                        <h2 className='text-4xl font-semibold'>A whole world of freelance talent at your fingertips</h2>
-                        <ul className='p-0'>
+                    <div className="left col-span-6  w-5/6 px-2 px-5">
+                        <h2 className='text-4xl font-semibold first-content-title'>A super perfect chance of <br className='d-none d-lg-block'></br> health care at your fingertips</h2>
+                        <ul className='p-0  first-content-list'>
                             <li>
                                 <span>
                                     <i className="fa-regular fa-circle-check"></i>
                                     The best for every budget
                                 </span>
-                                <p>Find high-quality services at every price point. No hourly rates, just project-based pricing.</p>
+                                <p>Find high-quality yoga services at every price point. No need experience, just need hard practice.</p>
                             </li>
                             <li>
                                 <span>
                                     <i className="fa-regular fa-circle-check"></i>
-                                    Quality work done quickly
+                                    Quality trainers from all over the world
                                 </span>
-                                <p>Find the right freelancer to begin working on your project within minutes.</p>
+                                <p>Find the right trainers to begin join in the world of this significantly effective mental therapy.</p>
                             </li>
                             <li>
                                 <span>
                                     <i className="fa-regular fa-circle-check"></i>
                                     Protected payments, every time
                                 </span>
-                                <p>Always know what you'll pay upfront. Your payment isn't released until you approve the work.</p>
+                                <p>Always know what you'll pay upfront. Your payment isn't released until you approve our services.</p>
                             </li>
                             <li>
                                 <span>
@@ -67,9 +67,10 @@ export default function HomeContent() {
                         <img src="https://www.meghantelpner.com/wp-content/uploads/2011/09/Yoga_Thailand_Resort_Anantara.jpg" alt="..." onClick={showModal}
                             style={{
                                 cursor: "pointer", width: "600px", borderRadius: "5px",
-                                boxShadow: "-10px 10px 15px -2px #000", height: "450px"
-                            }} />
-                        <i className="fa-solid fa-play" onClick={showModal} ></i>
+                                boxShadow: "-10px 10px 15px -2px #000", height: "500px"
+                            }} className='d-none d-lg-block' />
+
+                        <i className="fa-solid fa-play d-none d-lg-block" onClick={showModal} ></i>
                         <Modal
                             open={isModalVisible}
                             onOk={handleOk}
@@ -111,7 +112,7 @@ export default function HomeContent() {
                             <SwiperSlide>
                                 <div className='grid grid-cols-12 w-full flex align-items-center justify-content-center px-5' style={{}}>
                                     <div className="left col-span-5">
-                                        <img src="https://www.justrunlah.com/wp-content/uploads/2016/11/sport-girl-do-yoga-in-the-park-asian-beauty-woman.jpg" className="slider-img-content" alt="..." />
+                                        <img src="https://www.justrunlah.com/wp-content/uploads/2016/11/sport-girl-do-yoga-in-the-park-asian-beauty-woman.jpg" className="slider-img-content  d-md-none d-sm-none d-none d-lg-block" alt="..." />
                                     </div>
                                     <div className="right col-span-7 slider-info-text px-14 px-4 mt-3">
                                         <span className="text-gray-400 font-medium text-lg">
@@ -128,7 +129,7 @@ export default function HomeContent() {
                             <SwiperSlide>
                                 <div className='grid grid-cols-12 w-full flex align-items-center justify-content-center px-5' style={{}}>
                                     <div className="left col-span-5">
-                                        <img src="http://www.yogajournal.com/wp-content/uploads/sites/17/2018/07/yin4.jpg" className="slider-img-content" alt="..." />
+                                        <img src="http://www.yogajournal.com/wp-content/uploads/sites/17/2018/07/yin4.jpg" className="slider-img-content  d-md-none d-sm-none d-none d-lg-block" alt="..." />
 
                                     </div>
                                     <div className="right col-span-7 slider-info-text px-14 px-4 ">
@@ -144,7 +145,7 @@ export default function HomeContent() {
                             <SwiperSlide>
                                 <div className='grid grid-cols-12 w-full flex align-items-center justify-content-center px-5' style={{}}>
                                     <div className="left col-span-5">
-                                        <img src="https://mk0yogiapproveddv8to.kinstacdn.com/wp-content/uploads/2020/12/Crow.jpg" className="slider-img-content" alt="..." />
+                                        <img src="https://mk0yogiapproveddv8to.kinstacdn.com/wp-content/uploads/2020/12/Crow.jpg" className="slider-img-content  d-md-none d-sm-none d-none d-lg-block" alt="..." />
                                     </div>
                                     <div className="right col-span-7 slider-info-text px-14 px-4 ">
                                         <span className="text-gray-400 font-medium text-lg">
@@ -159,7 +160,7 @@ export default function HomeContent() {
                             <SwiperSlide>
                                 <div className='grid grid-cols-12 w-full flex align-items-center justify-content-center px-5' style={{}}>
                                     <div className="left col-span-5">
-                                        <img src="https://i.pinimg.com/originals/42/e6/32/42e6320117931b984290b56812a73bba.jpg" className="slider-img-content" alt="..." />
+                                        <img src="https://i.pinimg.com/originals/42/e6/32/42e6320117931b984290b56812a73bba.jpg" className="slider-img-content  d-md-none d-sm-none d-none d-lg-block" alt="..." />
                                     </div>
                                     <div className="right col-span-7 slider-info-text px-14 px-4 ">
                                         <span className="text-gray-400 font-medium text-lg">

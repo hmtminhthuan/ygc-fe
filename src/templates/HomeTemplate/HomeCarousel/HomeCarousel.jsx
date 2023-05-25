@@ -16,7 +16,7 @@ export default function HomeCarousel() {
                         <h2 className="mb-5" style={{ color: 'rgba(0, 0, 0)' }}>Do Yoga today for a better tomorrow</h2>
 
                         <p>
-                            <a href="/" className="btn btn-primary p-3 px-4">15 Day Free Trial</a>
+                            <a href="/" className="btn btn-primary p-3 px-4" style={{ fontSize: "18px" }}><span style={{ fontWeight: "bolder", color: "#000" }}>Super Hot</span>{" "}"15 Day Free Trial"</a>
                         </p>
                     </div>
                 </div>

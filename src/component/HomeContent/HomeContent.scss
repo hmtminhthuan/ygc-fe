@@ -419,3 +419,17 @@
   font-weight: bold;
   font-style: italic;
 }
+.first-content-title {
+  font-weight: bolder;
+  font-style: italic;
+  font-size: 40px;
+  color: #000;
+}
+.first-content-list {
+  li {
+    span,
+    i {
+      color: rgb(168, 77, 107) !important;
+    }
+  }
+}
