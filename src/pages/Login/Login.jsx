@@ -29,6 +29,9 @@ export default function Login() {
         .post("/Account/CheckLogin", values)
         .then((res) => {
           console.log(res);
+          localStorage.removeItem("USER_LOGIN");
+          localStorage.setItem("USER_LOGIN", JSON.stringify(res.data))
+
           Swal.fire({
             position: "center",
             icon: "success",

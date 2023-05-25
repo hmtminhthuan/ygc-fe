@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
-import logo from "../../assets/images/logo.png"
+import logo from "../../assets/images/logo.png";
 import "./HeaderHome.scss";
 export default function HeaderHome() {
+  const [userLogin, setUserLogin] = useState({});
+  let USER = {};
+  const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  if (USER_LOGIN != null && !userLogin.accountID) {
+    USER = JSON.parse(USER_LOGIN);
+    if (USER.firstname == undefined && USER.lastname == undefined) {
+      USER.firstname = "Tram";
+      USER.lastname = "Nguyen";
+    }
+    setUserLogin(USER);
+  }
+  console.log('USER', USER);
+  console.log('userLogin', userLogin);
+  console.log(userLogin.firtname); console.log(userLogin.lastname);
   return (
     <header>
       <Navbar
@@ -15,7 +29,8 @@ export default function HeaderHome() {
       >
         <Container className="header-container">
           <div className="flex align-items-center">
-            <img src={logo}
+            <img
+              src={logo}
               style={{ height: "40px", width: "40px", marginRight: "10px" }}
             />
             <Navbar.Brand href="/" className="header-brand">
@@ -40,12 +55,36 @@ export default function HeaderHome() {
               <Nav.Link href="/blog" className="px-4 nav-item">
                 Blog
               </Nav.Link>
-              <Nav.Link href="/login" className="px-4 nav-item">
-                Log in
-              </Nav.Link>
-              <Nav.Link href="/register" className="px-4 nav-item">
-                Register
-              </Nav.Link>
+              {USER_LOGIN != null ? (
+                <>
+                  <Nav.Link
+                    className="px-4 nav-item"
+                    onClick={() => {
+                      localStorage.removeItem("USER_LOGIN");
+                      USER = {};
+                      setUserLogin({});
+                      window.location.href = "/";
+                    }}
+                  >
+                    Log out
+                  </Nav.Link>
+                  <p className="p-0 m-0 flex align-items-center px-2 hello-user">
+                    Welcome,{" "}
+                    {userLogin.firstname == undefined || userLogin.lastname == undefined
+                      ? userLogin.phoneNumber
+                      : `${userLogin.firstname} ${userLogin.lastname}`}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="/login" className="px-4 nav-item">
+                    Log in
+                  </Nav.Link>
+                  <Nav.Link href="/register" className="px-4 nav-item">
+                    Register
+                  </Nav.Link>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
