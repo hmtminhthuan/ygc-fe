@@ -1,0 +1,17 @@
+.hero-wrap-banner {
+  background-image: url(../../assets/images/banner-1.jpg) !important;
+  background-size: cover;
+  height: 750px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  width: 100% !important;
+}
+
+.hero-wrap-banner .banner-container {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+/*# sourceMappingURL=Banner.css.map */

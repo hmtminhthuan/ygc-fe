@@ -1,0 +1,106 @@
+body {
+  overflow-x: hidden;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.bloglist-area {
+  background-color: #fafafa;
+}
+
+.bloglist-area .blog-container {
+  width: 100%;
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+footer {
+  display: block;
+}
+
+.w3-row-padding .w3-third {
+  padding: 0 8px;
+}
+
+.w3-row-padding.w3-padding-32 {
+  padding-top: 32px !important;
+  padding-bottom: 32px !important;
+}
+
+.w3-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.w3-ul li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.w3-ul li:last-child {
+  border-bottom: none;
+}
+
+.w3-ul.w3-hoverable li:hover {
+  background-color: #ccc;
+}
+
+.w3-padding-16 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+.w3-left {
+  float: left !important;
+}
+
+.w3-margin-right {
+  margin-right: 16px !important;
+}
+
+.w3-large {
+  font-size: 18px !important;
+}
+
+.w3-serif {
+  font-family: serif;
+}
+
+.w3-tag {
+  background-color: #000;
+  color: #fff;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-align: center;
+}
+
+.w3-black,
+.w3-hover-black:hover {
+  color: #fff !important;
+  background-color: #000 !important;
+}
+
+.w3-margin-bottom {
+  margin-bottom: 16px !important;
+}
+
+.w3-dark-grey,
+.w3-hover-dark-grey:hover {
+  color: #fff !important;
+  background-color: #616161 !important;
+}
+
+.w3-small {
+  font-size: 12px !important;
+}
+
+.page-item span,
+a {
+  color: #d08fba;
+  font-weight: 800;
+}
+/*# sourceMappingURL=Blog.css.map */

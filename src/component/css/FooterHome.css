@@ -1,0 +1,73 @@
+.footer {
+  background-color: #020c1b;
+  width: 100%;
+}
+
+.footer .contentWrapper {
+  padding: 30px 0;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.footer .contentWrapper .menuItems {
+  padding-bottom: 20px;
+}
+
+.footer .contentWrapper .menuItems .menuItem {
+  font-size: 16px;
+  margin: 0 15px;
+  text-align: center;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.footer .contentWrapper .menuItems .menuItem:hover {
+  color: #e24589;
+  font-weight: 500;
+}
+
+.footer .contentWrapper .infoText {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footer .socialIcons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.footer .socialIcons .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #04152d;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+}
+
+.footer .socialIcons .icon:hover {
+  -webkit-box-shadow: 0 0 0.625em #e24589;
+          box-shadow: 0 0 0.625em #e24589;
+  color: #e24589;
+}
+/*# sourceMappingURL=FooterHome.css.map */

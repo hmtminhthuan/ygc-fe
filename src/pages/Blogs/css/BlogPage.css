@@ -1,0 +1,136 @@
+main {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #f2ced8;
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .box {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 1020px;
+  height: 1500px;
+  margin-bottom: 40px;
+  background-color: #fff;
+  border-radius: 3.3rem;
+  -webkit-box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+          box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+}
+
+main .box .inner-box {
+  position: absolute;
+  width: calc(100% - 4.1rem);
+  height: calc(100% - 4.1rem);
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+main .box .inner-box .mb-5 {
+  margin-bottom: 3rem !important;
+}
+
+main .box .inner-box .mt-5 {
+  margin-top: 3rem !important;
+}
+
+main .box .inner-box .close {
+  text-align: right;
+  margin: 10px 50px;
+}
+
+main .box .inner-box .close a {
+  text-decoration: none;
+  margin-right: 10px;
+  color: #d08fba;
+}
+
+main .box .inner-box .title {
+  color: #d08fba;
+}
+
+main .box .inner-box .exit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+main .box .inner-box .exit a,
+main .box .inner-box i {
+  color: #000;
+}
+
+main .box .inner-box .user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .box .inner-box .user img {
+  font-size: 6.6px;
+  border-radius: 50%;
+  height: 9em;
+  width: 9em;
+  overflow-clip-margin: content-box;
+  overflow: clip;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .box .inner-box .user .info {
+  margin: 0 15px !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .box .inner-box .user .info a,
+main .box .inner-box .user .info .time {
+  margin: 2px 0;
+  text-decoration: none;
+}
+
+main .box .inner-box .upload {
+  color: #d08fba;
+  margin-right: 50px;
+  text-align: right;
+  font-weight: bold;
+}
+
+main .box .inner-box .tag-cloud a {
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 4px 10px;
+  margin-bottom: 7px;
+  margin-right: 25px;
+  border-radius: 4px;
+  color: #000;
+  border: 1px solid #e6e6e6;
+  font-size: 11px;
+  text-decoration: none;
+  line-height: 1.8;
+  font-weight: 400;
+}
+/*# sourceMappingURL=BlogPage.css.map */
