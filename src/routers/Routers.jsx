@@ -14,6 +14,8 @@ import TrainerTemplate from "../templates/TrainerTemplate/TrainerTemplate";
 import TraineeTemplate from "../templates/TraineeTemplate/TraineeTemplate";
 import TraineeHome from "../pages/Trainee/Home/TraineeHome";
 import TrainerHome from "../pages/Trainer/Home/TrainerHome";
+import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
+import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -28,19 +30,18 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        { path: "/dashboard", element: <Dashboard /> },
+        // { path: "/dashboard", element: <Dashboard /> },
       ],
     },
-
     {
       path: "/admin",
-      element: <TrainerTemplate />,
-      children: [],
+      element: <AdminTemplate />,
+      children: [{ path: "/admin", element: <Dashboard /> },],
     },
     {
       path: "/staff",
-      element: <TraineeTemplate />,
-      children: [],
+      element: <StaffTemplate />,
+      children: [{ path: "/staff", element: <Dashboard /> },],
     },
     {
       path: "/trainer",
