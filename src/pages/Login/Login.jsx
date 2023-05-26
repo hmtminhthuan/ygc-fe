@@ -269,10 +269,10 @@ export default function Login() {
                         message: "Phone Number is not in correct form",
                         pattern: /(0|[1-9][0-9]*)$/,
                       },
-                      { min: 10, message: "Phone Number must be 10 numbers" },
+                      { min: 10, message: "Phone Number must be 10-11 numbers" },
                       {
-                        max: 10,
-                        message: "Your Phone Number is over 10 numbers",
+                        max: 11,
+                        message: "Your Phone Number must be 10-11 numbers",
                       },
                     ]}
                     hasFeedback
