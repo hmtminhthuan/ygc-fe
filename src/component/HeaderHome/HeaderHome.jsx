@@ -17,9 +17,6 @@ export default function HeaderHome() {
     }
     setUserLogin(USER);
   }
-  console.log('USER', USER);
-  console.log('userLogin', userLogin);
-  console.log(userLogin.firtname); console.log(userLogin.lastname);
   return (
     <header>
       <Navbar

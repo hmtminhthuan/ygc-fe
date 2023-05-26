@@ -185,13 +185,13 @@ export default function Register() {
                         message: "Phone Number cannot be blank",
                       },
                       {
-                        message: "Phone Number is not in correct form",
+                        message: "Phone is not in correct form",
                         pattern: /(0|[1-9][0-9]*)$/,
                       },
-                      { min: 10, message: "Phone Number must be 10-11 numbers" },
+                      { min: 10, message: "Phone must be 10-11 numbers" },
                       {
                         max: 11,
-                        message: "Your Phone Number must be 10-11 numbers",
+                        message: "Phone must be 10-11 numbers",
                       },
                     ]}
                     hasFeedback
