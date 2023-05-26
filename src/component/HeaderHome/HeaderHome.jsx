@@ -11,10 +11,6 @@ export default function HeaderHome() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   if (USER_LOGIN != null && !userLogin.accountID) {
     USER = JSON.parse(USER_LOGIN);
-    if (USER.firstname == undefined && USER.lastname == undefined) {
-      USER.firstname = "Tram";
-      USER.lastname = "Nguyen";
-    }
     setUserLogin(USER);
   }
   return (
@@ -66,10 +62,7 @@ export default function HeaderHome() {
                     Log out
                   </Nav.Link>
                   <p className="p-0 m-0 flex align-items-center px-2 hello-user">
-                    Welcome,{" "}
-                    {userLogin.firstname == undefined || userLogin.lastname == undefined
-                      ? userLogin.phoneNumber
-                      : `${userLogin.firstname} ${userLogin.lastname}`}
+                    Welcome, {userLogin.firstName} {userLogin.lastName}
                   </p>
                 </>
               ) : (

@@ -40,10 +40,10 @@ export default function CourseDetail({
                     <p className="course-level my-2 mt-2"> Level: {levelName}</p>
                     <Card.Title>{courseName}</Card.Title>
                     <Card.Text className="course-des">
-                        {description.length >= 120
-                            ? description.substring(0, 120).trim() + "..."
+                        {description.length >= 100
+                            ? description.substring(0, 100).trim() + "..."
                             : description}{" "}
-                        {description.length >= 120 ? (
+                        {description.length >= 100 ? (
                             <Link
                                 to={`/courseDetail/${courseID}`}
                                 className="text-decoration-none"
