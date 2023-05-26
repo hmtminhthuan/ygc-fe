@@ -48,7 +48,7 @@ export default function HeaderHome() {
               <Nav.Link href="/blog" className="px-4 nav-item">
                 Blog
               </Nav.Link>
-              {USER_LOGIN != null ? (
+              {USER_LOGIN != null && userLogin.accountID != null && userLogin.accountID != undefined ? (
                 <>
                   <Nav.Link
                     className="px-4 nav-item"
@@ -61,6 +61,39 @@ export default function HeaderHome() {
                   >
                     Log out
                   </Nav.Link>
+                  {userLogin.role.id != undefined &&
+                    userLogin.role.id != null &&
+                    (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
+                    <Nav.Link className="px-4 nav-item nav-item-after-login" onClick={() => {
+                      window.location.href = "/dashboard"
+                    }}>
+                      Dashboard
+                    </Nav.Link>
+                  ) : (
+                    <></>
+                  )}
+                  {userLogin.role.id != undefined &&
+                    userLogin.role.id != null &&
+                    userLogin.role.id == 3 ? (
+                    <Nav.Link className="px-4 nav-item nav-item-after-login" onClick={() => {
+                      window.location.href = "/trainer"
+                    }}>
+                      View Schedule
+                    </Nav.Link>
+                  ) : (
+                    <></>
+                  )}
+                  {userLogin.role.id != undefined &&
+                    userLogin.role.id != null &&
+                    userLogin.role.id == 4 ? (
+                    <Nav.Link className="px-4 nav-item nav-item-after-login" onClick={() => {
+                      window.location.href = "/trainee"
+                    }}>
+                      View Schedule
+                    </Nav.Link>
+                  ) : (
+                    <></>
+                  )}
                   <p className="p-0 m-0 flex align-items-center px-2 hello-user">
                     Welcome, {userLogin.firstName} {userLogin.lastName}
                   </p>

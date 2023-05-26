@@ -10,6 +10,10 @@ import Course from "../pages/Courses/Course";
 import CourseDetail from "../pages/Courses/CourseDetail/CourseDetail";
 
 import Dashboard from "../pages/Dashboard/Dashboard";
+import TrainerTemplate from "../templates/TrainerTemplate/TrainerTemplate";
+import TraineeTemplate from "../templates/TraineeTemplate/TraineeTemplate";
+import TraineeHome from "../pages/Trainee/Home/TraineeHome";
+import TrainerHome from "../pages/Trainer/Home/TrainerHome";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -26,6 +30,16 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/dashboard", element: <Dashboard /> },
       ],
+    },
+    {
+      path: "/trainer",
+      element: <TrainerTemplate />,
+      children: [{ path: "/trainer", element: <TrainerHome /> }],
+    },
+    {
+      path: "/trainee",
+      element: <TraineeTemplate />,
+      children: [{ path: "/trainee", element: <TraineeHome /> }],
     },
   ]);
 

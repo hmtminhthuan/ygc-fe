@@ -30,7 +30,7 @@ export default function Login() {
         .then((res) => {
           console.log(res);
           localStorage.removeItem("USER_LOGIN");
-          localStorage.setItem("USER_LOGIN", JSON.stringify(res.data))
+          localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
 
           Swal.fire({
             position: "center",
@@ -39,7 +39,11 @@ export default function Login() {
             showConfirmButton: true,
             timer: 1000,
           }).then(function () {
-            window.location.href = "/";
+            if (res.data.role.id == 1 || res.data.role.id == 2) {
+              window.location.href = "/dashboard";
+            } else {
+              window.location.href = "/";
+            }
           });
         })
         .catch((err) => {
