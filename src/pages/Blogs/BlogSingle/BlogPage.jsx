@@ -51,8 +51,11 @@ function BlogPage() {
     <div>
       <HeaderHome />
       <main>
-        <div className="box">
-          <div className="inner-box">
+        <div className="box" style={{
+          height: "90vh", overflowY: "scroll",
+          borderTopRightRadius: "10px", borderBottomRightRadius: "10px"
+        }}>
+          <div className="inner-box" style={{ top: "100%" }}>
             <div className="close">
               <Link to={"/blog"}>
                 <a href="">Close</a>
@@ -93,7 +96,7 @@ function BlogPage() {
               </div>
             </div>
 
-            <div className="content">
+            <div className="content blog-content">
               <p>{content}</p>
 
               <p>
@@ -103,7 +106,7 @@ function BlogPage() {
                 />
               </p>
 
-              <p>
+              {/* <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Ratione dicta fuga repellat rem numquam aliquid necessitatibus
                 maiores sit quaerat id, aperiam exercitationem corrupti
@@ -118,7 +121,7 @@ function BlogPage() {
                 officiis blanditiis fugit eaque quae veritatis eveniet commodi,
                 doloremque perferendis expedita repellat ratione id corrupti!
                 Minima?
-              </p>
+              </p> */}
 
               <div className="tag-widget post-tag-container mb-5 mt-5">
                 <div className="tag-cloud">
