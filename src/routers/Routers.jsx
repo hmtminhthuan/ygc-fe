@@ -31,6 +31,17 @@ export default function Routers() {
         { path: "/dashboard", element: <Dashboard /> },
       ],
     },
+
+    {
+      path: "/admin",
+      element: <TrainerTemplate />,
+      children: [],
+    },
+    {
+      path: "/staff",
+      element: <TraineeTemplate />,
+      children: [],
+    },
     {
       path: "/trainer",
       element: <TrainerTemplate />,
