@@ -73,7 +73,7 @@ export default function CourseDetail() {
                                 <Link to={"/course"} className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                                     style={{ "fontSize": "18px", "fontWeight": "500" }}>
                                     <i className="fa-solid fa-arrow-left"></i>
-                                    <span className="mx-2">Come Back</span>
+                                    <span className="mx-2">Back</span>
                                 </Link>
                             </div>{" "}
                         </div>
