@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "remixicon/fonts/remixicon.css";
 import "./Dashboard.scss";
 import user from "../../assets/images/user.jpg";
-
+import { api } from "../../constants/api";
 export default function Dashboard() {
   useEffect(() => {
     const menu = document.querySelector(".menu");
@@ -14,7 +14,35 @@ export default function Dashboard() {
       mainContent.classList.toggle("active");
     };
   }, []);
-  //
+
+  // Trainerlist
+  const [trainerList, setTrainerList] = useState([]);
+  useEffect(() => {
+    api
+      .get("/Account/AccountListByRole?id=3")
+      .then((res) => {
+        const filteredTrainers = res.data;
+        setTrainerList(filteredTrainers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Traineelist
+  const [traineeList, setTraineeList] = useState([]);
+  useEffect(() => {
+    api
+      .get("/Account/AccountListByRole?id=4")
+      .then((res) => {
+        const filteredTrainees = res.data;
+        setTraineeList(filteredTrainees);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       {/* Header */}
@@ -104,9 +132,18 @@ export default function Dashboard() {
                 <span className="sidebar--item">Classes</span>
               </a>
             </li>
+
             <li>
               <a href="#">
-                <span className="icon icon-6">
+                <span className="icon icon-7">
+                  <i className=" ri-wallet-3-line" />
+                </span>
+                <span className="sidebar--item">Payment</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span className="icon icon-8">
                   <i className="  ri-terminal-window-fill" />
                 </span>
                 <span className="sidebar--item">Blogs</span>
@@ -151,10 +188,11 @@ export default function Dashboard() {
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainers</h5>
-                    <h1>15</h1>
+                    <h1>{trainerList.length}</h1>
                   </div>
                   <i className="ri-user-2-line card--icon--lg" />
                 </div>
+
                 <div className="card--stats">
                   <span>
                     <i className="ri-bar-chart-fill card--icon stat--icon" />
@@ -170,7 +208,7 @@ export default function Dashboard() {
                 <div className="card--data mt-5 mx-3">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainees</h5>
-                    <h1>100</h1>
+                    <h1>{traineeList.length}</h1>
                   </div>
                   <i className=" mr-4 ri-user-line card--icon--lg " />
                 </div>
@@ -216,62 +254,16 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="doctors--cards">
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor1.jpg" alt />
+              {trainerList.map((trainer) => (
+                <a href="#" className="doctor--card" key={trainer.accountID}>
+                  <div className="img--box--cover">
+                    <div className="img--box">
+                      <img src={trainer.image} />
+                    </div>
                   </div>
-                </div>
-                <p className="free">Free</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor2.jpg" alt />
-                  </div>
-                </div>
-                <p className="scheduled">Trainer1</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor3.jpg" alt />
-                  </div>
-                </div>
-                <p className="scheduled">Trainer2</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor4.jpg" alt />
-                  </div>
-                </div>
-                <p className="free">Trainer3</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor5.jpg" alt />
-                  </div>
-                </div>
-                <p className="scheduled">Trainer4</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor6.jpg" alt />
-                  </div>
-                </div>
-                <p className="free">Trainer5</p>
-              </a>
-              <a href="#" className="doctor--card">
-                <div className="img--box--cover">
-                  <div className="img--box">
-                    <img src="assets/images/doctor7.jpg" alt />
-                  </div>
-                </div>
-                <p className="scheduled">Trainer6</p>
-              </a>
+                  <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>
+                </a>
+              ))}
             </div>
           </div>
           <div className="recent--patients">
@@ -287,53 +279,18 @@ export default function Dashboard() {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Date in</th>
                     <th>Gender</th>
-                    <th>Status</th>
+                    <th>Address</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Cameron Williamson</td>
-                    <td>30/04/2023</td>
-                    <td>Female</td>
-
-                    <td className="pending">pending</td>
-                  </tr>
-                  <tr>
-                    <td>George Washington</td>
-                    <td>30/04/2023</td>
-                    <td>Female</td>
-
-                    <td className="confirmed">Confirmed</td>
-                  </tr>
-                  <tr>
-                    <td>John Adams</td>
-                    <td>29/04/2023</td>
-                    <td>Female</td>
-                    <td className="confirmed">Confirmed</td>
-                  </tr>
-                  <tr>
-                    <td>Thomas Jefferson</td>
-                    <td>29/04/2023</td>
-                    <td>Female</td>
-
-                    <td className="rejected">Rejected</td>
-                  </tr>
-                  <tr>
-                    <td>James Madison</td>
-                    <td>29/04/2023</td>
-                    <td>Female</td>
-
-                    <td className="confirmed">Confirmed</td>
-                  </tr>
-                  <tr>
-                    <td>Andrew Jackson</td>
-                    <td>28/04/2023</td>
-                    <td>Female</td>
-
-                    <td className="confirmed">Confirmed</td>
-                  </tr>
+                  {traineeList.slice(-10).map((trainee) => (
+                    <tr key={trainee.accountID}>
+                      <td>{`${trainee.firstName} ${trainee.lastName}`}</td>
+                      <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
+                      <td>{`${trainee.address}`}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
