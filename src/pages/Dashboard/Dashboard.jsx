@@ -4,16 +4,16 @@ import "./Dashboard.scss";
 import user from "../../assets/images/user.jpg";
 import { api } from "../../constants/api";
 export default function Dashboard() {
-  const USER_LOGIN = localStorage.getItem("USER_LOGIN");
-  let USER = {};
-  USER = JSON.parse(USER_LOGIN);
-  if (
-    USER_LOGIN == null ||
-    USER_LOGIN == undefined ||
-    !(USER.role.id == 1 || USER.role.id == 2)
-  ) {
-    window.location.href = "/";
-  }
+  // const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  // let USER = {};
+  // USER = JSON.parse(USER_LOGIN);
+  // if (
+  //   USER_LOGIN == null ||
+  //   USER_LOGIN == undefined ||
+  //   !(USER.role.id == 1 || USER.role.id == 2)
+  // ) {
+  //   window.location.href = "/";
+  // }
 
   useEffect(() => {
     const menu = document.querySelector(".menu");
@@ -312,7 +312,8 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </section>{" "}
+      </section>
+      {/* {" "} */}
     </div>
   );
 }
