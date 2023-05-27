@@ -102,6 +102,7 @@ export default function Login() {
                 password: result.value.trim(),
               })
               .then((res) => {
+                console.log(res);
                 Swal.fire({
                   position: "center",
                   icon: "success",
@@ -122,6 +123,7 @@ export default function Login() {
   };
 
   const handleResetPassword = (validationCode, email, accountID) => {
+    console.log(validationCode);
     Swal.fire({
       title: `Verify your Email`,
       html: `We send a code to your Email: ${email}. <br/>
@@ -157,8 +159,7 @@ export default function Login() {
             timer: 2500,
           });
         } else if (result.isConfirmed === true) {
-          console.log('result', result);
-          console.log('validationCode', validationCode);
+          console.log(validationCode);
           if (result.value == validationCode) {
             handleChangePassword(accountID);
           } else {
@@ -203,7 +204,6 @@ export default function Login() {
             api
               .post(`/Account/CreateValidationCode?email=${result.value}`)
               .then((res) => {
-                console.log(res);
                 handleResetPassword(
                   res.data.validationCode,
                   result.value,
