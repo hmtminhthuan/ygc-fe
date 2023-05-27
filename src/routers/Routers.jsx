@@ -30,18 +30,18 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        // { path: "/dashboard", element: <Dashboard /> },
+        { path: "/dashboard", element: <Dashboard /> },
       ],
     },
     {
       path: "/admin",
       element: <AdminTemplate />,
-      children: [{ path: "/admin", element: <Dashboard /> },],
+      children: [{ path: "/admin", element: <Dashboard /> }],
     },
     {
       path: "/staff",
       element: <StaffTemplate />,
-      children: [{ path: "/staff", element: <Dashboard /> },],
+      children: [{ path: "/staff", element: <Dashboard /> }],
     },
     {
       path: "/trainer",
