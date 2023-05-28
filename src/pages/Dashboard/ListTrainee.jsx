@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../constants/api";
 import { Select } from "antd";
+import { Link } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainee.scss";
 export default function ListTrainee() {
@@ -61,9 +62,14 @@ export default function ListTrainee() {
   const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <div className="row flex trainee-containe mt-3 mx-3">
+    <div className="row flex trainee-containe mt-3 mx-5">
+      <div className="headerlist mb-3">
+        <h1>
+          <i className="ri-bookmark-line"></i> List Trainee
+        </h1>
+      </div>
       {/* Sort by firstname */}
-      <div className="col-lg-4 col-md-12 flex justify-content-center ">
+      <div className="col-lg-4 col-md-12 flex justify-content-center mb-2">
         <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by FirstName</h4>
         <div className="w-50">
           <Select
@@ -82,7 +88,7 @@ export default function ListTrainee() {
       </div>
 
       {/* Sort by gender */}
-      <div className="col-lg-4 col-md-12 flex justify-content-center ">
+      <div className="col-lg-4 col-md-12 flex justify-content-center mb-2">
         <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h4>
         <div className="w-50">
           <Select
@@ -111,7 +117,14 @@ export default function ListTrainee() {
               <th>Address</th>
               <th>Course</th>
               <th>Class</th>
-              <th></th>
+              <th>
+                <button className="btn-home px-3 pt-2 pb-2 justify-content-center">
+                  <i className="ri-home-2-fill"></i>
+                  <Link to={"/dashboard"} className="exit-list">
+                    Home
+                  </Link>
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -125,7 +138,7 @@ export default function ListTrainee() {
                 <td>{`${trainee.address}`}</td>
                 <td></td>
                 <td></td>
-                <td>
+                <td className="setting">
                   <i className="ri-edit-2-fill mx-2"></i>
                   <i className="ri-delete-bin-line mx-2"></i>
                 </td>

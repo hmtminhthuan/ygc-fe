@@ -3,7 +3,15 @@ body {
   margin: 0;
   background: linear-gradient(45deg, #f2ced8, #f2acc6);
   font-family: "Montserrat", sans-serif;
-  font-weight: 100;
+  font-weight: 300;
+}
+
+.headerlist {
+  text-align: center;
+  color: linear-gradient(#e66465, #9198e5);
+  h1 {
+    font-weight: 900;
+  }
 }
 
 .trainee-container {
@@ -24,6 +32,7 @@ table {
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
 }
 
 th,
@@ -68,4 +77,29 @@ tbody td:hover:before {
   bottom: -9999px;
   background-color: rgba(255, 255, 255, 0.2);
   z-index: -1;
+}
+
+.btn-home {
+  background-color: #71c55b;
+  color: #fff;
+  font-weight: 500;
+}
+
+.exit-list {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+  &:hover {
+    color: #333;
+  }
+}
+
+.setting {
+  font-size: 18px;
+  .ri-edit-2-fill {
+    color: rgb(0, 9, 111);
+  }
+  .ri-delete-bin-line {
+    color: red;
+  }
 }

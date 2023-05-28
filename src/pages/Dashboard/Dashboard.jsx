@@ -74,7 +74,7 @@ export default function Dashboard() {
     <>
       <div>
         {/* Header */}
-        <section className="header">
+        <section className="headerdb">
           <div className="logo mt-2">
             <h2>
               <i className="ri-menu-line icon icon-0 menu mx-2" />
@@ -161,6 +161,7 @@ export default function Dashboard() {
                   <span className="icon icon-4">
                     <i className="ri-user-line" />
                   </span>
+
                   <span className="sidebar--item">Trainees</span>
                 </a>
               </li>
