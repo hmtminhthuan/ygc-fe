@@ -35,26 +35,26 @@ export default function Routers() {
         { path: "/listTrainee", element: <ListTrainee /> },
       ],
     },
-    // {
-    //   path: "/admin",
-    //   element: <AdminTemplate />,
-    //   children: [{ path: "/admin", element: <Dashboard /> }],
-    // },
-    // {
-    //   path: "/staff",
-    //   element: <StaffTemplate />,
-    //   children: [{ path: "/staff", element: <Dashboard /> }],
-    // },
-    // {
-    //   path: "/trainer",
-    //   element: <TrainerTemplate />,
-    //   children: [{ path: "/trainer", element: <TrainerHome /> }],
-    // },
-    // {
-    //   path: "/trainee",
-    //   element: <TraineeTemplate />,
-    //   children: [{ path: "/trainee", element: <TraineeHome /> }],
-    // },
+    {
+      path: "/admin",
+      element: <AdminTemplate />,
+      children: [{ path: "/admin", element: <Dashboard /> }],
+    },
+    {
+      path: "/staff",
+      element: <StaffTemplate />,
+      children: [{ path: "/staff", element: <Dashboard /> }],
+    },
+    {
+      path: "/trainer",
+      element: <TrainerTemplate />,
+      children: [{ path: "/trainer", element: <TrainerHome /> }],
+    },
+    {
+      path: "/trainee",
+      element: <TraineeTemplate />,
+      children: [{ path: "/trainee", element: <TraineeHome /> }],
+    },
   ]);
 
   return routing;
