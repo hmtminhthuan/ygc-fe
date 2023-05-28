@@ -17,6 +17,7 @@ import TrainerHome from "../pages/Trainer/Home/TrainerHome";
 import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/ListTrainee";
+import ListTrainer from "../pages/Dashboard/ListTrainer";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -33,6 +34,7 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/listTrainee", element: <ListTrainee /> },
+        { path: "/listTrainer", element: <ListTrainer /> },
       ],
     },
     {

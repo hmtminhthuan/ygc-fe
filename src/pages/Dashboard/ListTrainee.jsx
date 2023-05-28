@@ -46,12 +46,12 @@ export default function ListTrainee() {
         break;
       case "asc":
         sortedTrainees = sortedTrainees.sort((a, b) =>
-          a.firstName.localeCompare(b.firstName, "en", { sensitivity: "base" })
+          a.firstName.localeCompare(b.firstName, { sensitivity: "base" })
         );
         break;
       case "desc":
         sortedTrainees = sortedTrainees.sort((a, b) =>
-          b.firstName.localeCompare(a.firstName, "en", { sensitivity: "base" })
+          b.firstName.localeCompare(a.firstName, { sensitivity: "base" })
         );
         break;
     }
@@ -65,7 +65,7 @@ export default function ListTrainee() {
     <div className="row flex trainee-containe mt-3 mx-5">
       <div className="headerlist mb-3">
         <h1>
-          <i className="ri-bookmark-line"></i> List Trainee
+          <i className="ri-bookmark-line"></i> List Trainees
         </h1>
       </div>
       {/* Sort by firstname */}
