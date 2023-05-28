@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../constants/api";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainee.scss";
 export default function ListTrainee() {
@@ -38,6 +39,9 @@ export default function ListTrainee() {
           (trainee) => trainee.gender === "Female"
         );
         break;
+      default:
+        sortedTrainees = [...traineeList];
+        break;
     }
 
     switch (firstNameSort) {
@@ -54,12 +58,71 @@ export default function ListTrainee() {
           b.firstName.localeCompare(a.firstName, { sensitivity: "base" })
         );
         break;
+      default:
+        break;
     }
 
     setSortedTrainees(sortedTrainees);
-  }, [firstNameSort, genderSort]);
+  }, [firstNameSort, genderSort, traineeList]);
 
-  const [sortOrder, setSortOrder] = useState("");
+  const deleteTrainee = (traineeId) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success mx-3",
+        cancelButton: "btn btn-danger mx-3",
+      },
+      buttonsStyling: false,
+    });
+    const traineeToDelete = traineeList.find(
+      (trainee) => trainee.accountID === traineeId
+    );
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: `Do you want delete ${traineeToDelete.firstName} ${traineeToDelete.lastName}?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          api
+            .delete(`/Account/DeleteAccount?id=${traineeId}`)
+            .then(() => {
+              console.log("Trainee deleted successfully.");
+              // Refresh the trainee list after deletion
+              setTraineeList((prevList) =>
+                prevList.filter((trainee) => trainee.accountID !== traineeId)
+              );
+              swalWithBootstrapButtons.fire(
+                "Deleted!",
+                "Trainee deleted successfully.",
+                "success"
+              );
+            })
+            .catch((error) => {
+              console.log("Failed to delete trainee. Please try again.");
+              console.log(error);
+              swalWithBootstrapButtons.fire(
+                "Failed to delete",
+                "Please try again.",
+                "error"
+              );
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            "Failed to delete!",
+            "error"
+          );
+        }
+      });
+  };
+
+  // const [sortOrder, setSortOrder] = useState("");
 
   return (
     <div className="row flex trainee-containe mt-3 mx-5">
@@ -140,7 +203,11 @@ export default function ListTrainee() {
                 <td></td>
                 <td className="setting">
                   <i className="ri-edit-2-fill mx-2"></i>
-                  <i className="ri-delete-bin-line mx-2"></i>
+                  <i
+                    className="ri-delete-bin-line mx-2 "
+                    onClick={() => deleteTrainee(trainee.accountID)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
                 </td>
               </tr>
             ))}
