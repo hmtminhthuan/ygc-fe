@@ -31,12 +31,12 @@ export default function ListTrainee() {
         break;
       case "male":
         sortedTrainees = sortedTrainees.filter(
-          (trainee) => trainee.gender === "Male"
+          (trainee) => trainee.gender === true
         );
         break;
       case "female":
         sortedTrainees = sortedTrainees.filter(
-          (trainee) => trainee.gender === "Female"
+          (trainee) => trainee.gender === false
         );
         break;
       default:

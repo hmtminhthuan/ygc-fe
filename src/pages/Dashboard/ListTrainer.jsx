@@ -31,12 +31,12 @@ export default function ListTrainer() {
         break;
       case "male":
         sortedTrainers = sortedTrainers.filter(
-          (trainer) => trainer.gender === "Male"
+          (trainer) => trainer.gender === true
         );
         break;
       case "female":
         sortedTrainers = sortedTrainers.filter(
-          (trainer) => trainer.gender === "Female"
+          (trainer) => trainer.gender === false
         );
         break;
       default:
