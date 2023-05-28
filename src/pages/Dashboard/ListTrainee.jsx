@@ -125,8 +125,8 @@ export default function ListTrainee() {
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <div className="row flex trainee-containe mt-3 mx-5">
-      <div className="headerlist mb-3">
+    <div className="row flex trainee-containe mt-3 mx-5 mb-5">
+      <div className="headerlist mb-2">
         <h1>
           <i className="ri-bookmark-line"></i> List Trainees
         </h1>
