@@ -18,6 +18,7 @@ import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/ListTrainee";
 import ListTrainer from "../pages/Dashboard/ListTrainer";
+import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -40,7 +41,10 @@ export default function Routers() {
     {
       path: "/admin",
       element: <AdminTemplate />,
-      children: [{ path: "/admin", element: <Dashboard /> }],
+      children: [
+        { path: "/admin", element: <Dashboard /> },
+        { path: "/admin/courseManagement", element: <CourseManagement /> },
+      ],
     },
     {
       path: "/staff",
