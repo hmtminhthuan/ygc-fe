@@ -83,12 +83,14 @@ tbody td:hover:before {
   background-color: #71c55b;
   color: #fff;
   font-weight: 500;
+  border-radius: 10px;
 }
 
 .exit-list {
   color: #fff;
   text-decoration: none;
   margin: 0 5px;
+
   &:hover {
     color: #333;
   }

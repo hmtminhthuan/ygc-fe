@@ -80,7 +80,7 @@ export default function ListTrainee() {
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `Do you want delete ${traineeToDelete.firstName} ${traineeToDelete.lastName}?`,
+        text: `Do you want to delete ${traineeToDelete.firstName} ${traineeToDelete.lastName}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
@@ -92,7 +92,7 @@ export default function ListTrainee() {
           api
             .delete(`/Account/DeleteAccount?id=${traineeId}`)
             .then(() => {
-              console.log("Trainee deleted successfully.");
+              // console.log("Trainee deleted successfully.");
               // Refresh the trainee list after deletion
               setTraineeList((prevList) =>
                 prevList.filter((trainee) => trainee.accountID !== traineeId)
@@ -104,7 +104,7 @@ export default function ListTrainee() {
               );
             })
             .catch((error) => {
-              console.log("Failed to delete trainee. Please try again.");
+              // console.log("Failed to delete trainee. Please try again.");
               console.log(error);
               swalWithBootstrapButtons.fire(
                 "Failed to delete",
@@ -181,7 +181,7 @@ export default function ListTrainee() {
               <th>Course</th>
               <th>Class</th>
               <th>
-                <button className="btn-home px-3 pt-2 pb-2 justify-content-center">
+                <button className="btn-home px-3 pt-2 pb-2 justify-content-center ">
                   <i className="ri-home-2-fill"></i>
                   <Link to={"/dashboard"} className="exit-list">
                     Home
