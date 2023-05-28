@@ -56,6 +56,20 @@ export default function Dashboard() {
       });
   }, []);
 
+  //Course
+  const [courseList, setCourseList] = useState([]);
+  useEffect(() => {
+    api
+      .get("/Course/GetCourseList")
+      .then((res) => {
+        const total = res.data;
+        setCourseList(total);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <div>
@@ -231,7 +245,7 @@ export default function Dashboard() {
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
-                      <h1>9</h1>
+                      <h1>{courseList.length}</h1>
                     </div>
                     <i className="mr-4 ri-book-open-fill card--icon--lg" />
                   </div>
