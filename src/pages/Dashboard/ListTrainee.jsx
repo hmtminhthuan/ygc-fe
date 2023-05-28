@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../constants/api";
 import { Select } from "antd";
+import "remixicon/fonts/remixicon.css";
 import "./ListTrainee.scss";
 export default function ListTrainee() {
   const [traineeList, setTraineeList] = useState([]);
@@ -38,10 +39,9 @@ export default function ListTrainee() {
         break;
     }
 
-    // Sắp xếp theo firstname
     switch (firstNameSort) {
       case "all":
-        // Không cần thực hiện sắp xếp danh sách trainee theo firstname
+        sortedTrainees = [...traineeList];
         break;
       case "asc":
         sortedTrainees = sortedTrainees.sort((a, b) =>
@@ -61,7 +61,7 @@ export default function ListTrainee() {
   const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <div className="trainee-containe mt-3">
+    <div className="row flex trainee-containe mt-3 mx-3">
       {/* Sort by firstname */}
       <div className="col-lg-4 col-md-12 flex justify-content-center ">
         <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by FirstName</h4>
@@ -111,6 +111,7 @@ export default function ListTrainee() {
               <th>Address</th>
               <th>Course</th>
               <th>Class</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -122,6 +123,12 @@ export default function ListTrainee() {
                 <td>{`${trainee.phoneNumber}`}</td>
                 <td>{`${trainee.email}`}</td>
                 <td>{`${trainee.address}`}</td>
+                <td></td>
+                <td></td>
+                <td>
+                  <i className="ri-edit-2-fill mx-2"></i>
+                  <i className="ri-delete-bin-line mx-2"></i>
+                </td>
               </tr>
             ))}
           </tbody>
