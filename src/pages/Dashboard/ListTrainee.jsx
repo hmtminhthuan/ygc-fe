@@ -203,7 +203,7 @@ export default function ListTrainee() {
                   <td></td>
                   <td></td>
                   <td className="setting">
-                    <i className="ri-edit-2-fill mx-2"></i>
+                    {/* <i className="ri-edit-2-fill mx-2"></i> */}
                     <i
                       className="ri-delete-bin-line mx-2 "
                       onClick={() => deleteTrainee(trainee.accountID)}
