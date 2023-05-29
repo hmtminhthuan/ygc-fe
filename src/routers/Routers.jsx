@@ -18,6 +18,7 @@ import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/ListTrainee";
 import ListTrainer from "../pages/Dashboard/ListTrainer";
+import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
 import CreateTrainer from "../pages/Dashboard/Staff/CreateTrainer";
 
@@ -44,7 +45,10 @@ export default function Routers() {
     {
       path: "/admin",
       element: <AdminTemplate />,
-      children: [{ path: "/admin", element: <Dashboard /> }],
+      children: [
+        { path: "/admin", element: <Dashboard /> },
+        { path: "/admin/courseManagement", element: <CourseManagement /> },
+      ],
     },
     {
       path: "/staff",
