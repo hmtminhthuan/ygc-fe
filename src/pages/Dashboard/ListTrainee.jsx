@@ -4,7 +4,7 @@ import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
-import "./ListTrainee.scss";
+import "./ListStyle.scss";
 export default function ListTrainee() {
   const [traineeList, setTraineeList] = useState([]);
   const [sortedTrainees, setSortedTrainees] = useState([]);
@@ -125,8 +125,8 @@ export default function ListTrainee() {
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <div className="staff-list-trainee-area pt-3">
-      <div className="row flex trainee-containe mx-5 mb-5">
+    <div className="staff-list-area pt-3 pb-3">
+      <div className="row flex trainee-containe mt-2 mx-5 mb-5">
         <div className="headerlist mb-2">
           <h1>
             <i className="ri-bookmark-line"></i> List Trainees
@@ -203,7 +203,7 @@ export default function ListTrainee() {
                   <td></td>
                   <td></td>
                   <td className="setting">
-                    <i className="ri-edit-2-fill mx-2"></i>
+                    {/* <i className="ri-edit-2-fill mx-2"></i> */}
                     <i
                       className="ri-delete-bin-line mx-2 "
                       onClick={() => deleteTrainee(trainee.accountID)}

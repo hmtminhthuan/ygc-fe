@@ -1,64 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
-// import { useHistory } from "react-router-dom";
+
 import "./UpdateTrainee.scss";
-export default function UpdateTrainee() {
-  const [traineeInfo, setTraineeInfo] = useState({
-    firstName: "",
-    lastName: "",
-    gender: false,
+export default function CreateTrainer() {
+  const [newTrainer, setNewTrainer] = useState({
+    firstname: "",
+    lastname: "",
+    gender: true,
     phoneNumber: "",
     email: "",
     address: "",
-    // course: "",
-    // class: "",
   });
 
-  useEffect(() => {
+  const createTrainer = () => {
     api
-      .get("/Account/AccountListByRole?id=4")
+      .post("/Account/CreateAccount", newTrainer)
       .then((res) => {
-        const trainee = res.data.find((trainee) => trainee.accountID === 18); // Change the accountID accordingly
-        const { firstName, lastName, gender, phoneNumber, email, address } =
-          trainee;
-        setTraineeInfo({
-          firstName,
-          lastName,
-          gender,
-          phoneNumber,
-          email,
-          address,
-          // course: "", // Replace with the appropriate course value
-          // class: "", // Replace with the appropriate class value
-        });
+        // Account trainer created successfully
+        const createdTrainer = res.data;
+        setTrainerList((prevList) => [...prevList, createdTrainer]);
+        // history.push("/listtrainers"); // Chuyển hướng về trang danh sách trainers sau khi tạo thành công
       })
       .catch((err) => {
         console.log(err);
-      });
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setTraineeInfo((prevTraineeInfo) => ({
-      ...prevTraineeInfo,
-      [name]: value,
-    }));
-  };
-
-  const handleUpdateTrainee = () => {
-    api
-      .put("/Account/UpdateAccount", traineeInfo)
-      .then(() => {
-        console.log("Trainee updated successfully.");
-        // history.push("/listTrainee");
-        // Perform any necessary actions after successful update
-      })
-      .catch((error) => {
-        console.log("Failed to update trainee. Please try again.");
-        console.log(error);
+        // Xử lý lỗi khi không thể tạo account trainer
       });
   };
-  //   const history = useHistory();
   return (
     <div className="update">
       <div className="containerud">
@@ -91,9 +58,13 @@ export default function UpdateTrainee() {
                     <input
                       type="text"
                       className="form-control"
-                      name="firstName"
-                      value={traineeInfo.firstName}
-                      onChange={handleInputChange}
+                      value={newTrainer.firstname}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          firstname: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -103,24 +74,30 @@ export default function UpdateTrainee() {
                     <input
                       type="text"
                       className="form-control"
-                      name="lastName"
-                      value={traineeInfo.lastName}
-                      onChange={handleInputChange}
+                      value={newTrainer.lastname}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          lastname: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
                     <p>Gender</p>
-                    <select
+                    <input
+                      type="text"
                       className="form-control"
-                      name="gender"
-                      value={traineeInfo.gender ? "male" : "female"}
-                      onChange={handleInputChange}
-                    >
-                      <option value={true}>Male</option>
-                      <option value={false}>Female</option>
-                    </select>
+                      value={newTrainer.gender}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          gender: e.target.value,
+                        }))
+                      }
+                    />
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -129,9 +106,13 @@ export default function UpdateTrainee() {
                     <input
                       type="text"
                       className="form-control"
-                      name="phoneNumber"
-                      value={traineeInfo.phoneNumber}
-                      onChange={handleInputChange}
+                      value={newTrainer.phoneNumber}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          phoneNumber: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -141,9 +122,13 @@ export default function UpdateTrainee() {
                     <input
                       type="text"
                       className="form-control"
-                      name="email"
-                      value={traineeInfo.email}
-                      onChange={handleInputChange}
+                      value={newTrainer.email}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          email: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -153,32 +138,24 @@ export default function UpdateTrainee() {
                     <input
                       type="text"
                       className="form-control"
-                      name="address"
-                      value={traineeInfo.address}
-                      onChange={handleInputChange}
+                      value={newTrainer.address}
+                      onChange={(e) =>
+                        setNewTrainer((prevTrainer) => ({
+                          ...prevTrainer,
+                          address: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
-                {/* <div className="col-md-6">
-                  <div className="form-group">
-                    <p>Course</p>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-group">
-                    <p>Class</p>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div> */}
               </div>
 
               <div>
                 <button
                   className="btn btn-primary mx-2"
-                  onClick={handleUpdateTrainee}
+                  onClick={createTrainer}
                 >
-                  Update
+                  Create
                 </button>
                 <button className="btn btn-light ">Cancel</button>
               </div>
