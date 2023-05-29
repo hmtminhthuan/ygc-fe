@@ -126,8 +126,8 @@ export default function ListTrainee() {
 
   return (
     <div className="staff-list-trainee-area pt-3">
-      <div className="row flex trainee-containe mx-5">
-        <div className="headerlist mb-3">
+      <div className="row flex trainee-containe mx-5 mb-5">
+        <div className="headerlist mb-2">
           <h1>
             <i className="ri-bookmark-line"></i> List Trainees
           </h1>
