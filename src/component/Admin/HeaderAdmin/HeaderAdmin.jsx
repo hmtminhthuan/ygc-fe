@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../../assets/images/logo.png";
 import user from "../../../assets/images/user.jpg";
 import { Link } from "react-router-dom";
-export default function HeaderAdmin() {
+export default function HeaderAdmin({ background, ...restParams }) {
     return (
         <section className="headerdb">
             <div className="logo mt-2">
