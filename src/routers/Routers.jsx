@@ -19,6 +19,7 @@ import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/ListTrainee";
 import ListTrainer from "../pages/Dashboard/ListTrainer";
 import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
+import CreateTrainer from "../pages/Dashboard/Staff/CreateTrainer";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -37,6 +38,7 @@ export default function Routers() {
         { path: "/listTrainee", element: <ListTrainee /> },
         { path: "/listTrainer", element: <ListTrainer /> },
         { path: "/updateTrainee", element: <UpdateTrainee /> },
+        { path: "/createTrainer", element: <CreateTrainer /> },
       ],
     },
     {

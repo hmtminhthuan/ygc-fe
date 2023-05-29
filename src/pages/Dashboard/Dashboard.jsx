@@ -170,7 +170,7 @@ export default function Dashboard() {
                   <span className="icon icon-5">
                     <i className="ri-folder-open-fill" />
                   </span>
-                  <span className="sidebar--item">Courses</span>
+                  <span className="sidebar--item">Classes</span>
                 </a>
               </li>
               <li>
@@ -178,7 +178,7 @@ export default function Dashboard() {
                   <span className="icon icon-6">
                     <i className=" ri-community-line" />
                   </span>
-                  <span className="sidebar--item">Classes</span>
+                  <span className="sidebar--item">Feedbacks</span>
                 </a>
               </li>
               <li>
@@ -215,20 +215,13 @@ export default function Dashboard() {
             <div className="overview">
               <div className="title">
                 <h2 className="section--title">Overview</h2>
-                <select name="date" id="date" className="dropdown">
-                  <option value="today">Today</option>
-                  <option value="lastweek">Last Week</option>
-                  <option value="lastmonth">Last Month</option>
-                  <option value="lastyear">Last Year</option>
-                  <option value="alltime">All Time</option>
-                </select>
               </div>
               <div className="cards">
                 <div className="card card-1 text-center">
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
-                      <h1>{trainerList.length}</h1>
+                      <h1 className=" mt-4">{trainerList.length}</h1>
                     </div>
                     <i className="ri-user-2-line card--icon--lg" />
                   </div>
@@ -237,7 +230,7 @@ export default function Dashboard() {
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainees</h5>
-                      <h1>{traineeList.length}</h1>
+                      <h1 className=" mt-4">{traineeList.length}</h1>
                     </div>
                     <i className=" mr-4 ri-user-line card--icon--lg " />
                   </div>
@@ -246,7 +239,7 @@ export default function Dashboard() {
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
-                      <h1>{courseList.length}</h1>
+                      <h1 className=" mt-4">{courseList.length}</h1>
                     </div>
                     <i className="mr-4 ri-book-open-fill card--icon--lg" />
                   </div>
@@ -255,7 +248,7 @@ export default function Dashboard() {
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Classes</h5>
-                      <h1>15</h1>
+                      <h1 className=" mt-4">15</h1>
                     </div>
                     <i className="mr-4 ri-community-line card--icon--lg" />
                   </div>
