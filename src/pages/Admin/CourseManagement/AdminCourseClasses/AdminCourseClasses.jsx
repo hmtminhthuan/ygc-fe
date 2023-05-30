@@ -9,8 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment/moment";
 
-export default function CourseClasses({ courseClasses, ...restParams }) {
-
+export default function AdminCourseClasses({ courseClasses, ...restParams }) {
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
@@ -31,12 +30,12 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
     }));
 
     return (
-        <div className="row flex justify-content-center">
+        <div className="row flex justify-content-start">
             <div className="course-detail-classes col-10">
                 {courseClasses.length <= 0 ? (
                     <p
                         className="text-danger text-center p-0 m-0"
-                        style={{ "fontSize": "18px", "fontWeight": "600" }}
+                        style={{ fontSize: "18px", fontWeight: "600" }}
                     >
                         No available class till present!
                     </p>
@@ -44,11 +43,12 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
-                                <TableRow>
+                                <TableRow className=" bg-dark">
                                     <StyledTableCell>No.</StyledTableCell>
                                     <StyledTableCell align="left">Start Date</StyledTableCell>
                                     <StyledTableCell align="left">End Date</StyledTableCell>
                                     <StyledTableCell align="left">Trainer</StyledTableCell>
+                                    <StyledTableCell align="left">Room</StyledTableCell>
                                     <StyledTableCell align="left">Schedule</StyledTableCell>
                                 </TableRow>
                             </TableHead>
@@ -63,6 +63,7 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
                                             firstname,
                                             lastname,
                                             schedule,
+                                            room,
                                         },
                                         index
                                     ) => {
@@ -77,17 +78,18 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
                                                     )}
                                                 </StyledTableCell>
                                                 <StyledTableCell align="left">
-                                                    {moment(new Date(`${endDate}`)).format(
-                                                        "DD-MM-YYYY"
-                                                    )}
+                                                    {moment(new Date(`${endDate}`)).format("DD-MM-YYYY")}
                                                 </StyledTableCell>
                                                 <StyledTableCell align="left">
                                                     {firstname} {lastname}
                                                 </StyledTableCell>
                                                 <StyledTableCell align="left">
+                                                    {room}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">
                                                     {schedule.map(({ date, time }, index) => (
                                                         <p className="p-0 m-0 py-1" key={index}>
-                                                            {date}, {time}
+                                                            {date},{" "}{time}
                                                         </p>
                                                     ))}
                                                 </StyledTableCell>
