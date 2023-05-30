@@ -68,6 +68,23 @@ tbody td {
   position: relative;
 }
 
+// tbody td::before {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   background-color: rgba(255, 255, 255, 0.2);
+//   // z-index: -1;
+//   opacity: 0;
+//   transition: opacity 0.2s ease;
+// }
+
+// tbody td:hover td::before {
+//   opacity: 1;
+// }
+
 tbody td:hover:before {
   content: "";
   position: absolute;
@@ -75,8 +92,9 @@ tbody td:hover:before {
   right: 0;
   top: -9999px;
   bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.2);
-  z-index: -1;
+  background-color: rgba(255, 255, 255, 0.1);
+  // z-index: -1;
+  // opacity: 1;
 }
 
 .btn-home {
@@ -98,10 +116,12 @@ tbody td:hover:before {
 
 .setting {
   font-size: 18px;
+  z-index: 1000 !important;
   .ri-edit-2-fill {
     color: rgb(0, 9, 111);
   }
   .ri-delete-bin-line {
     color: red;
+    z-index: 1000 !important;
   }
 }

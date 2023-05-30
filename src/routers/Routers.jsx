@@ -21,6 +21,7 @@ import ListTrainer from "../pages/Dashboard/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
 import CreateTrainer from "../pages/Dashboard/Staff/CreateTrainer";
+import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -40,6 +41,7 @@ export default function Routers() {
         { path: "/listTrainer", element: <ListTrainer /> },
         { path: "/updateTrainee", element: <UpdateTrainee /> },
         { path: "/createTrainer", element: <CreateTrainer /> },
+        { path: "/feedbackManagement", element: <FeedbackManagement /> },
       ],
     },
     {
