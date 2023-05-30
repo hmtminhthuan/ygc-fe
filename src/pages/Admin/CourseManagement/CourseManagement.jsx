@@ -6,6 +6,7 @@ import { api } from "../../../constants/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
+import Swal from "sweetalert2";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -22,7 +23,6 @@ export default function CourseManagement() {
     const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
     const [sortedClasses, setSortedClasses] = useState("Unsort");
 
-    console.log(renderCourseList);
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -49,7 +49,8 @@ export default function CourseManagement() {
         }
         return "";
     };
-    useEffect(() => {
+
+    const renderCourseForAdmin = () => {
         let courseListStrat = [];
         let courseListEnd = [];
         api
@@ -101,6 +102,10 @@ export default function CourseManagement() {
                         });
                 });
             });
+    };
+
+    useEffect(() => {
+        renderCourseForAdmin();
     }, []);
 
     const resetSort = () => {
@@ -249,7 +254,19 @@ export default function CourseManagement() {
                 break;
         }
     }, [sortedClasses]);
-
+    const handleDeleteCourseByAdmin = (courseid) => {
+        api
+            .delete("/Course/DeleteCourse", { params: { courseid: courseid } })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((res) => {
+                console.log(err);
+            })
+            .finally(() => {
+                renderCourseForAdmin();
+            });
+    };
     return (
         <>
             <HeaderAdmin />
@@ -467,7 +484,11 @@ export default function CourseManagement() {
                                 {isDeleted ? (
                                     <th style={{ textAlign: "center" }}>Activate</th>
                                 ) : (
-                                    <th style={{ textAlign: "center" }}>Delete</th>
+                                    <th
+                                        style={{ textAlign: "center" }}
+                                    >
+                                        Delete
+                                    </th>
                                 )}
                                 <th style={{ textAlign: "center" }}>Edit</th>
                             </tr>
@@ -477,8 +498,8 @@ export default function CourseManagement() {
                                 .filter((item) => item.deleted == isDeleted)
                                 .filter((item) =>
                                     item.courseName
-                                        .toLowerCase()
-                                        .includes(searchedName.toLowerCase())
+                                        .trim().toLowerCase()
+                                        .includes(searchedName.trim().toLowerCase())
                                 )
                                 .filter((item) => item.levelName.includes(sortedLevel))
                                 .map(
@@ -565,7 +586,7 @@ export default function CourseManagement() {
                                                                 className="px-2 py-1 text-decoration-none text-success bg-success bg-opacity-10 border-0"
                                                                 style={{ borderRadius: "10px" }}
                                                             >
-                                                                Activte
+                                                                Activate
                                                             </button>
                                                         </td>
                                                     ) : (
@@ -573,6 +594,18 @@ export default function CourseManagement() {
                                                             <button
                                                                 className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0"
                                                                 style={{ borderRadius: "10px" }}
+                                                                onClick={() => {
+                                                                    if (classInfo != null) {
+                                                                        Swal.fire({
+                                                                            position: "center",
+                                                                            icon: "warning",
+                                                                            title:
+                                                                                "Delete failed!</br> This course has some classes at the present.",
+                                                                            showConfirmButton: true,
+                                                                            timer: 5000,
+                                                                        });
+                                                                    } else { handleDeleteCourseByAdmin(`${courseID}`); }
+                                                                }}
                                                             >
                                                                 Delete
                                                             </button>
@@ -600,7 +633,7 @@ export default function CourseManagement() {
                                                                 style={{
                                                                     textAlign: "right",
                                                                     fontWeight: "600",
-                                                                    verticalAlign: "top"
+                                                                    verticalAlign: "top",
                                                                 }}
                                                             >
                                                                 Description
@@ -621,7 +654,7 @@ export default function CourseManagement() {
                                                                 style={{
                                                                     textAlign: "right",
                                                                     fontWeight: "600",
-                                                                    verticalAlign: "top"
+                                                                    verticalAlign: "top",
                                                                 }}
                                                             >
                                                                 Classes
@@ -630,10 +663,12 @@ export default function CourseManagement() {
                                                                 {classInfo != null && classInfo.length > 0 ? (
                                                                     <AdminCourseClasses
                                                                         courseClasses={classInfo}
-                                                                        className='flex justify-content-start'
+                                                                        className="flex justify-content-start"
                                                                     />
                                                                 ) : (
-                                                                    <p className="text-danger m-0 p-0">No classes yet</p>
+                                                                    <p className="text-danger m-0 p-0">
+                                                                        No classes yet
+                                                                    </p>
                                                                 )}
                                                             </td>
                                                         </tr>
@@ -648,7 +683,7 @@ export default function CourseManagement() {
                                                                 style={{
                                                                     textAlign: "right",
                                                                     fontWeight: "600",
-                                                                    verticalAlign: "top"
+                                                                    verticalAlign: "top",
                                                                 }}
                                                             >
                                                                 Feedbacks
