@@ -5,6 +5,7 @@ import "./CourseManagement.scss";
 import { api } from "../../../constants/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
+import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -70,19 +71,33 @@ export default function CourseManagement() {
                         .then((res) => {
                             let classInfo = res.data;
                             course = { ...course, classInfo };
-                            courseListEnd = [...courseListEnd, course];
                         })
                         .catch((err) => {
                             let classInfo = [];
                             course = { ...course, classInfo };
-                            courseListEnd = [...courseListEnd, course];
-                            courseListEnd = courseListEnd.sort(
-                                (a, b) => a.courseID - b.courseID
-                            );
                         })
                         .finally(() => {
-                            setCourseList(courseListEnd);
-                            setRenderCourseList(courseListEnd);
+                            api
+                                .get("/Feedback/GetCourseFeedbackbyId", {
+                                    params: { courseid: course.courseID },
+                                })
+                                .then((res) => {
+                                    let feedbackInfo = res.data;
+                                    course = { ...course, feedbackInfo };
+                                    courseListEnd = [...courseListEnd, course];
+                                })
+                                .catch((err) => {
+                                    let feedbackInfo = [];
+                                    course = { ...course, feedbackInfo };
+                                    courseListEnd = [...courseListEnd, course];
+                                })
+                                .finally(async () => {
+                                    courseListEnd = await courseListEnd.sort(
+                                        (a, b) => a.courseID - b.courseID
+                                    );
+                                    setCourseList(courseListEnd);
+                                    setRenderCourseList(courseListEnd);
+                                });
                         });
                 });
             });
@@ -449,7 +464,11 @@ export default function CourseManagement() {
                                     </select>
                                 </th>
                                 <th style={{ textAlign: "center" }}>More</th>
-                                <th style={{ textAlign: "center" }}>Delete</th>
+                                {isDeleted ? (
+                                    <th style={{ textAlign: "center" }}>Activate</th>
+                                ) : (
+                                    <th style={{ textAlign: "center" }}>Delete</th>
+                                )}
                                 <th style={{ textAlign: "center" }}>Edit</th>
                             </tr>
                         </thead>
@@ -474,6 +493,7 @@ export default function CourseManagement() {
                                             description,
                                             courseImg,
                                             classInfo,
+                                            feedbackInfo,
                                             deleted,
                                         },
                                         index
@@ -526,7 +546,7 @@ export default function CourseManagement() {
                                                             </button>
                                                         ) : (
                                                             <button
-                                                                className="px-2 py-1 text-decoration-none text-info bg-info bg-opacity-25 border-0"
+                                                                className="px-2 py-1 text-decoration-none text-info bg-info bg-opacity-10 border-0"
                                                                 style={{ borderRadius: "10px" }}
                                                                 onClick={() => {
                                                                     setInfoMoreList([
@@ -539,17 +559,28 @@ export default function CourseManagement() {
                                                             </button>
                                                         )}
                                                     </td>
+                                                    {isDeleted ? (
+                                                        <td style={{ textAlign: "center" }}>
+                                                            <button
+                                                                className="px-2 py-1 text-decoration-none text-success bg-success bg-opacity-10 border-0"
+                                                                style={{ borderRadius: "10px" }}
+                                                            >
+                                                                Activte
+                                                            </button>
+                                                        </td>
+                                                    ) : (
+                                                        <td style={{ textAlign: "center" }}>
+                                                            <button
+                                                                className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0"
+                                                                style={{ borderRadius: "10px" }}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    )}
                                                     <td style={{ textAlign: "center" }}>
                                                         <button
-                                                            className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-25 border-0"
-                                                            style={{ borderRadius: "10px" }}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                    <td style={{ textAlign: "center" }}>
-                                                        <button
-                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-25 border-0"
+                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
                                                             style={{ borderRadius: "10px" }}
                                                         >
                                                             Edit
@@ -569,11 +600,12 @@ export default function CourseManagement() {
                                                                 style={{
                                                                     textAlign: "right",
                                                                     fontWeight: "600",
+                                                                    verticalAlign: "top"
                                                                 }}
                                                             >
                                                                 Description
                                                             </td>
-                                                            <td colSpan={7} style={{ textAlign: "left" }}>
+                                                            <td colSpan={7} style={{ textAlign: "justify" }}>
                                                                 {description}
                                                             </td>
                                                             <td colSpan={2}></td>
@@ -589,21 +621,48 @@ export default function CourseManagement() {
                                                                 style={{
                                                                     textAlign: "right",
                                                                     fontWeight: "600",
+                                                                    verticalAlign: "top"
                                                                 }}
                                                             >
                                                                 Classes
                                                             </td>
-                                                            <td
-                                                                className="text-danger"
-                                                                colSpan={9}
-                                                                style={{ textAlign: "left" }}
-                                                            >
+                                                            <td colSpan={9} style={{ textAlign: "left" }}>
                                                                 {classInfo != null && classInfo.length > 0 ? (
                                                                     <AdminCourseClasses
                                                                         courseClasses={classInfo}
+                                                                        className='flex justify-content-start'
                                                                     />
                                                                 ) : (
-                                                                    "No classes yet"
+                                                                    <p className="text-danger m-0 p-0">No classes yet</p>
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`feedback-${courseID}`}
+                                                        >
+                                                            <td></td>
+                                                            <td
+                                                                className="text-info"
+                                                                colSpan={2}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                    verticalAlign: "top"
+                                                                }}
+                                                            >
+                                                                Feedbacks
+                                                            </td>
+                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                                {feedbackInfo != null &&
+                                                                    feedbackInfo.length > 0 ? (
+                                                                    <AdminCourseFeedback
+                                                                        courseFeedback={feedbackInfo}
+                                                                    />
+                                                                ) : (
+                                                                    <p className="text-danger m-0 p-0">
+                                                                        No feedbacks yet
+                                                                    </p>
                                                                 )}
                                                             </td>
                                                         </tr>

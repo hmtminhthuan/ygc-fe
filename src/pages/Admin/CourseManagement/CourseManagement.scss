@@ -46,6 +46,12 @@
             background-color: #33333320;
           }
         }
+        button {
+          &:hover {
+            transform: scale(1.1);
+            font-weight: 600;
+          }
+        }
       }
       tbody td:hover:before {
         display: none !important;
