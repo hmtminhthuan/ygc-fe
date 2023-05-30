@@ -48,6 +48,7 @@
         }
       }
       tbody td:hover:before {
+        display: none !important;
         z-index: -100;
       }
     }
