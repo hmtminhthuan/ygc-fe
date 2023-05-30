@@ -47,6 +47,9 @@
           }
         }
       }
+      tbody td:hover:before {
+        z-index: -100;
+      }
     }
   }
 }

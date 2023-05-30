@@ -66,6 +66,7 @@ tbody tr:hover {
 
 tbody td {
   position: relative;
+  z-index: 500;
 }
 
 // tbody td::before {
@@ -85,17 +86,17 @@ tbody td {
 //   opacity: 1;
 // }
 
-// tbody td:hover:before {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   top: -9999px;
-//   bottom: -9999px;
-//   background-color: rgba(255, 255, 255, 0.1);
-//   // z-index: -1;
-//   // opacity: 1;
-// }
+tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  // z-index: -1;
+  // opacity: 1;
+}
 
 .btn-home {
   background-color: #71c55b;
@@ -121,7 +122,15 @@ tbody td {
     color: rgb(0, 9, 111);
   }
   .ri-delete-bin-line {
+    position: absolute;
+    display: flex;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
     color: red;
-    z-index: 1000 !important;
+    z-index: 5000 !important;
   }
 }

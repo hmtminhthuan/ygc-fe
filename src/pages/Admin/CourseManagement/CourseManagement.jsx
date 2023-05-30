@@ -16,7 +16,7 @@ export default function CourseManagement() {
     const [sortedName, setSortedName] = useState("Unsort");
     const [sortedDiscount, setSortedDiscount] = useState("Unsort");
     const [filteredPrice, setFilteredPrice] = useState();
-    const [filteredCalPrice, setFilteredCalPrice] = useState('');
+    const [filteredCalPrice, setFilteredCalPrice] = useState("");
     const [sortedPrice, setSortedPrice] = useState("Unsort");
     const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
     const [sortedClasses, setSortedClasses] = useState("Unsort");
@@ -133,7 +133,8 @@ export default function CourseManagement() {
             case "Unsort":
                 resetSort();
                 break;
-            default: resetSort();
+            default:
+                resetSort();
                 break;
         }
     }, [sortedName]);
@@ -153,7 +154,8 @@ export default function CourseManagement() {
             case "Unsort":
                 resetSort();
                 break;
-            default: resetSort();
+            default:
+                resetSort();
                 break;
         }
     }, [sortedDiscount]);
@@ -173,7 +175,8 @@ export default function CourseManagement() {
             case "Unsort":
                 resetSort();
                 break;
-            default: resetSort();
+            default:
+                resetSort();
                 break;
         }
     }, [sortedPrice]);
@@ -201,7 +204,8 @@ export default function CourseManagement() {
             case "Unsort":
                 resetSort();
                 break;
-            default: resetSort();
+            default:
+                resetSort();
                 break;
         }
     }, [sortedTotalPrice]);
@@ -225,7 +229,8 @@ export default function CourseManagement() {
             case "Unsort":
                 resetSort();
                 break;
-            default: resetSort();
+            default:
+                resetSort();
                 break;
         }
     }, [sortedClasses]);
@@ -324,8 +329,11 @@ export default function CourseManagement() {
                                 <th style={{ textAlign: "left" }}>
                                     Level
                                     <span style={{ marginLeft: "5px" }}>
-                                        {sortedLevel != '' ? (
-                                            <i class="fa fa-filter symbol-sorting" aria-hidden="true"></i>
+                                        {sortedLevel != "" ? (
+                                            <i
+                                                class="fa fa-filter symbol-sorting"
+                                                aria-hidden="true"
+                                            ></i>
                                         ) : (
                                             <></>
                                         )}
@@ -368,7 +376,6 @@ export default function CourseManagement() {
                                         <option value="ASC">ASC</option>
                                         <option value="DESC">DESC</option>
                                         <option value="Unsort">Unsort</option>
-
                                     </select>
                                 </th>
                                 <th style={{ textAlign: "right" }}>
@@ -551,25 +558,38 @@ export default function CourseManagement() {
                                                 </tr>
                                                 {pos != null && pos >= 0 ? (
                                                     <>
-                                                        <tr className="bg-dark bg-opacity-10" key={`description-${courseID}`}>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`description-${courseID}`}
+                                                        >
                                                             <td></td>
                                                             <td
                                                                 className="text-info"
                                                                 colSpan={2}
-                                                                style={{ textAlign: "right", fontWeight: "600" }}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                }}
                                                             >
                                                                 Description
                                                             </td>
-                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                            <td colSpan={7} style={{ textAlign: "left" }}>
                                                                 {description}
                                                             </td>
+                                                            <td colSpan={2}></td>
                                                         </tr>
-                                                        <tr className="bg-dark bg-opacity-10" key={`classes-${courseID}`}>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`classes-${courseID}`}
+                                                        >
                                                             <td></td>
                                                             <td
                                                                 className="text-info"
                                                                 colSpan={2}
-                                                                style={{ textAlign: "right", fontWeight: "600" }}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                }}
                                                             >
                                                                 Classes
                                                             </td>
@@ -578,9 +598,13 @@ export default function CourseManagement() {
                                                                 colSpan={9}
                                                                 style={{ textAlign: "left" }}
                                                             >
-                                                                {classInfo != null && classInfo.length > 0
-                                                                    ? <AdminCourseClasses courseClasses={classInfo} />
-                                                                    : "No classes yet"}
+                                                                {classInfo != null && classInfo.length > 0 ? (
+                                                                    <AdminCourseClasses
+                                                                        courseClasses={classInfo}
+                                                                    />
+                                                                ) : (
+                                                                    "No classes yet"
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     </>
