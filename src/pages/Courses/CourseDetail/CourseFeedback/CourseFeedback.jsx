@@ -9,6 +9,7 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
     let [traineeInfo, setTraineeInfo] = useState([]);
     let [count, setCount] = useState(0);
 
+
     useEffect(() => {
         courseFeedback.forEach(({ id, ...restParams }) => {
             api
@@ -37,104 +38,106 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
     return (
         <div className="course-detail-fb row flex align-items-center justify-content-center">
             <div className="col-10">
-                {courseFeedback.length <= 0 ? (
-                    <p
-                        className="text-danger text-center p-0 m-0"
-                        style={{ fontSize: "18px", fontWeight: "600" }}
-                    >
-                        No rating or feedback yet!
-                    </p>
-                ) : (
-                    <div>
-                        {courseFeedback.map(
-                            (
-                                {
-                                    id,
-                                    traineeId,
-                                    courseId,
-                                    rating,
-                                    status,
-                                    description,
-                                    coursename,
-                                },
-                                index
-                            ) => {
-                                let pos = traineeInfo.findIndex((obj) => {
-                                    return obj.id == id;
-                                });
-                                return (
-                                    <div
-                                        className="row m-3 mx-0 mx-lg-5 mt-0 flex justify-content-center align-items-start"
-                                        key={index}
-                                    >
-                                        <div className="col-2 flex justify-content-end align-items-start px-3">
-                                            <img
-                                                className={`course-feedback-trainee-img-null-
+                {courseFeedback.length <= 0
+                    || courseFeedback.filter(item => item.rating >= 4).length <= 0
+                    ? (
+                        <p
+                            className="text-danger text-center p-0 m-0"
+                            style={{ fontSize: "18px", fontWeight: "600" }}
+                        >
+                            No rating or feedback yet!
+                        </p>
+                    ) : (
+                        <div>
+                            {courseFeedback.filter(item => item.rating >= 4).map(
+                                (
+                                    {
+                                        id,
+                                        traineeId,
+                                        courseId,
+                                        rating,
+                                        status,
+                                        description,
+                                        coursename,
+                                    },
+                                    index
+                                ) => {
+                                    let pos = traineeInfo.findIndex((obj) => {
+                                        return obj.id == id;
+                                    });
+                                    return (
+                                        <div
+                                            className="row m-3 mx-0 mx-lg-5 mt-0 flex justify-content-center align-items-start"
+                                            key={index}
+                                        >
+                                            <div className="col-2 flex justify-content-end align-items-start px-3">
+                                                <img
+                                                    className={`course-feedback-trainee-img-null-
                                                     `}
-                                                // ${traineeInfo.length != courseFeedback.length &&
-                                                //     traineeInfo[pos].img != null &&
-                                                //     !(traineeInfo[pos].img.toLowerCase().trim() ==
-                                                //         "male" ||
-                                                //         traineeInfo[pos].img.toLowerCase().trim() == "female")
-                                                //     }
-                                                style={{
-                                                    width: "50px",
-                                                    height: "50px",
-                                                    borderRadius: "50%",
-                                                }}
-                                                src={
-                                                    traineeInfo.length == courseFeedback.length &&
-                                                        traineeInfo[pos].img != null &&
-                                                        traineeInfo[pos].img.toLowerCase().trim() == "female"
-                                                        ? maleImg
-                                                        : femaleImg
-                                                }
-                                            />
-                                        </div>
-                                        <div className="col-9">
-                                            {traineeInfo.length == courseFeedback.length ? (
-                                                <p className="p-0 m-0" style={{ fontWeight: "600" }}>
-                                                    <span> {traineeInfo[pos].firstname}</span>{" "}
-                                                    <span> {traineeInfo[pos].lastname}</span>{" "}
+                                                    // ${traineeInfo.length != courseFeedback.length &&
+                                                    //     traineeInfo[pos].img != null &&
+                                                    //     !(traineeInfo[pos].img.toLowerCase().trim() ==
+                                                    //         "male" ||
+                                                    //         traineeInfo[pos].img.toLowerCase().trim() == "female")
+                                                    //     }
+                                                    style={{
+                                                        width: "50px",
+                                                        height: "50px",
+                                                        borderRadius: "50%",
+                                                    }}
+                                                    src={
+                                                        traineeInfo.length == courseFeedback.length &&
+                                                            traineeInfo[pos].img != null &&
+                                                            traineeInfo[pos].img.toLowerCase().trim() == "female"
+                                                            ? maleImg
+                                                            : femaleImg
+                                                    }
+                                                />
+                                            </div>
+                                            <div className="col-9">
+                                                {traineeInfo.length == courseFeedback.length ? (
+                                                    <p className="p-0 m-0" style={{ fontWeight: "600" }}>
+                                                        <span> {traineeInfo[pos].firstname}</span>{" "}
+                                                        <span> {traineeInfo[pos].lastname}</span>{" "}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                                <p className="p-0 mt-2">
+                                                    <span style={{ color: "#e47200", fontWeight: "500" }}>
+                                                        Rating:
+                                                    </span>{" "}
+                                                    <i
+                                                        className={`fa-solid fa-star ${rating >= 1 ? "star-active" : ""
+                                                            }`}
+                                                    ></i>
+                                                    <i
+                                                        className={`fa-solid fa-star ${rating >= 2 ? "star-active" : ""
+                                                            }`}
+                                                    ></i>
+                                                    <i
+                                                        className={`fa-solid fa-star ${rating >= 3 ? "star-active" : ""
+                                                            }`}
+                                                    ></i>
+                                                    <i
+                                                        className={`fa-solid fa-star ${rating >= 4 ? "star-active" : ""
+                                                            }`}
+                                                    ></i>
+                                                    <i
+                                                        className={`fa-solid fa-star ${rating >= 5 ? "star-active" : ""
+                                                            }`}
+                                                    ></i>
                                                 </p>
-                                            ) : (
-                                                <></>
-                                            )}
-                                            <p className="p-0 mt-2">
-                                                <span style={{ color: "#e47200", fontWeight: "500" }}>
-                                                    Rating:
-                                                </span>{" "}
-                                                <i
-                                                    className={`fa-solid fa-star ${rating >= 1 ? "star-active" : ""
-                                                        }`}
-                                                ></i>
-                                                <i
-                                                    className={`fa-solid fa-star ${rating >= 2 ? "star-active" : ""
-                                                        }`}
-                                                ></i>
-                                                <i
-                                                    className={`fa-solid fa-star ${rating >= 3 ? "star-active" : ""
-                                                        }`}
-                                                ></i>
-                                                <i
-                                                    className={`fa-solid fa-star ${rating >= 4 ? "star-active" : ""
-                                                        }`}
-                                                ></i>
-                                                <i
-                                                    className={`fa-solid fa-star ${rating >= 5 ? "star-active" : ""
-                                                        }`}
-                                                ></i>
-                                            </p>
 
-                                            <p className="p-0 m-0">{description}</p>
+                                                <p className="p-0 m-0">{description}</p>
+                                            </div>
+                                            <hr className="mt-4" />
                                         </div>
-                                        <hr className="mt-4" />
-                                    </div>
-                                );
-                            }
-                        )}
-                    </div>
-                )}
+                                    );
+                                }
+                            )}
+                        </div>
+                    )}
             </div>
         </div>
     );
