@@ -67,4 +67,11 @@
     word-wrap: break-word !important;
     word-break: break-word !important;
   }
+  .preview-item {
+    label,
+    label::after,
+    .preview-item-content {
+      color: rgb(0, 145, 255);
+    }
+  }
 }

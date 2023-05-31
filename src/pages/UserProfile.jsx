@@ -21,7 +21,7 @@ function UserProfile() {
         console.log(err);
       });
   }, [param.id]);
-  if (profile === null) {
+  if (profile === null || profile[0] == null || profile[0] == undefined) {
     return null; // Render loading state or handle the case when blogDetail is not available yet
   }
 
@@ -32,8 +32,9 @@ function UserProfile() {
     email,
     phoneNumber,
     address,
+    role,
     ...restParams
-  } = profile;
+  } = profile[0];
   return (
     <div className="page-content page-container " id="page-content">
       <div className="video-background">
@@ -54,9 +55,9 @@ function UserProfile() {
                       />
                     </div>
                     <h6 className="f-w-600">
-                      {profile.firstName} {profile.lastName}
+                      {firstName} {lastName}
                     </h6>
-                    <p>Role: {profile.role.name} </p>
+                    <p>Role: {role.name} </p>
                     <div className="icon mt-3">
                       <i className="ri-home-4-line mt-5 mx-3 "></i>
                       <i className="ri-edit-2-line mt-5  mx-3 "></i>
@@ -72,24 +73,24 @@ function UserProfile() {
                       <div className="col-sm-6 mb-3">
                         <p className="m-b-10 f-w-600">Gender</p>
                         <h6 className="text-muted f-w-400">
-                          {profile.gender ? "Male" : "Female"}
+                          {gender ? "Male" : "Female"}
                         </h6>
                       </div>
                       <div className="col-sm-6 mb-3">
                         <p className="m-b-10 f-w-600">Email</p>
-                        <h6 className="text-muted f-w-400">{profile.email}</h6>
+                        <h6 className="text-muted f-w-400">{email}</h6>
                       </div>
                       <div className="col-sm-6 mb-3">
                         <p className="m-b-10 f-w-600">Phone</p>
                         <h6 className="text-muted f-w-400">
-                          {profile.phoneNumber}
+                          {phoneNumber}
                         </h6>
                       </div>
 
                       <div className="col-sm-6 mb-3">
                         <p className="m-b-10 f-w-600">Address</p>
                         <h6 className="text-muted f-w-400">
-                          {profile.address}
+                          {address}
                         </h6>
                       </div>
                     </div>

@@ -9,7 +9,8 @@ import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
 
 export default function AdminCourseCreate() {
-    const [previewImg, setPreviewImg] = useState();
+    const [previewImg, setPreviewImg] = useState('');
+    const [previewPrice, setPreviewPrice] = useState(-1);
     const [levelList, setLevelList] = useState([]);
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
@@ -85,6 +86,10 @@ export default function AdminCourseCreate() {
                                         required: true,
                                         message: "Course Name cannot be blank",
                                     },
+                                    {
+                                        max: 50,
+                                        message: "Course Name must not be over 50 characters",
+                                    },
                                 ]}
                                 hasFeedback
                             >
@@ -118,17 +123,23 @@ export default function AdminCourseCreate() {
                                     type="number"
                                     value={formik.values.price}
                                     onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                        setPreviewPrice(e.target.value)
+                                    }}
                                     placeholder="Enter Price"
                                 />
                             </Form.Item>
+                            {previewPrice < 0 ? <></> : <Form.Item className="preview-item" label="Preview Price">
+                                <p className="p-0 m-0 preview-item-content">{formatPrice(previewPrice)}</p>
+                            </Form.Item>}
                             <Form.Item
                                 name="discount"
                                 label="Discount"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: "Discount is not in correct form",
-                                    },
+                                    // {
+                                    //     required: true,
+                                    //     message: "Discount is not in correct form",
+                                    // },
                                     {
                                         pattern: /^[1-9]?[0-9]{1}$|^100$/,
                                         message: "Discount must be from 0-100",
@@ -142,7 +153,7 @@ export default function AdminCourseCreate() {
                                     type="number"
                                     value={formik.values.discount}
                                     onChange={formik.handleChange}
-                                    placeholder="Enter Discount"
+                                    placeholder="Enter Discount (optional)"
                                 />
                             </Form.Item>
 
@@ -205,7 +216,7 @@ export default function AdminCourseCreate() {
                             </Form.Item>
 
                             <Form.Item name="img" label="Image" rules={[]} hasFeedback>
-                                <Input
+                                {/* <Input
                                     style={{ width: "100%" }}
                                     name="img"
                                     value={formik.values.img}
@@ -222,11 +233,21 @@ export default function AdminCourseCreate() {
                                     id="imgInp"
                                     type="file"
                                     accept="image/png, image/jpeg, image/jpg"
+                                /> */}
+                                <Input
+                                    style={{ width: "100%" }}
+                                    name="img"
+                                    value={formik.values.img}
+                                    onChange={formik.handleChange}
+                                    onInput={e => {
+                                        setPreviewImg(e.target.value)
+                                    }}
+                                    placeholder="Enter Link Of Image (optional)"
                                 />
                             </Form.Item>
-                            {previewImg == '' ? <></> : <Form.Item label="Preview Image">
+                            {previewImg == '' ? <></> : <Form.Item className="preview-item" label="Preview Image">
                                 <img id="blah" src={previewImg}
-                                    style={{ width: "40%", borderRadius: "5px" }} />
+                                    style={{ width: "50%", borderRadius: "5px" }} />
                             </Form.Item>}
 
                             <button
