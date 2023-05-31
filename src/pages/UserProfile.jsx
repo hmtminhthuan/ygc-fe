@@ -7,7 +7,7 @@ import { api } from "../constants/api";
 
 function UserProfile() {
   const param = useParams();
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     api
