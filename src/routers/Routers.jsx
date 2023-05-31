@@ -19,8 +19,9 @@ import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/Staff/Trainee/ListTrainee";
 import ListTrainer from "../pages/Dashboard/Staff/Trainer/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
-import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
+// import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
 import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
+import CreateTrainee from "../pages/Dashboard/Staff/Trainee/CreateTrainee";
 import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 
@@ -40,8 +41,9 @@ export default function Routers() {
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/listTrainee", element: <ListTrainee /> },
         { path: "/listTrainer", element: <ListTrainer /> },
-        { path: "/updateTrainee", element: <UpdateTrainee /> },
+        // { path: "/updateTrainee", element: <UpdateTrainee /> },
         { path: "/createTrainer", element: <CreateTrainer /> },
+        { path: "/createTrainee", element: <CreateTrainee /> },
         { path: "/feedbackManagement", element: <FeedbackManagement /> },
       ],
     },

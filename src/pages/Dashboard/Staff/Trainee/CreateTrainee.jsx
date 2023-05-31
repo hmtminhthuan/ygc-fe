@@ -3,9 +3,9 @@ import { api } from "../../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Select } from "antd";
 import Swal from "sweetalert2";
-import "./CreateTrainer.scss";
+import "./CreateTrainee.scss";
 
-export default function CreateTrainer() {
+export default function CreateTrainee() {
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -13,7 +13,7 @@ export default function CreateTrainer() {
 
   const formik = useFormik({
     initialValues: {
-      roleId: 3,
+      roleId: 4,
       firstname: "",
       lastname: "",
       gender: true,
@@ -29,14 +29,14 @@ export default function CreateTrainer() {
         .post("/Account/CreateAccount", values)
         .then((res) => {
           // Account trainer created successfully
-          const createdTrainer = res.data;
+          const createdTrainee = res.data;
           // Reset the form after successful creation
           resetForm();
           setSubmitting(false);
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Create new trainer successfully!",
+            title: "Create new trainee successfully!",
             showConfirmButton: true,
             timer: 3500,
           });
@@ -55,7 +55,7 @@ export default function CreateTrainer() {
   return (
     <div className="update">
       <div className="containerud">
-        <h1 className="mt-5 mb-4">Create Trainer's Account</h1>
+        <h1 className="mt-5 mb-4">Create Trainee's Account</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
