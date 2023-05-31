@@ -22,6 +22,7 @@ import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
 import CreateTrainer from "../pages/Dashboard/Staff/CreateTrainer";
 import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
+import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -50,6 +51,7 @@ export default function Routers() {
       children: [
         { path: "/admin", element: <Dashboard /> },
         { path: "/admin/courseManagement", element: <CourseManagement /> },
+        { path: "/admin/courseManagement/createCourse", element: <AdminCourseCreates /> },
       ],
     },
     {
