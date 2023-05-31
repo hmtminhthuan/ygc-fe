@@ -8,6 +8,7 @@ import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import AdminCourseEdit from "./AdminCourseEdit/AdminCourseEdit";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -23,6 +24,7 @@ export default function CourseManagement() {
     const [sortedPrice, setSortedPrice] = useState("Unsort");
     const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
     const [sortedClasses, setSortedClasses] = useState("Unsort");
+    const [priority, setPriority] = useState("");
 
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
@@ -117,9 +119,8 @@ export default function CourseManagement() {
             sortedTotalPrice == "Unsort" &&
             sortedClasses == "Unsort"
         ) {
-            setRenderCourseList(
-                [...renderCourseList].sort((a, b) => a.courseID - b.courseID)
-            );
+            let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
+            setRenderCourseList(render);
         }
     };
 
@@ -128,10 +129,10 @@ export default function CourseManagement() {
             case "A-Z":
                 setRenderCourseList(
                     [...renderCourseList].sort((a, b) => {
-                        if (a.courseName < b.courseName) {
+                        if (a.courseName.trim() < b.courseName.trim()) {
                             return -1;
                         }
-                        if (a.courseName > b.courseName) {
+                        if (a.courseName.trim() > b.courseName.trim()) {
                             return 1;
                         }
                         return 0;
@@ -141,10 +142,10 @@ export default function CourseManagement() {
             case "Z-A":
                 setRenderCourseList(
                     [...renderCourseList].sort((a, b) => {
-                        if (a.courseName > b.courseName) {
+                        if (a.courseName.trim() > b.courseName.trim()) {
                             return -1;
                         }
-                        if (a.courseName < b.courseName) {
+                        if (a.courseName.trim() < b.courseName.trim()) {
                             return 1;
                         }
                         return 0;
@@ -331,7 +332,11 @@ export default function CourseManagement() {
                             <input
                                 type="search"
                                 placeholder="Enter part of name..."
-                                style={{ borderRadius: "5px", border: "1px solid gray" }}
+                                style={{
+                                    borderRadius: "5px",
+                                    border: "1px solid gray",
+                                    outline: "none",
+                                }}
                                 className="px-1"
                                 value={searchedName}
                                 onChange={(e) => {
@@ -359,7 +364,8 @@ export default function CourseManagement() {
                                     Name
                                     <span style={{ marginLeft: "5px" }}>
                                         <i
-                                            className={`${symbolSorting(sortedName)} symbol-sorting`}
+                                            className={`${symbolSorting(sortedName)} symbol-sorting ${!priority.includes("sortedName") ? "d-none" : ""
+                                                }`}
                                         />
                                     </span>
                                     <select
@@ -369,6 +375,7 @@ export default function CourseManagement() {
                                         value={sortedName}
                                         onChange={(e) => {
                                             setSortedName(e.target.value);
+                                            if (e.target.value != "Unsort") setPriority("sortedName");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -411,7 +418,8 @@ export default function CourseManagement() {
                                         <i
                                             className={`${symbolSorting(
                                                 sortedDiscount
-                                            )} symbol-sorting`}
+                                            )} symbol-sorting ${!priority.includes("sortedDiscount") ? "d-none" : ""
+                                                }`}
                                         />
                                     </span>
                                     <select
@@ -421,6 +429,8 @@ export default function CourseManagement() {
                                         value={sortedDiscount}
                                         onChange={(e) => {
                                             setSortedDiscount(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedDiscount");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -433,7 +443,10 @@ export default function CourseManagement() {
                                     Price
                                     <span style={{ marginLeft: "5px" }}>
                                         <i
-                                            className={`${symbolSorting(sortedPrice)} symbol-sorting`}
+                                            className={`${symbolSorting(
+                                                sortedPrice
+                                            )} symbol-sorting ${!priority.includes("sortedPrice") ? "d-none" : ""
+                                                }`}
                                         />
                                     </span>
                                     <select
@@ -443,6 +456,8 @@ export default function CourseManagement() {
                                         value={sortedPrice}
                                         onChange={(e) => {
                                             setSortedPrice(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedPrice");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -457,7 +472,8 @@ export default function CourseManagement() {
                                         <i
                                             className={`${symbolSorting(
                                                 sortedTotalPrice
-                                            )} symbol-sorting`}
+                                            )} symbol-sorting ${!priority.includes("sortedTotalPrice") ? "d-none" : ""
+                                                }`}
                                         />
                                     </span>
                                     <select
@@ -467,6 +483,8 @@ export default function CourseManagement() {
                                         value={sortedTotalPrice}
                                         onChange={(e) => {
                                             setSortedTotalPrice(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedTotalPrice");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -481,7 +499,8 @@ export default function CourseManagement() {
                                         <i
                                             className={`${symbolSorting(
                                                 sortedClasses
-                                            )} symbol-sorting`}
+                                            )} symbol-sorting ${!priority.includes("sortedClasses") ? "d-none" : ""
+                                                }`}
                                         />
                                     </span>
                                     <select
@@ -491,6 +510,8 @@ export default function CourseManagement() {
                                         value={sortedClasses}
                                         onChange={(e) => {
                                             setSortedClasses(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedClasses");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -700,7 +721,7 @@ export default function CourseManagement() {
                                                             className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
                                                             style={{ borderRadius: "10px" }}
                                                         >
-                                                            Edit
+                                                            <Link to={`/admin/courseManagement/editCourse/${courseID}`}>Edit</Link>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -797,6 +818,7 @@ export default function CourseManagement() {
                     </table>
                 </div>
             </section>
+
         </>
     );
 }

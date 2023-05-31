@@ -9,7 +9,7 @@ import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
 
 export default function AdminCourseCreate() {
-    const [previewImg, setPreviewImg] = useState('');
+    const [previewImg, setPreviewImg] = useState("");
     const [previewPrice, setPreviewPrice] = useState(-1);
     const [levelList, setLevelList] = useState([]);
     const formatPrice = (price) => {
@@ -30,13 +30,48 @@ export default function AdminCourseCreate() {
             price: 0,
             discount: 0,
             levelId: 0,
-            description: "string",
+            description: "",
             img: "",
             deleted: false,
         },
 
         onSubmit: (values) => {
-            console.log(values);
+            console.log("values", values);
+            Swal.fire({
+                title: `Are you sure to create new course?`,
+                inputAttributes: {
+                    autocapitalize: "off",
+                },
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: "Confirm",
+                cancelButtonText: "Cancel",
+                preConfirm: (login) => {
+                    // console.log(login);
+                },
+                allowOutsideClick: true,
+            }).then((result) => {
+                if (result.isDenied === true || result.isDismissed === true) {
+                } else if (result.isConfirmed === true) {
+                    api
+                        .post("Course/CreateCourse", values)
+                        .then((res) => {
+                            console.log("res", res);
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Create course successfully!",
+                                showConfirmButton: true,
+                                timer: 1000,
+                            }).then(function () {
+                                window.location.href = "/admin/courseManagement";
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }
+            });
         },
     });
     const handleChangeLevel = (levelId) => {
@@ -59,8 +94,11 @@ export default function AdminCourseCreate() {
                 >
                     <div className="row justify-content-center">
                         <div className="col-12">
-                            <Link to={"/admin/courseManagement"} className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
-                                style={{ "fontSize": "18px", "fontWeight": "500" }}>
+                            <Link
+                                to={"/admin/courseManagement"}
+                                className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                                style={{ fontSize: "18px", fontWeight: "500" }}
+                            >
                                 <i className="fa-solid fa-arrow-left"></i>
                                 <span className="mx-2">Back</span>
                             </Link>
@@ -70,7 +108,6 @@ export default function AdminCourseCreate() {
                         <h1 className="m-0 p-0 text-primary">Create New Course</h1>
                     </div>
                     <div className="row create-course-content mt-4">
-
                         <Form
                             onFinish={formik.handleSubmit}
                             {...formItemLayout}
@@ -124,14 +161,20 @@ export default function AdminCourseCreate() {
                                     value={formik.values.price}
                                     onChange={formik.handleChange}
                                     onInput={(e) => {
-                                        setPreviewPrice(e.target.value)
+                                        setPreviewPrice(e.target.value);
                                     }}
                                     placeholder="Enter Price"
                                 />
                             </Form.Item>
-                            {previewPrice < 0 ? <></> : <Form.Item className="preview-item" label="Preview Price">
-                                <p className="p-0 m-0 preview-item-content">{formatPrice(previewPrice)}</p>
-                            </Form.Item>}
+                            {previewPrice < 0 ? (
+                                <></>
+                            ) : (
+                                <Form.Item className="preview-item" label="Preview Price">
+                                    <p className="p-0 m-0 preview-item-content">
+                                        {formatPrice(previewPrice)}
+                                    </p>
+                                </Form.Item>
+                            )}
                             <Form.Item
                                 name="discount"
                                 label="Discount"
@@ -239,16 +282,23 @@ export default function AdminCourseCreate() {
                                     name="img"
                                     value={formik.values.img}
                                     onChange={formik.handleChange}
-                                    onInput={e => {
-                                        setPreviewImg(e.target.value)
+                                    onInput={(e) => {
+                                        setPreviewImg(e.target.value);
                                     }}
                                     placeholder="Enter Link Of Image (optional)"
                                 />
                             </Form.Item>
-                            {previewImg == '' ? <></> : <Form.Item className="preview-item" label="Preview Image">
-                                <img id="blah" src={previewImg}
-                                    style={{ width: "50%", borderRadius: "5px" }} />
-                            </Form.Item>}
+                            {previewImg == "" ? (
+                                <></>
+                            ) : (
+                                <Form.Item className="preview-item" label="Preview Image">
+                                    <img
+                                        id="blah"
+                                        src={previewImg}
+                                        style={{ width: "50%", borderRadius: "5px" }}
+                                    />
+                                </Form.Item>
+                            )}
 
                             <button
                                 className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
