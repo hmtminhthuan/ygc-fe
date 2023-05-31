@@ -326,7 +326,7 @@ export default function CourseManagement() {
                                 style={{ borderRadius: "5px" }}
                                 onClick={() => { }}
                             >
-                                Create New Course
+                                <a>Create New Course</a>
                             </button>
                         </div>
                     </div>

@@ -51,7 +51,7 @@ export default function Routers() {
       children: [
         { path: "/admin", element: <Dashboard /> },
         { path: "/admin/courseManagement", element: <CourseManagement /> },
-        { path: "/admin/courseManagement/createCourse", element: <AdminCourseCreates /> },
+        { path: "/admin/courseManagement/createCourse", element: <AdminCourseCreate /> },
       ],
     },
     {
