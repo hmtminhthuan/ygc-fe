@@ -16,11 +16,11 @@ import TraineeHome from "../pages/Trainee/Home/TraineeHome";
 import TrainerHome from "../pages/Trainer/Home/TrainerHome";
 import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
-import ListTrainee from "../pages/Dashboard/ListTrainee";
-import ListTrainer from "../pages/Dashboard/ListTrainer";
+import ListTrainee from "../pages/Dashboard/Staff/Trainee/ListTrainee";
+import ListTrainer from "../pages/Dashboard/Staff/Trainer/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
-import CreateTrainer from "../pages/Dashboard/Staff/CreateTrainer";
+import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
 import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 
@@ -51,7 +51,10 @@ export default function Routers() {
       children: [
         { path: "/admin", element: <Dashboard /> },
         { path: "/admin/courseManagement", element: <CourseManagement /> },
-        { path: "/admin/courseManagement/createCourse", element: <AdminCourseCreate /> },
+        {
+          path: "/admin/courseManagement/createCourse",
+          element: <AdminCourseCreate />,
+        },
       ],
     },
     {

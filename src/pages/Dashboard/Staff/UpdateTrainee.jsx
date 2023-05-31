@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
 // import { useHistory } from "react-router-dom";
-import "./UpdateTrainee.scss";
+// import "./UpdateTrainee.scss";
 export default function UpdateTrainee() {
   const [traineeInfo, setTraineeInfo] = useState({
     firstName: "",

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../../constants/api";
+import { api } from "../../../../constants/api";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
-import "./ListStyle.scss";
-export default function ListTrainee() {
-  const [traineeList, setTraineeList] = useState([]);
-  const [sortedTrainees, setSortedTrainees] = useState([]);
+import "./ListTrainer.scss";
+export default function ListTrainer() {
+  const [trainerList, setTrainerList] = useState([]);
+  const [sortedTrainers, setSortedTrainers] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
   const [genderSort, setgenderSort] = useState("All");
 
   useEffect(() => {
     api
-      .get("/Account/AccountListByRole?id=4")
+      .get("/Account/AccountListByRole?id=3")
       .then((res) => {
-        setTraineeList(res.data);
+        setTrainerList(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -23,38 +23,38 @@ export default function ListTrainee() {
   }, []);
 
   useEffect(() => {
-    let sortedTrainees = [...traineeList];
+    let sortedTrainers = [...trainerList];
 
     switch (genderSort) {
       case "all":
-        sortedTrainees = [...traineeList];
+        sortedTrainers = [...trainerList];
         break;
       case "male":
-        sortedTrainees = sortedTrainees.filter(
-          (trainee) => trainee.gender === true
+        sortedTrainers = sortedTrainers.filter(
+          (trainer) => trainer.gender === true
         );
         break;
       case "female":
-        sortedTrainees = sortedTrainees.filter(
-          (trainee) => trainee.gender === false
+        sortedTrainers = sortedTrainers.filter(
+          (trainer) => trainer.gender === false
         );
         break;
       default:
-        sortedTrainees = [...traineeList];
+        sortedTrainers = [...trainerList];
         break;
     }
 
     switch (firstNameSort) {
       case "all":
-        sortedTrainees = [...traineeList];
+        sortedTrainers = [...trainerList];
         break;
       case "asc":
-        sortedTrainees = sortedTrainees.sort((a, b) =>
+        sortedTrainers = sortedTrainers.sort((a, b) =>
           a.firstName.localeCompare(b.firstName, { sensitivity: "base" })
         );
         break;
       case "desc":
-        sortedTrainees = sortedTrainees.sort((a, b) =>
+        sortedTrainers = sortedTrainers.sort((a, b) =>
           b.firstName.localeCompare(a.firstName, { sensitivity: "base" })
         );
         break;
@@ -62,10 +62,12 @@ export default function ListTrainee() {
         break;
     }
 
-    setSortedTrainees(sortedTrainees);
-  }, [firstNameSort, genderSort, traineeList]);
+    setSortedTrainers(sortedTrainers);
+  }, [firstNameSort, genderSort, trainerList]);
 
-  const deleteTrainee = (traineeId) => {
+  // const [shouldUpdateList, setShouldUpdateList] = useState(false);
+
+  const deleteTrainer = (trainerId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success mx-3",
@@ -73,14 +75,14 @@ export default function ListTrainee() {
       },
       buttonsStyling: false,
     });
-    const traineeToDelete = traineeList.find(
-      (trainee) => trainee.accountID === traineeId
+    const trainerToDelete = trainerList.find(
+      (trainer) => trainer.accountID === trainerId
     );
 
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `Do you want to delete ${traineeToDelete.firstName} ${traineeToDelete.lastName}?`,
+        text: `Do you want to delete ${trainerToDelete.firstName} ${trainerToDelete.lastName}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
@@ -90,21 +92,21 @@ export default function ListTrainee() {
       .then((result) => {
         if (result.isConfirmed) {
           api
-            .delete(`/Account/DeleteAccount?id=${traineeId}`)
+            .delete(`/Account/DeleteAccount?id=${trainerId}`)
             .then(() => {
-              // console.log("Trainee deleted successfully.");
+              // console.log("Trainer deleted successfully.");
               // Refresh the trainee list after deletion
-              setTraineeList((prevList) =>
-                prevList.filter((trainee) => trainee.accountID !== traineeId)
+              setTrainerList((prevList) =>
+                prevList.filter((trainer) => trainer.accountID !== trainerId)
               );
               swalWithBootstrapButtons.fire(
                 "Deleted!",
-                "Trainee deleted successfully.",
+                "Trainer deleted successfully.",
                 "success"
               );
             })
             .catch((error) => {
-              // console.log("Failed to delete trainee. Please try again.");
+              // console.log("Failed to delete trainer. Please try again.");
               console.log(error);
               swalWithBootstrapButtons.fire(
                 "Failed to delete",
@@ -129,7 +131,7 @@ export default function ListTrainee() {
       <div className="row flex trainee-containe mt-2 mx-5 mb-5">
         <div className="headerlist mb-2">
           <h1>
-            <i className="ri-bookmark-line"></i> List Trainees
+            <i className="ri-bookmark-line"></i> List Trainers
           </h1>
         </div>
         {/* Sort by firstname */}
@@ -182,7 +184,7 @@ export default function ListTrainee() {
                 <th>Course</th>
                 <th>Class</th>
                 <th>
-                  <button className="btn-home px-3 pt-2 pb-2 justify-content-center ">
+                  <button className="btn-home px-3 pt-2 pb-2 justify-content-center">
                     <i className="ri-home-2-fill"></i>
                     <Link to={"/dashboard"} className="exit-list">
                       Home
@@ -192,21 +194,20 @@ export default function ListTrainee() {
               </tr>
             </thead>
             <tbody>
-              {sortedTrainees.map((trainee) => (
-                <tr key={trainee.accountID}>
-                  <td>{`${trainee.firstName}`}</td>
-                  <td>{`${trainee.lastName}`}</td>
-                  <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
-                  <td>{`${trainee.phoneNumber}`}</td>
-                  <td>{`${trainee.email}`}</td>
-                  <td>{`${trainee.address}`}</td>
+              {sortedTrainers.map((trainer) => (
+                <tr key={trainer.accountID}>
+                  <td>{`${trainer.firstName}`}</td>
+                  <td>{`${trainer.lastName}`}</td>
+                  <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
+                  <td>{`${trainer.phoneNumber}`}</td>
+                  <td>{`${trainer.email}`}</td>
+                  <td>{`${trainer.address}`}</td>
                   <td></td>
                   <td></td>
                   <td className="setting">
-                    {/* <i className="ri-edit-2-fill mx-2"></i> */}
                     <i
-                      className="ri-delete-bin-line mx-2 "
-                      onClick={() => deleteTrainee(trainee.accountID)}
+                      className="ri-delete-bin-line mx-2"
+                      onClick={() => deleteTrainer(trainer.accountID)}
                       style={{ cursor: "pointer" }}
                     ></i>
                   </td>
