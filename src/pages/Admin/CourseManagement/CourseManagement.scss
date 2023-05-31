@@ -60,3 +60,11 @@
     }
   }
 }
+#admin-course-management-area {
+  input {
+    overflow-y: auto;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}
