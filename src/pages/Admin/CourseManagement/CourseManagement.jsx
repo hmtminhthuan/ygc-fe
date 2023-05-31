@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -256,17 +257,35 @@ export default function CourseManagement() {
     }, [sortedClasses]);
     const handleDeleteCourseByAdmin = (courseid) => {
         api
-            .delete("/Course/DeleteCourse", { params: { courseid: courseid } })
+            .delete("/Course/DeleteCourse", {
+                params: { courseid: parseInt(courseid) },
+            })
             .then((res) => {
                 console.log(res);
             })
-            .catch((res) => {
+            .catch((err) => {
                 console.log(err);
             })
             .finally(() => {
                 renderCourseForAdmin();
             });
     };
+    const handleReactivateByAdmin = (courseid) => {
+        console.log(parseInt(courseid));
+        console.log(typeof parseInt(courseid));
+        api
+            .put(`/Course/ReactivateCourse?CourseId=${parseInt(courseid)}`)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                renderCourseForAdmin();
+            });
+    };
+
     return (
         <>
             <HeaderAdmin />
@@ -320,14 +339,14 @@ export default function CourseManagement() {
                                 }}
                             />
                         </div>
-                        <div className="">
-                            <button
+                        <div className="my-1">
+                            <Link
                                 className="px-2 py-1 my-1 text-decoration-none text-light bg-primary border-0"
                                 style={{ borderRadius: "5px" }}
-                                onClick={() => { }}
+                                to="/admin/courseManagement/createCourse"
                             >
-                                <a>Create New Course</a>
-                            </button>
+                                Create New Course
+                            </Link>
                         </div>
                     </div>
                     <table>
@@ -484,11 +503,7 @@ export default function CourseManagement() {
                                 {isDeleted ? (
                                     <th style={{ textAlign: "center" }}>Activate</th>
                                 ) : (
-                                    <th
-                                        style={{ textAlign: "center" }}
-                                    >
-                                        Delete
-                                    </th>
+                                    <th style={{ textAlign: "center" }}>Delete</th>
                                 )}
                                 <th style={{ textAlign: "center" }}>Edit</th>
                             </tr>
@@ -498,7 +513,8 @@ export default function CourseManagement() {
                                 .filter((item) => item.deleted == isDeleted)
                                 .filter((item) =>
                                     item.courseName
-                                        .trim().toLowerCase()
+                                        .trim()
+                                        .toLowerCase()
                                         .includes(searchedName.trim().toLowerCase())
                                 )
                                 .filter((item) => item.levelName.includes(sortedLevel))
@@ -585,6 +601,38 @@ export default function CourseManagement() {
                                                             <button
                                                                 className="px-2 py-1 text-decoration-none text-success bg-success bg-opacity-10 border-0"
                                                                 style={{ borderRadius: "10px" }}
+                                                                onClick={() => {
+                                                                    Swal.fire({
+                                                                        title: `Are you sure to activate this course?`,
+                                                                        inputAttributes: {
+                                                                            autocapitalize: "off",
+                                                                        },
+                                                                        showCancelButton: true,
+                                                                        showConfirmButton: true,
+                                                                        confirmButtonText: "Confirm",
+                                                                        cancelButtonText: "Cancel",
+                                                                        preConfirm: (login) => {
+                                                                            // console.log(login);
+                                                                        },
+                                                                        allowOutsideClick: true,
+                                                                    }).then((result) => {
+                                                                        console.log(result);
+                                                                        if (
+                                                                            result.isDenied === true ||
+                                                                            result.isDismissed === true
+                                                                        ) {
+                                                                        } else if (result.isConfirmed === true) {
+                                                                            Swal.fire({
+                                                                                position: "center",
+                                                                                icon: "success",
+                                                                                title: "Activate course successfully!",
+                                                                                showConfirmButton: true,
+                                                                                timer: 1000,
+                                                                            });
+                                                                            handleReactivateByAdmin(`${courseID}`);
+                                                                        }
+                                                                    });
+                                                                }}
                                                             >
                                                                 Activate
                                                             </button>
@@ -595,16 +643,52 @@ export default function CourseManagement() {
                                                                 className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0"
                                                                 style={{ borderRadius: "10px" }}
                                                                 onClick={() => {
-                                                                    if (classInfo != null) {
+                                                                    if (
+                                                                        classInfo != null &&
+                                                                        classInfo.length > 0
+                                                                    ) {
                                                                         Swal.fire({
                                                                             position: "center",
                                                                             icon: "warning",
                                                                             title:
                                                                                 "Delete failed!</br> This course has some classes at the present.",
                                                                             showConfirmButton: true,
-                                                                            timer: 5000,
+                                                                            timer: 3500,
                                                                         });
-                                                                    } else { handleDeleteCourseByAdmin(`${courseID}`); }
+                                                                    } else {
+                                                                        Swal.fire({
+                                                                            title: `Are you sure to delete this course?`,
+                                                                            inputAttributes: {
+                                                                                autocapitalize: "off",
+                                                                            },
+                                                                            showCancelButton: true,
+                                                                            showConfirmButton: true,
+                                                                            confirmButtonText: "Confirm",
+                                                                            cancelButtonText: "Cancel",
+                                                                            preConfirm: (login) => {
+                                                                                // console.log(login);
+                                                                            },
+                                                                            allowOutsideClick: true,
+                                                                        }).then((result) => {
+                                                                            console.log(result);
+                                                                            if (
+                                                                                result.isDenied === true ||
+                                                                                result.isDismissed === true
+                                                                            ) {
+                                                                            } else if (result.isConfirmed === true) {
+                                                                                Swal.fire({
+                                                                                    position: "center",
+                                                                                    icon: "success",
+                                                                                    title: "Delete course successfully!",
+                                                                                    showConfirmButton: true,
+                                                                                    timer: 1000,
+                                                                                });
+                                                                                handleDeleteCourseByAdmin(
+                                                                                    `${courseID}`
+                                                                                );
+                                                                            }
+                                                                        });
+                                                                    }
                                                                 }}
                                                             >
                                                                 Delete
