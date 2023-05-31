@@ -23,7 +23,10 @@ import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
 import CreateTrainee from "../pages/Dashboard/Staff/Trainee/CreateTrainee";
 import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
+// import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
+import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
+import UserProfile from "../pages/UserProfile";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -38,13 +41,16 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
+        { path: "/profile", element: <UserProfile /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/listTrainee", element: <ListTrainee /> },
         { path: "/listTrainer", element: <ListTrainer /> },
+        { path: "/listStaff", element: <ListStaff /> },
         // { path: "/updateTrainee", element: <UpdateTrainee /> },
         { path: "/createTrainer", element: <CreateTrainer /> },
         { path: "/createTrainee", element: <CreateTrainee /> },
         { path: "/feedbackManagement", element: <FeedbackManagement /> },
+        // { path: "/blogManagement", element: <BlogManagement /> },
       ],
     },
     {

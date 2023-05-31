@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.staff-list-area {
+  margin: 0;
+  background: linear-gradient(45deg, #f2ced8, #f2acc6);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  height: 100vh;
+}
+
+.headerlist {
+  text-align: center;
+  color: linear-gradient(#e66465, #9198e5);
+  h1 {
+    font-weight: 900;
+  }
+}
+
+.trainee-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.trainee {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+th,
+td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #333 !important;
+}
+
+th {
+  text-align: center;
+}
+
+thead th {
+  background-color: #333;
+  position: sticky;
+  top: 0;
+  color: #fff !important;
+  text-align: center;
+}
+
+tbody {
+  overflow: auto;
+  height: 300px;
+  text-align: center;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+tbody td {
+  position: relative;
+}
+
+// tbody td::before {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   background-color: rgba(255, 255, 255, 0.2);
+//   // z-index: -1;
+//   opacity: 0;
+//   transition: opacity 0.2s ease;
+// }
+
+// tbody td:hover td::before {
+//   opacity: 1;
+// }
+
+tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  // z-index: -1;
+  // opacity: 1;
+}
+
+.btn-home {
+  background-color: #71c55b;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.exit-list {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+
+  &:hover {
+    color: #333;
+  }
+}
+
+.setting {
+  font-size: 18px;
+  z-index: 1000 !important;
+  .ri-edit-2-fill {
+    color: rgb(0, 9, 111);
+  }
+  .ri-delete-bin-line {
+    position: absolute;
+    display: flex;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    z-index: 5000 !important;
+  }
+}
