@@ -32,7 +32,7 @@ export default function CreateTrainee() {
           const createdTrainee = res.data;
           // Reset the form after successful creation
           resetForm();
-          setSubmitting(false);
+          // setSubmitting(false);
           Swal.fire({
             position: "center",
             icon: "success",
@@ -43,7 +43,7 @@ export default function CreateTrainee() {
         })
         .catch((err) => {
           console.log(err);
-          setSubmitting(false);
+          // setSubmitting(false);
         });
     },
   });
