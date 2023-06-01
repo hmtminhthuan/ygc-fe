@@ -7,13 +7,13 @@ import { api } from "../constants/api";
 import { Link } from "react-router-dom";
 
 function UserProfile() {
-  const param = useParams();
+  const { id } = useParams();
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     api
       .get("/Account/GetUserProfile", {
-        params: { id: param.id },
+        params: { id: id },
       })
       .then((res) => {
         setProfile(res.data);
@@ -21,7 +21,7 @@ function UserProfile() {
       .catch((err) => {
         console.log(err);
       });
-  }, [param.id]);
+  }, [id]);
 
   if (profile === null || profile[0] == null || profile[0] == undefined) {
     return null;
