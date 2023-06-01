@@ -3,32 +3,20 @@ import React, { useEffect } from "react";
 export default function MeanuAdmin() {
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     const USER = JSON.parse(USER_LOGIN);
-    const list = document.querySelectorAll(".menu-navigation li");
-    const activeLink = async (click) => {
-        await list.forEach((item) => {
-            item.classList.value = "";
-        });
-        console.log("click", click.target);
-        // active.value = "active--link";
-    };
 
-    // useEffect(() => {
-    //     // let count = 0;
-    //     for (i = 0; i <= 0; i++) {
-    //         if (list[0] != null && list[0] != undefined) {
-    //             list[0].classList.value = "active--link";
-    //         }
-    //     }
-    //     // list.forEach((item) => {
-    //     //     console.log(item, count);
-    //     //     item.classList.value = 'active--link'
-    //     //     count++
-    //     //     if (count > 0) { return; }
-    //     // });
-    // }, [list.length]);
+    useEffect(() => {
+        const menu = document.querySelector(".menu");
+        const sidebar = document.querySelector(".sidebar");
+        const mainContent = document.querySelector(".main--content");
+
+        menu.onclick = function () {
+            sidebar.classList.toggle("active");
+            mainContent.classList.toggle("active");
+        };
+    }, []);
 
     return (
-        <div className="sidebar menu-navigation">
+        <div className="sidebar bg-dark">
             <ul className="sidebar--items">
                 <li>
                     <a href="#">
