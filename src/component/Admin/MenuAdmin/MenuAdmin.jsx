@@ -1,11 +1,37 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 export default function MeanuAdmin() {
+    const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+    const USER = JSON.parse(USER_LOGIN);
+    const list = document.querySelectorAll(".menu-navigation li");
+    const activeLink = async (click) => {
+        await list.forEach((item) => {
+            item.classList.value = "";
+        });
+        console.log("click", click.target);
+        // active.value = "active--link";
+    };
+
+    // useEffect(() => {
+    //     // let count = 0;
+    //     for (i = 0; i <= 0; i++) {
+    //         if (list[0] != null && list[0] != undefined) {
+    //             list[0].classList.value = "active--link";
+    //         }
+    //     }
+    //     // list.forEach((item) => {
+    //     //     console.log(item, count);
+    //     //     item.classList.value = 'active--link'
+    //     //     count++
+    //     //     if (count > 0) { return; }
+    //     // });
+    // }, [list.length]);
+
     return (
-        <div className="sidebar">
+        <div className="sidebar menu-navigation">
             <ul className="sidebar--items">
                 <li>
-                    <a href="#" id="active--link">
+                    <a href="#">
                         <span className="icon icon-1">
                             <i className="ri-layout-grid-line" />
                         </span>
@@ -14,77 +40,72 @@ export default function MeanuAdmin() {
                 </li>
                 <li>
                     <a href="#">
-                        <span className="icon icon-2">
-                            <i className="ri-calendar-2-line" />
-                        </span>
-                        <span className="sidebar--item">Schedule</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span className="icon icon-3">
-                            <i className="ri-user-2-line" />
-                        </span>
-                        <span
-                            className="sidebar--item"
-                            style={{ whiteSpace: "nowrap" }}
-                        >
-                            Trainers
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <span className="icon icon-4">
                             <i className="ri-user-line" />
                         </span>
 
-                        <span className="sidebar--item">Trainees</span>
+                        <span className="sidebar--item">Staff</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a
+                        href="/admin/courseManagement"
+                    >
                         <span className="icon icon-5">
                             <i className="ri-folder-open-fill" />
                         </span>
                         <span className="sidebar--item">Courses</span>
                     </a>
                 </li>
-                <li>
+                {/* <li>
                     <a href="#">
                         <span className="icon icon-6">
                             <i className=" ri-community-line" />
                         </span>
                         <span className="sidebar--item">Classes</span>
                     </a>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                     <a href="#">
                         <span className="icon icon-6">
                             <i className="  ri-terminal-window-fill" />
                         </span>
                         <span className="sidebar--item">Blogs</span>
                     </a>
-                </li>
+                </li> */}
             </ul>
             <ul className="sidebar--bottom-items">
                 <li>
-                    <a href="#">
+                    <a href="/">
+                        <span className="icon icon-4">
+                            <i className="fa-solid fa-house"></i>{" "}
+                        </span>
+                        <span className="sidebar--item">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href={`/profile/${USER.accountID}`}>
                         <span className="icon icon-7">
-                            <i className="ri-settings-3-line" />
+                            <i className="fa-sharp fa-solid fa-address-card"></i>{" "}
                         </span>
                         <span className="sidebar--item">My Profile</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a
+                        href="/"
+                        onClick={() => {
+                            localStorage.removeItem("USER_LOGIN");
+                            window.location.href = "/";
+                        }}
+                    >
                         <span className="icon icon-8">
                             <i className="ri-logout-box-r-line" />
                         </span>
-                        <span className="sidebar--item">Logout</span>
+                        <span className="sidebar--item">Log out</span>
                     </a>
                 </li>
             </ul>
         </div>
-    )
+    );
 }

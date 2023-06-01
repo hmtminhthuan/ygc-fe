@@ -13,6 +13,7 @@ export default function HeaderHome() {
     USER = JSON.parse(USER_LOGIN);
     setUserLogin(USER);
   }
+
   return (
     <header>
       <Navbar
@@ -49,8 +50,8 @@ export default function HeaderHome() {
                 Blog
               </Nav.Link>
               {USER_LOGIN != null &&
-              userLogin.accountID != null &&
-              userLogin.accountID != undefined ? (
+                userLogin.accountID != null &&
+                userLogin.accountID != undefined ? (
                 <>
                   <Nav.Link
                     className="px-4 nav-item"
@@ -64,10 +65,10 @@ export default function HeaderHome() {
                     Log out
                   </Nav.Link>
                   {userLogin.role.id != undefined &&
-                  userLogin.role.id != null &&
-                  (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
+                    userLogin.role.id != null &&
+                    (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
                     <Nav.Link
-                      className="px-4 nav-item nav-item-after-login"
+                      className="px-4 nav-item nav-item-after-login hello-user"
                       onClick={() => {
                         window.location.href = "/dashboard";
                       }}
@@ -78,8 +79,8 @@ export default function HeaderHome() {
                     <></>
                   )}
                   {userLogin.role.id != undefined &&
-                  userLogin.role.id != null &&
-                  userLogin.role.id == 3 ? (
+                    userLogin.role.id != null &&
+                    userLogin.role.id == 3 ? (
                     <Nav.Link
                       className="px-4 nav-item nav-item-after-login"
                       onClick={() => {
@@ -92,8 +93,8 @@ export default function HeaderHome() {
                     <></>
                   )}
                   {userLogin.role.id != undefined &&
-                  userLogin.role.id != null &&
-                  userLogin.role.id == 4 ? (
+                    userLogin.role.id != null &&
+                    userLogin.role.id == 4 ? (
                     <Nav.Link
                       className="px-4 nav-item nav-item-after-login"
                       onClick={() => {
@@ -105,13 +106,13 @@ export default function HeaderHome() {
                   ) : (
                     <></>
                   )}
-                  <p className="p-0 m-0 flex align-items-center px-2 hello-user">
+                  {/* <p className="p-0 m-0 flex align-items-center px-2 hello-user">
                     Welcome, {userLogin.firstName} {userLogin.lastName}
-                  </p>
+                  </p> */}
                   <Nav.Link
-                    className="px-4 nav-item nav-item-after-login"
+                    className="px-4 nav-item nav-item-after-login hello-user"
                     onClick={() => {
-                      window.location.href = "/profile/" + userLogin.accountID;
+                      window.location.href = `/profile/${userLogin.accountID}`;
                     }}
                   >
                     Profile

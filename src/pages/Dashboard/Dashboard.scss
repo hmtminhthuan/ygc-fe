@@ -160,9 +160,11 @@ body {
       background-color: #fff;
       color: #333;
     }
-    #active--link {
+    .active--link {
       background-color: #fff;
-      color: #333;
+      .sidebar--item {
+        color: #333;
+      }
     }
     .sidebar--bottom-items li:last-child a {
       margin-bottom: 0;

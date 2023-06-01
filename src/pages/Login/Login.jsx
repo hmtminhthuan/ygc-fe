@@ -35,9 +35,9 @@ export default function Login() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Log in successfully!",
+            title: `Log in successfully! </br> Welcome ${res.data.firstName} ${res.data.lastName}`,
             showConfirmButton: true,
-            timer: 1000,
+            timer: 2000,
           }).then(function () {
             if (res.data.role.id == 1 || res.data.role.id == 2) {
               window.location.href = "/dashboard";
