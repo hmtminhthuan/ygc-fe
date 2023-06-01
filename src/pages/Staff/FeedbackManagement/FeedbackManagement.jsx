@@ -14,6 +14,11 @@ export default function FeedbackManagement() {
     const [searchedName, setSearchedName] = useState("");
     const [sortedLevel, setSortedLevel] = useState("");
     const [sortedName, setSortedName] = useState("Unsort");
+    const [sortedPending, setSortedPending] = useState("Unsort");
+    const [sortedCensored, setSortedCensored] = useState("Unsort");
+    const [sortedDeleted, setSortedDeleted] = useState("Unsort");
+    const [sortedTotalFb, setSortedTotalFb] = useState("Unsort");
+    const [sortedRating, setSortedRating] = useState("Unsort");
     const [priority, setPriority] = useState("");
 
     const symbolSorting = (item) => {
@@ -49,7 +54,8 @@ export default function FeedbackManagement() {
             })
             .catch((err) => {
                 console.log(err);
-            }).finally(() => {
+            })
+            .finally(() => {
                 courseListStart.forEach((course) => {
                     api
                         .get("/Feedback/GetCourseFeedbackbyId", {
@@ -57,12 +63,47 @@ export default function FeedbackManagement() {
                         })
                         .then((res) => {
                             let feedbackInfo = res.data;
-                            course = { ...course, feedbackInfo };
+                            let pending = feedbackInfo.filter(
+                                (item) => item.status == 0
+                            ).length;
+                            let censored = feedbackInfo.filter(
+                                (item) => item.status == 1
+                            ).length;
+                            let deletedFb = feedbackInfo.filter(
+                                (item) => item.status == 2
+                            ).length;
+                            let rating = 0;
+                            feedbackInfo.forEach((item) => {
+                                rating += item.rating;
+                            });
+                            if (feedbackInfo.length > 0) {
+                                rating = rating / feedbackInfo.length;
+                                rating = rating.toFixed(2);
+                            }
+                            course = {
+                                ...course,
+                                feedbackInfo,
+                                pending,
+                                censored,
+                                deletedFb,
+                                rating,
+                            };
                             courseListEnd = [...courseListEnd, course];
                         })
                         .catch((err) => {
                             let feedbackInfo = [];
-                            course = { ...course, feedbackInfo };
+                            let pending = 0;
+                            let censored = 0;
+                            let deletedFb = 0;
+                            let rating = 0;
+                            course = {
+                                ...course,
+                                feedbackInfo,
+                                pending,
+                                censored,
+                                deletedFb,
+                                rating,
+                            };
                             courseListEnd = [...courseListEnd, course];
                         })
                         .finally(async () => {
@@ -72,7 +113,7 @@ export default function FeedbackManagement() {
                             setCourseList(courseListEnd);
                             setRenderCourseList(courseListEnd);
                         });
-                })
+                });
             });
     };
 
@@ -84,11 +125,33 @@ export default function FeedbackManagement() {
 
     const resetSort = () => {
         if (
-            sortedName.trim().toLowerCase().includes("unsort")
+            sortedName.trim().toLowerCase().includes("unsort") &&
+            sortedPending.trim().toLowerCase().includes("unsort") &&
+            sortedCensored.trim().toLowerCase().includes("unsort") &&
+            sortedDeleted.trim().toLowerCase().includes("unsort") &&
+            sortedTotalFb.trim().toLowerCase().includes("unsort") &&
+            sortedRating.trim().toLowerCase().includes("unsort")
         ) {
             let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
             setRenderCourseList(render);
         }
+    };
+
+    const resetSort2 = () => {
+        let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
+        setRenderCourseList(render);
+    };
+
+    const unsortAll = () => {
+        if (!sortedRating.trim().toLowerCase().includes("unsort")) {
+            resetSort2();
+            setSortedRating("Unsort");
+        }
+        setSortedName("Unsort");
+        setSortedPending("Unsort");
+        setSortedCensored("Unsort");
+        setSortedDeleted("Unsort");
+        setSortedTotalFb("Unsort");
     };
 
     useEffect(() => {
@@ -127,6 +190,131 @@ export default function FeedbackManagement() {
                 break;
         }
     }, [sortedName]);
+
+    useEffect(() => {
+        switch (sortedPending) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => a.pending - b.pending)
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => b.pending - a.pending)
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedPending]);
+
+    useEffect(() => {
+        switch (sortedCensored) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => a.censored - b.censored)
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => b.censored - a.censored)
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedCensored]);
+
+    useEffect(() => {
+        switch (sortedDeleted) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => a.deletedFb - b.deletedFb)
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList].sort((a, b) => b.deletedFb - a.deletedFb)
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedDeleted]);
+
+    useEffect(() => {
+        switch (sortedTotalFb) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList].sort(
+                        (a, b) => a.feedbackInfo.length - b.feedbackInfo.length
+                    )
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList].sort(
+                        (a, b) => b.feedbackInfo.length - a.feedbackInfo.length
+                    )
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedTotalFb]);
+
+    useEffect(() => {
+        switch (sortedRating) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList]
+                        .filter((item) => {
+                            return (
+                                item.feedbackInfo != null &&
+                                item.feedbackInfo != undefined &&
+                                item.feedbackInfo.length > 0
+                            );
+                        })
+                        .sort((a, b) => a.rating - b.rating)
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList]
+                        .filter((item) => {
+                            return (
+                                item.feedbackInfo != null &&
+                                item.feedbackInfo != undefined &&
+                                item.feedbackInfo.length > 0
+                            );
+                        })
+                        .sort((a, b) => b.rating - a.rating)
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedRating]);
 
     return (
         <>
@@ -176,6 +364,7 @@ export default function FeedbackManagement() {
                                         className="selection-button"
                                         value={sortedName}
                                         onChange={(e) => {
+                                            unsortAll();
                                             setSortedName(e.target.value);
                                             if (e.target.value != "Unsort") setPriority("sortedName");
                                         }}
@@ -214,21 +403,147 @@ export default function FeedbackManagement() {
                                         <option value="">All</option>
                                     </select>
                                 </th>
-                                <th style={{ textAlign: "left" }}>
+                                <th style={{ textAlign: "center" }}>
                                     Pending
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedPending
+                                            )} symbol-sorting ${!priority.includes("sortedPending") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedPending"
+                                        id="sortedPending"
+                                        className="selection-button"
+                                        value={sortedPending}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedPending(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedPending");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
                                 </th>
-                                <th style={{ textAlign: "left" }}>
+                                <th style={{ textAlign: "center" }}>
                                     Censored
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedCensored
+                                            )} symbol-sorting ${!priority.includes("sortedCensored") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedCensored"
+                                        id="sortedCensored"
+                                        className="selection-button"
+                                        value={sortedCensored}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedCensored(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedCensored");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
                                 </th>
-                                <th style={{ textAlign: "left" }}>
+                                <th style={{ textAlign: "center" }}>
                                     Deleted
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedDeleted
+                                            )} symbol-sorting ${!priority.includes("sortedDeleted") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedDeleted"
+                                        id="sortedDeleted"
+                                        className="selection-button"
+                                        value={sortedDeleted}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedDeleted(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedDeleted");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
                                 </th>
-                                <th style={{ textAlign: "left" }}>
+                                <th style={{ textAlign: "center" }}>
                                     Total
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedTotalFb
+                                            )} symbol-sorting ${!priority.includes("sortedTotalFb") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedTotalFb"
+                                        id="sortedTotalFb"
+                                        className="selection-button"
+                                        value={sortedTotalFb}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedTotalFb(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedTotalFb");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
                                 </th>
-                                <th style={{ textAlign: "left" }}>
-                                    Detail
+                                <th style={{ textAlign: "center" }}>
+                                    Rate
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedRating
+                                            )} symbol-sorting ${!priority.includes("sortedRating") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedRating"
+                                        id="sortedRating"
+                                        className="selection-button"
+                                        value={sortedRating}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedRating(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedRating");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
                                 </th>
+                                <th style={{ textAlign: "center" }}>Detail</th>
                             </tr>
                         </thead>
                         <tbody style={{ height: "auto" }}>
@@ -253,6 +568,10 @@ export default function FeedbackManagement() {
                                             courseImg,
                                             feedbackInfo,
                                             deleted,
+                                            pending,
+                                            censored,
+                                            deletedFb,
+                                            rating,
                                         },
                                         index
                                     ) => {
@@ -274,6 +593,41 @@ export default function FeedbackManagement() {
                                                     </td>
                                                     <td style={{ textAlign: "left" }}>{courseName}</td>
                                                     <td style={{ textAlign: "left" }}>{levelName}</td>
+                                                    <td
+                                                        className={`${pending > 0 ? "text-primary" : ""}`}
+                                                        style={{ textAlign: "center" }}
+                                                    >
+                                                        {pending}
+                                                    </td>
+                                                    <td style={{ textAlign: "center" }}>{censored}</td>
+                                                    <td style={{ textAlign: "center" }}>{deletedFb}</td>
+                                                    {feedbackInfo != null && feedbackInfo != undefined ? (
+                                                        <td style={{ textAlign: "center" }}>
+                                                            {feedbackInfo.length > 0
+                                                                ? feedbackInfo.length
+                                                                : "Not yet"}
+                                                        </td>
+                                                    ) : (
+                                                        <td></td>
+                                                    )}
+                                                    {feedbackInfo != null && feedbackInfo != undefined ? (
+                                                        <td style={{ textAlign: "center" }}>
+                                                            {feedbackInfo.length > 0
+                                                                ? `${rating}`
+                                                                : "Not yet"}
+                                                        </td>
+                                                    ) : (
+                                                        <td></td>
+                                                    )}
+                                                    <td style={{ textAlign: "center" }}>
+                                                        <button
+                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
+                                                            style={{ borderRadius: "10px" }}
+                                                            onClick={() => { }}
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             </>
                                         );

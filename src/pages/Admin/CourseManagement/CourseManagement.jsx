@@ -22,6 +22,7 @@ export default function CourseManagement() {
     const [sortedPrice, setSortedPrice] = useState("Unsort");
     const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
     const [sortedClasses, setSortedClasses] = useState("Unsort");
+    const [sortedRating, setSortedRating] = useState("Unsort");
     const [priority, setPriority] = useState("");
 
     const formatPrice = (price) => {
@@ -30,6 +31,7 @@ export default function CourseManagement() {
             currency: "VND",
         }).format(price);
     };
+
     const symbolSorting = (item) => {
         switch (item) {
             case "A-Z":
@@ -85,12 +87,21 @@ export default function CourseManagement() {
                                 })
                                 .then((res) => {
                                     let feedbackInfo = res.data;
-                                    course = { ...course, feedbackInfo };
+                                    let rating = 0;
+                                    feedbackInfo.forEach((item) => {
+                                        rating += item.rating;
+                                    });
+                                    if (feedbackInfo.length > 0) {
+                                        rating = rating / feedbackInfo.length;
+                                        rating = rating.toFixed(2);
+                                    }
+                                    course = { ...course, feedbackInfo, rating };
                                     courseListEnd = [...courseListEnd, course];
                                 })
                                 .catch((err) => {
                                     let feedbackInfo = [];
-                                    course = { ...course, feedbackInfo };
+                                    let rating = 0;
+                                    course = { ...course, feedbackInfo, rating };
                                     courseListEnd = [...courseListEnd, course];
                                 })
                                 .finally(async () => {
@@ -120,6 +131,23 @@ export default function CourseManagement() {
             let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
             setRenderCourseList(render);
         }
+    };
+
+    const resetSort2 = () => {
+        let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
+        setRenderCourseList(render);
+    };
+
+    const unsortAll = () => {
+        if (!sortedRating.trim().toLowerCase().includes("unsort")) {
+            resetSort2();
+            setSortedRating("Unsort");
+        }
+        setSortedName("Unsort");
+        setSortedDiscount("Unsort");
+        setSortedPrice("Unsort");
+        setSortedTotalPrice("Unsort");
+        setSortedClasses("Unsort");
     };
 
     useEffect(() => {
@@ -254,6 +282,44 @@ export default function CourseManagement() {
                 break;
         }
     }, [sortedClasses]);
+
+    useEffect(() => {
+        switch (sortedRating) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList]
+                        .filter((item) => {
+                            return (
+                                item.feedbackInfo != null &&
+                                item.feedbackInfo != undefined &&
+                                item.feedbackInfo.length > 0
+                            );
+                        })
+                        .sort((a, b) => a.rating - b.rating)
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList]
+                        .filter((item) => {
+                            return (
+                                item.feedbackInfo != null &&
+                                item.feedbackInfo != undefined &&
+                                item.feedbackInfo.length > 0
+                            );
+                        })
+                        .sort((a, b) => b.rating - a.rating)
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedRating]);
+
     const handleDeleteCourseByAdmin = (courseid) => {
         api
             .delete("/Course/DeleteCourse", {
@@ -269,6 +335,7 @@ export default function CourseManagement() {
                 renderCourseForAdmin();
             });
     };
+
     const handleReactivateByAdmin = (courseid) => {
         console.log(parseInt(courseid));
         console.log(typeof parseInt(courseid));
@@ -372,10 +439,7 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedName}
                                         onChange={(e) => {
-                                            setSortedDiscount("Unsort");
-                                            setSortedPrice("Unsort");
-                                            setSortedTotalPrice("Unsort");
-                                            setSortedClasses("Unsort");
+                                            unsortAll();
                                             setSortedName(e.target.value);
                                             if (e.target.value != "Unsort") setPriority("sortedName");
                                         }}
@@ -430,10 +494,7 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedDiscount}
                                         onChange={(e) => {
-                                            setSortedName("Unsort");
-                                            setSortedPrice("Unsort");
-                                            setSortedTotalPrice("Unsort");
-                                            setSortedClasses("Unsort");
+                                            unsortAll();
                                             setSortedDiscount(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedDiscount");
@@ -461,10 +522,7 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedPrice}
                                         onChange={(e) => {
-                                            setSortedName("Unsort");
-                                            setSortedDiscount("Unsort");
-                                            setSortedTotalPrice("Unsort");
-                                            setSortedClasses("Unsort");
+                                            unsortAll();
                                             setSortedPrice(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedPrice");
@@ -492,10 +550,7 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedTotalPrice}
                                         onChange={(e) => {
-                                            setSortedName("Unsort");
-                                            setSortedDiscount("Unsort");
-                                            setSortedPrice("Unsort");
-                                            setSortedClasses("Unsort");
+                                            unsortAll();
                                             setSortedTotalPrice(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedTotalPrice");
@@ -523,13 +578,38 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedClasses}
                                         onChange={(e) => {
-                                            setSortedName("Unsort");
-                                            setSortedDiscount("Unsort");
-                                            setSortedPrice("Unsort");
-                                            setSortedTotalPrice("Unsort");
+                                            unsortAll();
                                             setSortedClasses(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedClasses");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
+                                </th>
+                                <th style={{ textAlign: "center" }}>
+                                    Rate
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedRating
+                                            )} symbol-sorting ${!priority.includes("sortedRating") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedRating"
+                                        id="sortedRating"
+                                        className="selection-button"
+                                        value={sortedRating}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedRating(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedRating");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -571,6 +651,7 @@ export default function CourseManagement() {
                                             classInfo,
                                             feedbackInfo,
                                             deleted,
+                                            rating,
                                         },
                                         index
                                     ) => {
@@ -602,7 +683,22 @@ export default function CourseManagement() {
                                                     <td style={{ textAlign: "right" }}>
                                                         {formatPrice(price * (1 - discount / 100))}
                                                     </td>
-                                                    <td>{classInfo != null ? classInfo.length : "0"}</td>
+                                                    {classInfo != null && classInfo != undefined ? (
+                                                        <td>
+                                                            {classInfo != null ? classInfo.length : "0"}
+                                                        </td>
+                                                    ) : (
+                                                        <td></td>
+                                                    )}
+                                                    {feedbackInfo != null && feedbackInfo != undefined ? (
+                                                        <td style={{ textAlign: "center" }}>
+                                                            {feedbackInfo.length > 0
+                                                                ? `${rating}`
+                                                                : "Not yet"}
+                                                        </td>
+                                                    ) : (
+                                                        <td></td>
+                                                    )}
                                                     <td style={{ textAlign: "center" }}>
                                                         {pos >= 0 ? (
                                                             <button

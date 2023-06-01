@@ -195,3 +195,9 @@
     transition: all 0.3s ease-in-out;
   }
 }
+.cancel-update-profile-button {
+  &:hover {
+    transform: scale(1.02);
+    background-color: #000000d0 !important;
+  }
+}

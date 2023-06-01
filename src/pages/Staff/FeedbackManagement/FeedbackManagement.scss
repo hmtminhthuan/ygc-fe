@@ -3,13 +3,18 @@
   .main--content {
     thead {
       .selection-button {
-        background-color: #333333;
+        background-color: rgb(59, 66, 162) !important;
         border: none;
-        color: #ffffff90;
+        color: #fff;
         cursor: pointer;
       }
       .symbol-sorting {
         color: #ffffff70;
+      }
+      tr {
+        th {
+          background-color: rgb(59, 66, 162) !important;
+        }
       }
     }
     .admin-course-list {
