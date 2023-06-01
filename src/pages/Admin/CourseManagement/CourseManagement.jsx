@@ -3,12 +3,10 @@ import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import "./CourseManagement.scss";
 import { api } from "../../../constants/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import AdminCourseEdit from "./AdminCourseEdit/AdminCourseEdit";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -113,11 +111,11 @@ export default function CourseManagement() {
 
     const resetSort = () => {
         if (
-            sortedName == "Unsort" &&
-            sortedDiscount == "Unsort" &&
-            sortedPrice == "Unsort" &&
-            sortedTotalPrice == "Unsort" &&
-            sortedClasses == "Unsort"
+            sortedName.trim().toLowerCase().includes("unsort") &&
+            sortedDiscount.trim().toLowerCase().includes("unsort") &&
+            sortedPrice.trim().toLowerCase().includes("unsort") &&
+            sortedTotalPrice.trim().toLowerCase().includes("unsort") &&
+            sortedClasses.trim().toLowerCase().includes("unsort")
         ) {
             let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
             setRenderCourseList(render);
@@ -374,6 +372,10 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedName}
                                         onChange={(e) => {
+                                            setSortedDiscount("Unsort");
+                                            setSortedPrice("Unsort");
+                                            setSortedTotalPrice("Unsort");
+                                            setSortedClasses("Unsort");
                                             setSortedName(e.target.value);
                                             if (e.target.value != "Unsort") setPriority("sortedName");
                                         }}
@@ -389,7 +391,7 @@ export default function CourseManagement() {
                                     <span style={{ marginLeft: "5px" }}>
                                         {sortedLevel != "" ? (
                                             <i
-                                                class="fa fa-filter symbol-sorting"
+                                                className="fa fa-filter symbol-sorting"
                                                 aria-hidden="true"
                                             ></i>
                                         ) : (
@@ -428,6 +430,10 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedDiscount}
                                         onChange={(e) => {
+                                            setSortedName("Unsort");
+                                            setSortedPrice("Unsort");
+                                            setSortedTotalPrice("Unsort");
+                                            setSortedClasses("Unsort");
                                             setSortedDiscount(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedDiscount");
@@ -455,6 +461,10 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedPrice}
                                         onChange={(e) => {
+                                            setSortedName("Unsort");
+                                            setSortedDiscount("Unsort");
+                                            setSortedTotalPrice("Unsort");
+                                            setSortedClasses("Unsort");
                                             setSortedPrice(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedPrice");
@@ -482,6 +492,10 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedTotalPrice}
                                         onChange={(e) => {
+                                            setSortedName("Unsort");
+                                            setSortedDiscount("Unsort");
+                                            setSortedPrice("Unsort");
+                                            setSortedClasses("Unsort");
                                             setSortedTotalPrice(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedTotalPrice");
@@ -509,6 +523,10 @@ export default function CourseManagement() {
                                         className="selection-button"
                                         value={sortedClasses}
                                         onChange={(e) => {
+                                            setSortedName("Unsort");
+                                            setSortedDiscount("Unsort");
+                                            setSortedPrice("Unsort");
+                                            setSortedTotalPrice("Unsort");
                                             setSortedClasses(e.target.value);
                                             if (e.target.value != "Unsort")
                                                 setPriority("sortedClasses");
@@ -721,7 +739,11 @@ export default function CourseManagement() {
                                                             className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
                                                             style={{ borderRadius: "10px" }}
                                                         >
-                                                            <Link to={`/admin/courseManagement/editCourse/${courseID}`}>Edit</Link>
+                                                            <Link
+                                                                to={`/admin/courseManagement/editCourse/${courseID}`}
+                                                            >
+                                                                Edit
+                                                            </Link>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -818,7 +840,6 @@ export default function CourseManagement() {
                     </table>
                 </div>
             </section>
-
         </>
     );
 }

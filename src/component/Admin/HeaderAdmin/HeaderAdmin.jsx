@@ -6,7 +6,10 @@ export default function HeaderAdmin({ background, ...restParams }) {
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     const USER = JSON.parse(USER_LOGIN);
     return (
-        <section className="headerdb">
+        <section className="headerdb"
+            style={{
+                borderBottom: "1px solid gray",
+            }}>
             <div className="logo mt-2">
                 <h2>
                     <i className="ri-menu-line icon icon-0 menu mx-2"
@@ -21,13 +24,8 @@ export default function HeaderAdmin({ background, ...restParams }) {
                     Yoga<span>Center</span>
                 </h2>
             </div>
-            <div className="search--notification--profile">
-                <div className="search">
-                    <input type="text" placeholder="Search..." />
-                    <button>
-                        <i className="ri-search-2-line" />
-                    </button>
-                </div>
+            <div className="search--notification--profile
+             flex justify-content-end">
                 <div className="notification--profile">
                     <div className="picon bell">
                         <i className="ri-notification-2-line" />
