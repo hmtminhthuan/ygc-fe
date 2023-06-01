@@ -27,6 +27,7 @@ import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManage
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
 import UserProfile from "../pages/UserProfile";
+import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/AdminCourseEdit";
 
 export default function Routers() {
   const routing = useRoutes([
