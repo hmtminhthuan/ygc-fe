@@ -1,0 +1,62 @@
+#staff-feedback-management-area {
+  background-color: #fff;
+  .main--content {
+    thead {
+      .selection-button {
+        background-color: #333333;
+        border: none;
+        color: #ffffff90;
+        cursor: pointer;
+      }
+      .symbol-sorting {
+        color: #ffffff70;
+      }
+    }
+    .admin-course-list {
+      background-color: #00000050;
+      color: #000;
+      transform: none;
+      z-index: 1;
+    }
+    .admin-course-list-active {
+      background-color: #333333;
+      color: #fff;
+      // transform: scale(1.1);
+      z-index: 10 !important;
+    }
+    table {
+      position: relative;
+
+      .table-head {
+        tr,
+        th {
+          position: sticky;
+          top: 0;
+        }
+      }
+      tbody {
+        .row-bg-1 {
+          background-color: #33333315;
+          &:hover {
+            background-color: #33333320;
+          }
+        }
+        .row-bg-0 {
+          &:hover {
+            background-color: #33333320;
+          }
+        }
+        button {
+          &:hover {
+            transform: scale(1.1);
+            font-weight: 600;
+          }
+        }
+      }
+      tbody td:hover:before {
+        display: none !important;
+        z-index: -100;
+      }
+    }
+  }
+}

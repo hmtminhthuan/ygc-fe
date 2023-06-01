@@ -22,13 +22,14 @@ import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
 
 import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
 import CreateTrainee from "../pages/Dashboard/Staff/Trainee/CreateTrainee";
-import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
+import FeedbackManagement1 from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
 // import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
 import UserProfile from "../pages/UserProfile";
 import UpdateProfile from "../pages/UpdateProfile";
 import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/AdminCourseEdit";
+import FeedbackManagement from "../pages/Staff/FeedbackManagement/FeedbackManagement";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -49,10 +50,10 @@ export default function Routers() {
         { path: "/listTrainee", element: <ListTrainee /> },
         { path: "/listTrainer", element: <ListTrainer /> },
         { path: "/listStaff", element: <ListStaff /> },
-
         { path: "/createTrainer", element: <CreateTrainer /> },
         { path: "/createTrainee", element: <CreateTrainee /> },
-        { path: "/feedbackManagement", element: <FeedbackManagement /> },
+        { path: "/feedbackManagement", element: <FeedbackManagement1 /> },
+        { path: "/staff/feedbackManagement", element: <FeedbackManagement /> },
         // { path: "/blogManagement", element: <BlogManagement /> },
       ],
     },

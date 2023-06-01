@@ -52,20 +52,20 @@ export default function CourseManagement() {
     };
 
     const renderCourseForAdmin = () => {
-        let courseListStrat = [];
+        let courseListStart = [];
         let courseListEnd = [];
         api
             .get("/Course/GetAllCourseForAdmin")
             .then(async (res) => {
                 setCourseList(res.data);
                 setRenderCourseList(res.data);
-                courseListStrat = res.data;
+                courseListStart = res.data;
             })
             .catch((err) => {
                 console.log(err);
             })
             .finally(async () => {
-                await courseListStrat.forEach((course) => {
+                await courseListStart.forEach((course) => {
                     api
                         .get("/Class/GetClassByCourseID", {
                             params: { courseid: course.courseID },
