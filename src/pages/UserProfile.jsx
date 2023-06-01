@@ -28,6 +28,7 @@ function UserProfile() {
   }
 
   let {
+    accountID,
     firstName,
     lastName,
     gender,
@@ -82,7 +83,7 @@ function UserProfile() {
                       </Link>
 
                       <Link
-                        to={`/updateProfile/${profile.id}`}
+                        to={`/updateProfile/${accountID}`}
                         className="updateInfo"
                       >
                         <i className="ri-edit-2-line mt-5  mx-3 "></i>
