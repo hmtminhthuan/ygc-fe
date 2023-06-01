@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
-import "./FeedbackManagement.scss";
 import { api } from "../../../constants/api";
 import AdminCourseClasses from "../../Admin/CourseManagement/AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "../../Admin/CourseManagement/AdminCourseFeedback/AdminCourseFeedback";
@@ -10,18 +9,28 @@ import { Link } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 
-export default function FeedbackManagement() {
+export default function CourseView() {
     const [courseList, setCourseList] = useState([]);
     const [renderCourseList, setRenderCourseList] = useState([]);
+    const [infoMoreList, setInfoMoreList] = useState([]);
     const [searchedName, setSearchedName] = useState("");
     const [sortedLevel, setSortedLevel] = useState("");
     const [sortedName, setSortedName] = useState("Unsort");
-    const [sortedPending, setSortedPending] = useState("Unsort");
-    const [sortedCensored, setSortedCensored] = useState("Unsort");
-    const [sortedDeleted, setSortedDeleted] = useState("Unsort");
-    const [sortedTotalFb, setSortedTotalFb] = useState("Unsort");
+    const [sortedDiscount, setSortedDiscount] = useState("Unsort");
+    const [filteredPrice, setFilteredPrice] = useState();
+    const [filteredCalPrice, setFilteredCalPrice] = useState("");
+    const [sortedPrice, setSortedPrice] = useState("Unsort");
+    const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
+    const [sortedClasses, setSortedClasses] = useState("Unsort");
     const [sortedRating, setSortedRating] = useState("Unsort");
     const [priority, setPriority] = useState("");
+
+    const formatPrice = (price) => {
+        return Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(price);
+    };
 
     const symbolSorting = (item) => {
         switch (item) {
@@ -57,69 +66,55 @@ export default function FeedbackManagement() {
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => {
-                courseListStart.forEach((course) => {
+            .finally(async () => {
+                await courseListStart.forEach((course) => {
                     api
-                        .get("/Feedback/GetCourseFeedbackbyId", {
+                        .get("/Class/GetClassByCourseID", {
                             params: { courseid: course.courseID },
                         })
                         .then((res) => {
-                            let feedbackInfo = res.data;
-                            let pending = feedbackInfo.filter(
-                                (item) => item.status == 0
-                            ).length;
-                            let censored = feedbackInfo.filter(
-                                (item) => item.status == 1
-                            ).length;
-                            let deletedFb = feedbackInfo.filter(
-                                (item) => item.status == 2
-                            ).length;
-                            let rating = 0;
-                            feedbackInfo.forEach((item) => {
-                                rating += item.rating;
-                            });
-                            if (feedbackInfo.length > 0) {
-                                rating = rating / feedbackInfo.length;
-                                rating = rating.toFixed(2);
-                            }
-                            course = {
-                                ...course,
-                                feedbackInfo,
-                                pending,
-                                censored,
-                                deletedFb,
-                                rating,
-                            };
-                            courseListEnd = [...courseListEnd, course];
+                            let classInfo = res.data;
+                            course = { ...course, classInfo };
                         })
                         .catch((err) => {
-                            let feedbackInfo = [];
-                            let pending = 0;
-                            let censored = 0;
-                            let deletedFb = 0;
-                            let rating = 0;
-                            course = {
-                                ...course,
-                                feedbackInfo,
-                                pending,
-                                censored,
-                                deletedFb,
-                                rating,
-                            };
-                            courseListEnd = [...courseListEnd, course];
+                            let classInfo = [];
+                            course = { ...course, classInfo };
                         })
-                        .finally(async () => {
-                            courseListEnd = await courseListEnd.sort(
-                                (a, b) => a.courseID - b.courseID
-                            );
-                            setCourseList(courseListEnd);
-                            setRenderCourseList(courseListEnd);
+                        .finally(() => {
+                            api
+                                .get("/Feedback/GetCourseFeedbackbyId", {
+                                    params: { courseid: course.courseID },
+                                })
+                                .then((res) => {
+                                    let feedbackInfo = res.data;
+                                    let rating = 0;
+                                    feedbackInfo.forEach((item) => {
+                                        rating += item.rating;
+                                    });
+                                    if (feedbackInfo.length > 0) {
+                                        rating = rating / feedbackInfo.length;
+                                        rating = rating.toFixed(2);
+                                    }
+                                    course = { ...course, feedbackInfo, rating };
+                                    courseListEnd = [...courseListEnd, course];
+                                })
+                                .catch((err) => {
+                                    let feedbackInfo = [];
+                                    let rating = 0;
+                                    course = { ...course, feedbackInfo, rating };
+                                    courseListEnd = [...courseListEnd, course];
+                                })
+                                .finally(async () => {
+                                    courseListEnd = await courseListEnd.sort(
+                                        (a, b) => a.courseID - b.courseID
+                                    );
+                                    setCourseList(courseListEnd);
+                                    setRenderCourseList(courseListEnd);
+                                });
                         });
                 });
             });
     };
-
-    console.log(renderCourseList);
 
     useEffect(() => {
         renderCourseForAdmin();
@@ -128,11 +123,10 @@ export default function FeedbackManagement() {
     const resetSort = () => {
         if (
             sortedName.trim().toLowerCase().includes("unsort") &&
-            sortedPending.trim().toLowerCase().includes("unsort") &&
-            sortedCensored.trim().toLowerCase().includes("unsort") &&
-            sortedDeleted.trim().toLowerCase().includes("unsort") &&
-            sortedTotalFb.trim().toLowerCase().includes("unsort") &&
-            sortedRating.trim().toLowerCase().includes("unsort")
+            sortedDiscount.trim().toLowerCase().includes("unsort") &&
+            sortedPrice.trim().toLowerCase().includes("unsort") &&
+            sortedTotalPrice.trim().toLowerCase().includes("unsort") &&
+            sortedClasses.trim().toLowerCase().includes("unsort")
         ) {
             let render = [...courseList].sort((a, b) => a.courseID - b.courseID);
             setRenderCourseList(render);
@@ -150,10 +144,10 @@ export default function FeedbackManagement() {
             setSortedRating("Unsort");
         }
         setSortedName("Unsort");
-        setSortedPending("Unsort");
-        setSortedCensored("Unsort");
-        setSortedDeleted("Unsort");
-        setSortedTotalFb("Unsort");
+        setSortedDiscount("Unsort");
+        setSortedPrice("Unsort");
+        setSortedTotalPrice("Unsort");
+        setSortedClasses("Unsort");
     };
 
     useEffect(() => {
@@ -194,15 +188,15 @@ export default function FeedbackManagement() {
     }, [sortedName]);
 
     useEffect(() => {
-        switch (sortedPending) {
+        switch (sortedDiscount) {
             case "ASC":
                 setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => a.pending - b.pending)
+                    [...renderCourseList].sort((a, b) => a.discount - b.discount)
                 );
                 break;
             case "DESC":
                 setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => b.pending - a.pending)
+                    [...renderCourseList].sort((a, b) => b.discount - a.discount)
                 );
                 break;
             case "Unsort":
@@ -212,18 +206,18 @@ export default function FeedbackManagement() {
                 resetSort();
                 break;
         }
-    }, [sortedPending]);
+    }, [sortedDiscount]);
 
     useEffect(() => {
-        switch (sortedCensored) {
+        switch (sortedPrice) {
             case "ASC":
                 setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => a.censored - b.censored)
+                    [...renderCourseList].sort((a, b) => a.price - b.price)
                 );
                 break;
             case "DESC":
                 setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => b.censored - a.censored)
+                    [...renderCourseList].sort((a, b) => b.price - a.price)
                 );
                 break;
             case "Unsort":
@@ -233,42 +227,25 @@ export default function FeedbackManagement() {
                 resetSort();
                 break;
         }
-    }, [sortedCensored]);
+    }, [sortedPrice]);
 
     useEffect(() => {
-        switch (sortedDeleted) {
-            case "ASC":
-                setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => a.deletedFb - b.deletedFb)
-                );
-                break;
-            case "DESC":
-                setRenderCourseList(
-                    [...renderCourseList].sort((a, b) => b.deletedFb - a.deletedFb)
-                );
-                break;
-            case "Unsort":
-                resetSort();
-                break;
-            default:
-                resetSort();
-                break;
-        }
-    }, [sortedDeleted]);
-
-    useEffect(() => {
-        switch (sortedTotalFb) {
+        switch (sortedTotalPrice) {
             case "ASC":
                 setRenderCourseList(
                     [...renderCourseList].sort(
-                        (a, b) => a.feedbackInfo.length - b.feedbackInfo.length
+                        (a, b) =>
+                            a.price * (1 - a.discount / 100) -
+                            b.price * (1 - b.discount / 100)
                     )
                 );
                 break;
             case "DESC":
                 setRenderCourseList(
                     [...renderCourseList].sort(
-                        (a, b) => b.feedbackInfo.length - a.feedbackInfo.length
+                        (a, b) =>
+                            b.price * (1 - b.discount / 100) -
+                            a.price * (1 - a.discount / 100)
                     )
                 );
                 break;
@@ -279,7 +256,32 @@ export default function FeedbackManagement() {
                 resetSort();
                 break;
         }
-    }, [sortedTotalFb]);
+    }, [sortedTotalPrice]);
+
+    useEffect(() => {
+        switch (sortedClasses) {
+            case "ASC":
+                setRenderCourseList(
+                    [...renderCourseList].sort(
+                        (a, b) => a.classInfo.length - b.classInfo.length
+                    )
+                );
+                break;
+            case "DESC":
+                setRenderCourseList(
+                    [...renderCourseList].sort(
+                        (a, b) => b.classInfo.length - a.classInfo.length
+                    )
+                );
+                break;
+            case "Unsort":
+                resetSort();
+                break;
+            default:
+                resetSort();
+                break;
+        }
+    }, [sortedClasses]);
 
     useEffect(() => {
         switch (sortedRating) {
@@ -321,9 +323,9 @@ export default function FeedbackManagement() {
     return (
         <>
             <HeaderStaff />
-            <section className="main" id="staff-feedback-management-area">
+            <section className="main" id="admin-course-management-area">
                 <MenuStaff />
-                <div className="main--content pt-3">
+                <div className="main--content staff-course-view pt-3">
                     <div
                         className="flex justify-content-between align-items-end"
                         style={{ width: "97%", margin: "0 auto" }}
@@ -405,26 +407,26 @@ export default function FeedbackManagement() {
                                         <option value="">All</option>
                                     </select>
                                 </th>
-                                <th style={{ textAlign: "center" }}>
-                                    Pending
+                                <th style={{ textAlign: "" }}>
+                                    Discount
                                     <span style={{ marginLeft: "5px" }}>
                                         <i
                                             className={`${symbolSorting(
-                                                sortedPending
-                                            )} symbol-sorting ${!priority.includes("sortedPending") ? "d-none" : ""
+                                                sortedDiscount
+                                            )} symbol-sorting ${!priority.includes("sortedDiscount") ? "d-none" : ""
                                                 }`}
                                         />
                                     </span>
                                     <select
-                                        name="sortedPending"
-                                        id="sortedPending"
+                                        name="sortedDiscount"
+                                        id="sortedDiscount"
                                         className="selection-button"
-                                        value={sortedPending}
+                                        value={sortedDiscount}
                                         onChange={(e) => {
                                             unsortAll();
-                                            setSortedPending(e.target.value);
+                                            setSortedDiscount(e.target.value);
                                             if (e.target.value != "Unsort")
-                                                setPriority("sortedPending");
+                                                setPriority("sortedDiscount");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -433,26 +435,26 @@ export default function FeedbackManagement() {
                                         <option value="Unsort">Unsort</option>
                                     </select>
                                 </th>
-                                <th style={{ textAlign: "center" }}>
-                                    Censored
+                                <th style={{ textAlign: "right" }}>
+                                    Price
                                     <span style={{ marginLeft: "5px" }}>
                                         <i
                                             className={`${symbolSorting(
-                                                sortedCensored
-                                            )} symbol-sorting ${!priority.includes("sortedCensored") ? "d-none" : ""
+                                                sortedPrice
+                                            )} symbol-sorting ${!priority.includes("sortedPrice") ? "d-none" : ""
                                                 }`}
                                         />
                                     </span>
                                     <select
-                                        name="sortedCensored"
-                                        id="sortedCensored"
+                                        name="sortedPrice"
+                                        id="sortedPrice"
                                         className="selection-button"
-                                        value={sortedCensored}
+                                        value={sortedPrice}
                                         onChange={(e) => {
                                             unsortAll();
-                                            setSortedCensored(e.target.value);
+                                            setSortedPrice(e.target.value);
                                             if (e.target.value != "Unsort")
-                                                setPriority("sortedCensored");
+                                                setPriority("sortedPrice");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -461,54 +463,54 @@ export default function FeedbackManagement() {
                                         <option value="Unsort">Unsort</option>
                                     </select>
                                 </th>
-                                <th style={{ textAlign: "center" }}>
-                                    Deleted
-                                    <span style={{ marginLeft: "5px" }}>
-                                        <i
-                                            className={`${symbolSorting(
-                                                sortedDeleted
-                                            )} symbol-sorting ${!priority.includes("sortedDeleted") ? "d-none" : ""
-                                                }`}
-                                        />
-                                    </span>
-                                    <select
-                                        name="sortedDeleted"
-                                        id="sortedDeleted"
-                                        className="selection-button"
-                                        value={sortedDeleted}
-                                        onChange={(e) => {
-                                            unsortAll();
-                                            setSortedDeleted(e.target.value);
-                                            if (e.target.value != "Unsort")
-                                                setPriority("sortedDeleted");
-                                        }}
-                                        style={{ width: "20px" }}
-                                    >
-                                        <option value="ASC">ASC</option>
-                                        <option value="DESC">DESC</option>
-                                        <option value="Unsort">Unsort</option>
-                                    </select>
-                                </th>
-                                <th style={{ textAlign: "center" }}>
+                                <th style={{ textAlign: "right" }}>
                                     Total
                                     <span style={{ marginLeft: "5px" }}>
                                         <i
                                             className={`${symbolSorting(
-                                                sortedTotalFb
-                                            )} symbol-sorting ${!priority.includes("sortedTotalFb") ? "d-none" : ""
+                                                sortedTotalPrice
+                                            )} symbol-sorting ${!priority.includes("sortedTotalPrice") ? "d-none" : ""
                                                 }`}
                                         />
                                     </span>
                                     <select
-                                        name="sortedTotalFb"
-                                        id="sortedTotalFb"
+                                        name="sortedTotalPrice"
+                                        id="sortedTotalPrice"
                                         className="selection-button"
-                                        value={sortedTotalFb}
+                                        value={sortedTotalPrice}
                                         onChange={(e) => {
                                             unsortAll();
-                                            setSortedTotalFb(e.target.value);
+                                            setSortedTotalPrice(e.target.value);
                                             if (e.target.value != "Unsort")
-                                                setPriority("sortedTotalFb");
+                                                setPriority("sortedTotalPrice");
+                                        }}
+                                        style={{ width: "20px" }}
+                                    >
+                                        <option value="ASC">ASC</option>
+                                        <option value="DESC">DESC</option>
+                                        <option value="Unsort">Unsort</option>
+                                    </select>
+                                </th>
+                                <th style={{ textAlign: "center" }}>
+                                    Class
+                                    <span style={{ marginLeft: "5px" }}>
+                                        <i
+                                            className={`${symbolSorting(
+                                                sortedClasses
+                                            )} symbol-sorting ${!priority.includes("sortedClasses") ? "d-none" : ""
+                                                }`}
+                                        />
+                                    </span>
+                                    <select
+                                        name="sortedClasses"
+                                        id="sortedClasses"
+                                        className="selection-button"
+                                        value={sortedClasses}
+                                        onChange={(e) => {
+                                            unsortAll();
+                                            setSortedClasses(e.target.value);
+                                            if (e.target.value != "Unsort")
+                                                setPriority("sortedClasses");
                                         }}
                                         style={{ width: "20px" }}
                                     >
@@ -545,7 +547,7 @@ export default function FeedbackManagement() {
                                         <option value="Unsort">Unsort</option>
                                     </select>
                                 </th>
-                                <th style={{ textAlign: "center" }}>Detail</th>
+                                <th style={{ textAlign: "center" }}>More</th>
                             </tr>
                         </thead>
                         <tbody style={{ height: "auto" }}>
@@ -568,15 +570,16 @@ export default function FeedbackManagement() {
                                             levelName,
                                             description,
                                             courseImg,
+                                            classInfo,
                                             feedbackInfo,
                                             deleted,
-                                            pending,
-                                            censored,
-                                            deletedFb,
                                             rating,
                                         },
                                         index
                                     ) => {
+                                        let pos = infoMoreList.findIndex((obj) => {
+                                            return obj == `more-info-id-${courseID}`;
+                                        });
                                         return (
                                             <>
                                                 <tr key={courseID} className={`row-bg-${index % 2}`}>
@@ -595,19 +598,16 @@ export default function FeedbackManagement() {
                                                     </td>
                                                     <td style={{ textAlign: "left" }}>{courseName}</td>
                                                     <td style={{ textAlign: "left" }}>{levelName}</td>
-                                                    <td
-                                                        className={`${pending > 0 ? "text-primary" : ""}`}
-                                                        style={{ textAlign: "center" }}
-                                                    >
-                                                        {pending}
+                                                    <td style={{ textAlign: "" }}>{discount}</td>
+                                                    <td style={{ textAlign: "right" }}>
+                                                        {formatPrice(price)}
                                                     </td>
-                                                    <td style={{ textAlign: "center" }}>{censored}</td>
-                                                    <td style={{ textAlign: "center" }}>{deletedFb}</td>
-                                                    {feedbackInfo != null && feedbackInfo != undefined ? (
-                                                        <td style={{ textAlign: "center" }}>
-                                                            {feedbackInfo.length > 0
-                                                                ? feedbackInfo.length
-                                                                : "Not yet"}
+                                                    <td style={{ textAlign: "right" }}>
+                                                        {formatPrice(price * (1 - discount / 100))}
+                                                    </td>
+                                                    {classInfo != null && classInfo != undefined ? (
+                                                        <td>
+                                                            {classInfo != null ? classInfo.length : "0"}
                                                         </td>
                                                     ) : (
                                                         <td></td>
@@ -622,15 +622,127 @@ export default function FeedbackManagement() {
                                                         <td></td>
                                                     )}
                                                     <td style={{ textAlign: "center" }}>
-                                                        <button
-                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
-                                                            style={{ borderRadius: "10px" }}
-                                                            onClick={() => { }}
-                                                        >
-                                                            View
-                                                        </button>
+                                                        {pos >= 0 ? (
+                                                            <button
+                                                                className="px-2 py-1 text-decoration-none text-light bg-dark border-0"
+                                                                style={{ borderRadius: "10px" }}
+                                                                onClick={() => {
+                                                                    // infoMoreList.splice(pos, 1);
+                                                                    setInfoMoreList(
+                                                                        infoMoreList.filter(
+                                                                            (item) =>
+                                                                                item != `more-info-id-${courseID}`
+                                                                        )
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Hide
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="px-2 py-1 text-decoration-none border-0"
+                                                                style={{
+                                                                    borderRadius: "10px",
+                                                                    color: "#489970",
+                                                                    backgroundColor: "#569c7932",
+                                                                }}
+                                                                onClick={() => {
+                                                                    setInfoMoreList([
+                                                                        ...infoMoreList,
+                                                                        `more-info-id-${courseID}`,
+                                                                    ]);
+                                                                }}
+                                                            >
+                                                                View
+                                                            </button>
+                                                        )}
                                                     </td>
                                                 </tr>
+                                                {pos != null && pos >= 0 ? (
+                                                    <>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`description-${courseID}`}
+                                                        >
+                                                            <td></td>
+                                                            <td
+                                                                className="text-success"
+                                                                colSpan={2}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                    verticalAlign: "top",
+                                                                }}
+                                                            >
+                                                                Description
+                                                            </td>
+                                                            <td colSpan={7} style={{ textAlign: "justify" }}>
+                                                                {description}
+                                                            </td>
+                                                            <td colSpan={2}></td>
+                                                        </tr>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`classes-${courseID}`}
+                                                        >
+                                                            <td></td>
+                                                            <td
+                                                                className="text-success"
+                                                                colSpan={2}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                    verticalAlign: "top",
+                                                                }}
+                                                            >
+                                                                Classes
+                                                            </td>
+                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                                {classInfo != null && classInfo.length > 0 ? (
+                                                                    <AdminCourseClasses
+                                                                        courseClasses={classInfo}
+                                                                        className="flex justify-content-start"
+                                                                    />
+                                                                ) : (
+                                                                    <p className="text-danger m-0 p-0">
+                                                                        No classes yet
+                                                                    </p>
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                        <tr
+                                                            className="bg-dark bg-opacity-10"
+                                                            key={`feedback-${courseID}`}
+                                                        >
+                                                            <td></td>
+                                                            <td
+                                                                className="text-success"
+                                                                colSpan={2}
+                                                                style={{
+                                                                    textAlign: "right",
+                                                                    fontWeight: "600",
+                                                                    verticalAlign: "top",
+                                                                }}
+                                                            >
+                                                                Feedbacks
+                                                            </td>
+                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                                {feedbackInfo != null &&
+                                                                    feedbackInfo.length > 0 ? (
+                                                                    <AdminCourseFeedback
+                                                                        courseFeedback={feedbackInfo}
+                                                                    />
+                                                                ) : (
+                                                                    <p className="text-danger m-0 p-0">
+                                                                        No feedbacks yet
+                                                                    </p>
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                    </>
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </>
                                         );
                                     }

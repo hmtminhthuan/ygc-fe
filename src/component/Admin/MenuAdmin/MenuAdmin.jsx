@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function MeanuAdmin() {
+export default function MenuAdmin() {
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     const USER = JSON.parse(USER_LOGIN);
 

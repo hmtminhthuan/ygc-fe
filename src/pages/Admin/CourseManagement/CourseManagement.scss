@@ -1,5 +1,25 @@
 #admin-course-management-area {
   background-color: #fff;
+  .staff-course-view {
+    table {
+      thead {
+        .selection-button {
+          background-color: #4d9f76;
+          border: none;
+          color: #ffffff90;
+          cursor: pointer;
+        }
+        .symbol-sorting {
+          color: #ffffff70;
+        }
+        tr {
+          th {
+            background-color: #4d9f76;
+          }
+        }
+      }
+    }
+  }
   .main--content {
     thead {
       .selection-button {

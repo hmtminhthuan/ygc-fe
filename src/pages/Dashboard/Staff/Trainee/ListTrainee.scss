@@ -4,6 +4,17 @@
   background: linear-gradient(45deg, #f2ced8, #f2acc6);
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
+  tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    // z-index: 1;
+    // opacity: 1;
+  }
 }
 
 .headerlist {
@@ -61,7 +72,7 @@ tbody {
 }
 
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 tbody td {
@@ -92,8 +103,8 @@ tbody td:hover:before {
   right: 0;
   top: -9999px;
   bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.1);
-  // z-index: -1;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  // z-index: 1;
   // opacity: 1;
 }
 
@@ -131,5 +142,40 @@ tbody td:hover:before {
     align-items: center;
     color: red;
     z-index: 5000 !important;
+  }
+}
+
+.main--content {
+  .staff-list-area {
+    margin: 0;
+    background: linear-gradient(45deg, #f2ced8, #f2acc6);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    .trainee-containe {
+      table {
+        font-size: 14px;
+      }
+      tbody {
+        overflow: auto;
+        height: 300px;
+        text-align: center;
+      }
+
+      tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.3) !important;
+      }
+      tbody td {
+        position: relative;
+      }
+      tbody td:hover:before {
+        content: "";
+        position: absolute !important;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+      }
+    }
   }
 }
