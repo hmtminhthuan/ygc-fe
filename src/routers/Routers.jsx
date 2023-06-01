@@ -19,7 +19,7 @@ import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Dashboard/Staff/Trainee/ListTrainee";
 import ListTrainer from "../pages/Dashboard/Staff/Trainer/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
-// import UpdateTrainee from "../pages/Dashboard/Staff/UpdateTrainee";
+
 import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
 import CreateTrainee from "../pages/Dashboard/Staff/Trainee/CreateTrainee";
 import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManagement";
@@ -27,6 +27,7 @@ import FeedbackManagement from "../pages/Dashboard/Staff/Feedback/FeedbackManage
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
 import UserProfile from "../pages/UserProfile";
+import UpdateProfile from "../pages/UpdateProfile";
 import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/AdminCourseEdit";
 
 export default function Routers() {
@@ -43,11 +44,12 @@ export default function Routers() {
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
         { path: "/profile/:id", element: <UserProfile /> },
+        { path: "/updateProfile/:id", element: <UpdateProfile /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/listTrainee", element: <ListTrainee /> },
         { path: "/listTrainer", element: <ListTrainer /> },
         { path: "/listStaff", element: <ListStaff /> },
-        // { path: "/updateTrainee", element: <UpdateTrainee /> },
+
         { path: "/createTrainer", element: <CreateTrainer /> },
         { path: "/createTrainee", element: <CreateTrainee /> },
         { path: "/feedbackManagement", element: <FeedbackManagement /> },

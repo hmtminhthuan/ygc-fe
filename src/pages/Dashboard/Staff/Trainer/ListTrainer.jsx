@@ -127,7 +127,7 @@ export default function ListTrainer() {
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <div className="staff-list-area pt-3 pb-3">
+    <div className="staff-list-area pt-3 pb-5">
       <div className="row flex trainee-containe mt-2 mx-5 mb-5">
         <div className="headerlist mb-2">
           <h1>

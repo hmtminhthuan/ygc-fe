@@ -50,13 +50,14 @@
 
 .card .card-img-top {
   width: 100%;
+  height: 100%;
   border-radius: 5px;
   -webkit-box-shadow: 0 3px 5px 0px rgba(48, 44, 47, 0.871);
           box-shadow: 0 3px 5px 0px rgba(48, 44, 47, 0.871);
 }
 
 .card .card-title {
-  font-size: 28px;
+  font-size: 200%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,14 +67,14 @@
   color: #d08fba;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .card .card-title {
-    font-size: 22px;
+    font-size: 150%;
   }
 }
 
 .card .card-text {
-  height: 70px;
+  height: 70px !important;
   color: #757575;
   text-align: justify;
   font-size: 16px;
@@ -82,6 +83,13 @@
 .card .card-text a {
   font-weight: 500;
   color: #565555;
+}
+
+@media screen and (max-width: 1024px) {
+  .card .card-text {
+    overflow-y: hidden;
+    height: 65px !important;
+  }
 }
 
 .card .course-level {
@@ -115,11 +123,23 @@
   font-weight: bold !important;
 }
 
+@media screen and (max-width: 1024px) {
+  .card .course-price {
+    font-size: 18px;
+  }
+}
+
 .card .course-price-before-discount {
   font-size: 23px;
   color: #7d7d7d;
   text-decoration: line-through;
   font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+  .card .course-price-before-discount {
+    font-size: 18px;
+  }
 }
 
 .card .course-price-after-discount {
@@ -129,21 +149,9 @@
   text-decoration: none !important;
 }
 
-@media screen and (max-width: 768px) {
-  .card .course-price {
-    font-size: 20px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .card .course-price-before-discount {
-    font-size: 20px;
-  }
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .card .course-price-after-discount {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
