@@ -9,8 +9,20 @@
   width: 72% !important;
 }
 
+@media only screen and (max-width: 940px) {
+  .bg-header-scrolled .header-container {
+    width: 100% !important;
+  }
+}
+
 .bg-header-scrolled .nav-item {
   color: white !important;
+}
+
+.hello-user {
+  font-size: 20px;
+  font-weight: 500;
+  color: #d291bc !important;
 }
 
 .header {
@@ -68,16 +80,27 @@
   background-color: #d291bc;
 }
 
+@media only screen and (max-width: 940px) {
+  .header .navbar-item {
+    background-color: #000 !important;
+    width: 100%;
+  }
+}
+
 .header .nav-item {
   font-size: 18px;
   color: #000;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 940px) {
   .header .nav-item {
     color: white !important;
     margin: 0 !important;
     padding: 0 10px !important;
+  }
+  .header .nav-item:hover {
+    -webkit-transform: scale(1.05) !important;
+            transform: scale(1.05) !important;
   }
 }
 
@@ -86,5 +109,10 @@
   font-weight: 500;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+.nav-item-after-login {
+  color: #d291bc !important;
+  font-weight: bold !important;
 }
 /*# sourceMappingURL=HeaderHome.css.map */

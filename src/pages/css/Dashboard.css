@@ -12,7 +12,7 @@ body {
   width: 100%;
 }
 
-body .header {
+body .headerdb {
   position: fixed;
   height: 50px;
   width: 100%;
@@ -23,9 +23,10 @@ body .header {
       -ms-flex-align: center;
           align-items: center;
   border-bottom: 2px solid #f1f1f1;
+  background-color: #fff;
 }
 
-body .header .logo {
+body .headerdb .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -36,11 +37,11 @@ body .header .logo {
   padding-left: 40px;
 }
 
-body .header .logo span {
+body .headerdb .logo span {
   color: #d08fba;
 }
 
-body .header .search--notification--profile {
+body .headerdb .search--notification--profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -54,7 +55,7 @@ body .header .search--notification--profile {
   padding: 0 40px;
 }
 
-body .header .search--notification--profile .search {
+body .headerdb .search--notification--profile .search {
   background-color: #f1f4f8;
   border-radius: 50px;
   width: 400px;
@@ -70,7 +71,7 @@ body .header .search--notification--profile .search {
           justify-content: space-between;
 }
 
-body .header .search--notification--profile .search input {
+body .headerdb .search--notification--profile .search input {
   background-color: transparent;
   outline: none;
   border: none;
@@ -78,7 +79,7 @@ body .header .search--notification--profile .search input {
   width: 85%;
 }
 
-body .header .search--notification--profile .search button {
+body .headerdb .search--notification--profile .search button {
   outline: none;
   border: none;
   border-radius: 50%;
@@ -95,12 +96,12 @@ body .header .search--notification--profile .search button {
           justify-content: center;
 }
 
-body .header .search--notification--profile .search button i {
+body .headerdb .search--notification--profile .search button i {
   font-size: 1.1rem;
   color: #d08fba;
 }
 
-body .header .search--notification--profile .notification--profile {
+body .headerdb .search--notification--profile .notification--profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -109,19 +110,19 @@ body .header .search--notification--profile .notification--profile {
           align-items: center;
 }
 
-body .header .search--notification--profile .notification--profile .picon {
+body .headerdb .search--notification--profile .notification--profile .picon {
   margin-left: 20px;
   font-size: 1.1rem;
   padding: 5px;
   border-radius: 5px;
 }
 
-body .header .search--notification--profile .notification--profile .bell {
+body .headerdb .search--notification--profile .notification--profile .bell {
   color: #f1d243;
   background-color: rgba(241, 210, 67, 0.2);
 }
 
-body .header .search--notification--profile .notification--profile .profile {
+body .headerdb .search--notification--profile .notification--profile .profile {
   position: relative;
   width: 40px;
   height: 40px;
@@ -129,7 +130,7 @@ body .header .search--notification--profile .notification--profile .profile {
   overflow: hidden;
 }
 
-body .header .search--notification--profile .notification--profile img {
+body .headerdb .search--notification--profile .notification--profile img {
   position: absolute;
   top: 0;
   left: 0;
@@ -239,7 +240,7 @@ body .main .icon-0 {
 }
 
 body .main .icon-1 {
-  color: #c5bc58;
+  color: #d2c535;
 }
 
 body .main .icon-2 {

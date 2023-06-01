@@ -133,4 +133,8 @@ main .box .inner-box .tag-cloud a {
   line-height: 1.8;
   font-weight: 400;
 }
+
+.blog-content {
+  text-align: justify;
+}
 /*# sourceMappingURL=BlogPage.css.map */
