@@ -98,7 +98,7 @@ export default function Login() {
             setTimeout(handleChangePassword(accountID), 2800);
           } else {
             api
-              .put(`/Account/UpdateAccount?id=${accountID}`, {
+              .put(`/Account/UpdatePasswordAccount?id=${accountID}`, {
                 password: result.value.trim(),
               })
               .then((res) => {
