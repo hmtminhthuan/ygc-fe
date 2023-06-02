@@ -7,8 +7,6 @@ import { Form, Input, Button } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import female from "../assets/images/avt-female.jpg";
 import male from "../assets/images/avt-male.jpg";
-// import { useHistory } from "react-router-dom";
-// import "./UpdateTrainee.scss";
 export default function UpdateProfile() {
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -16,11 +14,6 @@ export default function UpdateProfile() {
   };
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
-  // const [userInfo, setUserInfo] = useState({
-  //   phoneNumber: "",
-  //   address: "",
-  //   img: "",
-  // });
 
   const [lastName, setLastname] = useState("");
   const [firstName, setFirstname] = useState("");
@@ -35,14 +28,8 @@ export default function UpdateProfile() {
         params: { id: id },
       })
       .then((res) => {
-        // setProfile(res.data[0]);
         const userProfile = res.data[0];
         setProfile(userProfile);
-        // setUserInfo({
-        //   phoneNumber: res.data[0].phoneNumber,
-        //   address: res.data[0].address,
-        //   img: res.data[0].img,
-        // });
         formik.setValues({
           firstname: userProfile.firstName,
           lastname: userProfile.lastName,
@@ -64,47 +51,21 @@ export default function UpdateProfile() {
       });
   }, [id]);
 
-  // const handleChange = (e) => {
-  //   setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Send updated profile data to the server
-  //   api
-  //     .put(`/Account/UpdateAccount/${id}`, {
-  //       // phoneNumber: userInfo.phoneNumber,
-  //       // address: userInfo.address,
-  //       // img: userInfo.img,
-  //       profile: {
-  //         phoneNumber: userInfo.phoneNumber,
-  //         address: userInfo.address,
-  //         img: userInfo.img,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       Swal.fire({
-  //         position: "center",
-  //         icon: "success",
-  //         title: "Update successfully!",
-  //         showConfirmButton: true,
-  //         timer: 3500,
-  //       }); // Handle success
-  //     })
-  //     .catch((err) => {
-  //       console.log(err); // Handle error
-  //     });
-  // };
-
   const formik = useFormik({
     initialValues: {
+      firstname: "",
+      lastname: "",
       phoneNumber: "",
       address: "",
       img: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      if (values.img == "") {
+        values.img = "female";
+        if (profile.gender) {
+          values.img = "male";
+        }
+      }
       api
         .put(`/Account/UpdateAccount?id=${profile.accountID}`, values)
         .then((res) => {
@@ -128,10 +89,6 @@ export default function UpdateProfile() {
   if (!profile) {
     return null;
   }
-
-  // const { phoneNumber, address, img } = userInfo;
-
-  //   const history = useHistory();
 
   return (
     <div className="update">
