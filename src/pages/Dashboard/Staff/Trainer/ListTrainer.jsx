@@ -137,8 +137,7 @@ export default function ListTrainer() {
       </div>
       <section className="main bg-none the-content" id="">
         <MenuStaff />
-        <div className="main--content pt-3"
-          style={{ background: "linear-gradient(45deg, #f2ced8, #f2acc6)" }}>
+        <div className="main--content pt-3 bg-light">
           <div className="staff-list-area pt-3 pb-5">
             <div className="row flex trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
