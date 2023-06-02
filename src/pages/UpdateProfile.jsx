@@ -106,7 +106,7 @@ export default function UpdateProfile() {
     onSubmit: (values) => {
       console.log(values);
       api
-        .put(`/Account/UpdateAccount/${profile.accountID}`, values)
+        .put(`/Account/UpdateAccount?id=${profile.accountID}`, values)
         .then((res) => {
           console.log(res.data);
           Swal.fire({

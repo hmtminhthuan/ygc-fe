@@ -129,9 +129,13 @@ export default function ListTrainer() {
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
-    <>
-      <HeaderStaff />
-      <section className="main bg-none" id="">
+    <section
+      className="the-container"
+    >
+      <div className="the-menu">
+        <HeaderStaff />
+      </div>
+      <section className="main bg-none the-content" id="">
         <MenuStaff />
         <div className="main--content pt-3"
           style={{ background: "linear-gradient(45deg, #f2ced8, #f2acc6)" }}>
@@ -223,6 +227,6 @@ export default function ListTrainer() {
           </div>
         </div>
       </section>
-    </>
+    </section >
   );
 }

@@ -14,7 +14,8 @@ export default function MenuStaff() {
     };
   }, []);
   return (
-    <div className="sidebar pt-0 mt-0 pt-2">
+    <div className="sidebar pt-0 mt-0 pt-3 border-none"
+      style={{ border: "none" }}>
       <ul className="sidebar--items">
         <li>
           <a href="#" id="active--link">
