@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "remixicon/fonts/remixicon.css";
 import "./Dashboard.scss";
+import "./Slider.scss";
 import user from "../../assets/images/user.jpg";
 import { api } from "../../constants/api";
 import logo from "../../assets/images/logo.png";
@@ -265,17 +266,36 @@ export default function Dashboard() {
                   </button>
                 </div>
               </div>
-              <div className="doctors--cards">
-                {trainerList.map((trainer) => (
-                  <a href="#" className="doctor--card" key={trainer.accountID}>
-                    <div className="img--box--cover">
-                      <div className="img--box">
-                        <img src={`/path/to/images/${trainer.img}.png`} />
-                      </div>
+
+              <div className="carousel">
+                <div className="carousel__body">
+                  <div className="carousel__prev">
+                    <i className="far fa-angle-left"></i>
+                  </div>
+
+                  <div className="carousel__next">
+                    <i className="far fa-angle-right"></i>
+                  </div>
+
+                  <div className="carousel__slider">
+                    <div className="doctors--cards">
+                      {trainerList.map((trainer) => (
+                        <a
+                          href="#"
+                          className="doctor--card"
+                          key={trainer.accountID}
+                        >
+                          <div className="img--box--cover">
+                            <div className="img--box">
+                              <img src={`/path/to/images/${trainer.img}.png`} />
+                            </div>
+                          </div>
+                          <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>
+                        </a>
+                      ))}
                     </div>
-                    <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>
-                  </a>
-                ))}
+                  </div>
+                </div>
               </div>
             </div>
             <div className="recent--patients">

@@ -14,8 +14,10 @@ export default function MenuStaff() {
     };
   }, []);
   return (
-    <div className="sidebar pt-0 mt-0 pt-3 border-none"
-      style={{ border: "none" }}>
+    <div
+      className="sidebar pt-0 mt-0 pt-3 border-none"
+      style={{ border: "none" }}
+    >
       <ul className="sidebar--items">
         <li>
           <a href="#" id="active--link">
@@ -52,14 +54,14 @@ export default function MenuStaff() {
             <span className="sidebar--item">Trainees</span>
           </a>
         </li>
-        <li>
+        {/* <li>
           <a href="/staff/course">
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
             <span className="sidebar--item">Courses</span>
           </a>
-        </li>
+        </li> */}
         <li>
           <a href="/staff/feedbackManagement">
             <span className="icon icon-6">
