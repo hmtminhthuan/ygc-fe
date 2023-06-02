@@ -7,6 +7,7 @@ export default function HomeCarousel() {
     return (
         <section className="hero-wrap js-fullheight">
             <div className="overlay" />
+            <div className="overlay2" />
             <div className="container">
                 <div className="container row no-gutters slider-text js-fullheight align-items-center justify-content-center">
                     <div className="col-md-8 ftco-animate">
