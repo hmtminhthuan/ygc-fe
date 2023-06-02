@@ -2,6 +2,7 @@ import React from "react";
 import { api } from "../../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Select } from "antd";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./CreateTrainee.scss";
 
@@ -254,10 +255,12 @@ export default function CreateTrainee() {
                     <button className="btn btn-primary mx-2 my-2" type="submit">
                       Create
                     </button>
-                    <button className="btn btn-light mx-2">Cancel</button>
                   </Form.Item>
                 </div>
               </Form>
+              {/* <Link to="/dashboard">
+                <button className="btn btn-light mx-2">Cancel</button>
+              </Link> */}
             </div>
           </div>
         </div>
