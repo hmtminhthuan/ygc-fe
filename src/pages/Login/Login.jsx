@@ -103,13 +103,22 @@ export default function Login() {
               })
               .then((res) => {
                 console.log(res);
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Reset Password successfully!",
-                  showConfirmButton: true,
-                  timer: 2500,
-                });
+                api
+                  .get(`/Account/GetUserProfile?id=${accountID}`)
+                  .then((res) => {
+                    console.log(res);
+                    localStorage.removeItem("USER_LOGIN");
+                    localStorage.setItem("USER_LOGIN", JSON.stringify(res.data[0]));
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: `Reset Password successfully!</br>Welcome ${res.data[0].firstName} ${res.data[0].lastName}`,
+                      showConfirmButton: true,
+                      timer: 1500,
+                    }).then(function () {
+                      window.location.href = '/';
+                    })
+                  });
               })
               .catch((err) => {
                 console.log(err);

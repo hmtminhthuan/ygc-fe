@@ -86,12 +86,21 @@ export default function Register() {
                     Swal.fire({
                       position: "center",
                       icon: "success",
-                      title: "Register successfully!",
+                      title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
                       showConfirmButton: true,
                       timer: 2500,
-                    }).then(() => {
-
-                    });
+                    })
+                    api
+                      .post("/Account/CheckLogin", {
+                        phoneNumber: values.phoneNumber,
+                        password: values.password,
+                      })
+                      .then((res) => {
+                        console.log(res);
+                        localStorage.removeItem("USER_LOGIN");
+                        localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
+                        window.location.href = '/';
+                      });
                   })
                   .catch((err) => {
                     Swal.fire({
