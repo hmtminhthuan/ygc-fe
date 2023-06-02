@@ -131,8 +131,7 @@ export default function ListTrainee() {
       <HeaderStaff />
       <section className="main bg-none" id="">
         <MenuStaff />
-        <div className="main--content pt-3"
-          style={{ background: "linear-gradient(45deg, #f2ced8, #f2acc6)" }}>
+        <div className="main--content pt-3 bg-white">
           <section className="staff-list-area pt-3 pb-3">
             {/* <MenuStaff /> */}
             <div className="row flex trainee-containe mt-2 mx-5 mb-5">

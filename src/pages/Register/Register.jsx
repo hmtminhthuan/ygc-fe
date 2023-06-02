@@ -26,10 +26,15 @@ export default function Register() {
       email: "",
       address: "",
       password: "",
+      img: "",
     },
 
     onSubmit: async (values) => {
       console.log(values);
+      values.img = 'female';
+      if (values.gender) {
+        values.img = 'male'
+      }
       api.get("/Account/SendCodeRegister"
         , {
           params: { email: values.email }
@@ -84,6 +89,8 @@ export default function Register() {
                       title: "Register successfully!",
                       showConfirmButton: true,
                       timer: 2500,
+                    }).then(() => {
+
                     });
                   })
                   .catch((err) => {

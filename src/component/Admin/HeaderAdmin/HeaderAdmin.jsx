@@ -6,13 +6,10 @@ export default function HeaderAdmin({ background, ...restParams }) {
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     const USER = JSON.parse(USER_LOGIN);
     return (
-        <section className="headerdb"
-            style={{
-                borderBottom: "1px solid gray",
-            }}>
+        <section className="headerdb bg-black border-0">
             <div className="logo mt-2">
                 <h2>
-                    <i className="ri-menu-line icon icon-0 menu mx-2"
+                    <i className="ri-menu-line icon icon-0 menu mx-2 text-light"
                         style={{ cursor: "pointer" }} />
                 </h2>
                 <h2 style={{ cursor: "pointer" }}
@@ -21,7 +18,7 @@ export default function HeaderAdmin({ background, ...restParams }) {
                         window.location.href = '/'
                     }}>
                     <img src={logo} />
-                    Yoga<span>Center</span>
+                    <span className="text-light">Yoga</span><span>Center</span>
                 </h2>
             </div>
             <div className="search--notification--profile
