@@ -247,9 +247,10 @@ body {
     .cards {
       display: flex;
       gap: 20px;
-
+      justify-content: space-evenly;
       .card {
-        padding: 20px;
+        padding: 40px;
+        margin-bottom: 20px;
         border-radius: 20px;
         min-width: 230px;
         height: auto;

@@ -29,7 +29,7 @@ export default function Dashboard() {
     };
   }, []);
 
-  // Trainerlist
+  //Trainerlist;
   const [trainerList, setTrainerList] = useState([]);
   useEffect(() => {
     api
@@ -58,13 +58,13 @@ export default function Dashboard() {
   }, []);
 
   //Course
-  const [courseList, setCourseList] = useState([]);
+  const [countList, setCountList] = useState([]);
   useEffect(() => {
     api
-      .get("/Course/GetCourseList")
+      .get("/api/Admin/GetNumberOfAdmin")
       .then((res) => {
         const total = res.data;
-        setCourseList(total);
+        setCountList(total);
       })
       .catch((err) => {
         console.log(err);
@@ -185,7 +185,7 @@ export default function Dashboard() {
               <li>
                 <a href="#">
                   <span className="icon icon-6">
-                    <i className="  ri-terminal-window-fill" />
+                    <i className="ri-terminal-window-fill" />
                   </span>
                   <span className="sidebar--item">Blogs</span>
                 </a>
@@ -217,41 +217,61 @@ export default function Dashboard() {
               <div className="title">
                 <h2 className="section--title">Overview</h2>
               </div>
-              <div className="cards">
-                <div className="card card-1 text-center">
+              <div className="row cards ">
+                <div className="col-sm-3 card card-1 text-center">
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
-                      <h1 className=" mt-4">{trainerList.length}</h1>
+                      <h1 className=" mt-4">{countList.numOfTrainer}</h1>
                     </div>
                     <i className="ri-user-2-line card--icon--lg" />
                   </div>
                 </div>
-                <div className="card card-2 text-center">
+                <div className="col-sm-3 card card-2 text-center">
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainees</h5>
-                      <h1 className=" mt-4">{traineeList.length}</h1>
+                      <h1 className=" mt-4">{countList.numOfTrainee}</h1>
                     </div>
                     <i className=" mr-4 ri-user-line card--icon--lg " />
                   </div>
                 </div>
-                <div className="card card-3 text-center">
+                <div className="col-sm-3 card card-3 text-center">
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
-                      <h1 className=" mt-4">{courseList.length}</h1>
+                      <h1 className=" mt-4">{countList.numOfCourse}</h1>
                     </div>
                     <i className="mr-4 ri-book-open-fill card--icon--lg" />
                   </div>
                 </div>
-                <div className="card card-4 text-center">
+                <div className="col-sm-3 card card-4 text-center">
                   <div className="card--data mt-5 mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Classes</h5>
-                      <h1 className=" mt-4">15</h1>
+                      <h1 className=" mt-4">{countList.numOfClass}</h1>
                     </div>
                     <i className="mr-4 ri-community-line card--icon--lg" />
+                  </div>
+                </div>
+
+                <div className="col-sm-3 card card-6 text-center">
+                  <div className="card--data mt-5 mx-3">
+                    <div className="card--content">
+                      <h5 className="card--title">Feedbacks</h5>
+                      <h1 className=" mt-4">{countList.numOfFeedback}</h1>
+                    </div>
+                    <i className="mr-4 ri-community-line card--icon--lg" />
+                  </div>
+                </div>
+
+                <div className="col-sm-3 card card-5 text-center">
+                  <div className="card--data mt-5 mx-3">
+                    <div className="card--content">
+                      <h5 className="card--title">Blogs</h5>
+                      <h1 className=" mt-4">{countList.numOfBlog}</h1>
+                    </div>
+                    <i className="mr-4 ri-terminal-window-fill card--icon--lg" />
                   </div>
                 </div>
               </div>
