@@ -190,9 +190,9 @@ export default function ListTrainee() {
 
               {/* Sort by gender */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Sort by Gender
-                </h4>
+                </h5>
                 <div
                   className="w-50 flex justify-content-end"
                   style={{ fontSize: "13px" }}
@@ -214,9 +214,9 @@ export default function ListTrainee() {
 
               {/* Search By Phone */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Search by Phone
-                </h4>
+                </h5>
                 <div className="w-50 flex justify-content-end">
                   <input
                     type="search"
@@ -225,7 +225,7 @@ export default function ListTrainee() {
                       borderRadius: "5px",
                       border: "1px solid gray",
                       outline: "none",
-                      fontSize: "16px",
+                      fontSize: "13px",
                     }}
                     className="px-1 py-1 w-100"
                     value={searchedPhone}
@@ -238,9 +238,9 @@ export default function ListTrainee() {
 
               {/* Search By Email */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Search by Email
-                </h4>
+                </h5>
                 <div className="w-50 flex justify-content-end">
                   <input
                     type="search"
@@ -249,7 +249,7 @@ export default function ListTrainee() {
                       borderRadius: "5px",
                       border: "1px solid gray",
                       outline: "none",
-                      fontSize: "16px",
+                      fontSize: "13px",
                     }}
                     className="px-1 py-1 w-100"
                     value={searchedEmail}
