@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -28,11 +28,60 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
             border: 0,
         },
     }));
+    const [available, setAvailable] = useState(false);
+    const [markAvailable, setMarkAvailable] = useState(false);
+    const [viewAllButton, setViewAllButton] = useState(false);
+    const [hideButton, setHideButton] = useState(false);
 
+    useEffect(() => {
+        if (courseClasses.length > 0) {
+            for (i = 0; i < courseClasses.length; i++) {
+                let current = moment(new Date()).format("DD-MM-YYYY");
+                let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
+                    "DD-MM-YYYY"
+                );
+                if (current <= end) {
+                    setAvailable(true);
+                    setMarkAvailable(true);
+                    break;
+                }
+            }
+        }
+
+        if (courseClasses.length > 0) {
+            for (i = 0; i < courseClasses.length; i++) {
+                let current = moment(new Date()).format("DD-MM-YYYY");
+                let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
+                    "DD-MM-YYYY"
+                );
+                if (current > end) {
+                    setViewAllButton(true);
+                    break;
+                }
+            }
+        }
+
+    }, []);
+
+    let countNo = 1;
+    console.log('list', courseClasses);
     return (
         <div className="row flex justify-content-start">
             <div className="course-detail-classes col-10">
-                {courseClasses.length <= 0 ? (
+                {courseClasses.length > 0 ?
+                    <p className="text-black p-0 m-0 mx-2 mb-2"
+                        style={{ fontWeight: "bold" }}>Number of Current Classes:{" "}
+                        {courseClasses.filter(item => {
+                            return moment(new Date(`${item.endDate}`)).format(
+                                "DD-MM-YYYY"
+                            ) >= moment(new Date()).format(
+                                "DD-MM-YYYY"
+                            )
+                        }).length} </p>
+                    : <></>}
+                <p className="text-black p-0 m-0 mx-2 mb-3"
+                    style={{ fontWeight: "bold" }}>Number of Total Classes: {courseClasses.length} </p>
+                {courseClasses.length <= 0 || !available ? (
                     <p
                         className="text-danger text-center p-0 m-0"
                         style={{ fontSize: "18px", fontWeight: "600" }}
@@ -40,7 +89,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                         No available class till present!
                     </p>
                 ) : (
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} style={{ height: "360px" }}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
                                 <TableRow className=" bg-dark">
@@ -53,53 +102,107 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {courseClasses.map(
-                                    (
-                                        {
-                                            classId,
-                                            trainerId,
-                                            startDate,
-                                            endDate,
-                                            firstname,
-                                            lastname,
-                                            schedule,
-                                            room,
-                                        },
-                                        index
-                                    ) => {
-                                        return (
-                                            <StyledTableRow key={index}>
-                                                <StyledTableCell align="left">
-                                                    {index + 1}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    {moment(new Date(`${startDate}`)).format(
-                                                        "DD-MM-YYYY"
-                                                    )}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    {moment(new Date(`${endDate}`)).format("DD-MM-YYYY")}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    {firstname} {lastname}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    {room}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="left">
-                                                    {schedule.map(({ date, time }, index) => (
-                                                        <p className="p-0 m-0 py-1" key={index}>
-                                                            {date},{" "}{time}
-                                                        </p>
-                                                    ))}
-                                                </StyledTableCell>
-                                            </StyledTableRow>
-                                        );
-                                    }
-                                )}
+                                {courseClasses
+                                    .sort((a, b) => {
+                                        return moment(new Date(`${b.endDate}`)).format(
+                                            "DD-MM-YYYY"
+                                        ) > moment(new Date(`${a.endDate}`)).format("DD-MM-YYYY")
+                                            ? 1
+                                            : -1;
+                                    })
+                                    .map(
+                                        (
+                                            {
+                                                classId,
+                                                trainerId,
+                                                startDate,
+                                                endDate,
+                                                firstname,
+                                                lastname,
+                                                schedule,
+                                                room,
+                                            },
+                                            index
+                                        ) => {
+                                            let current = moment(new Date()).format("DD-MM-YYYY");
+                                            let start = moment(new Date(`${startDate}`)).format(
+                                                "DD-MM-YYYY"
+                                            );
+                                            let end = moment(new Date(`${endDate}`)).format(
+                                                "DD-MM-YYYY"
+                                            );
+                                            if (current > end && viewAllButton) {
+                                                return <></>;
+                                            }
+                                            return (
+                                                <StyledTableRow key={index}>
+                                                    <StyledTableCell align="left">
+                                                        {countNo++}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left"
+                                                        className={`${current > start ? "bg-warning bg-opacity-10" : ""}`}>
+                                                        {start}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left"
+                                                        className={`${current > end ? "bg-warning bg-opacity-10" : ""}`}>
+                                                        {end}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">
+                                                        {firstname} {lastname}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{room}</StyledTableCell>
+                                                    <StyledTableCell align="left">
+                                                        {schedule.map(({ date, time }, index) => (
+                                                            <p className="p-0 m-0 py-1" key={index}>
+                                                                {date}, {time}
+                                                            </p>
+                                                        ))}
+                                                    </StyledTableCell>
+                                                </StyledTableRow>
+                                            );
+                                        }
+                                    )}
                             </TableBody>
                         </Table>
                     </TableContainer>
+                )}
+                {viewAllButton && courseClasses.length > 0 ? (
+                    <div className="text-end">
+                        <button
+                            className="border-0 mt-2 mx-1
+                    text-black bg-info bg-opacity-75 py-1 px-2"
+                            style={{ borderRadius: "5px" }}
+                            onClick={() => {
+                                setViewAllButton(false);
+                                setHideButton(true);
+                                setAvailable(true);
+                            }}
+                        >
+                            View All Classes
+                        </button>
+                    </div>
+                ) : (
+                    <></>
+                )}
+                {hideButton ? (
+                    <div className="text-end">
+                        <button
+                            className="border-0 mt-2 mx-1
+                    text-light bg-black bg-opacity-75 py-1 px-2"
+                            style={{ borderRadius: "5px" }}
+                            onClick={() => {
+                                setViewAllButton(true);
+                                setHideButton(false);
+                                if (!markAvailable) {
+                                    setAvailable(false);
+                                }
+                            }}
+                        >
+                            Hide
+                        </button>
+                    </div>
+                ) : (
+                    <></>
                 )}
             </div>
         </div>

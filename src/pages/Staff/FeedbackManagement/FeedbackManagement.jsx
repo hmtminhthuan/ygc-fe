@@ -60,7 +60,7 @@ export default function FeedbackManagement() {
             .finally(() => {
                 courseListStart.forEach((course) => {
                     api
-                        .get("/Feedback/GetCourseFeedbackbyId", {
+                        .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
                             params: { courseid: course.courseID },
                         })
                         .then((res) => {
@@ -109,9 +109,18 @@ export default function FeedbackManagement() {
                             courseListEnd = [...courseListEnd, course];
                         })
                         .finally(async () => {
-                            courseListEnd = await courseListEnd.sort(
-                                (a, b) => a.courseID - b.courseID
-                            );
+                            let count = 0;
+                            courseListEnd = await courseListEnd.sort((a, b) => {
+                                if (b.pending - a.pending != 0) {
+                                    count++;
+                                }
+                                return b.pending - a.pending;
+                            });
+                            if (count == 0) {
+                                courseListEnd = await courseListEnd.sort(
+                                    (a, b) => a.courseID - b.courseID
+                                );
+                            }
                             setCourseList(courseListEnd);
                             setRenderCourseList(courseListEnd);
                         });
@@ -596,8 +605,11 @@ export default function FeedbackManagement() {
                                                     <td style={{ textAlign: "left" }}>{courseName}</td>
                                                     <td style={{ textAlign: "left" }}>{levelName}</td>
                                                     <td
-                                                        className={`${pending > 0 ? "text-primary" : ""}`}
-                                                        style={{ textAlign: "center" }}
+                                                        className={`${pending > 0 ? "text-danger" : ""}`}
+                                                        style={{
+                                                            textAlign: "center",
+                                                            fontWeight: `${pending > 0 ? "bolder" : ""}`,
+                                                        }}
                                                     >
                                                         {pending}
                                                     </td>

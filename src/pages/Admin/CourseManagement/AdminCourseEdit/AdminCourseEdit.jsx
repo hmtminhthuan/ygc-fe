@@ -13,6 +13,7 @@ export default function AdminCourseEdit() {
     const [editedCourse, setEditedCourse] = useState({});
     const [previewImg, setPreviewImg] = useState("");
     const [previewPrice, setPreviewPrice] = useState(-1);
+    const [previewDiscount, setPreviewDiscount] = useState(-1);
     const [levelList, setLevelList] = useState([]);
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
@@ -57,7 +58,10 @@ export default function AdminCourseEdit() {
                 if (result.isDenied === true || result.isDismissed === true) {
                 } else if (result.isConfirmed === true) {
                     api
-                        .put(`/Course/UpdateCourse?Courseid=${editedCourse.courseID}`, values)
+                        .put(
+                            `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
+                            values
+                        )
                         .then((res) => {
                             console.log("res", res);
                             Swal.fire({
@@ -89,6 +93,7 @@ export default function AdminCourseEdit() {
                 setEditedCourse(res.data);
                 setPreviewImg(res.data.courseImg);
                 setPreviewPrice(res.data.price);
+                setPreviewDiscount(res.data.discount);
             })
             .catch((err) => {
                 console.log(err);
@@ -197,15 +202,6 @@ export default function AdminCourseEdit() {
                                         placeholder="Enter Price"
                                     />
                                 </Form.Item>
-                                {previewPrice < 0 ? (
-                                    <></>
-                                ) : (
-                                    <Form.Item className="preview-item" label="Preview Price">
-                                        <p className="p-0 m-0 preview-item-content">
-                                            {formatPrice(previewPrice)}
-                                        </p>
-                                    </Form.Item>
-                                )}
                                 <Form.Item
                                     name="discount"
                                     label="Discount"
@@ -231,7 +227,33 @@ export default function AdminCourseEdit() {
                                         placeholder="Enter Discount (optional)"
                                     />
                                 </Form.Item>
-
+                                {previewPrice > 0 && previewDiscount <= 0 ? (
+                                    <Form.Item className="preview-item" label="Preview Price">
+                                        <p className="p-0 m-0 preview-item-content">
+                                            {formatPrice(previewPrice)}
+                                        </p>
+                                    </Form.Item>
+                                ) : (
+                                    <></>
+                                )}
+                                {previewPrice > 0 && previewDiscount > 0 ? (
+                                    <Form.Item className="preview-item" label="Preview Price">
+                                        <p className="p-0 m-0 preview-item-content">
+                                            {formatPrice(previewPrice)}{" "}
+                                            <span className="text-danger">
+                                                <i className="fa-solid fa-arrow-right px-2" />{" "}
+                                                {formatPrice(
+                                                    previewPrice * (1 - previewDiscount / 100)
+                                                )}
+                                                <span className="px-2">
+                                                    (Discount: {previewDiscount}%)
+                                                </span>
+                                            </span>
+                                        </p>
+                                    </Form.Item>
+                                ) : (
+                                    <></>
+                                )}
                                 <Form.Item
                                     label="Level"
                                     name="levelId"

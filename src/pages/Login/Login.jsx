@@ -80,7 +80,7 @@ export default function Login() {
             icon: "error",
             title: "Reset Password failed!",
             showConfirmButton: true,
-            timer: 2500,
+            timer: 1000,
           });
         } else if (result.isConfirmed === true) {
           if (result.value.trim().length < 6) {
@@ -90,7 +90,7 @@ export default function Login() {
               title:
                 "Your password must be at least 6 chacracters. </br> Please enter again!",
               showConfirmButton: true,
-              timer: 2500,
+              timer: 2000,
               preConfirm: (login) => {
                 // console.log(login);
               },
@@ -108,7 +108,10 @@ export default function Login() {
                   .then((res) => {
                     console.log(res);
                     localStorage.removeItem("USER_LOGIN");
-                    localStorage.setItem("USER_LOGIN", JSON.stringify(res.data[0]));
+                    localStorage.setItem(
+                      "USER_LOGIN",
+                      JSON.stringify(res.data[0])
+                    );
                     Swal.fire({
                       position: "center",
                       icon: "success",
@@ -116,8 +119,8 @@ export default function Login() {
                       showConfirmButton: true,
                       timer: 1500,
                     }).then(function () {
-                      window.location.href = '/';
-                    })
+                      window.location.href = "/";
+                    });
                   });
               })
               .catch((err) => {
@@ -131,12 +134,24 @@ export default function Login() {
       });
   };
 
+  const sendCodeAgain = (validationCode, email, accountID) => {
+    api
+      .post(`/Account/CreateValidationCode?email=${email}`)
+      .then((res) => {
+        handleResetPassword(res.data.validationCode, email, res.data.accountID);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleResetPassword = (validationCode, email, accountID) => {
     console.log(validationCode);
     Swal.fire({
       title: `Verify your Email`,
       html: `We send a code to your Email: ${email}. <br/>
-  Please check and enter this code here. <br/> This will close in <b></b> seconds.`,
+  Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
+  </br><b>Send another code?</b> <a class="again"></a>`,
       input: "text",
       timer: 180000,
       timerProgressBar: true,
@@ -148,7 +163,20 @@ export default function Login() {
       confirmButtonText: "Confirm",
       showLoaderOnConfirm: true,
       didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
+        const sendCodeAgainHTML =
+          Swal.getHtmlContainer().querySelector("a.again");
+        sendCodeAgainHTML.addEventListener("click", () => {
+          Swal.fire({
+            position: "center",
+            title: `We have sent another code to your Email.`,
+            showConfirmButton: true,
+            timer: 1200,
+          }).then(function () {
+            sendCodeAgain(validationCode, email, accountID);
+          });
+        });
+        sendCodeAgainHTML.textContent = `Click here`;
+        const b = Swal.getHtmlContainer().querySelector("b.time");
         let timerInterval = setInterval(() => {
           b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
         }, 1000);
@@ -159,13 +187,14 @@ export default function Login() {
       allowOutsideClick: () => !Swal.isLoading(),
     })
       .then((result) => {
+        let timeLeft = Swal.getTimerLeft();
         if (result.isDenied === true || result.isDismissed === true) {
           Swal.fire({
             position: "center",
             icon: "error",
             title: "Reset Password failed! </br> Please try again",
             showConfirmButton: true,
-            timer: 2500,
+            timer: 1000,
           });
         } else if (result.isConfirmed === true) {
           console.log(validationCode);
@@ -177,8 +206,11 @@ export default function Login() {
               icon: "error",
               title: "Wrong verify code! </br> Please try again",
               showConfirmButton: true,
-              timer: 2500,
-            });
+              timer: 1000,
+            }).then(function () {
+              // enterCodeAgain(validationCode, email, accountID, timeLeft);
+              // mark mark
+            })
           }
         }
       })

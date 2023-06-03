@@ -11,6 +11,7 @@ import TextArea from "antd/es/input/TextArea";
 export default function AdminCourseCreate() {
     const [previewImg, setPreviewImg] = useState("");
     const [previewPrice, setPreviewPrice] = useState(-1);
+    const [previewDiscount, setPreviewDiscount] = useState(-1);
     const [levelList, setLevelList] = useState([]);
     const formatPrice = (price) => {
         return Intl.NumberFormat("vi-VN", {
@@ -166,23 +167,10 @@ export default function AdminCourseCreate() {
                                     placeholder="Enter Price"
                                 />
                             </Form.Item>
-                            {previewPrice < 0 ? (
-                                <></>
-                            ) : (
-                                <Form.Item className="preview-item" label="Preview Price">
-                                    <p className="p-0 m-0 preview-item-content">
-                                        {formatPrice(previewPrice)}
-                                    </p>
-                                </Form.Item>
-                            )}
                             <Form.Item
                                 name="discount"
                                 label="Discount"
                                 rules={[
-                                    // {
-                                    //     required: true,
-                                    //     message: "Discount is not in correct form",
-                                    // },
                                     {
                                         pattern: /^[1-9]?[0-9]{1}$|^100$/,
                                         message: "Discount must be from 0-100",
@@ -196,10 +184,37 @@ export default function AdminCourseCreate() {
                                     type="number"
                                     value={formik.values.discount}
                                     onChange={formik.handleChange}
-                                    placeholder="Enter Discount (optional)"
+                                    onInput={(e) => {
+                                        setPreviewDiscount(e.target.value);
+                                    }}
+                                    placeholder="Enter Discount (default = 0)"
                                 />
                             </Form.Item>
-
+                            {previewPrice > 0 && previewDiscount <= 0 ? (
+                                <Form.Item className="preview-item" label="Preview Price">
+                                    <p className="p-0 m-0 preview-item-content">
+                                        {formatPrice(previewPrice)}
+                                    </p>
+                                </Form.Item>
+                            ) : (
+                                <></>
+                            )}
+                            {previewPrice > 0 && previewDiscount > 0 ? (
+                                <Form.Item className="preview-item" label="Preview Price">
+                                    <p className="p-0 m-0 preview-item-content">
+                                        {formatPrice(previewPrice)}{" "}
+                                        <span className="text-danger">
+                                            <i className="fa-solid fa-arrow-right px-2" />{" "}
+                                            {formatPrice(previewPrice * (1 - previewDiscount / 100))}
+                                            <span className="px-2">
+                                                (Discount: {previewDiscount}%)
+                                            </span>
+                                        </span>
+                                    </p>
+                                </Form.Item>
+                            ) : (
+                                <></>
+                            )}
                             <Form.Item
                                 label="Level"
                                 name="levelId"
@@ -285,7 +300,7 @@ export default function AdminCourseCreate() {
                                     onInput={(e) => {
                                         setPreviewImg(e.target.value);
                                     }}
-                                    placeholder="Enter Link Of Image (optional)"
+                                    placeholder="Enter Link Of Image"
                                 />
                             </Form.Item>
                             {previewImg == "" ? (

@@ -11,7 +11,7 @@ export default function AdminCourseFeedback({ courseFeedback, ...restParams }) {
     useEffect(() => {
         courseFeedback.forEach(({ id, ...restParams }) => {
             api
-                .get("/Feedback/GetFeedbackDetailForTrainee", {
+                .get("/Feedback/GetFeedbackDetailForAdmin", {
                     params: {
                         feedbackId: id,
                     },
@@ -23,7 +23,6 @@ export default function AdminCourseFeedback({ courseFeedback, ...restParams }) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
                 });
         });
         if (courseFeedback.length <= 0) {

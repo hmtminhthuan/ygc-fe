@@ -7,6 +7,7 @@ import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import moment from "moment/moment";
 
 export default function CourseManagement() {
     const [courseList, setCourseList] = useState([]);
@@ -64,7 +65,6 @@ export default function CourseManagement() {
                 courseListStart = res.data;
             })
             .catch((err) => {
-                console.log(err);
             })
             .finally(async () => {
                 await courseListStart.forEach((course) => {
@@ -82,7 +82,7 @@ export default function CourseManagement() {
                         })
                         .finally(() => {
                             api
-                                .get("/Feedback/GetCourseFeedbackbyId", {
+                                .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
                                     params: { courseid: course.courseID },
                                 })
                                 .then((res) => {
@@ -263,14 +263,38 @@ export default function CourseManagement() {
             case "ASC":
                 setRenderCourseList(
                     [...renderCourseList].sort(
-                        (a, b) => a.classInfo.length - b.classInfo.length
+                        (a, b) => a.classInfo.filter(item => {
+                            return moment(new Date(`${item.endDate}`)).format(
+                                "DD-MM-YYYY"
+                            ) >= moment(new Date()).format(
+                                "DD-MM-YYYY"
+                            )
+                        }).length - b.classInfo.filter(item => {
+                            return moment(new Date(`${item.endDate}`)).format(
+                                "DD-MM-YYYY"
+                            ) >= moment(new Date()).format(
+                                "DD-MM-YYYY"
+                            )
+                        }).length
                     )
                 );
                 break;
             case "DESC":
                 setRenderCourseList(
                     [...renderCourseList].sort(
-                        (a, b) => b.classInfo.length - a.classInfo.length
+                        (a, b) => b.classInfo.filter(item => {
+                            return moment(new Date(`${item.endDate}`)).format(
+                                "DD-MM-YYYY"
+                            ) >= moment(new Date()).format(
+                                "DD-MM-YYYY"
+                            )
+                        }).length - a.classInfo.filter(item => {
+                            return moment(new Date(`${item.endDate}`)).format(
+                                "DD-MM-YYYY"
+                            ) >= moment(new Date()).format(
+                                "DD-MM-YYYY"
+                            )
+                        }).length
                     )
                 );
                 break;
@@ -322,14 +346,10 @@ export default function CourseManagement() {
 
     const handleDeleteCourseByAdmin = (courseid) => {
         api
-            .delete("/Course/DeleteCourse", {
-                params: { courseid: parseInt(courseid) },
-            })
+            .put(`/Course/DeleteCourse?courseid=${courseid}`)
             .then((res) => {
-                console.log(res);
             })
             .catch((err) => {
-                console.log(err);
             })
             .finally(() => {
                 renderCourseForAdmin();
@@ -337,15 +357,11 @@ export default function CourseManagement() {
     };
 
     const handleReactivateByAdmin = (courseid) => {
-        console.log(parseInt(courseid));
-        console.log(typeof parseInt(courseid));
         api
             .put(`/Course/ReactivateCourse?CourseId=${parseInt(courseid)}`)
             .then((res) => {
-                console.log(res);
             })
             .catch((err) => {
-                console.log(err);
             })
             .finally(() => {
                 renderCourseForAdmin();
@@ -685,7 +701,19 @@ export default function CourseManagement() {
                                                     </td>
                                                     {classInfo != null && classInfo != undefined ? (
                                                         <td>
-                                                            {classInfo != null ? classInfo.length : "0"}
+                                                            {classInfo != null && classInfo.filter(item => {
+                                                                return moment(new Date(`${item.endDate}`)).format(
+                                                                    "DD-MM-YYYY"
+                                                                ) >= moment(new Date()).format(
+                                                                    "DD-MM-YYYY"
+                                                                )
+                                                            }).length > 0 ? classInfo.filter(item => {
+                                                                return moment(new Date(`${item.endDate}`)).format(
+                                                                    "DD-MM-YYYY"
+                                                                ) >= moment(new Date()).format(
+                                                                    "DD-MM-YYYY"
+                                                                )
+                                                            }).length : <span>Not yet</span>}
                                                         </td>
                                                     ) : (
                                                         <td></td>
@@ -747,11 +775,9 @@ export default function CourseManagement() {
                                                                         confirmButtonText: "Confirm",
                                                                         cancelButtonText: "Cancel",
                                                                         preConfirm: (login) => {
-                                                                            // console.log(login);
                                                                         },
                                                                         allowOutsideClick: true,
                                                                     }).then((result) => {
-                                                                        console.log(result);
                                                                         if (
                                                                             result.isDenied === true ||
                                                                             result.isDismissed === true
@@ -780,7 +806,13 @@ export default function CourseManagement() {
                                                                 onClick={() => {
                                                                     if (
                                                                         classInfo != null &&
-                                                                        classInfo.length > 0
+                                                                        classInfo.filter(item => {
+                                                                            return moment(new Date(`${item.endDate}`)).format(
+                                                                                "DD-MM-YYYY"
+                                                                            ) >= moment(new Date()).format(
+                                                                                "DD-MM-YYYY"
+                                                                            )
+                                                                        }).length > 0
                                                                     ) {
                                                                         Swal.fire({
                                                                             position: "center",
@@ -801,11 +833,9 @@ export default function CourseManagement() {
                                                                             confirmButtonText: "Confirm",
                                                                             cancelButtonText: "Cancel",
                                                                             preConfirm: (login) => {
-                                                                                // console.log(login);
                                                                             },
                                                                             allowOutsideClick: true,
                                                                         }).then((result) => {
-                                                                            console.log(result);
                                                                             if (
                                                                                 result.isDenied === true ||
                                                                                 result.isDismissed === true

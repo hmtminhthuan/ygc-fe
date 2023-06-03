@@ -16,6 +16,235 @@ export default function Register() {
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
   const [form] = Form.useForm();
+
+
+
+  const enterCodeAgain = (registeredEmail, values, code, time) => {
+    console.log(values);
+    console.log('time', time);
+    let timeLeft;
+    Swal.fire({
+      title: `Verify your Email`,
+      html: `We send a code to your Email: ${registeredEmail}. <br/>
+    Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
+    </br><b>Send another code?</b> <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
+      input: "text",
+      timer: time,
+      timerProgressBar: true,
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Confirm",
+      showLoaderOnConfirm: true,
+      didOpen: () => {
+        const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
+        sendCodeAgainHTML.addEventListener('click', () => {
+          Swal.fire({
+            position: "center",
+            title: `We have sent another code to your Email.`,
+            showConfirmButton: true,
+            timer: 1500,
+          }).then(function () {
+            sendCodeAgain(values);
+          })
+        })
+        sendCodeAgainHTML.textContent = `Click here`
+        const b = Swal.getHtmlContainer().querySelector("b.time");
+        let timerInterval = setInterval(() => {
+          b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+        }, 1000);
+      },
+      preConfirm: (login) => {
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      console.log('swal', Swal.getTimerLeft());
+      console.log(result);
+      timeLeft = Swal.getTimerLeft();
+      if (result.isDenied === true || result.isDismissed === true) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Register failed! </br> Please try again",
+          showConfirmButton: true,
+          timer: 1200,
+        });
+      } else if (result.isConfirmed === true) {
+        if (result.value === code) {
+
+          const roleId = 4;
+          values = { ...values, roleId };
+          console.log("values", values);
+          api.post("/Account/CreateAccount",
+            values
+          )
+            .then((res) => {
+              console.log(res);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
+                showConfirmButton: true,
+                timer: 2000,
+              })
+              api
+                .post("/Account/CheckLogin", {
+                  phoneNumber: values.phoneNumber,
+                  password: values.password,
+                })
+                .then((res) => {
+                  console.log(res);
+                  localStorage.removeItem("USER_LOGIN");
+                  localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
+                  window.location.href = '/';
+                });
+            })
+            .catch((err) => {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title:
+                  "This Email or Phone number has been registered! </br> Please try again",
+                showConfirmButton: true,
+                timer: 10000,
+              });
+            });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Wrong verify code! </br> Please try again",
+            showConfirmButton: true,
+            timer: 1000,
+          }).then(function () {
+            enterCodeAgain(registeredEmail, values, code, timeLeft);
+          })
+        }
+      }
+    });
+  }
+
+  const sendCodeAgain = (values) => {
+
+    values.img = 'female';
+    if (values.gender) {
+      values.img = 'male'
+    }
+    api.get("/Account/SendCodeRegister"
+      , {
+        params: { email: values.email }
+      }
+    )
+      .then(async (res) => {
+        Swal.fire({
+          title: `Verify your Email`,
+          html: `We send a code to your Email: ${values.email}. <br/>
+      Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
+      </br><b>Send another code?</b>
+      <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
+          input: "text",
+          timer: 180000,
+          timerProgressBar: true,
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: "Confirm",
+          showLoaderOnConfirm: true,
+          didOpen: () => {
+            const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
+            sendCodeAgainHTML.addEventListener('click', () => {
+              Swal.fire({
+                position: "center",
+                title: `We have sent another code to your Email.`,
+                showConfirmButton: true,
+                timer: 1500,
+              }).then(function () {
+                sendCodeAgain(values);
+              })
+            })
+            sendCodeAgainHTML.textContent = `Click here`
+            const b = Swal.getHtmlContainer().querySelector("b.time");
+            let timerInterval = setInterval(() => {
+              b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+            }, 1000);
+          },
+          preConfirm: (login) => {
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        }).then((result) => {
+          console.log(result);
+          console.log('swal', Swal.getTimerLeft());
+          let timeLeft = Swal.getTimerLeft();
+          if (result.isDenied === true || result.isDismissed === true) {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Register failed! </br> Please try again",
+              showConfirmButton: true,
+              timer: 1200,
+            });
+          } else if (result.isConfirmed === true) {
+            if (result.value === res.data) {
+              console.log("values", values);
+              values = { ...values, roleId };
+              api.post("/Account/CreateAccount",
+                values
+              )
+                .then((res) => {
+                  console.log(res);
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
+                    showConfirmButton: true,
+                    timer: 2500,
+                  })
+                  api
+                    .post("/Account/CheckLogin", {
+                      phoneNumber: values.phoneNumber,
+                      password: values.password,
+                    })
+                    .then((res) => {
+                      console.log(res);
+                      localStorage.removeItem("USER_LOGIN");
+                      localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
+                      window.location.href = '/';
+                    });
+                })
+                .catch((err) => {
+                  Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title:
+                      "This Email or Phone number has been registered! </br> Please try again",
+                    showConfirmButton: true,
+                    timer: 10000,
+                  });
+                });
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Wrong verify code! </br> Please try again",
+                showConfirmButton: true,
+                timer: 1000,
+              }).then(function () {
+                enterCodeAgain(values.email, values, res.data, timeLeft);
+              })
+            }
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -30,7 +259,6 @@ export default function Register() {
     },
 
     onSubmit: async (values) => {
-      console.log(values);
       values.img = 'female';
       if (values.gender) {
         values.img = 'male'
@@ -41,10 +269,12 @@ export default function Register() {
         }
       )
         .then(async (res) => {
-          await Swal.fire({
+          let timeLeft;
+          Swal.fire({
             title: `Verify your Email`,
             html: `We send a code to your Email: ${values.email}. <br/>
-          Please check and enter this code here. <br/> This will close in <b></b> seconds.`,
+          Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
+          </br><b>Send another code?</b> <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
             input: "text",
             timer: 180000,
             timerProgressBar: true,
@@ -56,29 +286,43 @@ export default function Register() {
             confirmButtonText: "Confirm",
             showLoaderOnConfirm: true,
             didOpen: () => {
-              const b = Swal.getHtmlContainer().querySelector("b");
+              const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
+              sendCodeAgainHTML.addEventListener('click', () => {
+                Swal.fire({
+                  position: "center",
+                  title: `We have sent another code to your Email.`,
+                  showConfirmButton: true,
+                  timer: 1500,
+                }).then(function () {
+                  sendCodeAgain(values);
+                })
+              })
+              sendCodeAgainHTML.textContent = `Click here`
+              const b = Swal.getHtmlContainer().querySelector("b.time");
               let timerInterval = setInterval(() => {
                 b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
               }, 1000);
             },
             preConfirm: (login) => {
-              // console.log(login);
             },
             allowOutsideClick: () => !Swal.isLoading(),
           }).then((result) => {
             console.log(result);
+            console.log('swal', Swal.getTimerLeft());
+            timeLeft = Swal.getTimerLeft();
             if (result.isDenied === true || result.isDismissed === true) {
               Swal.fire({
                 position: "center",
                 icon: "error",
                 title: "Register failed! </br> Please try again",
                 showConfirmButton: true,
-                timer: 2500,
+                timer: 1500,
               });
             } else if (result.isConfirmed === true) {
               if (result.value === res.data) {
+                values = { ...values, roleId };
                 console.log("values", values);
-                api.post("/Account/TraineeRegister",
+                api.post("/Account/CreateAccount",
                   values
                 )
                   .then((res) => {
@@ -118,8 +362,10 @@ export default function Register() {
                   icon: "error",
                   title: "Wrong verify code! </br> Please try again",
                   showConfirmButton: true,
-                  timer: 2500,
-                });
+                  timer: 1000,
+                }).then(function () {
+                  enterCodeAgain(values.email, values, res.data, timeLeft);
+                })
               }
             }
           });
