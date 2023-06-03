@@ -5,7 +5,7 @@ import { Form, Input, Button, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import Swal from "sweetalert2";
-// import "./CreateTrainer.scss";
+import "./CreateBlog.scss";
 
 export default function CreateBlog() {
   const formItemLayout = {
@@ -22,12 +22,12 @@ export default function CreateBlog() {
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      const formattedValues = {
-        ...values,
-        date: values.date.toISOString(), // Chuyển đổi định dạng ngày thành chuỗi thời gian
-      };
+      //   const formattedValues = {
+      //     ...values,
+      //     date: values.date.toISOString(), // Chuyển đổi định dạng ngày thành chuỗi thời gian
+      //   };
       api
-        .post("/Blog/CreateBlog", formattedValues)
+        .post("/Blog/CreateBlog", values)
         .then((res) => {
           // Account trainer created successfully
           const createdBlog = res.data;
@@ -50,7 +50,7 @@ export default function CreateBlog() {
   });
 
   return (
-    <div className="update">
+    <div className="createblog">
       <div className="containerud">
         <h1 className="mt-5 mb-4">Create New Blog</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
