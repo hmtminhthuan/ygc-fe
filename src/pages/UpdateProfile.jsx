@@ -15,8 +15,8 @@ export default function UpdateProfile() {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
 
-  const [lastName, setLastname] = useState("");
-  const [firstName, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [roleName, setRoleName] = useState("");
@@ -28,22 +28,26 @@ export default function UpdateProfile() {
         params: { id: id },
       })
       .then((res) => {
-        const userProfile = res.data[0];
+        const userProfile = res.data;
+        console.log(res.data);
         setProfile(userProfile);
+        setPhone(res.data.phoneNumber);
+        setAddress(res.data.address);
+        setPreviewImg(res.data.img);
         formik.setValues({
-          firstname: userProfile.firstName,
-          lastname: userProfile.lastName,
+          firstname: userProfile.firstname,
+          lastname: userProfile.lastname,
           phoneNumber: userProfile.phoneNumber,
           address: userProfile.address,
           img: userProfile.img,
         });
-        setLastname(res.data[0].lastName);
-        setFirstname(res.data[0].firstName);
-        setRoleName(res.data[0].role.name);
-        setPhone(res.data[0].phoneNumber);
-        setAddress(res.data[0].address);
-        if (res.data[0].img == "male" && res.data[0].img == "female") {
-          setPreviewImg(res.data[0].img);
+        setLastname(res.data.lastname);
+        setFirstname(res.data.firstname);
+        // setRoleName(res.data.role.name);
+        setPhone(res.data.phoneNumber);
+        setAddress(res.data.address);
+        if (res.data.img == "male" && res.data.img == "female") {
+          setPreviewImg(res.data.img);
         }
       })
       .catch((err) => {
@@ -60,6 +64,7 @@ export default function UpdateProfile() {
       img: "",
     },
     onSubmit: (values) => {
+      console.log(values);
       if (values.img == "") {
         values.img = "female";
         if (profile.gender) {
@@ -67,9 +72,9 @@ export default function UpdateProfile() {
         }
       }
       api
-        .put(`/Account/UpdateAccount?id=${profile.accountID}`, values)
+        .put(`/Account/UpdateAccount?id=${profile.id}`, values)
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
           Swal.fire({
             position: "center",
             icon: "success",
@@ -77,7 +82,7 @@ export default function UpdateProfile() {
             showConfirmButton: true,
             timer: 1000,
           }).then(function () {
-            window.location.href = `/profile/${profile.accountID}`;
+            window.location.href = `/profile/${profile.id}`;
           });
         })
         .catch((err) => {
@@ -91,11 +96,11 @@ export default function UpdateProfile() {
   }
 
   return (
-    <div className="update">
-      <div className="containerud">
-        <h1 className="mt-5 mb-4">Update User's Account</h1>
-        <div className="bg-white shadow rounded-lg d-sm-flex">
-          <div className="profile-tab-nav">
+    <div className="update w-100 flex justify-content-center">
+      <div className="containerud w-75" style={{ margin: "0 auto" }}>
+        <h1 className="mt-5 mb-4 text-primary text-center">Update Account</h1>
+        <div className="row bg-white shadow rounded-lg d-md-flex justify-content-center">
+          <div className="profile-tab-nav col-lg-3 col-md-12 border-md-0">
             <div className="p-4 mt-4 w-100">
               <div className="img-circle text-center mb-3">
                 {profile.img == "male" && previewImg == "" ? (
@@ -115,24 +120,36 @@ export default function UpdateProfile() {
                 )}
               </div>
               <h4 className="text-center" style={{}}>
-                {firstName} {lastName}
+                {firstname} {lastname}
               </h4>
-              <p className="text-left p-0 m-0 mt-2" style={{}}>
+              <h6 className="text-center" style={{}}>
+                Phone: {phone}
+              </h6>
+              <h6 className="text-center" style={{}}>
+                Address: {address}
+              </h6>
+              {/* <p className="text-left p-0 m-0 mt-2" style={{}}>
                 Phone: {phone}
               </p>
               <p
                 className="text-left p-0 m-0 mt-2"
-                style={{ maxWidth: "200px" }}
+                // style={{ maxWidth: "200px" }}
               >
                 Address: {address}
-              </p>
+              </p> */}
               {/* <p className="text-center">Account ID: {id}</p>
               <p className="text-center">Role: {roleName}</p> */}
             </div>
           </div>
 
-          <div className="tab-content p-4 p-md-5">
-            <div className="tab-pane fade show active">
+          <div
+            className="tab-content p-4 p-md-5 col-lg-9 col-md-12
+          "
+          >
+            <div
+              className="tab-pane fade show active w-100
+            d-md-flex d-sm-flex justify-content-center"
+            >
               {/* <h3 className="mb-4">Account Settings</h3> */}
               <Form
                 {...formItemLayout}
@@ -142,7 +159,7 @@ export default function UpdateProfile() {
                 autoComplete="off"
               >
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-12 col-lg-6">
                     <div className="form-group">
                       <Form.Item
                         name="firstname"
@@ -150,12 +167,12 @@ export default function UpdateProfile() {
                         rules={[
                           {
                             required: true,
-                            message: "Firstname cannot be blank",
+                            message: "firstname cannot be blank",
                           },
                           { whitespace: true },
                         ]}
                         hasFeedback
-                        initialValue={profile.firstName}
+                        initialValue={profile.firstname}
                       >
                         <Input
                           name="firstname"
@@ -164,12 +181,12 @@ export default function UpdateProfile() {
                           onInput={(e) => {
                             setFirstname(e.target.value);
                           }}
-                          placeholder="Enter Firstname"
+                          placeholder="Enter firstname"
                         />
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12 col-lg-6">
                     <div className="form-group">
                       <Form.Item
                         name="lastname"
@@ -177,12 +194,12 @@ export default function UpdateProfile() {
                         rules={[
                           {
                             required: true,
-                            message: "Lastname cannot be blank",
+                            message: "lastname cannot be blank",
                           },
                           { whitespace: true },
                         ]}
                         hasFeedback
-                        initialValue={profile.lastName}
+                        initialValue={profile.lastname}
                       >
                         <Input
                           name="lastname"
@@ -191,7 +208,7 @@ export default function UpdateProfile() {
                           onInput={(e) => {
                             setLastname(e.target.value);
                           }}
-                          placeholder="Enter Lastname"
+                          placeholder="Enter lastname"
                         />
                       </Form.Item>
                     </div>
@@ -200,9 +217,9 @@ export default function UpdateProfile() {
                     <div className="form-group flex m-0">
                       <Form.Item
                         name="phoneNumber"
-                        label="Phone Number"
-                        className="w-75"
-                        style={{ width: "fit-content" }}
+                        label="Phone"
+                        className="w-100"
+                        style={{ width: "" }}
                         rules={[
                           {
                             required: true,
@@ -239,8 +256,8 @@ export default function UpdateProfile() {
                       <Form.Item
                         name="address"
                         label="Address"
-                        className="w-75"
-                        style={{ width: "fit-content" }}
+                        className="w-100"
+                        style={{ width: "" }}
                         rules={[]}
                         hasFeedback
                         initialValue={profile.address}
@@ -263,14 +280,14 @@ export default function UpdateProfile() {
                       <Form.Item
                         name="img"
                         label="Image"
-                        className="w-75"
+                        className="w-100"
                         rules={[]}
                         hasFeedback
-                        initialValue={
-                          !profile.img == "male" && !profile.img == "female"
+                        initialValue={`${
+                          profile.img != "male" && profile.img != "female"
                             ? profile.img
                             : ""
-                        }
+                        }`}
                       >
                         <TextArea
                           style={{ width: "100%" }}
@@ -295,7 +312,7 @@ export default function UpdateProfile() {
                   </div>
                   <div className="col-6 flex align-items-center">
                     <Link
-                      to={`/profile/${profile.accountID}`}
+                      to={`/profile/${profile.id}`}
                       className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
                     text-decoration-none text-light"
                       style={{ borderRadius: "10px" }}

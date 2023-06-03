@@ -59,12 +59,12 @@
         .row-bg-1 {
           background-color: #33333315;
           &:hover {
-            background-color: #33333320;
+            background-color: #33333320 !important;
           }
         }
         .row-bg-0 {
           &:hover {
-            background-color: #33333320;
+            background-color: #33333320 !important;
           }
         }
         button {
@@ -94,5 +94,24 @@
     .preview-item-content {
       color: rgb(0, 145, 255);
     }
+  }
+}
+.course-detail-come-back {
+  &:hover {
+    span,
+    i {
+      color: #e36ac8;
+    }
+  }
+}
+.row-bg-1 {
+  background-color: #33333315;
+  &:hover {
+    background-color: #33333315 !important;
+  }
+}
+.row-bg-0 {
+  &:hover {
+    background-color: #fff !important;
   }
 }

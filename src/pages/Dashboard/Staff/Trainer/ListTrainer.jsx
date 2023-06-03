@@ -12,6 +12,9 @@ export default function ListTrainer() {
   const [sortedTrainers, setSortedTrainers] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
   const [genderSort, setgenderSort] = useState("All");
+  const [searchedEmail, setSearchedEmail] = useState("");
+  const [searchedPhone, setSearchedPhone] = useState("");
+  const [searchedName, setSearchedName] = useState("");
 
   useEffect(() => {
     api
@@ -140,10 +143,8 @@ export default function ListTrainer() {
                 </h1>
               </div>
               {/* Sort by firstname */}
-              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
-                  Sort by FirstName
-                </h4>
+              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by FirstName</h4>
                 <div className="w-50">
                   <Select
                     className="w-100 text-dark"
@@ -158,16 +159,40 @@ export default function ListTrainer() {
                     <Select.Option value="all">All</Select.Option>
                   </Select>
                 </div>
+              </div> */}
+
+              {/* Search By Name */}
+              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Search by Name
+                </h5>
+                <div className="w-50 flex justify-content-end">
+                  <input
+                    type="search"
+                    placeholder="Enter part of Name..."
+                    style={{
+                      borderRadius: "5px",
+                      border: "1px solid gray",
+                      outline: "none",
+                      fontSize: "13px",
+                    }}
+                    className="px-1 py-1 w-100"
+                    value={searchedName}
+                    onChange={(e) => {
+                      setSearchedName(e.target.value);
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Sort by gender */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Sort by Gender
-                </h4>
-                <div className="w-50">
+                </h5>
+                <div className="w-50" style={{ fontSize: "13px" }}>
                   <Select
-                    className="w-100 text-dark"
+                    className="w-100 text-dark mx-1"
                     name="gender"
                     value={genderSort}
                     onChange={(value) => {
@@ -180,8 +205,56 @@ export default function ListTrainer() {
                   </Select>
                 </div>
               </div>
+
+              {/* Search By Phone */}
+              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Search by Phone
+                </h5>
+                <div className="w-50 flex justify-content-end">
+                  <input
+                    type="search"
+                    placeholder="Enter Phone..."
+                    style={{
+                      borderRadius: "5px",
+                      border: "1px solid gray",
+                      outline: "none",
+                      fontSize: "13px",
+                    }}
+                    className="px-1 py-1 w-100"
+                    value={searchedPhone}
+                    onChange={(e) => {
+                      setSearchedPhone(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Search By Email */}
+              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Search by Email
+                </h5>
+                <div className="w-50 flex justify-content-end">
+                  <input
+                    type="search"
+                    placeholder="Enter Email..."
+                    style={{
+                      borderRadius: "5px",
+                      border: "1px solid gray",
+                      outline: "none",
+                      fontSize: "13px",
+                    }}
+                    className="px-1 py-1 w-100"
+                    value={searchedEmail}
+                    onChange={(e) => {
+                      setSearchedEmail(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
               <div className="trainee">
-                <table>
+                <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
                       <th>First Name</th>
@@ -196,25 +269,49 @@ export default function ListTrainer() {
                     </tr>
                   </thead>
                   <tbody>
-                    {sortedTrainers.map((trainer) => (
-                      <tr key={trainer.accountID}>
-                        <td>{`${trainer.firstName}`}</td>
-                        <td>{`${trainer.lastName}`}</td>
-                        <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
-                        <td>{`${trainer.phoneNumber}`}</td>
-                        <td>{`${trainer.email}`}</td>
-                        <td>{`${trainer.address}`}</td>
-                        <td></td>
-                        <td></td>
-                        <td className="setting">
-                          <i
-                            className="ri-delete-bin-line mx-2"
-                            onClick={() => deleteTrainer(trainer.accountID)}
-                            style={{ cursor: "pointer" }}
-                          ></i>
-                        </td>
-                      </tr>
-                    ))}
+                    {sortedTrainers
+                      .filter((item) =>
+                        item.email
+                          .trim()
+                          .toLowerCase()
+                          .includes(searchedEmail.trim().toLowerCase())
+                      )
+                      .filter((item) =>
+                        item.phoneNumber
+                          .trim()
+                          .toLowerCase()
+                          .includes(searchedPhone.trim().toLowerCase())
+                      )
+                      .filter(
+                        (item) =>
+                          item.firstName
+                            .trim()
+                            .toLowerCase()
+                            .includes(searchedName.trim().toLowerCase()) ||
+                          item.lastName
+                            .trim()
+                            .toLowerCase()
+                            .includes(searchedName.trim().toLowerCase())
+                      )
+                      .map((trainer) => (
+                        <tr key={trainer.accountID}>
+                          <td>{`${trainer.firstName}`}</td>
+                          <td>{`${trainer.lastName}`}</td>
+                          <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
+                          <td>{`${trainer.phoneNumber}`}</td>
+                          <td>{`${trainer.email}`}</td>
+                          <td>{`${trainer.address}`}</td>
+                          <td></td>
+                          <td></td>
+                          <td className="setting">
+                            <i
+                              className="ri-delete-bin-line mx-2"
+                              onClick={() => deleteTrainer(trainer.accountID)}
+                              style={{ cursor: "pointer" }}
+                            ></i>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

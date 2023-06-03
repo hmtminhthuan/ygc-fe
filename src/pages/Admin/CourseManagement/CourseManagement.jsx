@@ -408,8 +408,8 @@ export default function CourseManagement() {
                                 Deleted
                             </button>
                         </div>
-                        <div className="my-1">
-                            <span className="px-2">Search by Name</span>
+                        <div className="my-1 flex align-items-center">
+                            <h5 className="m-0 p-0 px-2">Search by Name</h5>
                             <input
                                 type="search"
                                 placeholder="Enter part of name..."
@@ -417,6 +417,8 @@ export default function CourseManagement() {
                                     borderRadius: "5px",
                                     border: "1px solid gray",
                                     outline: "none",
+                                    fontSize: "14px",
+                                    padding: "2px 0"
                                 }}
                                 className="px-1"
                                 value={searchedName}
@@ -730,8 +732,8 @@ export default function CourseManagement() {
                                                     <td style={{ textAlign: "center" }}>
                                                         {pos >= 0 ? (
                                                             <button
-                                                                className="px-2 py-1 text-decoration-none text-light bg-dark border-0"
-                                                                style={{ borderRadius: "10px" }}
+                                                                className="px-2 py-1 text-decoration-none text-light bg-dark border-0  text-center"
+                                                                style={{ borderRadius: "50%", fontSize: "12px" }}
                                                                 onClick={() => {
                                                                     // infoMoreList.splice(pos, 1);
                                                                     setInfoMoreList(
@@ -742,12 +744,12 @@ export default function CourseManagement() {
                                                                     );
                                                                 }}
                                                             >
-                                                                Hide
+                                                                <i className="fa-solid fa-eye-slash" />
                                                             </button>
                                                         ) : (
                                                             <button
-                                                                className="px-2 py-1 text-decoration-none text-info bg-info bg-opacity-10 border-0"
-                                                                style={{ borderRadius: "10px" }}
+                                                                className="px-2 py-1 text-decoration-none text-info bg-info bg-opacity-10 border-0  text-center"
+                                                                style={{ borderRadius: "50%", fontSize: "15px" }}
                                                                 onClick={() => {
                                                                     setInfoMoreList([
                                                                         ...infoMoreList,
@@ -755,15 +757,15 @@ export default function CourseManagement() {
                                                                     ]);
                                                                 }}
                                                             >
-                                                                View
+                                                                <i className="fa-solid fa-book-open-reader" />
                                                             </button>
                                                         )}
                                                     </td>
                                                     {isDeleted ? (
                                                         <td style={{ textAlign: "center" }}>
                                                             <button
-                                                                className="px-2 py-1 text-decoration-none text-success bg-success bg-opacity-10 border-0"
-                                                                style={{ borderRadius: "10px" }}
+                                                                className="px-2 py-1 text-decoration-none text-success bg-success bg-opacity-10 border-0  text-center"
+                                                                style={{ borderRadius: "50%", fontSize: "15px" }}
                                                                 onClick={() => {
                                                                     Swal.fire({
                                                                         title: `Are you sure to activate this course?`,
@@ -795,14 +797,15 @@ export default function CourseManagement() {
                                                                     });
                                                                 }}
                                                             >
-                                                                Activate
+                                                                <i className="fa-solid fa-circle-check" />
+
                                                             </button>
                                                         </td>
                                                     ) : (
                                                         <td style={{ textAlign: "center" }}>
                                                             <button
-                                                                className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0"
-                                                                style={{ borderRadius: "10px" }}
+                                                                className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0  text-center"
+                                                                style={{ borderRadius: "50%", fontSize: "15px" }}
                                                                 onClick={() => {
                                                                     if (
                                                                         classInfo != null &&
@@ -856,19 +859,20 @@ export default function CourseManagement() {
                                                                     }
                                                                 }}
                                                             >
-                                                                Delete
+                                                                <i className="fa-solid fa-trash" />
                                                             </button>
                                                         </td>
                                                     )}
                                                     <td style={{ textAlign: "center" }}>
                                                         <button
-                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
-                                                            style={{ borderRadius: "10px" }}
+                                                            className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
+                                                            style={{ borderRadius: "50%", fontSize: "15px" }}
                                                         >
                                                             <Link
+                                                                className="px-2 py-1 "
                                                                 to={`/admin/courseManagement/editCourse/${courseID}`}
                                                             >
-                                                                Edit
+                                                                <i className="fa-solid fa-pen-to-square" />
                                                             </Link>
                                                         </button>
                                                     </td>
@@ -891,7 +895,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Description
                                                             </td>
-                                                            <td colSpan={7} style={{ textAlign: "justify" }}>
+                                                            <td colSpan={8} style={{ textAlign: "justify" }}>
                                                                 {description}
                                                             </td>
                                                             <td colSpan={2}></td>
@@ -912,7 +916,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Classes
                                                             </td>
-                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                            <td colSpan={10} style={{ textAlign: "left" }}>
                                                                 {classInfo != null && classInfo.length > 0 ? (
                                                                     <AdminCourseClasses
                                                                         courseClasses={classInfo}
@@ -941,7 +945,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Feedbacks
                                                             </td>
-                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                            <td colSpan={10} style={{ textAlign: "left" }}>
                                                                 {feedbackInfo != null &&
                                                                     feedbackInfo.length > 0 ? (
                                                                     <AdminCourseFeedback

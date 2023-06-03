@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
-import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import "./FeedbackManagement.scss";
 import { api } from "../../../constants/api";
-import AdminCourseClasses from "../../Admin/CourseManagement/AdminCourseClasses/AdminCourseClasses";
-import AdminCourseFeedback from "../../Admin/CourseManagement/AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
@@ -55,7 +51,6 @@ export default function FeedbackManagement() {
                 courseListStart = res.data;
             })
             .catch((err) => {
-                console.log(err);
             })
             .finally(() => {
                 courseListStart.forEach((course) => {
@@ -110,6 +105,9 @@ export default function FeedbackManagement() {
                         })
                         .finally(async () => {
                             let count = 0;
+                            courseListEnd = await courseListEnd.sort(
+                                (a, b) => a.courseID - b.courseID
+                            );
                             courseListEnd = await courseListEnd.sort((a, b) => {
                                 if (b.pending - a.pending != 0) {
                                     count++;
@@ -127,8 +125,6 @@ export default function FeedbackManagement() {
                 });
             });
     };
-
-    console.log(renderCourseList);
 
     useEffect(() => {
         renderCourseForAdmin();
@@ -635,11 +631,15 @@ export default function FeedbackManagement() {
                                                     )}
                                                     <td style={{ textAlign: "center" }}>
                                                         <button
-                                                            className="px-2 py-1 text-decoration-none text-primary bg-primary bg-opacity-10 border-0"
-                                                            style={{ borderRadius: "10px" }}
-                                                            onClick={() => { }}
+                                                            className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0 text-center"
+                                                            style={{ borderRadius: "50%" }}
                                                         >
-                                                            View
+                                                            <Link
+                                                                className="px-2 py-1 "
+                                                                to={`/staff/feedbackManagement/${courseID}`}
+                                                            >
+                                                                <i className="fa-solid fa-eye" />
+                                                            </Link>
                                                         </button>
                                                     </td>
                                                 </tr>

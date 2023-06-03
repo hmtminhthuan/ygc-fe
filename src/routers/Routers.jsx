@@ -34,7 +34,7 @@ import CourseView from "../pages/Staff/CourseView/CourseView";
 import CreateStaff from "../pages/Admin/StaffManagement/CreateStaff";
 import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
 import CreateBlog from "../pages/Dashboard/Staff/Blog/CreateBlog";
-
+import FeedbackManagementDetail from "../pages/Staff/FeedbackManagement/FeedbackManagementDetail/FeedbackManagementDetail";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -48,7 +48,7 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        { path: "/profile/:id", element: <UserProfile /> },
+        { path: "/profile/:paramID", element: <UserProfile /> },
         { path: "/updateProfile/:id", element: <UpdateProfile /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/listTrainee", element: <ListTrainee /> },
@@ -59,6 +59,10 @@ export default function Routers() {
         { path: "/createStaff", element: <CreateStaff /> },
         { path: "/feedbackManagement", element: <FeedbackManagement1 /> },
         { path: "/staff/feedbackManagement", element: <FeedbackManagement /> },
+        {
+          path: "/staff/feedbackManagement/:id",
+          element: <FeedbackManagementDetail />,
+        },
         { path: "/staff/course", element: <CourseView /> },
         { path: "/blogManagement", element: <BlogManagement /> },
         { path: "/createBlog", element: <CreateBlog /> },
