@@ -408,8 +408,8 @@ export default function CourseManagement() {
                                 Deleted
                             </button>
                         </div>
-                        <div className="my-1">
-                            <span className="px-2">Search by Name</span>
+                        <div className="my-1 flex align-items-center">
+                            <h5 className="m-0 p-0 px-2">Search by Name</h5>
                             <input
                                 type="search"
                                 placeholder="Enter part of name..."
@@ -417,8 +417,9 @@ export default function CourseManagement() {
                                     borderRadius: "5px",
                                     border: "1px solid gray",
                                     outline: "none",
+                                    fontSize: "16px"
                                 }}
-                                className="px-1"
+                                className="px-1 py-1"
                                 value={searchedName}
                                 onChange={(e) => {
                                     setSearchedName(e.target.value);
@@ -891,7 +892,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Description
                                                             </td>
-                                                            <td colSpan={7} style={{ textAlign: "justify" }}>
+                                                            <td colSpan={8} style={{ textAlign: "justify" }}>
                                                                 {description}
                                                             </td>
                                                             <td colSpan={2}></td>
@@ -912,7 +913,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Classes
                                                             </td>
-                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                            <td colSpan={10} style={{ textAlign: "left" }}>
                                                                 {classInfo != null && classInfo.length > 0 ? (
                                                                     <AdminCourseClasses
                                                                         courseClasses={classInfo}
@@ -941,7 +942,7 @@ export default function CourseManagement() {
                                                             >
                                                                 Feedbacks
                                                             </td>
-                                                            <td colSpan={9} style={{ textAlign: "left" }}>
+                                                            <td colSpan={10} style={{ textAlign: "left" }}>
                                                                 {feedbackInfo != null &&
                                                                     feedbackInfo.length > 0 ? (
                                                                     <AdminCourseFeedback
