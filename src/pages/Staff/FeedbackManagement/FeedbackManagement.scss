@@ -65,3 +65,12 @@
     }
   }
 }
+.new-row-feedback-handle {
+  background-color: #3b42a2 !important;
+  color: #fff !important;
+  &:hover {
+    background-color: #3b42a2 !important;
+    color: #fff !important;
+    z-index: 10;
+  }
+}
