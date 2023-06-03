@@ -47,6 +47,8 @@ main {
         color: rgb(208, 143, 186);
       }
       .exit {
+        position: absolute;
+        z-index: 1000 !important;
         display: flex;
         justify-content: space-between;
       }

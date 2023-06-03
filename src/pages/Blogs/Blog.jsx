@@ -39,11 +39,11 @@ function Blog() {
       <section className="w-100 bloglist-area px-md-4">
         <div className="blog-contaier flex justify-content-center align-content-center">
           <div className="row">
-            {blogList.map((blog, index) => {
+            {blogList.map((blog) => {
               const formattedDate = formatDate(blog.date);
               return (
                 <BlogDetail
-                  key={index}
+                  // key={index}
                   blogID={blog.blogID}
                   header={blog.header}
                   content={blog.content}

@@ -1,0 +1,92 @@
+.blog {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+  }
+
+  th,
+  td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #333 !important;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  thead th {
+    background-color: #333;
+    position: sticky;
+    top: 0;
+    color: #fff !important;
+    text-align: center;
+  }
+  tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  tbody td {
+    position: relative;
+  }
+  tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.1);
+    // z-index: -1;
+    // opacity: 1;
+  }
+
+  .view-content {
+    position: absolute;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .setting {
+    font-size: 18px;
+    z-index: 1000 !important;
+    .ri-edit-2-line {
+      position: absolute;
+      display: flex;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      justify-content: center;
+      align-items: center;
+      color: rgb(0, 9, 111);
+      cursor: pointer;
+    }
+    .ri-delete-bin-line {
+      padding-right: 10px;
+      position: absolute;
+      display: flex;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      justify-content: center;
+      align-items: center;
+      color: red;
+      z-index: 5000 !important;
+      cursor: pointer;
+    }
+  }
+
+  .tab {
+    display: flex;
+    justify-content: center;
+    .create {
+      margin-left: 100px;
+      right: 0;
+    }
+  }
+}

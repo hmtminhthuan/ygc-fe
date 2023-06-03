@@ -67,8 +67,6 @@ export default function ListTrainer() {
     setSortedTrainers(sortedTrainers);
   }, [firstNameSort, genderSort, trainerList]);
 
-  // const [shouldUpdateList, setShouldUpdateList] = useState(false);
-
   const deleteTrainer = (trainerId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -126,12 +124,8 @@ export default function ListTrainer() {
       });
   };
 
-  // const [sortOrder, setSortOrder] = useState("");
-
   return (
-    <section
-      className="the-container"
-    >
+    <section className="the-container">
       <div className="the-menu">
         <HeaderStaff />
       </div>
@@ -147,7 +141,9 @@ export default function ListTrainer() {
               </div>
               {/* Sort by firstname */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by FirstName</h4>
+                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Sort by FirstName
+                </h4>
                 <div className="w-50">
                   <Select
                     className="w-100 text-dark"
@@ -166,7 +162,9 @@ export default function ListTrainer() {
 
               {/* Sort by gender */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h4>
+                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Sort by Gender
+                </h4>
                 <div className="w-50">
                   <Select
                     className="w-100 text-dark"
@@ -194,9 +192,7 @@ export default function ListTrainer() {
                       <th>Address</th>
                       <th>Course</th>
                       <th>Class</th>
-                      <th>
-                        Delete
-                      </th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -226,6 +222,6 @@ export default function ListTrainer() {
           </div>
         </div>
       </section>
-    </section >
+    </section>
   );
 }

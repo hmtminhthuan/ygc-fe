@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-
+import "remixicon/fonts/remixicon.css";
 import HeaderHome from "../../../component/HeaderHome/HeaderHome";
 import user from "../../../assets/images/user.jpg";
 import axios from "axios";
@@ -51,11 +51,16 @@ function BlogPage() {
     <div>
       <HeaderHome />
       <main>
-        <div className="box" style={{
-          height: "90vh", overflowY: "scroll",
-          borderTopRightRadius: "10px", borderBottomRightRadius: "10px"
-        }}>
-          <div className="inner-box" style={{ top: "100%" }}>
+        <div
+          className="box"
+          style={{
+            height: "90vh",
+            overflowY: "scroll",
+            borderTopRightRadius: "10px",
+            borderBottomRightRadius: "10px",
+          }}
+        >
+          <div className="inner-box mt-5" style={{ top: "100%" }}>
             <div className="close">
               <Link to={"/blog"}>
                 <a href="">Close</a>
@@ -63,17 +68,15 @@ function BlogPage() {
               </Link>
             </div>
 
-            <div className="exit mt-2">
+            <div className="exit mt-5">
               <a>
                 {previousBlogID > 0 && (
                   <Link to={`/blogPage/${previousBlogID}`}>
-                    <i className="fa-solid fa-arrow-left mx-3 mt-2"></i>
+                    <i className="ri-arrow-left-line mx-3 mt-2">aaaaaa</i>
                   </Link>
                 )}
               </a>
-
               <a>
-                {" "}
                 {nextBlogID > 0 && (
                   <Link to={`/blogPage/${nextBlogID}`}>
                     <i className="fa-solid fa-arrow-right mx-3"></i>
@@ -97,7 +100,14 @@ function BlogPage() {
             </div>
 
             <div className="content blog-content">
-              <p>{content}</p>
+              <p>
+                {content.split("\r\n").map((paragraph, index) => (
+                  <React.Fragment key={index}>
+                    {paragraph}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </p>
 
               <p>
                 <img
