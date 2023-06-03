@@ -23,30 +23,30 @@ function UserProfile() {
       });
   }, [id]);
 
-  if (profile === null || profile[0] == null || profile[0] == undefined) {
+  if (profile === null) {
     return null;
   }
 
   let {
     accountID,
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     gender,
     email,
     phoneNumber,
     address,
-    role,
+    roleId,
     ...restParams
-  } = profile[0];
+  } = profile;
 
   let roleColor = "";
-  if (role.name === "Admin") {
+  if (roleId == 1) {
     roleColor = "text-red";
-  } else if (role.name === "Staff") {
+  } else if (roleId == 2) {
     roleColor = "text-orange";
-  } else if (role.name === "Trainer") {
+  } else if (roleId == 3) {
     roleColor = "text-blue";
-  } else if (role.name === "Trainee") {
+  } else if (roleId == 4) {
     roleColor = "text-green";
   }
   return (
@@ -69,14 +69,14 @@ function UserProfile() {
                       />
                     </div>
                     <h6 className="f-w-600" style={{ fontSize: "20px" }}>
-                      {firstName} {lastName}
+                      {firstname} {lastname}
                     </h6>
-                    <p
+                    {/* <p
                       className={`${roleColor}`}
                       style={{ fontSize: "16px", fontWeight: "bold" }}
                     >
                       Role: {role.name}
-                    </p>
+                    </p> */}
                     <div className="icon mt-3">
                       <Link to={"/"} className="home">
                         <i className="ri-home-4-line mt-5 mx-3 "></i>
