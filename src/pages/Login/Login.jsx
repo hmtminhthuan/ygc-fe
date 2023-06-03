@@ -24,11 +24,9 @@ export default function Login() {
     },
 
     onSubmit: (values) => {
-      console.log("values", values);
       api
         .post("/Account/CheckLogin", values)
         .then((res) => {
-          console.log(res);
           localStorage.removeItem("USER_LOGIN");
           localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
 
@@ -47,7 +45,6 @@ export default function Login() {
           });
         })
         .catch((err) => {
-          console.log(err);
           Swal.fire({
             position: "center",
             icon: "error",
@@ -92,7 +89,6 @@ export default function Login() {
               showConfirmButton: true,
               timer: 2000,
               preConfirm: (login) => {
-                // console.log(login);
               },
             });
             setTimeout(handleChangePassword(accountID), 2800);
@@ -102,11 +98,9 @@ export default function Login() {
                 password: result.value.trim(),
               })
               .then((res) => {
-                console.log(res);
                 api
                   .get(`/Account/GetUserProfile?id=${accountID}`)
                   .then((res) => {
-                    console.log(res);
                     localStorage.removeItem("USER_LOGIN");
                     localStorage.setItem(
                       "USER_LOGIN",
@@ -124,13 +118,11 @@ export default function Login() {
                   });
               })
               .catch((err) => {
-                console.log(err);
               });
           }
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -141,15 +133,13 @@ export default function Login() {
         handleResetPassword(res.data.validationCode, email, res.data.accountID);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
   const handleResetPassword = (validationCode, email, accountID) => {
-    console.log(validationCode);
     Swal.fire({
       title: `Verify your Email`,
-      html: `We send a code to your Email: ${email}. <br/>
+      html: `We have sent a code to your Email: </br> ${email}. <br/>
   Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
   </br><b>Send another code?</b> <a class="again"></a>`,
       input: "text",
@@ -182,7 +172,6 @@ export default function Login() {
         }, 1000);
       },
       preConfirm: (login) => {
-        // console.log(login);
       },
       allowOutsideClick: () => !Swal.isLoading(),
     })
@@ -197,7 +186,6 @@ export default function Login() {
             timer: 1000,
           });
         } else if (result.isConfirmed === true) {
-          console.log(validationCode);
           if (result.value == validationCode) {
             handleChangePassword(accountID);
           } else {
@@ -252,7 +240,6 @@ export default function Login() {
                 );
               })
               .catch((err) => {
-                console.log(err);
               });
           } else {
             Swal.fire({
@@ -267,7 +254,6 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   return (

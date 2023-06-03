@@ -20,12 +20,9 @@ export default function Register() {
 
 
   const enterCodeAgain = (registeredEmail, values, code, time) => {
-    console.log(values);
-    console.log('time', time);
-    let timeLeft;
     Swal.fire({
       title: `Verify your Email`,
-      html: `We send a code to your Email: ${registeredEmail}. <br/>
+      html: `We send a code to your Email: </br> ${registeredEmail}. <br/>
     Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
     </br><b>Send another code?</b> <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
       input: "text",
@@ -60,9 +57,7 @@ export default function Register() {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
-      console.log('swal', Swal.getTimerLeft());
-      console.log(result);
-      timeLeft = Swal.getTimerLeft();
+      let timeLeft = Swal.getTimerLeft();
       if (result.isDenied === true || result.isDismissed === true) {
         Swal.fire({
           position: "center",
@@ -76,18 +71,16 @@ export default function Register() {
 
           const roleId = 4;
           values = { ...values, roleId };
-          console.log("values", values);
           api.post("/Account/CreateAccount",
             values
           )
             .then((res) => {
-              console.log(res);
               Swal.fire({
                 position: "center",
                 icon: "success",
                 title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
                 showConfirmButton: true,
-                timer: 2000,
+                timer: 2500,
               })
               api
                 .post("/Account/CheckLogin", {
@@ -95,7 +88,6 @@ export default function Register() {
                   password: values.password,
                 })
                 .then((res) => {
-                  console.log(res);
                   localStorage.removeItem("USER_LOGIN");
                   localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
                   window.location.href = '/';
@@ -127,11 +119,6 @@ export default function Register() {
   }
 
   const sendCodeAgain = (values) => {
-
-    values.img = 'female';
-    if (values.gender) {
-      values.img = 'male'
-    }
     api.get("/Account/SendCodeRegister"
       , {
         params: { email: values.email }
@@ -140,7 +127,7 @@ export default function Register() {
       .then(async (res) => {
         Swal.fire({
           title: `Verify your Email`,
-          html: `We send a code to your Email: ${values.email}. <br/>
+          html: `We send a code to your Email: </br> ${values.email}. <br/>
       Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
       </br><b>Send another code?</b>
       <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
@@ -176,8 +163,6 @@ export default function Register() {
           },
           allowOutsideClick: () => !Swal.isLoading(),
         }).then((result) => {
-          console.log(result);
-          console.log('swal', Swal.getTimerLeft());
           let timeLeft = Swal.getTimerLeft();
           if (result.isDenied === true || result.isDismissed === true) {
             Swal.fire({
@@ -189,13 +174,15 @@ export default function Register() {
             });
           } else if (result.isConfirmed === true) {
             if (result.value === res.data) {
-              console.log("values", values);
+              values.img = 'female';
+              if (values.gender) {
+                values.img = 'male'
+              }
               values = { ...values, roleId };
               api.post("/Account/CreateAccount",
                 values
               )
                 .then((res) => {
-                  console.log(res);
                   Swal.fire({
                     position: "center",
                     icon: "success",
@@ -209,7 +196,6 @@ export default function Register() {
                       password: values.password,
                     })
                     .then((res) => {
-                      console.log(res);
                       localStorage.removeItem("USER_LOGIN");
                       localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
                       window.location.href = '/';
@@ -240,7 +226,6 @@ export default function Register() {
         });
       })
       .catch((err) => {
-        console.log(err);
       });
 
   }
@@ -272,7 +257,7 @@ export default function Register() {
           let timeLeft;
           Swal.fire({
             title: `Verify your Email`,
-            html: `We send a code to your Email: ${values.email}. <br/>
+            html: `We send a code to your Email:</br> ${values.email}. <br/>
           Please check and enter this code here. <br/> This will close in <b class="time"></b> seconds.
           </br><b>Send another code?</b> <a class="again" style="cursor: pointer; text-decoration: none"></a>`,
             input: "text",
@@ -307,8 +292,6 @@ export default function Register() {
             },
             allowOutsideClick: () => !Swal.isLoading(),
           }).then((result) => {
-            console.log(result);
-            console.log('swal', Swal.getTimerLeft());
             timeLeft = Swal.getTimerLeft();
             if (result.isDenied === true || result.isDismissed === true) {
               Swal.fire({
@@ -321,12 +304,10 @@ export default function Register() {
             } else if (result.isConfirmed === true) {
               if (result.value === res.data) {
                 values = { ...values, roleId };
-                console.log("values", values);
                 api.post("/Account/CreateAccount",
                   values
                 )
                   .then((res) => {
-                    console.log(res);
                     Swal.fire({
                       position: "center",
                       icon: "success",
@@ -340,7 +321,6 @@ export default function Register() {
                         password: values.password,
                       })
                       .then((res) => {
-                        console.log(res);
                         localStorage.removeItem("USER_LOGIN");
                         localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
                         window.location.href = '/';
@@ -371,7 +351,6 @@ export default function Register() {
           });
         })
         .catch((err) => {
-          console.log(err);
         });
     },
   });
