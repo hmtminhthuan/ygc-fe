@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./FeedbackManagement.scss";
-import { api } from "../../../constants/api";
+import { api } from "../../../../constants/api";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import MenuStaff from "../../../component/Staff/MenuStaff";
-import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../../component/Staff/MenuStaff";
+import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 
-export default function FeedbackManagement() {
+export default function FeedbackManagementDetail() {
     const [courseList, setCourseList] = useState([]);
     const [renderCourseList, setRenderCourseList] = useState([]);
     const [searchedName, setSearchedName] = useState("");
@@ -51,6 +50,7 @@ export default function FeedbackManagement() {
                 courseListStart = res.data;
             })
             .catch((err) => {
+                console.log(err);
             })
             .finally(() => {
                 courseListStart.forEach((course) => {
@@ -125,6 +125,8 @@ export default function FeedbackManagement() {
                 });
             });
     };
+
+    console.log(renderCourseList);
 
     useEffect(() => {
         renderCourseForAdmin();

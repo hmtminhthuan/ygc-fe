@@ -32,6 +32,7 @@ import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/Adm
 import FeedbackManagement from "../pages/Staff/FeedbackManagement/FeedbackManagement";
 import CourseView from "../pages/Staff/CourseView/CourseView";
 import CreateStaff from "../pages/Admin/StaffManagement/CreateStaff";
+import FeedbackManagementDetail from "../pages/Staff/FeedbackManagement/FeedbackManagementDetail/FeedbackManagementDetail";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -57,6 +58,7 @@ export default function Routers() {
         { path: "/createStaff", element: <CreateStaff /> },
         { path: "/feedbackManagement", element: <FeedbackManagement1 /> },
         { path: "/staff/feedbackManagement", element: <FeedbackManagement /> },
+        { path: "/staff/feedbackManagement/:id", element: <FeedbackManagementDetail /> },
         { path: "/staff/course", element: <CourseView /> },
         // { path: "/blogManagement", element: <BlogManagement /> },
       ],

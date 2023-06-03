@@ -292,7 +292,7 @@ export default function ListTrainee() {
                         (item) =>
                           item.firstName
                             .trim()
-                            .toLowserCase()
+                            .toLowerCase()
                             .includes(searchedName.trim().toLowerCase()) ||
                           item.lastName
                             .trim()
