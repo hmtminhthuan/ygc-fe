@@ -51,12 +51,7 @@ export default function Routers() {
         { path: "/profile/:paramID", element: <UserProfile /> },
         { path: "/updateProfile/:id", element: <UpdateProfile /> },
         { path: "/dashboard", element: <Dashboard /> },
-        { path: "/listTrainee", element: <ListTrainee /> },
-        { path: "/listTrainer", element: <ListTrainer /> },
-        { path: "/listStaff", element: <ListStaff /> },
-        { path: "/createTrainer", element: <CreateTrainer /> },
-        { path: "/createTrainee", element: <CreateTrainee /> },
-        { path: "/createStaff", element: <CreateStaff /> },
+
         { path: "/feedbackManagement", element: <FeedbackManagement1 /> },
         { path: "/staff/feedbackManagement", element: <FeedbackManagement /> },
         {
@@ -64,7 +59,6 @@ export default function Routers() {
           element: <FeedbackManagementDetail />,
         },
         { path: "/staff/course", element: <CourseView /> },
-        { path: "/blogManagement", element: <BlogManagement /> },
       ],
     },
     {
@@ -72,6 +66,8 @@ export default function Routers() {
       element: <AdminTemplate />,
       children: [
         { path: "/admin", element: <Dashboard /> },
+        { path: "/admin/listStaff", element: <ListStaff /> },
+        { path: "/admin/createStaff", element: <CreateStaff /> },
         { path: "/admin/courseManagement", element: <CourseManagement /> },
         {
           path: "/admin/courseManagement/createCourse",
@@ -86,7 +82,14 @@ export default function Routers() {
     {
       path: "/staff",
       element: <StaffTemplate />,
-      children: [{ path: "/staff", element: <Dashboard /> }],
+      children: [
+        { path: "/staff", element: <Dashboard /> },
+        { path: "/staff/listTrainee", element: <ListTrainee /> },
+        { path: "/staff/listTrainer", element: <ListTrainer /> },
+        { path: "/staff/createTrainer", element: <CreateTrainer /> },
+        { path: "/staff/createTrainee", element: <CreateTrainee /> },
+        { path: "/staff/blogManagement", element: <BlogManagement /> },
+      ],
     },
     {
       path: "/trainer",
