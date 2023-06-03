@@ -7,28 +7,26 @@ import { api } from "../constants/api";
 import { Link } from "react-router-dom";
 
 function UserProfile() {
-  const { id } = useParams();
+  const { paramID } = useParams();
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     api
       .get("/Account/GetUserProfile", {
-        params: { id: id },
+        params: { id: paramID },
       })
       .then((res) => {
         setProfile(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+      .catch((err) => {});
+  }, [paramID]);
 
   if (profile === null) {
     return null;
   }
 
   let {
-    accountID,
+    id,
     firstname,
     lastname,
     gender,
@@ -82,10 +80,7 @@ function UserProfile() {
                         <i className="ri-home-4-line mt-5 mx-3 "></i>
                       </Link>
 
-                      <Link
-                        to={`/updateProfile/${accountID}`}
-                        className="updateInfo"
-                      >
+                      <Link to={`/updateProfile/${id}`} className="updateInfo">
                         <i className="ri-edit-2-line mt-5  mx-3 "></i>
                       </Link>
                     </div>
