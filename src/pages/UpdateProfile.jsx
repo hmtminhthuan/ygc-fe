@@ -96,11 +96,11 @@ export default function UpdateProfile() {
   }
 
   return (
-    <div className="update">
-      <div className="containerud">
-        <h1 className="mt-5 mb-4">Update User's Account</h1>
-        <div className="bg-white shadow rounded-lg d-sm-flex">
-          <div className="profile-tab-nav">
+    <div className="update w-100 flex justify-content-center">
+      <div className="containerud w-75" style={{ margin: "0 auto" }}>
+        <h1 className="mt-5 mb-4 text-primary text-center">Update Account</h1>
+        <div className="row bg-white shadow rounded-lg d-md-flex justify-content-center">
+          <div className="profile-tab-nav col-lg-3 col-md-12 border-md-0">
             <div className="p-4 mt-4 w-100">
               <div className="img-circle text-center mb-3">
                 {profile.img == "male" && previewImg == "" ? (
@@ -122,22 +122,34 @@ export default function UpdateProfile() {
               <h4 className="text-center" style={{}}>
                 {firstname} {lastname}
               </h4>
-              <p className="text-left p-0 m-0 mt-2" style={{}}>
+              <h6 className="text-center" style={{}}>
+                Phone: {phone}
+              </h6>
+              <h6 className="text-center" style={{}}>
+                Address: {address}
+              </h6>
+              {/* <p className="text-left p-0 m-0 mt-2" style={{}}>
                 Phone: {phone}
               </p>
               <p
                 className="text-left p-0 m-0 mt-2"
-                style={{ maxWidth: "200px" }}
+                // style={{ maxWidth: "200px" }}
               >
                 Address: {address}
-              </p>
+              </p> */}
               {/* <p className="text-center">Account ID: {id}</p>
               <p className="text-center">Role: {roleName}</p> */}
             </div>
           </div>
 
-          <div className="tab-content p-4 p-md-5">
-            <div className="tab-pane fade show active">
+          <div
+            className="tab-content p-4 p-md-5 col-lg-9 col-md-12
+          "
+          >
+            <div
+              className="tab-pane fade show active w-100
+            d-md-flex d-sm-flex justify-content-center"
+            >
               {/* <h3 className="mb-4">Account Settings</h3> */}
               <Form
                 {...formItemLayout}
@@ -147,11 +159,11 @@ export default function UpdateProfile() {
                 autoComplete="off"
               >
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-12 col-lg-6">
                     <div className="form-group">
                       <Form.Item
                         name="firstname"
-                        label="firstname"
+                        label="Firstname"
                         rules={[
                           {
                             required: true,
@@ -174,11 +186,11 @@ export default function UpdateProfile() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12 col-lg-6">
                     <div className="form-group">
                       <Form.Item
                         name="lastname"
-                        label="lastname"
+                        label="Lastname"
                         rules={[
                           {
                             required: true,
@@ -205,9 +217,9 @@ export default function UpdateProfile() {
                     <div className="form-group flex m-0">
                       <Form.Item
                         name="phoneNumber"
-                        label="Phone Number"
-                        className="w-75"
-                        style={{ width: "fit-content" }}
+                        label="Phone"
+                        className="w-100"
+                        style={{ width: "" }}
                         rules={[
                           {
                             required: true,
@@ -244,8 +256,8 @@ export default function UpdateProfile() {
                       <Form.Item
                         name="address"
                         label="Address"
-                        className="w-75"
-                        style={{ width: "fit-content" }}
+                        className="w-100"
+                        style={{ width: "" }}
                         rules={[]}
                         hasFeedback
                         initialValue={profile.address}
@@ -268,7 +280,7 @@ export default function UpdateProfile() {
                       <Form.Item
                         name="img"
                         label="Image"
-                        className="w-75"
+                        className="w-100"
                         rules={[]}
                         hasFeedback
                         initialValue={`${

@@ -5,6 +5,8 @@ import video from "../assets/video.mp4";
 import "remixicon/fonts/remixicon.css";
 import { api } from "../constants/api";
 import { Link } from "react-router-dom";
+import maleImg from "../assets/images/avt-male.jpg";
+import femaleImg from "../assets/images/avt-female.jpg";
 
 function UserProfile() {
   const { paramID } = useParams();
@@ -48,15 +50,19 @@ function UserProfile() {
     roleColor = "text-green";
   }
   return (
-    <div className="page-content page-container " id="page-content">
+    <div
+      className="page-content page-container scroll-user-profile"
+      id="page-content"
+      style={{ height: "100vh" }}
+    >
       <div className="video-background">
         <video src={video} autoPlay muted loop></video>
       </div>
       <div className="padding mx-5">
         <div className="row container d-flex justify-content-center">
           <div className="col-xl-6 col-md-12">
-            <div className="card user-card-full ">
-              <div className="row m-l-0 m-r-0 ">
+            <div className="card user-card-full">
+              <div className="row m-l-0 m-r-0">
                 <div className="col-sm-4 bg-c-lite-green user-profile">
                   <div className="card-block text-center">
                     <div className="m-b-25">
@@ -73,7 +79,7 @@ function UserProfile() {
                       className={`${roleColor}`}
                       style={{ fontSize: "16px", fontWeight: "bold" }}
                     >
-                      Role: {role.name}
+                      Role: {roleColor.name}
                     </p> */}
                     <div className="icon mt-3">
                       <Link to={"/"} className="home">

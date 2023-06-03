@@ -201,3 +201,9 @@
     background-color: #000000d0 !important;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .scroll-user-profile {
+    overflow-y: scroll;
+  }
+}
