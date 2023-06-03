@@ -57,7 +57,7 @@ export default function Dashboard() {
       });
   }, []);
 
-  //Course
+  //Count
   const [countList, setCountList] = useState([]);
   useEffect(() => {
     api

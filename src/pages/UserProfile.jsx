@@ -54,7 +54,7 @@ function UserProfile() {
       <div className="video-background">
         <video src={video} autoPlay muted loop></video>
       </div>
-      <div className="padding">
+      <div className="padding mx-5">
         <div className="row container d-flex justify-content-center">
           <div className="col-xl-6 col-md-12">
             <div className="card user-card-full ">
@@ -68,7 +68,7 @@ function UserProfile() {
                         alt="User-Profile-Image"
                       />
                     </div>
-                    <h6 className="f-w-600" style={{ fontSize: "25px" }}>
+                    <h6 className="f-w-600" style={{ fontSize: "20px" }}>
                       {firstName} {lastName}
                     </h6>
                     <p
@@ -91,8 +91,8 @@ function UserProfile() {
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-8">
-                  <div className="card-block my-2 mx-4">
+                <div className="col-sm-8 align-items-center my-5">
+                  <div className="card-block my-2 mx-4 align-items-center">
                     <h6
                       className="m-b-20 p-b-5 b-b-default f-w-600"
                       style={{ color: "rgba(210, 145, 188, 1)" }}
@@ -118,26 +118,6 @@ function UserProfile() {
                       <div className="col-sm-6 mb-3">
                         <p className="m-b-10 f-w-600">Address</p>
                         <h6 className="text-muted f-w-400">{address}</h6>
-                      </div>
-                    </div>
-                    <h6
-                      className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"
-                      style={{ color: "rgba(210, 145, 188, 1)" }}
-                    >
-                      COURSE
-                    </h6>
-                    <div className="row">
-                      <div className="col-sm-6 mb-3">
-                        <p className="m-b-10 f-w-600">Course name current</p>
-                        <h6 className="text-muted f-w-400">none</h6>
-                      </div>
-                      <div className="col-sm-6 mb-3">
-                        <p className="m-b-10 f-w-600">Class</p>
-                        <h6 className="text-muted f-w-400">none</h6>
-                      </div>
-                      <div className="col-sm-6 ">
-                        <p className="m-b-10 f-w-600">Level</p>
-                        <h6 className="text-muted f-w-400">none</h6>
                       </div>
                     </div>
                   </div>
