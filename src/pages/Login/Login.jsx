@@ -88,8 +88,7 @@ export default function Login() {
                 "Your password must be at least 6 chacracters. </br> Please enter again!",
               showConfirmButton: true,
               timer: 2000,
-              preConfirm: (login) => {
-              },
+              preConfirm: (login) => {},
             });
             setTimeout(handleChangePassword(accountID), 2800);
           } else {
@@ -117,13 +116,11 @@ export default function Login() {
                     });
                   });
               })
-              .catch((err) => {
-              });
+              .catch((err) => {});
           }
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
 
   const sendCodeAgain = (validationCode, email, accountID) => {
@@ -132,8 +129,7 @@ export default function Login() {
       .then((res) => {
         handleResetPassword(res.data.validationCode, email, res.data.accountID);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
 
   const handleResetPassword = (validationCode, email, accountID) => {
@@ -158,9 +154,9 @@ export default function Login() {
         sendCodeAgainHTML.addEventListener("click", () => {
           Swal.fire({
             position: "center",
-            title: `We have sent another code to your Email.`,
+            title: `We have sent another code to your Email.</br>Please check your Email again.`,
             showConfirmButton: true,
-            timer: 1200,
+            timer: 1500,
           }).then(function () {
             sendCodeAgain(validationCode, email, accountID);
           });
@@ -171,8 +167,7 @@ export default function Login() {
           b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
         }, 1000);
       },
-      preConfirm: (login) => {
-      },
+      preConfirm: (login) => {},
       allowOutsideClick: () => !Swal.isLoading(),
     })
       .then((result) => {
@@ -198,11 +193,11 @@ export default function Login() {
             }).then(function () {
               // enterCodeAgain(validationCode, email, accountID, timeLeft);
               // mark mark
-            })
+            });
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleForgetPassword = () => {
@@ -228,7 +223,7 @@ export default function Login() {
             .then((res) => {
               checkEmail = res.data;
             })
-            .catch((err) => { });
+            .catch((err) => {});
           if (checkEmail) {
             api
               .post(`/Account/CreateValidationCode?email=${result.value}`)
@@ -239,8 +234,7 @@ export default function Login() {
                   res.data.accountID
                 );
               })
-              .catch((err) => {
-              });
+              .catch((err) => {});
           } else {
             Swal.fire({
               position: "center",
@@ -253,8 +247,7 @@ export default function Login() {
           }
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   return (
     <div>
@@ -264,7 +257,7 @@ export default function Login() {
 
       <main>
         <div className="box m-0 mt-5" style={{ height: "90vh" }}>
-          <div className="inner-box flex justify-content-center">
+          <div className="inner-box inner-log-in flex justify-content-center">
             <div className="container flex justify-content-center">
               <div className="videoDiv d-none d-lg-flex d-md-none d-sm-none">
                 <video src={video} autoPlay muted loop></video>
