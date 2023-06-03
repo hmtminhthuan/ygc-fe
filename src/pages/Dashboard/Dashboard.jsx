@@ -61,7 +61,7 @@ export default function Dashboard() {
   const [countList, setCountList] = useState([]);
   useEffect(() => {
     api
-      .get("/api/Admin/GetNumberOfAdmin")
+      .get("/api/AdminRepositoryAPI/GetNumberOfAdmin")
       .then((res) => {
         const total = res.data;
         setCountList(total);
