@@ -17,8 +17,6 @@ export default function Register() {
   };
   const [form] = Form.useForm();
 
-
-
   const enterCodeAgain = (registeredEmail, values, code, time) => {
     Swal.fire({
       title: `Verify your Email`,
@@ -36,25 +34,25 @@ export default function Register() {
       confirmButtonText: "Confirm",
       showLoaderOnConfirm: true,
       didOpen: () => {
-        const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
-        sendCodeAgainHTML.addEventListener('click', () => {
+        const sendCodeAgainHTML =
+          Swal.getHtmlContainer().querySelector("a.again");
+        sendCodeAgainHTML.addEventListener("click", () => {
           Swal.fire({
             position: "center",
-            title: `We have sent another code to your Email.`,
+            title: `We have sent another code to your Email.</br>Please check your Email again.`,
             showConfirmButton: true,
             timer: 1500,
           }).then(function () {
             sendCodeAgain(values);
-          })
-        })
-        sendCodeAgainHTML.textContent = `Click here`
+          });
+        });
+        sendCodeAgainHTML.textContent = `Click here`;
         const b = Swal.getHtmlContainer().querySelector("b.time");
         let timerInterval = setInterval(() => {
           b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
         }, 1000);
       },
-      preConfirm: (login) => {
-      },
+      preConfirm: (login) => {},
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       let timeLeft = Swal.getTimerLeft();
@@ -68,12 +66,10 @@ export default function Register() {
         });
       } else if (result.isConfirmed === true) {
         if (result.value === code) {
-
           const roleId = 4;
           values = { ...values, roleId };
-          api.post("/Account/CreateAccount",
-            values
-          )
+          api
+            .post("/Account/CreateAccount", values)
             .then((res) => {
               Swal.fire({
                 position: "center",
@@ -81,7 +77,7 @@ export default function Register() {
                 title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
                 showConfirmButton: true,
                 timer: 2500,
-              })
+              });
               api
                 .post("/Account/CheckLogin", {
                   phoneNumber: values.phoneNumber,
@@ -90,7 +86,7 @@ export default function Register() {
                 .then((res) => {
                   localStorage.removeItem("USER_LOGIN");
                   localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
-                  window.location.href = '/';
+                  window.location.href = "/";
                 });
             })
             .catch((err) => {
@@ -112,18 +108,17 @@ export default function Register() {
             timer: 1000,
           }).then(function () {
             enterCodeAgain(registeredEmail, values, code, timeLeft);
-          })
+          });
         }
       }
     });
-  }
+  };
 
   const sendCodeAgain = (values) => {
-    api.get("/Account/SendCodeRegister"
-      , {
-        params: { email: values.email }
-      }
-    )
+    api
+      .get("/Account/SendCodeRegister", {
+        params: { email: values.email },
+      })
       .then(async (res) => {
         Swal.fire({
           title: `Verify your Email`,
@@ -142,25 +137,25 @@ export default function Register() {
           confirmButtonText: "Confirm",
           showLoaderOnConfirm: true,
           didOpen: () => {
-            const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
-            sendCodeAgainHTML.addEventListener('click', () => {
+            const sendCodeAgainHTML =
+              Swal.getHtmlContainer().querySelector("a.again");
+            sendCodeAgainHTML.addEventListener("click", () => {
               Swal.fire({
                 position: "center",
-                title: `We have sent another code to your Email.`,
+                title: `We have sent another code to your Email.</br>Please check your Email again.`,
                 showConfirmButton: true,
                 timer: 1500,
               }).then(function () {
                 sendCodeAgain(values);
-              })
-            })
-            sendCodeAgainHTML.textContent = `Click here`
+              });
+            });
+            sendCodeAgainHTML.textContent = `Click here`;
             const b = Swal.getHtmlContainer().querySelector("b.time");
             let timerInterval = setInterval(() => {
               b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
             }, 1000);
           },
-          preConfirm: (login) => {
-          },
+          preConfirm: (login) => {},
           allowOutsideClick: () => !Swal.isLoading(),
         }).then((result) => {
           let timeLeft = Swal.getTimerLeft();
@@ -174,14 +169,13 @@ export default function Register() {
             });
           } else if (result.isConfirmed === true) {
             if (result.value === res.data) {
-              values.img = 'female';
+              values.img = "female";
               if (values.gender) {
-                values.img = 'male'
+                values.img = "male";
               }
               values = { ...values, roleId };
-              api.post("/Account/CreateAccount",
-                values
-              )
+              api
+                .post("/Account/CreateAccount", values)
                 .then((res) => {
                   Swal.fire({
                     position: "center",
@@ -189,7 +183,7 @@ export default function Register() {
                     title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
                     showConfirmButton: true,
                     timer: 2500,
-                  })
+                  });
                   api
                     .post("/Account/CheckLogin", {
                       phoneNumber: values.phoneNumber,
@@ -197,8 +191,11 @@ export default function Register() {
                     })
                     .then((res) => {
                       localStorage.removeItem("USER_LOGIN");
-                      localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
-                      window.location.href = '/';
+                      localStorage.setItem(
+                        "USER_LOGIN",
+                        JSON.stringify(res.data)
+                      );
+                      window.location.href = "/";
                     });
                 })
                 .catch((err) => {
@@ -220,15 +217,13 @@ export default function Register() {
                 timer: 1000,
               }).then(function () {
                 enterCodeAgain(values.email, values, res.data, timeLeft);
-              })
+              });
             }
           }
         });
       })
-      .catch((err) => {
-      });
-
-  }
+      .catch((err) => {});
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -244,15 +239,14 @@ export default function Register() {
     },
 
     onSubmit: async (values) => {
-      values.img = 'female';
+      values.img = "female";
       if (values.gender) {
-        values.img = 'male'
+        values.img = "male";
       }
-      api.get("/Account/SendCodeRegister"
-        , {
-          params: { email: values.email }
-        }
-      )
+      api
+        .get("/Account/SendCodeRegister", {
+          params: { email: values.email },
+        })
         .then(async (res) => {
           let timeLeft;
           Swal.fire({
@@ -271,25 +265,25 @@ export default function Register() {
             confirmButtonText: "Confirm",
             showLoaderOnConfirm: true,
             didOpen: () => {
-              const sendCodeAgainHTML = Swal.getHtmlContainer().querySelector("a.again");
-              sendCodeAgainHTML.addEventListener('click', () => {
+              const sendCodeAgainHTML =
+                Swal.getHtmlContainer().querySelector("a.again");
+              sendCodeAgainHTML.addEventListener("click", () => {
                 Swal.fire({
                   position: "center",
-                  title: `We have sent another code to your Email.`,
+                  title: `We have sent another code to your Email.</br>Please check your Email again.`,
                   showConfirmButton: true,
                   timer: 1500,
                 }).then(function () {
                   sendCodeAgain(values);
-                })
-              })
-              sendCodeAgainHTML.textContent = `Click here`
+                });
+              });
+              sendCodeAgainHTML.textContent = `Click here`;
               const b = Swal.getHtmlContainer().querySelector("b.time");
               let timerInterval = setInterval(() => {
                 b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
               }, 1000);
             },
-            preConfirm: (login) => {
-            },
+            preConfirm: (login) => {},
             allowOutsideClick: () => !Swal.isLoading(),
           }).then((result) => {
             timeLeft = Swal.getTimerLeft();
@@ -304,9 +298,8 @@ export default function Register() {
             } else if (result.isConfirmed === true) {
               if (result.value === res.data) {
                 values = { ...values, roleId };
-                api.post("/Account/CreateAccount",
-                  values
-                )
+                api
+                  .post("/Account/CreateAccount", values)
                   .then((res) => {
                     Swal.fire({
                       position: "center",
@@ -314,7 +307,7 @@ export default function Register() {
                       title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
                       showConfirmButton: true,
                       timer: 2500,
-                    })
+                    });
                     api
                       .post("/Account/CheckLogin", {
                         phoneNumber: values.phoneNumber,
@@ -322,8 +315,11 @@ export default function Register() {
                       })
                       .then((res) => {
                         localStorage.removeItem("USER_LOGIN");
-                        localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
-                        window.location.href = '/';
+                        localStorage.setItem(
+                          "USER_LOGIN",
+                          JSON.stringify(res.data)
+                        );
+                        window.location.href = "/";
                       });
                   })
                   .catch((err) => {
@@ -345,13 +341,12 @@ export default function Register() {
                   timer: 1000,
                 }).then(function () {
                   enterCodeAgain(values.email, values, res.data, timeLeft);
-                })
+                });
               }
             }
           });
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     },
   });
   const handleChangeGender = (gender) => {
@@ -364,8 +359,11 @@ export default function Register() {
         <HeaderHome />
       </div>
       <main>
-        <div className="box m-0 mt-5" style={{ height: "90vh" }}>
-          <div className="inner-box flex align-items-center">
+        <div
+          className="box m-0 mt-5 register-scroll"
+          style={{ height: "90vh" }}
+        >
+          <div className="inner-box inner-register flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
               <div className="form-container form-register-container flex justify-content-center">
                 <Form
@@ -596,7 +594,7 @@ export default function Register() {
           </div>
         </div>
       </main>
-      <div className="">
+      <div className="footer-register">
         <FooterHome />
       </div>
     </div>

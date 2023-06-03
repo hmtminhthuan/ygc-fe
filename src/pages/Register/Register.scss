@@ -26,7 +26,7 @@ main {
   position: relative;
   width: 100%;
   max-width: 1020px;
-  height: 640px;
+  height: auto;
   background-color: #fff;
   border-radius: 3.3rem;
   box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
@@ -39,12 +39,47 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  @media (max-width: 1024px) {
+  @media (max-width: 600px) {
     overflow-x: hidden;
     overflow-y: scroll;
   }
 }
-
+.inner-log-in {
+  @media (max-width: 1024px) {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
+.form-register-container {
+  .ant-form {
+    @media (max-width: 1024px) {
+      transform: translateY(15px) !important;
+    }
+    @media (max-width: 950px) {
+      transform: translateY(10px) !important;
+    }
+    @media (max-width: 550px) {
+      transform: translateY(230px) !important;
+    }
+  }
+  @media (max-width: 1024px) {
+    height: 100%;
+  }
+}
+.inner-register {
+  @media (max-width: 1024px) {
+  }
+}
+.regis-container {
+  @media (max-width: 1024px) {
+    height: 3000px;
+  }
+}
+.footer-register {
+  @media (max-width: 600px) {
+    display: none !important;
+  }
+}
 .forms-wrap {
   position: absolute;
   height: 100%;
