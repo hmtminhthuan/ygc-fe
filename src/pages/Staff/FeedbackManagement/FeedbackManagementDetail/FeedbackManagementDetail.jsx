@@ -11,6 +11,7 @@ export default function FeedbackManagementDetail() {
   const [feedbackList, setFeedbackList] = useState([]);
   const [sortedStatus, setSortedStatus] = useState("");
   const [searchedName, setSearchedName] = useState("");
+  const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [course, setCourse] = useState({});
   const param = useParams();
   const [recently, setRecently] = useState([]);
@@ -66,6 +67,21 @@ export default function FeedbackManagementDetail() {
     renderCourseName();
     renderFeedbackList();
   }, []);
+
+  useEffect(() => {
+    if (searchedName == "") {
+      setListOfSearchedName([]);
+    } else {
+      let list = [];
+      let values = searchedName.split(" ");
+      values.forEach((item) => {
+        if (item.trim() != "") {
+          list = [...list, item.trim()];
+          setListOfSearchedName(list);
+        }
+      });
+    }
+  }, [searchedName]);
 
   const handleFeedback = (fb, stt) => {
     let { id, traineeId, courseId, rating, status, description } = fb;
@@ -205,16 +221,34 @@ export default function FeedbackManagementDetail() {
               {feedbackList
                 .filter((item) => {
                   if (item.detail != null && item.detail != undefined) {
-                    return (
-                      item.detail.firstname
-                        .trim()
-                        .toLowerCase()
-                        .includes(searchedName.trim().toLowerCase()) ||
-                      item.detail.lastname
-                        .trim()
-                        .toLowerCase()
-                        .includes(searchedName.trim().toLowerCase())
-                    );
+                    if (listOfSearchedName.length <= 0) {
+                      return true;
+                    }
+                    for (i = 0; i < listOfSearchedName.length; i++) {
+                      if (
+                        item.detail.firstname
+                          .trim()
+                          .toLowerCase()
+                          .includes(
+                            listOfSearchedName[i]
+                              .toString()
+                              .trim()
+                              .toLowerCase()
+                          ) ||
+                        item.detail.lastname
+                          .trim()
+                          .toLowerCase()
+                          .includes(
+                            listOfSearchedName[i]
+                              .toString()
+                              .trim()
+                              .toLowerCase()
+                          )
+                      ) {
+                        return true;
+                      }
+                    }
+                    return false;
                   } else {
                     return true;
                   }
