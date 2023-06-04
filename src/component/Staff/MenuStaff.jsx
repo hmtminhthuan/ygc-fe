@@ -55,7 +55,7 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/staff/classManagement">
             <span className="icon icon-3">
               <i className=" ri-community-line" />
             </span>

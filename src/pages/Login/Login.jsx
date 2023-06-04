@@ -24,6 +24,19 @@ export default function Login() {
     },
 
     onSubmit: (values) => {
+      let timerInterval;
+      Swal.fire({
+        title: "Loading...",
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      });
+
       api
         .post("/Account/CheckLogin", values)
         .then((res) => {
@@ -55,7 +68,7 @@ export default function Login() {
             title:
               "Log in failed!</br> Your phone number or password is not correct. </br> Please check again",
             showConfirmButton: true,
-            timer: 10000,
+            timer: 2000,
           });
         });
     },
