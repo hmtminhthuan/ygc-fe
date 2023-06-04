@@ -34,6 +34,7 @@ import CreateBlog from "../pages/Dashboard/Staff/Blog/CreateBlog";
 import UpdateBlog from "../pages/Dashboard/Staff/Blog/UpdateBlog";
 import CommonTemplate from "../templates/CommonTemplate/CommonTemplate";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
+import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -87,6 +88,7 @@ export default function Routers() {
         { path: "/staff/listTrainer", element: <ListTrainer /> },
         { path: "/staff/createTrainer", element: <CreateTrainer /> },
         { path: "/staff/createTrainee", element: <CreateTrainee /> },
+        { path: "/staff/classManagement", element: <ClassManagement /> },
         { path: "/staff/blogManagement", element: <BlogManagement /> },
         { path: "/staff/createBlog", element: <CreateBlog /> },
         { path: "/staff/updateBlog/:id", element: <UpdateBlog /> },
