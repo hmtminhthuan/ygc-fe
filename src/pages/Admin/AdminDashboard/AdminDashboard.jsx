@@ -3,6 +3,7 @@ import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 
 export default function AdminDashboard() {
+  localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
   return (
     <>
       <HeaderAdmin />

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import moment from "moment/moment";
 
 export default function CourseManagement() {
+  localStorage.setItem("MENU_ACTIVE", "admin-course");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);

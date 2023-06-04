@@ -7,6 +7,7 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 
 export default function FeedbackManagement() {
+  localStorage.setItem("MENU_ACTIVE", "staff-feedback");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [searchedName, setSearchedName] = useState("");

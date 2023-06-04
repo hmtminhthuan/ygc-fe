@@ -10,6 +10,7 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 
 export default function CourseView() {
+  localStorage.setItem("MENU_ACTIVE", "staff-course");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);

@@ -9,6 +9,7 @@ import MenuStaff from "../../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
 
 function BlogManagement() {
+  localStorage.setItem("MENU_ACTIVE", "staff-blog");
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [dateSort, setDateSort] = useState("All");

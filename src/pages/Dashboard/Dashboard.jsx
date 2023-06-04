@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import MenuStaff from "../../component/Staff/MenuStaff";
 import HeaderStaff from "../../component/Staff/HeaderStaff";
 export default function Dashboard() {
+  localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
   useEffect(() => {
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");

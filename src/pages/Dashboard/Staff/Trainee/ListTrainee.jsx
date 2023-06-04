@@ -8,6 +8,7 @@ import "./ListTrainee.scss";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 export default function ListTrainee() {
+  localStorage.setItem("MENU_ACTIVE", "staff-trainee");
   const [traineeList, setTraineeList] = useState([]);
   const [sortedTrainees, setSortedTrainees] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");

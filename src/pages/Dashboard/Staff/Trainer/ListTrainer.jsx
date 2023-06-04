@@ -8,6 +8,7 @@ import "./ListTrainer.scss";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 export default function ListTrainer() {
+  localStorage.setItem("MENU_ACTIVE", "staff-trainer");
   const [trainerList, setTrainerList] = useState([]);
   const [sortedTrainers, setSortedTrainers] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
