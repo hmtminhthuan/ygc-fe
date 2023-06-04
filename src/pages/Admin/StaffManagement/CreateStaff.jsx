@@ -67,7 +67,7 @@ export default function CreateStaff() {
                 autoComplete="off"
               >
                 <div className="row mx-4">
-                  <div className="col-md-6">
+                  <div className="col-md-6 ">
                     <div className="form-group">
                       <Form.Item
                         label="Firstname"

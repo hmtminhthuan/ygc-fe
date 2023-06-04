@@ -3,6 +3,7 @@ import { Select } from "antd";
 import "remixicon/fonts/remixicon.css";
 import Swal from "sweetalert2";
 import { api } from "../../../../constants/api";
+import { Link } from "react-router-dom";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
@@ -219,7 +220,14 @@ function BlogManagement() {
                           <td>
                             {`${blog.firstName}`} {`${blog.lastName}`}
                           </td>
-                          <td className="setting"></td>
+                          <td className="setting">
+                            <Link
+                              to={`/updateBlog/${blog.blogID}`}
+                              className="updateInfo"
+                            >
+                              <i className="ri-edit-2-line mt-2 "></i>
+                            </Link>
+                          </td>
                           <td className="setting">
                             <i
                               className="ri-delete-bin-line mx-2"

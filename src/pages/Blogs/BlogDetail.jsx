@@ -10,8 +10,8 @@ export default function BlogDetail({
   content,
   firstName,
   lastName,
-  date,
   img,
+  ...restParam
 }) {
   return (
     <div className=" col-lg-4 col-md-6 flex justify-content-center">
