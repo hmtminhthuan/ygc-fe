@@ -27,7 +27,7 @@ export default function Login() {
       let timerInterval;
       Swal.fire({
         title: "Loading...",
-        timer: 1000,
+        timer: 800,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading();
@@ -48,7 +48,7 @@ export default function Login() {
             icon: "success",
             title: `Log in successfully! </br> Welcome ${res.data.firstName} ${res.data.lastName}`,
             showConfirmButton: true,
-            timer: 2000,
+            timer: 1600,
           }).then(function () {
             if (res.data.role.id == 1) {
               window.location.href = "/admin";
