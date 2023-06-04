@@ -128,18 +128,41 @@ export default function ListTrainee() {
       });
   };
 
-  useEffect(() => {
-    const traineeIds = traineeList.map((trainee) => trainee.accountID);
+  // useEffect(() => {
+  //   const traineeIds = traineeList.find((trainee) => trainee.accountID);
 
-    api
-      .get(`/Trainee/GetTraineeCourses?traineeId=${traineeIds}`)
-      .then((res) => {
-        setTraineeCourses(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [traineeList]);
+  //   api
+  //     .get(`/Trainee/GetTraineeCourses?traineeId=${traineeIds}`)
+  //     .then((res) => {
+  //       setTraineeCourses(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [traineeList]);
+
+  // useEffect(() => {
+  //   const traineeIds = traineeList.map((trainee) => trainee.accountID);
+
+  //   const fetchTraineeCourses = async () => {
+  //     try {
+  //       const traineeCoursesPromises = traineeIds.map((traineeId) =>
+  //         api.get(`/Trainee/GetTraineeCourses?traineeId=${traineeId}`)
+  //       );
+  //       const traineeCoursesResponses = await Promise.all(
+  //         traineeCoursesPromises
+  //       );
+  //       const traineeCoursesData = traineeCoursesResponses.map(
+  //         (response) => response.data
+  //       );
+  //       setTraineeCourses(traineeCoursesData);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   fetchTraineeCourses();
+  // }, [traineeList]);
 
   // const [sortOrder, setSortOrder] = useState("");
 
@@ -294,7 +317,7 @@ export default function ListTrainee() {
                             .includes(searchedName.trim().toLowerCase())
                       )
                       .map((trainee) => {
-                        const traineeCoursesFiltered = traineeCourses.filter(
+                        const traineeCoursesFiltered = traineeCourses.find(
                           (course) => course.traineeId === trainee.accountID
                         );
                         return (
@@ -306,17 +329,13 @@ export default function ListTrainee() {
                             <td>{`${trainee.email}`}</td>
                             <td>{`${trainee.address}`}</td>
                             <td>
-                              {traineeCoursesFiltered.length > 0
-                                ? traineeCoursesFiltered.map(
-                                    (course) => course.courseName
-                                  )
+                              {traineeCoursesFiltered
+                                ? traineeCoursesFiltered.courseName
                                 : "-"}
                             </td>
                             <td>
-                              {traineeCoursesFiltered.length > 0
-                                ? traineeCoursesFiltered.map(
-                                    (course) => course.className
-                                  )
+                              {traineeCoursesFiltered
+                                ? traineeCoursesFiltered.className
                                 : "-"}
                             </td>
                             <td className="setting">
