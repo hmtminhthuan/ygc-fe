@@ -1,7 +1,7 @@
 import React from "react";
 import { api } from "../../../../constants/api";
 import { useFormik } from "formik";
-import { Form, Input, Select } from "antd";
+import { Form, Input, Select, Button } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./CreateTrainee.scss";
@@ -54,13 +54,13 @@ export default function CreateTrainee() {
   };
 
   return (
-    <div className="update">
+    <div className="create-trainee">
       <div className="containerud">
-        <h1 className="mt-5 mb-4">Create Trainee's Account</h1>
+        <h1 className="mt-4 mb-3 mx-4">Create Trainee's Account</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
-              <h3 className="mb-4">Account Settings</h3>
+              {/* <h3 className="mb-4">Account Settings</h3> */}
               <Form
                 {...formItemLayout}
                 form={formik.form}
@@ -173,7 +173,7 @@ export default function CreateTrainee() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Email"
@@ -199,29 +199,29 @@ export default function CreateTrainee() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Address"
                         name="address"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Address cannot be blank",
-                          },
-                        ]}
-                        hasFeedback
+                        // rules={[
+                        //   {
+                        //     required: true,
+                        //     message: "Address cannot be blank",
+                        //   },
+                        // ]}
+                        // hasFeedback
                       >
                         <Input
                           name="address"
                           value={formik.values.address}
                           onChange={formik.handleChange}
-                          placeholder="Enter Address"
+                          placeholder="Enter Address (Optional)"
                         />
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Password"
@@ -250,12 +250,22 @@ export default function CreateTrainee() {
                   </div>
                 </div>
 
-                <div className="flex">
-                  <Form.Item className="text-center">
-                    <button className="btn btn-primary mx-2 my-2" type="submit">
+                <div className="text-center row">
+                  <div className="col-6">
+                    <Button type="primary" htmlType="submit">
                       Create
-                    </button>
-                  </Form.Item>
+                    </Button>
+                  </div>
+                  <div className="col-6 flex align-items-center">
+                    <Link
+                      to={"/staff/listTrainee"}
+                      className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
+                    text-decoration-none text-light"
+                      style={{ borderRadius: "10px" }}
+                    >
+                      Cancel
+                    </Link>
+                  </div>
                 </div>
               </Form>
               {/* <Link to="/dashboard">

@@ -48,7 +48,7 @@ export default function CreateBlog() {
   return (
     <div className="createblog">
       <div className="containerud">
-        <h1 className="mt-5 mb-4">Create New Blog</h1>
+        <h1 className="mt-4 mb-3 mx-4">Create New Blog</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
@@ -155,6 +155,7 @@ export default function CreateBlog() {
                           value={formik.values.content}
                           onChange={formik.handleChange}
                           placeholder="Enter Content"
+                          rows={5}
                         />
                       </Form.Item>
                     </div>

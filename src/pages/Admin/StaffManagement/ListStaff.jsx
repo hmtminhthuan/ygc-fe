@@ -237,7 +237,18 @@ export default function ListStaff() {
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th>Delete</th>
+                    <th>
+                      <Link
+                        to={"/admin/createStaff"}
+                        className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                        style={{
+                          borderRadius: "10px",
+                          backgroundColor: "#71c55b",
+                        }}
+                      >
+                        Create new staff
+                      </Link>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

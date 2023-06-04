@@ -59,13 +59,13 @@ export default function CreateStaff() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className="main--content staff-course-view pt-3">
-          <div className="update">
+        <div className="main--content staff-course-view ">
+          <div className="create-staff">
             <div
               className="containerud m-0 p-0"
               style={{ height: "80vh", overflowY: "none" }}
             >
-              <h1 className="m-0 p-0 text-primary">Create Staff's Account</h1>
+              <h1>Create Staff's Account</h1>
               <div className="bg-white shadow rounded-lg d-sm-flex">
                 <div className="tab-content p-4 p-md-5">
                   <div className="tab-pane fade show active">
@@ -267,10 +267,7 @@ export default function CreateStaff() {
 
                       <div className="row">
                         <div className="col-6">
-                          <Button
-                            className="btn btn-primary p-0 m-0 px-3"
-                            type="submit"
-                          >
+                          <Button className="btn  p-0 m-0 px-3" type="submit">
                             Create
                           </Button>
                         </div>

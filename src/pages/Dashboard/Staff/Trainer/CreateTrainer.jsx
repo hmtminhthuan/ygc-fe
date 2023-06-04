@@ -1,7 +1,8 @@
 import React from "react";
 import { api } from "../../../../constants/api";
 import { useFormik } from "formik";
-import { Form, Input, Select } from "antd";
+import { Form, Input, Select, Button } from "antd";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./CreateTrainer.scss";
 
@@ -53,9 +54,9 @@ export default function CreateTrainer() {
   };
 
   return (
-    <div className="update">
-      <div className="containerud">
-        <h1 className="mt-5 mb-4">Create Trainer's Account</h1>
+    <div className="create-trainer">
+      <div className="containerud m-0 p-0">
+        <h1 className="mt-4 mb-3 mx-4">Create Trainer's Account</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
@@ -172,7 +173,7 @@ export default function CreateTrainer() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Email"
@@ -198,29 +199,29 @@ export default function CreateTrainer() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Address"
                         name="address"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Address cannot be blank",
-                          },
-                        ]}
-                        hasFeedback
+                        // rules={[
+                        //   {
+                        //     required: true,
+                        //     message: "Address cannot be blank",
+                        //   },
+                        // ]}
+                        // hasFeedback
                       >
                         <Input
                           name="address"
                           value={formik.values.address}
                           onChange={formik.handleChange}
-                          placeholder="Enter Address"
+                          placeholder="Enter Address (Optional)"
                         />
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Password"
@@ -249,13 +250,22 @@ export default function CreateTrainer() {
                   </div>
                 </div>
 
-                <div className="flex">
-                  <Form.Item className="text-center">
-                    <button className="btn btn-primary mx-2 my-2" type="submit">
+                <div className="text-center row">
+                  <div className="col-6">
+                    <Button type="primary" htmlType="submit">
                       Create
-                    </button>
-                    <button className="btn btn-light mx-2">Cancel</button>
-                  </Form.Item>
+                    </Button>
+                  </div>
+                  <div className="col-6 flex align-items-center">
+                    <Link
+                      to={"/staff/listTrainer"}
+                      className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
+                    text-decoration-none text-light"
+                      style={{ borderRadius: "10px" }}
+                    >
+                      Cancel
+                    </Link>
+                  </div>
                 </div>
               </Form>
             </div>

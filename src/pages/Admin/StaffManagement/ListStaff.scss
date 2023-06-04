@@ -9,7 +9,7 @@
 
 .headerlist {
   text-align: center;
-  color: linear-gradient(#e66465, #9198e5);
+  // color: linear-gradient(#e66465, #9198e5);
   h1 {
     font-weight: 900;
   }
@@ -139,7 +139,9 @@ tbody td:hover:before {
     thead {
       tr {
         th {
-          background-color: #da25b3d5 !important;
+          font-size: 16px !important;
+          background-color: rgba(210, 145, 188, 1);
+          color: #333 !important;
         }
       }
     }

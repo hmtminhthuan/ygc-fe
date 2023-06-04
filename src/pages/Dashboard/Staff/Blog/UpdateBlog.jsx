@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import { Form, Input, Button } from "antd";
 import { useFormik } from "formik";
 import { api } from "../../../../constants/api";
+import moment from "moment";
+import "./UpdateBlog.scss";
 
 export default function UpdateBlog() {
   const formItemLayout = {
@@ -13,6 +15,10 @@ export default function UpdateBlog() {
 
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const [date, setDate] = useState("");
+  const [header, setHeader] = useState("");
+  const [content, setContent] = useState("");
+  const [img, setImg] = useState("");
 
   useEffect(() => {
     api
@@ -22,12 +28,20 @@ export default function UpdateBlog() {
       .then((res) => {
         const blogDetail = res.data;
         setBlog(blogDetail);
+        setDate(res.data.date);
+        setHeader(res.data.header);
+        setContent(res.data.content);
+        setImg(res.data.img);
         formik.setValues({
           date: blogDetail.date,
           header: blogDetail.header,
           content: blogDetail.content,
           img: blogDetail.img,
         });
+        setDate(res.data.date);
+        setHeader(res.data.header);
+        setContent(res.data.content);
+        setImg(res.data.img);
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +50,7 @@ export default function UpdateBlog() {
 
   const formik = useFormik({
     initialValues: {
-      date: "",
+      // date: "",
       header: "",
       content: "",
       img: "",
@@ -67,9 +81,9 @@ export default function UpdateBlog() {
   }
 
   return (
-    <div className="updateblog">
+    <div className="updateblog p-2">
       <div className="containerud">
-        <h1 className="mt-5 mb-4">Update Blog</h1>
+        <h1 className="mt-4 mb-3 mx-4">Update Blog</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
@@ -81,21 +95,23 @@ export default function UpdateBlog() {
                 autoComplete="off"
               >
                 <div className="row mx-4">
-                  <div className="col-md-12">
+                  {/* <div className="col-md-12">
                     <div className="form-group">
                       <Form.Item
                         label="Date"
                         name="date"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Date cannot be blank",
-                          },
-                          {
-                            pattern: /^(\d{4})-(\d{2})-(\d{2})$/,
-                            message: "Date must be in the format YYYY-MM-DD",
-                          },
-                        ]}
+                        // rules={[
+                        //   {
+                        //     required: true,
+                        //     message: "Date cannot be blank",
+                        //   },
+                        //   {
+                        //     pattern: /^(\d{4})-(\d{2})-(\d{2})$/,
+                        //     message: "Date must be in the format YYYY-MM-DD",
+                        //   },
+                        // ]}
+                        initialValue={moment(blog.date).format("YYYY-MM-DD")}
+                        readOnly
                       >
                         <Input
                           name="date"
@@ -105,7 +121,7 @@ export default function UpdateBlog() {
                         />
                       </Form.Item>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-md-12">
                     <div className="form-group">
@@ -119,6 +135,7 @@ export default function UpdateBlog() {
                           },
                           { whitespace: true },
                         ]}
+                        initialValue={blog.header}
                         hasFeedback
                       >
                         <Input
@@ -143,6 +160,7 @@ export default function UpdateBlog() {
                           },
                           { whitespace: true },
                         ]}
+                        initialValue={blog.content}
                         hasFeedback
                       >
                         <Input.TextArea
@@ -151,6 +169,7 @@ export default function UpdateBlog() {
                           value={formik.values.content}
                           onChange={formik.handleChange}
                           placeholder="Enter Content"
+                          rows={10}
                         />
                       </Form.Item>
                     </div>
@@ -167,6 +186,7 @@ export default function UpdateBlog() {
                             message: "Image cannot be blank",
                           },
                         ]}
+                        initialValue={blog.img}
                         hasFeedback
                       >
                         <Input
