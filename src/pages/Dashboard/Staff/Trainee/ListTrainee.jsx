@@ -130,7 +130,6 @@ export default function ListTrainee() {
 
   useEffect(() => {
     const traineeIds = traineeList.map((trainee) => trainee.accountID);
-    // console.log("tr", traineeIds);
     traineeIds.forEach((item) => {
       let course = {};
       api
@@ -146,8 +145,6 @@ export default function ListTrainee() {
         .finally(() => {});
     });
   }, [traineeList]);
-  console.log("arr", traineeCourses);
-  // const [sortOrder, setSortOrder] = useState("");
 
   return (
     <>
