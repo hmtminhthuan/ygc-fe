@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Select } from "antd";
+import "remixicon/fonts/remixicon.css";
+import Swal from "sweetalert2";
+import { api } from "../../../../constants/api";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
-import Swal from "sweetalert2";
-import { Select } from "antd";
-import { Link } from "react-router-dom";
-import { api } from "../../../../constants/api";
 import "./BlogManagement.scss";
+
 function BlogManagement() {
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
@@ -31,6 +32,7 @@ function BlogManagement() {
 
     return `${day}-${month}-${year}`;
   };
+
   const generateContentHTML = (content) => {
     return content
       .split("\r\n")
@@ -86,12 +88,11 @@ function BlogManagement() {
       },
       buttonsStyling: false,
     });
-    // const blogToDelete = blogList.find((blog) => blog.blogID === blogId);
 
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `Do you want to delete?`,
+        text: "Do you want to delete?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
@@ -103,8 +104,6 @@ function BlogManagement() {
           api
             .delete(`/Blog/DeleteBlog?id=${blogId}`)
             .then(() => {
-              // console.log("Trainer deleted successfully.");
-              // Refresh the trainee list after deletion
               setBlogList((prevList) =>
                 prevList.filter((blog) => blog.blogID !== blogId)
               );
@@ -115,7 +114,6 @@ function BlogManagement() {
               );
             })
             .catch((error) => {
-              // console.log("Failed to delete trainer. Please try again.");
               console.log(error);
               swalWithBootstrapButtons.fire(
                 "Failed to delete",
@@ -132,6 +130,7 @@ function BlogManagement() {
         }
       });
   };
+
   return (
     <section className="the-container">
       <div className="the-menu">
@@ -163,12 +162,12 @@ function BlogManagement() {
                       }}
                     >
                       <Select.Option value="asc">Oldest</Select.Option>
-                      <Select.Option value="desc">Lastest</Select.Option>
+                      <Select.Option value="desc">Latest</Select.Option>
                       <Select.Option value="all">All</Select.Option>
                     </Select>
                   </div>
                 </div>
-                <div className="create col-lg-6 flex ">
+                <div className="create col-lg-6 flex">
                   <button>Create</button>
                 </div>
               </div>
@@ -189,12 +188,11 @@ function BlogManagement() {
                   </thead>
                   <tbody>
                     {sortedBlogs.map((blog) => {
-                      const formattedDate = formatDate(blog.date || "");
+                      const formattedDate = formatDate(blog.date);
                       return (
                         <tr key={blog.blogID}>
                           <td>{`${blog.blogID}`}</td>
                           <td>{formattedDate}</td>
-
                           <td>{`${blog.header}`}</td>
                           <td style={{ textAlign: "justify" }}>
                             {blog.content.length >= 100
@@ -211,7 +209,6 @@ function BlogManagement() {
                               <></>
                             )}
                           </td>
-
                           <td>
                             <img
                               src={`${blog.img}`}
@@ -222,15 +219,7 @@ function BlogManagement() {
                           <td>
                             {`${blog.firstName}`} {`${blog.lastName}`}
                           </td>
-                          <td className="setting">
-                            <Link
-                              to={`/updateProfile/${id}`}
-                              className="updateInfo"
-                            >
-                              <i className="ri-edit-2-line mx-2"></i>
-                              {/* <span className="px-2">Update</span> */}
-                            </Link>
-                          </td>
+                          <td className="setting"></td>
                           <td className="setting">
                             <i
                               className="ri-delete-bin-line mx-2"
