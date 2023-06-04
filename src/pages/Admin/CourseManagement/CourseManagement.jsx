@@ -692,6 +692,12 @@ export default function CourseManagement() {
                                 width: "50px",
                                 height: "30px",
                                 borderRadius: "10px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                Swal.fire({
+                                  imageUrl: `${courseImg}`,
+                                });
                               }}
                             />
                           </td>
