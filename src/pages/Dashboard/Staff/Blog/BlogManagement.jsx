@@ -149,6 +149,15 @@ function BlogManagement() {
               </div>
               {/* Sort by date */}
               <div className="tab row">
+                <div className="col-lg-6 create flex mb-2 ">
+                  <Link
+                    to={"/staff/createBlog"}
+                    className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                    style={{ borderRadius: "10px", backgroundColor: "green" }}
+                  >
+                    Create new blog
+                  </Link>
+                </div>
                 <div className="col-lg-6 flex mb-2">
                   <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
                     Sort by Date
@@ -167,9 +176,6 @@ function BlogManagement() {
                       <Select.Option value="all">All</Select.Option>
                     </Select>
                   </div>
-                </div>
-                <div className="create col-lg-6 flex">
-                  <button>Create</button>
                 </div>
               </div>
 
