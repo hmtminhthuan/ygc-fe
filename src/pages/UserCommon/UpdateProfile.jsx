@@ -86,6 +86,7 @@ export default function UpdateProfile() {
       img: "",
     },
     onSubmit: (values) => {
+      console.log(values);
       if (values.img == "") {
         values.img = "female";
         if (profile.gender) {
@@ -124,7 +125,7 @@ export default function UpdateProfile() {
               })
               .catch((err) => {})
               .finally(() => {
-                window.location.href = `/updateProfile/${profile.id}`;
+                // window.location.href = `/updateProfile/${profile.id}`;
               });
           });
         })

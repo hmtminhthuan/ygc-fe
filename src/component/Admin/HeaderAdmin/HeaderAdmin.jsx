@@ -60,7 +60,7 @@ export default function HeaderAdmin({ background, ...restParams }) {
             )}
             {USER.img != "" && USER.img != "male" && USER.img != "female" ? (
               <img
-                src={profile.img}
+                src={USER.img}
                 alt="Image"
                 className="shadow img-user-profile"
                 style={{ borderRadius: "50%" }}
