@@ -222,7 +222,7 @@ function BlogManagement() {
                           </td>
                           <td className="setting">
                             <Link
-                              to={`/updateBlog/${blog.blogID}`}
+                              to={`/staff/updateBlog/${blog.blogID}`}
                               className="updateInfo"
                             >
                               <i className="ri-edit-2-line mt-2 "></i>
