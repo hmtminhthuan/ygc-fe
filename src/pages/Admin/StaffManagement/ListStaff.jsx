@@ -247,7 +247,7 @@ export default function ListStaff() {
                           backgroundColor: "#71c55b",
                         }}
                       >
-                        Create new staff
+                        Create
                       </Link>
                     </th>
                   </tr>
