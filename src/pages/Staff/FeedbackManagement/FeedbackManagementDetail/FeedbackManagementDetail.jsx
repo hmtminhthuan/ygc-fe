@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { Link, useParams } from "react-router-dom";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
-import FeedbackInfo from "./FeedbackInfo";
 import maleImg from "../../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../../assets/images/avt-female.jpg";
 
@@ -265,7 +264,7 @@ export default function FeedbackManagementDetail() {
                       </td>
                       <td>
                         <div className="row flex justify-content-start align-items-start">
-                          <div className="col-1 flex justify-content-end align-items-star mx-2">
+                          <div className="col-2 flex justify-content-end align-items-start mx-2">
                             <img
                               className={`course-feedback-trainee-img-null-`}
                               style={{
@@ -285,7 +284,7 @@ export default function FeedbackManagementDetail() {
                               }
                             />
                           </div>
-                          <div className="col-10">
+                          <div className="col-9">
                             <p
                               className="p-0 m-0 text-start"
                               style={{ fontWeight: "600" }}

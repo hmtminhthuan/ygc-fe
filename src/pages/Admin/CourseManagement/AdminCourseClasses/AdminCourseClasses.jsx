@@ -110,6 +110,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                   <StyledTableCell align="left">Trainer</StyledTableCell>
                   <StyledTableCell align="left">Room</StyledTableCell>
                   <StyledTableCell align="left">Schedule</StyledTableCell>
+                  <StyledTableCell align="left">Quantity</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -132,6 +133,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                         lastname,
                         schedule,
                         room,
+                        numOfTrainee,
                       },
                       index
                     ) => {
@@ -169,13 +171,18 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                           <StyledTableCell align="left">
                             {firstname} {lastname}
                           </StyledTableCell>
-                          <StyledTableCell align="left">{room}</StyledTableCell>
+                          <StyledTableCell align="center">
+                            {room}
+                          </StyledTableCell>
                           <StyledTableCell align="left">
                             {schedule.map(({ date, time }, index) => (
                               <p className="p-0 m-0 py-1" key={index}>
                                 {date}, {time}
                               </p>
                             ))}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {numOfTrainee}
                           </StyledTableCell>
                         </StyledTableRow>
                       );
