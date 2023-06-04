@@ -48,7 +48,6 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        { path: "/dashboard", element: <Dashboard /> },
       ],
     },
     {
