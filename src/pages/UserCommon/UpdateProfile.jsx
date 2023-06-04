@@ -102,7 +102,30 @@ export default function UpdateProfile() {
             showConfirmButton: true,
             timer: 1000,
           }).then(function () {
-            window.location.href = `/profile/${profile.id}`;
+            api
+              .get("/Account/AccountList")
+              .then((res) => {
+                let userList = [];
+                userList = res.data;
+                localStorage.removeItem("USER_LOGIN");
+                localStorage.setItem(
+                  "USER_LOGIN",
+                  JSON.stringify(
+                    userList[
+                      userList.findIndex((obj) => {
+                        return (
+                          obj.phoneNumber.toString().trim() ==
+                          values.phoneNumber.toString().trim()
+                        );
+                      })
+                    ]
+                  )
+                );
+              })
+              .catch((err) => {})
+              .finally(() => {
+                window.location.href = `/updateProfile/${profile.id}`;
+              });
           });
         })
         .catch((err) => {});

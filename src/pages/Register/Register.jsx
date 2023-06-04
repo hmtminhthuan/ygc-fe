@@ -20,26 +20,49 @@ export default function Register() {
   const handleRegister = (values) => {
     const roleId = 4;
     values = { ...values, roleId };
+    values.img = "female";
+    if (values.gender) {
+      values.img = "male";
+    }
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      html: "Please wait a few seconds",
+      timer: 1600,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .post("/Account/CreateAccount", values)
       .then((res) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `Register successfully! </br> Welcome ${values.firstname} ${values.lastname}`,
-          showConfirmButton: true,
-          timer: 2500,
-        });
         api
-          .post("/Account/CheckLogin", {
-            phoneNumber: values.phoneNumber,
-            password: values.password,
-          })
+          .get("/Account/AccountList")
           .then((res) => {
+            let userList = [];
+            userList = res.data;
+            let pos = userList.findIndex((obj) => {
+              return (
+                obj.email.toString().trim() == values.email.toString().trim()
+              );
+            });
             localStorage.removeItem("USER_LOGIN");
-            localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
-            window.location.href = "/";
-          });
+            localStorage.setItem("USER_LOGIN", JSON.stringify(userList[pos]));
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `Register successfully</br>Welcome ${values.firstname} ${values.lastname}`,
+              showConfirmButton: true,
+              timer: 2000,
+            }).then(function () {
+              window.location.href = `/`;
+            });
+          })
+          .catch((err) => {});
       })
       .catch((err) => {
         Swal.fire({

@@ -105,16 +105,33 @@ export default function Login() {
               })
               .then((res) => {
                 if (res.status == 200) {
-                  Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title:
-                      "Update Password Successfully.</br>You can Log in now!",
-                    showConfirmButton: true,
-                    timer: 1500,
-                  }).then(function () {
-                    // window.location.href = `/updateProfile/${userId}`;
-                  });
+                  api
+                    .get("/Account/AccountList")
+                    .then((res) => {
+                      let userList = [];
+                      userList = res.data;
+                      let pos = userList.findIndex((obj) => {
+                        return (
+                          obj.accountID.toString().trim() ==
+                          accountID.toString().trim()
+                        );
+                      });
+                      localStorage.removeItem("USER_LOGIN");
+                      localStorage.setItem(
+                        "USER_LOGIN",
+                        JSON.stringify(userList[pos])
+                      );
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `Reset Password Successfully</br>Welcome ${userList[pos].firstName} ${userList[pos].lastName}`,
+                        showConfirmButton: true,
+                        timer: 1500,
+                      }).then(function () {
+                        window.location.href = `/`;
+                      });
+                    })
+                    .catch((err) => {});
                 }
               })
               .catch((err) => {});
@@ -125,6 +142,7 @@ export default function Login() {
   };
 
   const handleResetPassword = (validationCode, email, accountID, time) => {
+    console.log(validationCode);
     Swal.fire({
       title: `Verify your Account`,
       html: `We have sent a code to your Email: </br> ${email}. <br/>
