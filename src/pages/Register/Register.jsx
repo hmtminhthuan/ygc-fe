@@ -76,8 +76,8 @@ export default function Register() {
           Swal.fire({
             position: "center",
             title: `We have sent another code to your Email.</br>Please check your Email again.`,
-            showConfirmButton: true,
-            timer: 2500,
+            showConfirmButton: false,
+            timer: 2000,
           }).then(function () {
             handleVerifyEmail(values);
           });
@@ -135,6 +135,20 @@ export default function Register() {
   };
 
   const handleVerifyEmail = (values) => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      html: "Please wait a few seconds",
+      timer: 1200,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
+
     api
       .get(`/Account/SendCodeRegister?email=${values.email}`)
       .then((res) => {

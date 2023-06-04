@@ -145,8 +145,8 @@ export default function ChangePassword({ userEmail, userId }) {
           Swal.fire({
             position: "center",
             title: `We have sent another code to your Email.</br>Please check your Email again.`,
-            showConfirmButton: true,
-            timer: 2500,
+            showConfirmButton: false,
+            timer: 2000,
           }).then(function () {
             handleForgetPassword();
           });
@@ -204,6 +204,20 @@ export default function ChangePassword({ userEmail, userId }) {
   };
 
   const handleForgetPassword = () => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      html: "Please wait a few seconds",
+      timer: 1200,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
+
     api
       .post(`/Account/CreateValidationCode?email=${userEmail}`)
       .then((res) => {
