@@ -268,9 +268,15 @@ body {
         margin: 20px auto !important;
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: space-around !important;
         h1 {
           font-size: 50px !important;
+        }
+
+        .card--content {
+          margin: 0 20px;
+          align-items: center !important;
+          justify-content: center !important;
         }
       }
 
@@ -280,18 +286,9 @@ body {
       }
       .card--icon--lg {
         font-size: 80px;
-        margin: 0 auto !important;
+        margin: 0 20px !important;
       }
-      .card--stats {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 5px;
-      }
-      .card--stats span {
-        display: flex;
-        align-items: center;
-      }
+
       .card--icon {
         margin-right: 5px;
       }
@@ -344,39 +341,39 @@ body {
 .card-4 .card--icon--lg {
   color: rgba(227, 106, 200, 0.4);
 }
-/* doctors */
-.doctors--right--btns {
+/* trainers */
+.trainers--right--btns {
   display: flex;
   align-items: center;
   gap: 30px;
 }
-.add {
-  display: flex;
-  align-items: center;
-  padding: 5px 10px;
-  outline: none;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.add:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-.add i {
-  margin-right: 10px;
-  padding: 5px;
-  background-color: #fff;
-  border-radius: 50%;
-  color: #000;
-}
-.doctors--cards {
+// .add {
+//   display: flex;
+//   align-items: center;
+//   padding: 5px 10px;
+//   outline: none;
+//   border: none;
+//   background-color: #333;
+//   color: #fff;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   transition: 0.3s;
+// }
+// .add:hover {
+//   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+// }
+// .add i {
+//   margin-right: 10px;
+//   padding: 5px;
+//   background-color: #fff;
+//   border-radius: 50%;
+//   color: #000;
+// }
+.trainers--cards {
   display: flex;
   gap: 20px;
 }
-.doctor--card {
+.trainer--card {
   padding: 20px;
   border-radius: 20px;
   height: auto;
@@ -388,7 +385,7 @@ body {
   font-size: 0.8rem;
   background-color: #fff;
 }
-.doctor--card:hover {
+.trainer--card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .img--box--cover {
@@ -412,7 +409,7 @@ body {
   color: rgb(208, 143, 186);
 }
 /* recent--patients */
-.recent--patients {
+.recent--trainees {
   margin-bottom: 20px;
 }
 .table {
@@ -427,6 +424,9 @@ table {
 tr {
   border-bottom: 1px solid #f1f1f1;
 }
+// td {
+//   background-color: #fff !important;
+// }
 td,
 th {
   padding-block: 10px;
@@ -450,7 +450,7 @@ th {
 /* responsive starts here */
 @media screen and (max-width: 1350px) {
   .cards,
-  .doctors--cards {
+  .trainers--cards {
     overflow-x: scroll;
   }
 }
@@ -513,7 +513,7 @@ th {
   }
 }
 @media screen and (max-width: 450px) {
-  .doctor--filter {
+  .trainer--filter {
     display: none;
   }
   .main--content {
