@@ -22,14 +22,10 @@ export default function CreateBlog() {
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      //   const formattedValues = {
-      //     ...values,
-      //     date: values.date.toISOString(), // Chuyển đổi định dạng ngày thành chuỗi thời gian
-      //   };
       api
         .post("/Blog/CreateBlog", values)
         .then((res) => {
-          // Account trainer created successfully
+          //  blog created successfully
           const createdBlog = res.data;
           // Reset the form after successful creation
           resetForm();
@@ -99,12 +95,18 @@ export default function CreateBlog() {
                             required: true,
                             message: "Date cannot be blank",
                           },
+
+                          {
+                            message: "Date is not in correct form (YYYY-MM-DD)",
+                            pattern: /^(\d{4})-(\d{2})-(\d{2})$/,
+                          },
                         ]}
                       >
-                        <DatePicker
+                        <Input
                           name="date"
-                          showTime
-                          format="YYYY-MM-DD HH:mm:ss"
+                          value={formik.values.date}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Date (YYYY-MM-DD)"
                         />
                       </Form.Item>
                     </div>
