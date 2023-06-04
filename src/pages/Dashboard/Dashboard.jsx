@@ -81,7 +81,7 @@ export default function Dashboard() {
               </div>
               <div className="row cards ">
                 <div className="col-sm-3 card card-1 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data  mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
                       <h1 className=" mt-4">{countList.numOfTrainer}</h1>
@@ -90,16 +90,16 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="col-sm-3 card card-2 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data  mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainees</h5>
                       <h1 className=" mt-4">{countList.numOfTrainee}</h1>
                     </div>
-                    <i className=" mr-4 ri-user-line card--icon--lg " />
+                    <i className=" ri-user-line card--icon--lg " />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-3 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data  mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
                       <h1 className=" mt-4">{countList.numOfCourse}</h1>
@@ -108,7 +108,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="col-sm-3 card card-4 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Classes</h5>
                       <h1 className=" mt-4">{countList.numOfClass}</h1>
@@ -118,7 +118,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="col-sm-3 card card-6 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data  mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Feedbacks</h5>
                       <h1 className=" mt-4">{countList.numOfFeedback}</h1>
@@ -128,7 +128,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="col-sm-3 card card-5 text-center">
-                  <div className="card--data mt-5 mx-3">
+                  <div className="card--data  mx-3">
                     <div className="card--content">
                       <h5 className="card--title">Blogs</h5>
                       <h1 className=" mt-4">{countList.numOfBlog}</h1>

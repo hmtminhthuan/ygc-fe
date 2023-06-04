@@ -265,9 +265,13 @@ body {
       }
 
       .card--data {
+        margin: 20px auto !important;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-evenly;
+        h1 {
+          font-size: 50px !important;
+        }
       }
 
       .card h1 {
@@ -276,6 +280,7 @@ body {
       }
       .card--icon--lg {
         font-size: 80px;
+        margin: 0 auto !important;
       }
       .card--stats {
         display: flex;

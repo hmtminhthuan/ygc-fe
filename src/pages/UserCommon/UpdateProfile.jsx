@@ -148,7 +148,7 @@ export default function UpdateProfile() {
               className="containerud w-100"
               style={{ margin: "0 auto", width: "100%" }}
             >
-              <h1 className="mb-4 pt-5 text-primary text-center">
+              <h1 className="mb-4 mt-5 pt-5 text-primary text-center">
                 Update Account
               </h1>
               <div className="row bg-white shadow rounded-lg d-md-flex justify-content-center">
