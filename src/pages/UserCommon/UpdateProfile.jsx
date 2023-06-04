@@ -170,7 +170,11 @@ export default function UpdateProfile() {
                           src={male}
                           alt="Image"
                           className="shadow img-user-profile"
-                          style={{ width: "150px", height: "150px" }}
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "5px",
+                          }}
                         />
                       ) : (
                         <></>
@@ -180,7 +184,11 @@ export default function UpdateProfile() {
                           src={female}
                           alt="Image"
                           className="shadow img-user-profile"
-                          style={{ width: "150px", height: "150px" }}
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "5px",
+                          }}
                         />
                       ) : (
                         <></>
@@ -192,7 +200,11 @@ export default function UpdateProfile() {
                           src={previewImg}
                           alt="Image"
                           className="shadow img-user-profile"
-                          style={{ width: "150px", height: "150px" }}
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "5px",
+                          }}
                         />
                       )}
                     </div>
