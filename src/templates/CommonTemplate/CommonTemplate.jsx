@@ -5,12 +5,18 @@ export default function CommonTemplate() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   let USER = {};
   USER = JSON.parse(USER_LOGIN);
-  if (USER_LOGIN == null || USER_LOGIN == undefined) {
+  if (
+    USER_LOGIN == null ||
+    USER_LOGIN == undefined ||
+    USER.role.id == undefined
+  ) {
     window.location.href = "/";
   }
   return (
     <>
-      {USER_LOGIN == null || USER_LOGIN == undefined ? (
+      {USER_LOGIN == null ||
+      USER_LOGIN == undefined ||
+      USER.role.id == undefined ? (
         <></>
       ) : (
         <div style={{}}>
