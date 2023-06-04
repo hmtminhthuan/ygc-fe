@@ -134,3 +134,27 @@ tbody td:hover:before {
     z-index: 5000 !important;
   }
 }
+#admin-list-staff-area {
+  table {
+    thead {
+      tr {
+        th {
+          background-color: #da25b3d5 !important;
+        }
+      }
+    }
+    tbody tr:hover {
+      // background-color: rgba(255, 255, 255, 0.3) !important;
+      background-color: rgba(248, 208, 230, 0.764) !important;
+      color: #000 !important;
+    }
+    tbody td {
+      position: relative;
+    }
+    tbody td:hover:before {
+      content: "";
+      z-index: -100;
+      display: none !important;
+    }
+  }
+}

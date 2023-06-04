@@ -7,11 +7,16 @@ import Swal from "sweetalert2";
 // import MenuStaff from "../../component/Staff/MenuStaff";
 import "remixicon/fonts/remixicon.css";
 import "./ListStaff.scss";
+import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
+import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 export default function ListStaff() {
   const [staffList, setStaffList] = useState([]);
   const [sortedStaffs, setSortedStaffs] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
   const [genderSort, setgenderSort] = useState("All");
+  const [searchedEmail, setSearchedEmail] = useState("");
+  const [searchedPhone, setSearchedPhone] = useState("");
+  const [searchedName, setSearchedName] = useState("");
 
   useEffect(() => {
     api
@@ -121,98 +126,167 @@ export default function ListStaff() {
 
   return (
     <>
-      {/* <HeaderStaff /> */}
-
-      <section className="staff-list-area pt-3 pb-3">
-        {/* <MenuStaff /> */}
-        <div className=" row flex trainee-containe mt-2 mx-5 mb-5">
-          <div className="headerlist mb-2">
-            <h1>
-              <i className="ri-bookmark-line"></i> List Staffs
-            </h1>
-          </div>
-          {/* Sort by firstname */}
-          <div className="col-lg-4 col-md-12 flex justify-content-center mb-2">
-            <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
-              Sort by FirstName
-            </h4>
-            <div className="w-50">
-              <Select
-                className="w-100 text-dark"
-                name="firstname"
-                value={firstNameSort}
-                onChange={(value) => {
-                  setfirstNameSort(value);
-                }}
-              >
-                <Select.Option value="asc">A - Z</Select.Option>
-                <Select.Option value="desc">Z - A</Select.Option>
-                <Select.Option value="all">All</Select.Option>
-              </Select>
+      <HeaderAdmin />
+      <section className="main" id="admin-list-staff-area">
+        <MenuAdmin />
+        <div className="main--content pt-3 bg-white">
+          <div className=" row flex trainee-containe mt-2 mx-5 mb-5">
+            <div className="headerlist mb-2">
+              <h1 className="m-0 p-0 mb-2" style={{ color: "#da25b3d5" }}>
+                <i className="ri-bookmark-line"></i> List Staffs
+              </h1>
             </div>
-          </div>
-
-          {/* Sort by gender */}
-          <div className="col-lg-4 col-md-12 flex justify-content-center mb-2">
-            <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h4>
-            <div className="w-50">
-              <Select
-                className="w-100 text-dark"
-                name="gender"
-                value={genderSort}
-                onChange={(value) => {
-                  setgenderSort(value);
-                }}
-              >
-                <Select.Option value="male">Male</Select.Option>
-                <Select.Option value="female">Female</Select.Option>
-                <Select.Option value="all">All</Select.Option>
-              </Select>
+            {/* Search By Name */}
+            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Search by Name</h5>
+              <div className="w-50 flex justify-content-end">
+                <input
+                  type="search"
+                  placeholder="Enter part of Name..."
+                  style={{
+                    borderRadius: "5px",
+                    border: "1px solid gray",
+                    outline: "none",
+                    fontSize: "13px",
+                  }}
+                  className="px-1 py-1 w-100"
+                  value={searchedName}
+                  onChange={(e) => {
+                    setSearchedName(e.target.value);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <div className="trainee">
-            <table>
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Gender</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>Address</th>
 
-                  <th>
-                    <button className="btn-home px-3 pt-2 pb-2 justify-content-center ">
-                      <i className="ri-home-2-fill"></i>
-                      <Link to={"/dashboard"} className="exit-list">
-                        Home
-                      </Link>
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedStaffs.map((staff) => (
-                  <tr key={staff.accountID}>
-                    <td>{`${staff.firstName}`}</td>
-                    <td>{`${staff.lastName}`}</td>
-                    <td>{`${staff.gender ? "Male" : "Female"}`}</td>
-                    <td>{`${staff.phoneNumber}`}</td>
-                    <td>{`${staff.email}`}</td>
-                    <td>{`${staff.address}`}</td>
+            {/* Sort by gender */}
+            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h5>
+              <div
+                className="w-50 flex justify-content-end"
+                style={{ fontSize: "13px" }}
+              >
+                <Select
+                  className="w-100 text-dark mx-1"
+                  name="gender"
+                  value={genderSort}
+                  onChange={(value) => {
+                    setgenderSort(value);
+                  }}
+                >
+                  <Select.Option value="male">Male</Select.Option>
+                  <Select.Option value="female">Female</Select.Option>
+                  <Select.Option value="all">All</Select.Option>
+                </Select>
+              </div>
+            </div>
 
-                    <td className="setting">
-                      {/* <i className="ri-edit-2-fill mx-2"></i> */}
-                      <i
-                        className="ri-delete-bin-line mx-2 "
-                        onClick={() => deleteStaff(staff.accountID)}
-                        style={{ cursor: "pointer" }}
-                      ></i>
-                    </td>
+            {/* Search By Phone */}
+            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                Search by Phone
+              </h5>
+              <div className="w-50 flex justify-content-end">
+                <input
+                  type="search"
+                  placeholder="Enter Phone..."
+                  style={{
+                    borderRadius: "5px",
+                    border: "1px solid gray",
+                    outline: "none",
+                    fontSize: "13px",
+                  }}
+                  className="px-1 py-1 w-100"
+                  value={searchedPhone}
+                  onChange={(e) => {
+                    setSearchedPhone(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Search By Email */}
+            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                Search by Email
+              </h5>
+              <div className="w-50 flex justify-content-end">
+                <input
+                  type="search"
+                  placeholder="Enter Email..."
+                  style={{
+                    borderRadius: "5px",
+                    border: "1px solid gray",
+                    outline: "none",
+                    fontSize: "13px",
+                  }}
+                  className="px-1 py-1 w-100"
+                  value={searchedEmail}
+                  onChange={(e) => {
+                    setSearchedEmail(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="trainee">
+              <table style={{ fontSize: "13px" }}>
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Delete</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {sortedStaffs
+                    .filter((item) =>
+                      item.email
+                        .trim()
+                        .toLowerCase()
+                        .includes(searchedEmail.trim().toLowerCase())
+                    )
+                    .filter((item) =>
+                      item.phoneNumber
+                        .trim()
+                        .toLowerCase()
+                        .includes(searchedPhone.trim().toLowerCase())
+                    )
+                    .filter(
+                      (item) =>
+                        item.firstName
+                          .trim()
+                          .toLowerCase()
+                          .includes(searchedName.trim().toLowerCase()) ||
+                        item.lastName
+                          .trim()
+                          .toLowerCase()
+                          .includes(searchedName.trim().toLowerCase())
+                    )
+                    .map((staff) => (
+                      <tr key={staff.accountID}>
+                        <td>{`${staff.firstName}`}</td>
+                        <td>{`${staff.lastName}`}</td>
+                        <td>{`${staff.gender ? "Male" : "Female"}`}</td>
+                        <td>{`${staff.phoneNumber}`}</td>
+                        <td>{`${staff.email}`}</td>
+                        <td>{`${staff.address}`}</td>
+
+                        <td className="setting">
+                          {/* <i className="ri-edit-2-fill mx-2"></i> */}
+                          <i
+                            className="ri-delete-bin-line mx-2 "
+                            onClick={() => deleteStaff(staff.accountID)}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>

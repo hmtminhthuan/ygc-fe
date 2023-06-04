@@ -27,7 +27,7 @@ export default function MenuAdmin() {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/listStaff">
             <span className="icon icon-4">
               <i className="ri-user-line" />
             </span>
@@ -40,7 +40,7 @@ export default function MenuAdmin() {
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
-            <span className="sidebar--item">Courses</span>
+            <span className="sidebar--item">Course</span>
           </a>
         </li>
         {/* <li>

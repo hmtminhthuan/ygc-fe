@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "../../../assets/images/logo.png";
 import user from "../../../assets/images/user.jpg";
-import maleImg from "../../assets/images/avt-male.jpg";
-import femaleImg from "../../assets/images/avt-female.jpg";
+import maleImg from "../../../assets/images/avt-male.jpg";
+import femaleImg from "../../../assets/images/avt-female.jpg";
 import { Link } from "react-router-dom";
 export default function HeaderAdmin({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");

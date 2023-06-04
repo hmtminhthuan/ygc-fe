@@ -34,7 +34,7 @@ export default function MenuStaff() {
               <i className="ri-user-2-line" />
             </span>
             <span className="sidebar--item" style={{ whiteSpace: "nowrap" }}>
-              Trainers
+              Trainer
             </span>
           </a>
         </li>
@@ -43,7 +43,7 @@ export default function MenuStaff() {
             <span className="icon icon-4">
               <i className="ri-user-line" />
             </span>
-            <span className="sidebar--item">Trainees</span>
+            <span className="sidebar--item">Trainee</span>
           </a>
         </li>
         <li>
@@ -51,7 +51,7 @@ export default function MenuStaff() {
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
-            <span className="sidebar--item">Courses</span>
+            <span className="sidebar--item">Course</span>
           </a>
         </li>
         <li>
@@ -59,7 +59,7 @@ export default function MenuStaff() {
             <span className="icon icon-3">
               <i className=" ri-community-line" />
             </span>
-            <span className="sidebar--item">Classes</span>
+            <span className="sidebar--item">Class</span>
           </a>
         </li>
         <li>
@@ -80,7 +80,7 @@ export default function MenuStaff() {
             <span className="icon icon-2">
               <i className="  ri-terminal-window-fill" />
             </span>
-            <span className="sidebar--item">Blogs</span>
+            <span className="sidebar--item">Blog</span>
           </a>
         </li>
       </ul>
