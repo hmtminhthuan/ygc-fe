@@ -20,23 +20,16 @@ export default function MenuStaff() {
     >
       <ul className="sidebar--items">
         <li>
-          <a href="#" id="active--link">
+          <a href="/staff/dashboard" id="active--link">
             <span className="icon icon-1">
               <i className="ri-layout-grid-line" />
             </span>
             <span className="sidebar--item">Dashboard</span>
           </a>
         </li>
+
         <li>
-          <a href="#">
-            <span className="icon icon-2">
-              <i className="ri-calendar-2-line" />
-            </span>
-            <span className="sidebar--item">Schedule</span>
-          </a>
-        </li>
-        <li>
-          <a href="/listTrainer">
+          <a href="/staff/listTrainer">
             <span className="icon icon-4">
               <i className="ri-user-2-line" />
             </span>
@@ -46,41 +39,45 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/listTrainee">
+          <a href="/staff/listTrainee">
             <span className="icon icon-4">
               <i className="ri-user-line" />
             </span>
-
             <span className="sidebar--item">Trainees</span>
           </a>
         </li>
-        {/* <li>
+        <li>
           <a href="/staff/course">
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
             <span className="sidebar--item">Courses</span>
           </a>
-        </li> */}
-        <li>
-          <a href="/staff/feedbackManagement">
-            <span className="icon icon-6">
-              <i className="fa-sharp fa-solid fa-comments"></i>
-            </span>
-            <span className="sidebar--item">Feedback</span>
-          </a>
         </li>
         <li>
           <a href="#">
-            <span className="icon icon-2">
+            <span className="icon icon-3">
               <i className=" ri-community-line" />
             </span>
             <span className="sidebar--item">Classes</span>
           </a>
         </li>
         <li>
-          <a href="#">
-            <span className="icon icon-3">
+          <a href="/staff/feedbackManagement">
+            <span className="icon icon-6">
+              <i className="fa-sharp fa-solid fa-comments"></i>
+            </span>
+            <span
+              className="sidebar--item"
+              style={{ transform: "translateX(-4px)" }}
+            >
+              Feedback
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/staff/blogManagement">
+            <span className="icon icon-2">
               <i className="  ri-terminal-window-fill" />
             </span>
             <span className="sidebar--item">Blogs</span>
@@ -101,7 +98,7 @@ export default function MenuStaff() {
             <span className="icon icon-7">
               <i className="fa-sharp fa-solid fa-address-card"></i>{" "}
             </span>
-            <span className="sidebar--item">My Profile</span>
+            <span className="sidebar--item">Profile</span>
           </a>
         </li>
         <li>

@@ -6,18 +6,9 @@ import user from "../../assets/images/user.jpg";
 import { api } from "../../constants/api";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import MenuStaff from "../../component/Staff/MenuStaff";
+import HeaderStaff from "../../component/Staff/HeaderStaff";
 export default function Dashboard() {
-  // const USER_LOGIN = localStorage.getItem("USER_LOGIN");
-  // let USER = {};
-  // USER = JSON.parse(USER_LOGIN);
-  // if (
-  //   USER_LOGIN == null ||
-  //   USER_LOGIN == undefined ||
-  //   !(USER.role.id == 1 || USER.role.id == 2)
-  // ) {
-  //   window.location.href = "/";
-  // }
-
   useEffect(() => {
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
@@ -75,141 +66,12 @@ export default function Dashboard() {
     <>
       <div>
         {/* Header */}
-        <section className="headerdb">
-          <div className="logo mt-2">
-            <h2>
-              <i className="ri-menu-line icon icon-0 menu mx-2" />
-            </h2>
-            <h2>
-              <img src={logo} />
-              Yoga<span>Center</span>
-            </h2>
-          </div>
-          <div className="search--notification--profile">
-            <div className="search">
-              <input type="text" placeholder="Search..." />
-              <button>
-                <i className="ri-search-2-line" />
-              </button>
-            </div>
-            <div className="notification--profile">
-              <div className="picon bell">
-                <i className="ri-notification-2-line" />
-              </div>
-
-              <div className="picon profile">
-                <img src={user} alt="" />
-              </div>
-              <Link
-                to={"/"}
-                className="px-2 text-decoration-none text-primary bg-primary bg-opacity-25
-              "
-                style={{ borderRadius: "10px", marginLeft: "20px" }}
-              >
-                Home
-              </Link>
-              <Link
-                onClick={() => {
-                  localStorage.removeItem("USER_LOGIN");
-                  window.location.href = "/";
-                }}
-                className="px-2 text-decoration-none text-danger bg-danger bg-opacity-25
-              "
-                style={{ borderRadius: "10px", marginLeft: "20px" }}
-              >
-                Log out
-              </Link>
-            </div>
-          </div>
-        </section>
+        <HeaderStaff />
 
         {/* Main */}
         <section className="main">
           {/* Sidebar */}
-          <div className="sidebar">
-            <ul className="sidebar--items">
-              <li>
-                <a href="#" id="active--link">
-                  <span className="icon icon-1">
-                    <i className="ri-layout-grid-line" />
-                  </span>
-                  <span className="sidebar--item">Dashboard</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-2">
-                    <i className="ri-calendar-2-line" />
-                  </span>
-                  <span className="sidebar--item">Schedule</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-3">
-                    <i className="ri-user-2-line" />
-                  </span>
-                  <span
-                    className="sidebar--item"
-                    style={{ whiteSpace: "nowrap" }}
-                  >
-                    Trainers
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-4">
-                    <i className="ri-user-line" />
-                  </span>
-
-                  <span className="sidebar--item">Trainees</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-5">
-                    <i className="ri-folder-open-fill" />
-                  </span>
-                  <span className="sidebar--item">Classes</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-6">
-                    <i className=" ri-community-line" />
-                  </span>
-                  <span className="sidebar--item">Feedbacks</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-6">
-                    <i className="ri-terminal-window-fill" />
-                  </span>
-                  <span className="sidebar--item">Blogs</span>
-                </a>
-              </li>
-            </ul>
-            <ul className="sidebar--bottom-items">
-              <li>
-                <a href="#">
-                  <span className="icon icon-7">
-                    <i className="ri-settings-3-line" />
-                  </span>
-                  <span className="sidebar--item">My Profile</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span className="icon icon-8">
-                    <i className="ri-logout-box-r-line" />
-                  </span>
-                  <span className="sidebar--item">Logout</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+          <MenuStaff />
 
           <div className="main--content">
             {/* Overview */}

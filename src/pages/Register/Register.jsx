@@ -59,7 +59,15 @@ export default function Register() {
               showConfirmButton: true,
               timer: 2000,
             }).then(function () {
-              window.location.href = `/`;
+              if (userList[pos].role.id == 1) {
+                window.location.href = "/admin";
+              } else if (userList[pos].role.id == 2) {
+                window.location.href = "/staff";
+              } else if (userList[pos].role.id == 3) {
+                window.location.href = "/trainer";
+              } else if (userList[pos].role.id == 4) {
+                window.location.href = "/trainee";
+              }
             });
           })
           .catch((err) => {});
