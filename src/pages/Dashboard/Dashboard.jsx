@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "remixicon/fonts/remixicon.css";
 import "./Dashboard.scss";
 import "./Slider.scss";
@@ -26,7 +26,7 @@ export default function Dashboard() {
     api
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
-        const filteredTrainers = res.data;
+        const filteredTrainers = res.data.slice(0, 7);
         setTrainerList(filteredTrainers);
       })
       .catch((err) => {
@@ -81,112 +81,112 @@ export default function Dashboard() {
               </div>
               <div className="row cards ">
                 <div className="col-sm-3 card card-1 text-center">
-                  <div className="card--data  mx-3">
+                  <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
-                      <h1 className=" mt-4">{countList.numOfTrainer}</h1>
+                      <h1>{countList.numOfTrainer}</h1>
                     </div>
-                    <i className="ri-user-2-line card--icon--lg" />
+                    <i className="ri-user-2-line card--icon--lg " />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-2 text-center">
-                  <div className="card--data  mx-3">
+                  <div className="card--data  ">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainees</h5>
-                      <h1 className=" mt-4">{countList.numOfTrainee}</h1>
+                      <h1>{countList.numOfTrainee}</h1>
                     </div>
                     <i className=" ri-user-line card--icon--lg " />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-3 text-center">
-                  <div className="card--data  mx-3">
+                  <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
-                      <h1 className=" mt-4">{countList.numOfCourse}</h1>
+                      <h1>{countList.numOfCourse}</h1>
                     </div>
                     <i className="mr-4 ri-book-open-fill card--icon--lg" />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-4 text-center">
-                  <div className="card--data mx-3">
+                  <div className="card--data">
                     <div className="card--content">
                       <h5 className="card--title">Classes</h5>
-                      <h1 className=" mt-4">{countList.numOfClass}</h1>
+                      <h1>{countList.numOfClass}</h1>
                     </div>
                     <i className="mr-4 ri-community-line card--icon--lg" />
                   </div>
                 </div>
 
                 <div className="col-sm-3 card card-6 text-center">
-                  <div className="card--data  mx-3">
+                  <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Feedbacks</h5>
-                      <h1 className=" mt-4">{countList.numOfFeedback}</h1>
+                      <h1>{countList.numOfFeedback}</h1>
                     </div>
                     <i className="mr-4 ri-community-line card--icon--lg" />
                   </div>
                 </div>
 
                 <div className="col-sm-3 card card-5 text-center">
-                  <div className="card--data  mx-3">
+                  <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Blogs</h5>
-                      <h1 className=" mt-4">{countList.numOfBlog}</h1>
+                      <h1>{countList.numOfBlog}</h1>
                     </div>
                     <i className="mr-4 ri-terminal-window-fill card--icon--lg" />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="doctors">
+            <div className="trainers">
               <div className="title">
                 <h2 className="section--title">Trainers</h2>
-                <div className="doctors--right--btns">
+                {/* <div className="trainers--right--btns">
                   <button className="add">
                     <i className="ri-add-line" />
                     Add Trainer
                   </button>
-                </div>
+                </div> */}
               </div>
+              <div className="trainers--container flex">
+                <div className="trainers--cards" style={{ display: "flex" }}>
+                  {trainerList.map((trainer, index) => (
+                    <a
+                      href="#"
+                      className="trainer--card"
+                      key={trainer.accountID}
+                    >
+                      <div className="img--box--cover">
+                        <div className="img--box">
+                          <img
+                            src={`/path/to/images/${trainer.img}.png`}
+                            alt="Trainer"
+                          />
+                        </div>
+                      </div>
+                      <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>
+                    </a>
+                  ))}
+                </div>
 
-              <div className="carousel">
-                <div className="carousel__body">
-                  <div className="carousel__prev">
-                    <i className="far fa-angle-left"></i>
-                  </div>
-
-                  <div className="carousel__next">
-                    <i className="far fa-angle-right"></i>
-                  </div>
-
-                  <div className="carousel__slider">
-                    <div className="doctors--cards">
-                      {trainerList.map((trainer) => (
-                        <a
-                          href="#"
-                          className="doctor--card"
-                          key={trainer.accountID}
-                        >
-                          <div className="img--box--cover">
-                            <div className="img--box">
-                              <img src={`/path/to/images/${trainer.img}.png`} />
-                            </div>
-                          </div>
-                          <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+                <div className="more">
+                  <Link to={`/staff/listTrainer`} className="updateInfo">
+                    <i
+                      className=" ri-arrow-right-s-line mx-4 mt-2 "
+                      style={{ color: "#333", fontSize: "40px" }}
+                    ></i>
+                  </Link>
                 </div>
               </div>
             </div>
-            <div className="recent--patients">
+
+            <div className="recent--trainees">
               <div className="title">
                 <h2 className="section--title">Recent Trainees</h2>
-                <button className="add">
+                {/* <button className="add">
                   <i className="ri-add-line" />
                   Add Trainee
-                </button>
+                </button> */}
               </div>
               <div className="table">
                 <table>

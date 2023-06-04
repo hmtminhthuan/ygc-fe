@@ -302,6 +302,7 @@ export default function ListTrainee() {
                           }}
                         >
                           Create
+                          {/* <i className=" ri-user-add-line mx-2 flex"></i>Create */}
                         </Link>
                       </th>
                     </tr>
@@ -332,18 +333,18 @@ export default function ListTrainee() {
                             .includes(searchedName.trim().toLowerCase())
                       )
                       .map((trainee) => {
-                        // const traineeCoursesFiltered = traineeCourses.find(
-                        //   (course) => course.traineeId === trainee.accountID
-                        // );
-                        const traineeCoursesFiltered = traineeCourses.filter(
+                        const traineeCoursesFiltered = traineeCourses.find(
                           (course) => course.traineeId === trainee.accountID
                         );
-                        const courseNames = traineeCoursesFiltered.map(
-                          (course) => course.courseName
-                        );
-                        const classNames = traineeCoursesFiltered.map(
-                          (course) => course.className
-                        );
+                        // const traineeCoursesFiltered = traineeCourses.filter(
+                        //   (course) => course.traineeId === trainee.accountID
+                        // );
+                        // const courseNames = traineeCoursesFiltered
+                        //   .map((course) => course.courseName)
+                        //   .join(",");
+                        // const classNames = traineeCoursesFiltered.map(
+                        //   (course) => course.className
+                        // );
                         return (
                           <tr key={trainee.accountID}>
                             <td>{`${trainee.firstName}`}</td>
@@ -352,7 +353,7 @@ export default function ListTrainee() {
                             <td>{`${trainee.phoneNumber}`}</td>
                             <td>{`${trainee.email}`}</td>
                             <td>{`${trainee.address}`}</td>
-                            {/* <td>
+                            <td>
                               {traineeCoursesFiltered
                                 ? traineeCoursesFiltered.courseName
                                 : "-"}
@@ -361,12 +362,12 @@ export default function ListTrainee() {
                               {traineeCoursesFiltered
                                 ? traineeCoursesFiltered.className
                                 : "-"}
-                            </td> */}
+                            </td>
 
-                            <td>
+                            {/* <td>
                               {courseNames.length > 0 ? courseNames : "-"}
                             </td>
-                            <td>{classNames.length > 0 ? classNames : "-"}</td>
+                            <td>{classNames.length > 0 ? classNames : "-"}</td> */}
                             <td className="setting">
                               {/* <i className="ri-edit-2-fill mx-2"></i> */}
                               <i
