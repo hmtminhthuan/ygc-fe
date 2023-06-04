@@ -3,17 +3,17 @@ import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import Swal from "sweetalert2";
 import { Select } from "antd";
+import { Link } from "react-router-dom";
 import { api } from "../../../../constants/api";
 import "./BlogManagement.scss";
 function BlogManagement() {
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [dateSort, setDateSort] = useState("All");
-  const [statusSort, setStatusSort] = useState("all");
 
   useEffect(() => {
     api
-      .get("/Blog/GetBlogListByStaff")
+      .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
       })
@@ -47,19 +47,6 @@ function BlogManagement() {
         content: "text-justify",
       },
     });
-  };
-
-  const getStatusValue = (status) => {
-    switch (status) {
-      case "waiting":
-        return 0;
-      case "approved":
-        return 1;
-      case "deleted":
-        return 2;
-      default:
-        return -1;
-    }
   };
 
   useEffect(() => {
@@ -236,7 +223,13 @@ function BlogManagement() {
                             {`${blog.firstName}`} {`${blog.lastName}`}
                           </td>
                           <td className="setting">
-                            <i className="ri-edit-2-line mx-2"></i>
+                            <Link
+                              to={`/updateProfile/${id}`}
+                              className="updateInfo"
+                            >
+                              <i className="ri-edit-2-line mx-2"></i>
+                              {/* <span className="px-2">Update</span> */}
+                            </Link>
                           </td>
                           <td className="setting">
                             <i

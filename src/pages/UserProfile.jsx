@@ -109,26 +109,26 @@ function UserProfile() {
                           <h6 className="f-w-600" style={{ fontSize: "20px" }}>
                             {firstname} {lastname}
                           </h6>
-                          {/* <p
-                      className={`${roleColor}`}
-                      style={{ fontSize: "16px", fontWeight: "bold" }}
-                    >
-                      Role: {roleColor.name}
-                    </p> */}
-                          <div className="icon mt-3">
-                            <div className="text-center">
+                          <p
+                            className={`${roleColor}`}
+                            style={{ fontSize: "16px" }}
+                          >
+                            UserID: {id}
+                          </p>
+                          <div className="icon mt-3 text-center justify-content-center">
+                            {/* <div className=" col-md-6 p-0">
                               <Link to={"/"} className="home">
-                                <i className="ri-home-4-line mt-5 px-2"></i>
+                                <i className="ri-home-4-line mt-5 "></i>
                                 <span className="px-2">Home</span>
                               </Link>
-                            </div>
-                            <div className="text-center mt-2">
+                            </div> */}
+                            <div className="p-0">
                               <Link
                                 to={`/updateProfile/${id}`}
                                 className="updateInfo"
                               >
-                                <i className="ri-edit-2-line mt-5 px-2"></i>
-                                <span className="px-2">Update</span>
+                                <i className="ri-edit-2-line mt-2 "></i>
+                                {/* <span className="px-2">Update</span> */}
                               </Link>
                             </div>
                           </div>
@@ -136,12 +136,12 @@ function UserProfile() {
                       </div>
                       <div className="col-sm-8 align-items-center my-5">
                         <div className="card-block my-2 mx-4 align-items-center">
-                          <h6
+                          <h5
                             className="m-b-20 p-b-5 b-b-default f-w-600"
                             style={{ color: "rgba(210, 145, 188, 1)" }}
                           >
                             INFORMATION
-                          </h6>
+                          </h5>
                           <div className="row">
                             <div className="col-sm-6 mb-3">
                               <p className="m-b-10 f-w-600">Gender</p>

@@ -30,7 +30,8 @@ function BlogPage() {
     return null; // Render loading state or handle the case when blogDetail is not available yet
   }
 
-  let { blogID, header, content, firstName, date, ...restParams } = blogDetail;
+  let { blogID, header, content, firstName, date, img, ...restParams } =
+    blogDetail;
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -110,28 +111,8 @@ function BlogPage() {
               </p>
 
               <p>
-                <img
-                  src="https://themewagon.github.io/yogalax/images/image_1.jpg"
-                  alt=""
-                />
+                <img src={img} alt="" />
               </p>
-
-              {/* <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Ratione dicta fuga repellat rem numquam aliquid necessitatibus
-                maiores sit quaerat id, aperiam exercitationem corrupti
-                temporibus doloremque dolorum veritatis nesciunt vitae ad harum
-                incidunt impedit atque? Aperiam, cumque molestias! Reprehenderit
-                incidunt molestias eaque velit iusto sed neque delectus facilis
-                voluptatum aliquam dignissimos asperiores dolore ullam labore
-                laudantium officiis nesciunt numquam odit omnis doloribus
-                voluptates consequatur, eius distinctio pariatur! Nostrum
-                placeat illum earum, esse beatae ipsum. Laudantium veniam
-                quaerat reprehenderit sit! Aliquam a officia quis quos minima
-                officiis blanditiis fugit eaque quae veritatis eveniet commodi,
-                doloremque perferendis expedita repellat ratione id corrupti!
-                Minima?
-              </p> */}
 
               <div className="tag-widget post-tag-container mb-5 mt-5">
                 <div className="tag-cloud">

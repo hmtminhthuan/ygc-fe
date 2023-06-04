@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 import "./BlogDetail.scss";
-import image from "../../assets/images/img_blog.jpg";
+// import image from "../../assets/images/img_blog.jpg";
 import { Link } from "react-router-dom";
 // /import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
 export default function BlogDetail({
@@ -9,14 +9,15 @@ export default function BlogDetail({
   header,
   content,
   firstName,
+  lastName,
   date,
-  ...restParams
+  img,
 }) {
   return (
     <div className=" col-lg-4 col-md-6 flex justify-content-center">
       <Card className="blog-entry justify-content-end my-5 mx-5 shadow-none shadow-none border-0">
         <div className="w-100 block-20">
-          <Card.Img src={image} />
+          <Card.Img src={img} />
         </div>
         <Card.Body className="text p-4 float-right d-block">
           <Card.Title>
@@ -68,7 +69,9 @@ export default function BlogDetail({
             </p>
           </Card.Text>
 
-          <p className="blogger mt-5">{firstName}</p>
+          <p className="blogger mt-5 pt-2">
+            {firstName} {lastName}
+          </p>
         </Card.Body>
       </Card>
     </div>
