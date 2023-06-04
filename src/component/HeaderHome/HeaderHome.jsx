@@ -70,7 +70,12 @@ export default function HeaderHome() {
                     <Nav.Link
                       className="px-4 nav-item nav-item-after-login hello-user"
                       onClick={() => {
-                        window.location.href = "/dashboard";
+                        if (userLogin.role.id == 1) {
+                          window.location.href = "/admin";
+                        }
+                        if (userLogin.role.id == 2) {
+                          window.location.href = "/staff";
+                        }
                       }}
                     >
                       Dashboard

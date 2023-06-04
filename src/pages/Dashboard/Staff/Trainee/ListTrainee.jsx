@@ -128,43 +128,23 @@ export default function ListTrainee() {
       });
   };
 
-  // useEffect(() => {
-  //   const traineeIds = traineeList.find((trainee) => trainee.accountID);
-
-  //   api
-  //     .get(`/Trainee/GetTraineeCourses?traineeId=${traineeIds}`)
-  //     .then((res) => {
-  //       setTraineeCourses(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [traineeList]);
-
-  // useEffect(() => {
-  //   const traineeIds = traineeList.map((trainee) => trainee.accountID);
-
-  //   const fetchTraineeCourses = async () => {
-  //     try {
-  //       const traineeCoursesPromises = traineeIds.map((traineeId) =>
-  //         api.get(`/Trainee/GetTraineeCourses?traineeId=${traineeId}`)
-  //       );
-  //       const traineeCoursesResponses = await Promise.all(
-  //         traineeCoursesPromises
-  //       );
-  //       const traineeCoursesData = traineeCoursesResponses.map(
-  //         (response) => response.data
-  //       );
-  //       setTraineeCourses(traineeCoursesData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchTraineeCourses();
-  // }, [traineeList]);
-
-  // const [sortOrder, setSortOrder] = useState("");
+  useEffect(() => {
+    const traineeIds = traineeList.map((trainee) => trainee.accountID);
+    traineeIds.forEach((item) => {
+      let course = {};
+      api
+        .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
+        .then((res) => {
+          res.data.forEach((courseItem) => {
+            course = courseItem;
+            course.traineeId = item;
+            setTraineeCourses([...traineeCourses, course]);
+          });
+        })
+        .catch((err) => {})
+        .finally(() => {});
+    });
+  }, [traineeList]);
 
   return (
     <>

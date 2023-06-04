@@ -82,7 +82,7 @@ export default function CourseView() {
             })
             .finally(() => {
               api
-                .get("/Feedback/GetCourseFeedbackbyId", {
+                .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
                   params: { courseid: course.courseID },
                 })
                 .then((res) => {
@@ -619,7 +619,28 @@ export default function CourseView() {
                             <td></td>
                           )}
                           {feedbackInfo != null && feedbackInfo != undefined ? (
-                            <td style={{ textAlign: "center" }}>
+                            <td
+                              style={{ textAlign: "center" }}
+                              className={`
+                              ${
+                                feedbackInfo.length > 0 && rating >= 4
+                                  ? "text-success"
+                                  : ""
+                              }
+                                ${
+                                  feedbackInfo.length > 0 &&
+                                  rating >= 3 &&
+                                  rating < 4
+                                    ? "text-primary"
+                                    : ""
+                                }
+                                ${
+                                  feedbackInfo.length > 0 && rating < 3
+                                    ? "text-danger"
+                                    : ""
+                                }
+                              `}
+                            >
                               {feedbackInfo.length > 0
                                 ? `${rating}`
                                 : "Not yet"}
