@@ -130,17 +130,23 @@ export default function ListTrainee() {
 
   useEffect(() => {
     const traineeIds = traineeList.map((trainee) => trainee.accountID);
-
-    api
-      .get(`/Trainee/GetTraineeCourses?traineeId=${traineeIds}`)
-      .then((res) => {
-        setTraineeCourses(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // console.log("tr", traineeIds);
+    traineeIds.forEach((item) => {
+      let course = {};
+      api
+        .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
+        .then((res) => {
+          res.data.forEach((courseItem) => {
+            course = courseItem;
+            course.traineeId = item;
+            setTraineeCourses([...traineeCourses, course]);
+          });
+        })
+        .catch((err) => {})
+        .finally(() => {});
+    });
   }, [traineeList]);
-
+  console.log("arr", traineeCourses);
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
