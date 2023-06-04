@@ -292,7 +292,18 @@ export default function ListTrainee() {
                       <th>Address</th>
                       <th>Course</th>
                       <th>Class</th>
-                      <th>Delete</th>
+                      <th>
+                        <Link
+                          to={"/staff/createTrainee"}
+                          className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                          style={{
+                            borderRadius: "10px",
+                            backgroundColor: "#71c55b",
+                          }}
+                        >
+                          Create
+                        </Link>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>

@@ -253,7 +253,7 @@ export default function ListTrainer() {
                   />
                 </div>
               </div>
-              <div className="trainee">
+              <div className="trainer">
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
@@ -265,7 +265,18 @@ export default function ListTrainer() {
                       <th>Address</th>
                       <th>Course</th>
                       <th>Class</th>
-                      <th>Delete</th>
+                      <th>
+                        <Link
+                          to={"/staff/createTrainer"}
+                          className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                          style={{
+                            borderRadius: "10px",
+                            backgroundColor: "#71c55b",
+                          }}
+                        >
+                          Create
+                        </Link>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
