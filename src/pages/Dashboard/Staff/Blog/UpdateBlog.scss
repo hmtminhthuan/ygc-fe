@@ -1,15 +1,15 @@
-.createblog {
+.updateblog {
+  background-color: #f2ced8;
+  padding-bottom: 0;
+  bottom: 0 !important;
   .tab-content {
+    margin: 0;
     border-radius: 17px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
-  background-color: #f2ced8;
-  margin-top: 0;
-  padding-top: 20px;
   form {
     margin: 0 auto !important;
   }
-
   button {
     background-color: rgba(210, 145, 188, 1);
     color: #333;
