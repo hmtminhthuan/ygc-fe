@@ -35,9 +35,7 @@ export default function CourseDetail() {
       .then((res) => {
         setCourseDetail(res.data);
       })
-      .catch((err) => {
-        // console.log(err);
-      });
+      .catch((err) => {});
 
     api
       .get("/Class/GetClassByCourseID", {
@@ -46,9 +44,7 @@ export default function CourseDetail() {
       .then((res) => {
         setCourseClasses(res.data);
       })
-      .catch((err) => {
-        // console.log(err);
-      });
+      .catch((err) => {});
 
     api
       .get("/Feedback/GetCourseFeedbackbyId", {
@@ -57,9 +53,7 @@ export default function CourseDetail() {
       .then((res) => {
         setCourseFeedback(res.data);
       })
-      .catch((err) => {
-        // console.log(err);
-      });
+      .catch((err) => {});
 
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     let USER = {};

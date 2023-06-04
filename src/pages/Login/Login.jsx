@@ -167,7 +167,6 @@ export default function Login() {
   };
 
   const handleResetPassword = (validationCode, email, accountID, time) => {
-    console.log(validationCode);
     Swal.fire({
       title: `Verify your Account`,
       html: `We have sent a code to your Email: </br> ${email}. <br/>

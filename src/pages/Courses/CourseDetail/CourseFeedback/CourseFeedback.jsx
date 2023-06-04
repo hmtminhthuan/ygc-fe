@@ -23,16 +23,14 @@ export default function CourseFeedback({ courseFeedback, ...restParams }) {
             setTraineeInfo(traineeInfoArr);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     });
-    if (courseFeedback.length <= 0) {
-      setCount((prevCount) => prevCount + 1);
-    } else {
-      setCount(0);
-    }
-  }, [count]);
+    // if (courseFeedback.length <= 0) {
+    //   setCount((prevCount) => prevCount + 1);
+    // } else {
+    //   setCount(0);
+    // }
+  }, [courseFeedback.length]);
 
   return (
     <div className="course-detail-fb row flex align-items-center justify-content-center">
