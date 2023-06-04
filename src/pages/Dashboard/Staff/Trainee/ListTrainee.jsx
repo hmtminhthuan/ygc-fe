@@ -15,6 +15,7 @@ export default function ListTrainee() {
   const [searchedEmail, setSearchedEmail] = useState("");
   const [searchedPhone, setSearchedPhone] = useState("");
   const [searchedName, setSearchedName] = useState("");
+  const [traineeCourses, setTraineeCourses] = useState([]);
 
   useEffect(() => {
     api
@@ -127,6 +128,19 @@ export default function ListTrainee() {
       });
   };
 
+  useEffect(() => {
+    const traineeIds = traineeList.map((trainee) => trainee.accountID);
+
+    api
+      .get(`/Trainee/GetTraineeCourses?traineeId=${traineeIds}`)
+      .then((res) => {
+        setTraineeCourses(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [traineeList]);
+
   // const [sortOrder, setSortOrder] = useState("");
 
   return (
@@ -143,26 +157,6 @@ export default function ListTrainee() {
                   <i className="ri-bookmark-line"></i> List Trainees
                 </h1>
               </div>
-              {/* Sort by firstname */}
-              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
-                  Sort by FirstName
-                </h4>
-                <div className="w-50 flex justify-content-end">
-                  <Select
-                    className="w-100 text-dark"
-                    name="firstname"
-                    value={firstNameSort}
-                    onChange={(value) => {
-                      setfirstNameSort(value);
-                    }}
-                  >
-                    <Select.Option value="asc">A - Z</Select.Option>
-                    <Select.Option value="desc">Z - A</Select.Option>
-                    <Select.Option value="all">All</Select.Option>
-                  </Select>
-                </div>
-              </div> */}
 
               {/* Search By Name */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
@@ -299,26 +293,43 @@ export default function ListTrainee() {
                             .toLowerCase()
                             .includes(searchedName.trim().toLowerCase())
                       )
-                      .map((trainee) => (
-                        <tr key={trainee.accountID}>
-                          <td>{`${trainee.firstName}`}</td>
-                          <td>{`${trainee.lastName}`}</td>
-                          <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
-                          <td>{`${trainee.phoneNumber}`}</td>
-                          <td>{`${trainee.email}`}</td>
-                          <td>{`${trainee.address}`}</td>
-                          <td></td>
-                          <td></td>
-                          <td className="setting">
-                            {/* <i className="ri-edit-2-fill mx-2"></i> */}
-                            <i
-                              className="ri-delete-bin-line mx-2 "
-                              onClick={() => deleteTrainee(trainee.accountID)}
-                              style={{ cursor: "pointer" }}
-                            ></i>
-                          </td>
-                        </tr>
-                      ))}
+                      .map((trainee) => {
+                        const traineeCoursesFiltered = traineeCourses.filter(
+                          (course) => course.traineeId === trainee.accountID
+                        );
+                        return (
+                          <tr key={trainee.accountID}>
+                            <td>{`${trainee.firstName}`}</td>
+                            <td>{`${trainee.lastName}`}</td>
+                            <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
+                            <td>{`${trainee.phoneNumber}`}</td>
+                            <td>{`${trainee.email}`}</td>
+                            <td>{`${trainee.address}`}</td>
+                            <td>
+                              {traineeCoursesFiltered.length > 0
+                                ? traineeCoursesFiltered.map(
+                                    (course) => course.courseName
+                                  )
+                                : "-"}
+                            </td>
+                            <td>
+                              {traineeCoursesFiltered.length > 0
+                                ? traineeCoursesFiltered.map(
+                                    (course) => course.className
+                                  )
+                                : "-"}
+                            </td>
+                            <td className="setting">
+                              {/* <i className="ri-edit-2-fill mx-2"></i> */}
+                              <i
+                                className="ri-delete-bin-line mx-2 "
+                                onClick={() => deleteTrainee(trainee.accountID)}
+                                style={{ cursor: "pointer" }}
+                              ></i>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

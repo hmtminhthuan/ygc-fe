@@ -83,10 +83,12 @@
 
   .tab {
     display: flex;
-    justify-content: center;
+    justify-content: space-between !important;
     .create {
       margin-left: 100px;
       right: 0;
+      text-align: right;
+      background-color: green !important;
     }
   }
 }
