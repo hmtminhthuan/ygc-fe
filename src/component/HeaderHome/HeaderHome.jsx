@@ -93,7 +93,7 @@ export default function HeaderHome() {
                         window.location.href = "/trainer";
                       }}
                     >
-                      View Schedule
+                      Schedule
                     </Nav.Link>
                   ) : (
                     <></>
@@ -107,7 +107,7 @@ export default function HeaderHome() {
                         window.location.href = "/trainee";
                       }}
                     >
-                      View Schedule
+                      Schedule
                     </Nav.Link>
                   ) : (
                     <></>
