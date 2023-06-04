@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "./UserProfile.scss";
-import video from "../assets/video.mp4";
+import video from "../../assets/video.mp4";
 import "remixicon/fonts/remixicon.css";
-import { api } from "../constants/api";
+import { api } from "../../constants/api";
 import { Link } from "react-router-dom";
-import maleImg from "../assets/images/avt-male.jpg";
-import femaleImg from "../assets/images/avt-female.jpg";
-import HeaderHome from "../component/HeaderHome/HeaderHome";
+import maleImg from "../../assets/images/avt-male.jpg";
+import femaleImg from "../../assets/images/avt-female.jpg";
+import HeaderHome from "../../component/HeaderHome/HeaderHome";
 
 function UserProfile() {
   const { paramID } = useParams();
@@ -100,11 +100,38 @@ function UserProfile() {
                       <div className="col-sm-4 bg-c-lite-green user-profile">
                         <div className="card-block text-center">
                           <div className="m-b-25">
-                            <img
-                              src="https://img.icons8.com/bubbles/100/000000/user.png"
-                              className="img-radius"
-                              alt="User-Profile-Image"
-                            />
+                            {profile.img == "male" ? (
+                              <img
+                                src={maleImg}
+                                alt="Image"
+                                className="shadow img-user-profile"
+                                style={{ borderRadius: "50%" }}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                            {profile.img == "female" ? (
+                              <img
+                                src={femaleImg}
+                                alt="Image"
+                                className="shadow img-user-profile"
+                                style={{ borderRadius: "50%" }}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                            {profile.img != "" &&
+                            profile.img != "male" &&
+                            profile.img != "female" ? (
+                              <img
+                                src={profile.img}
+                                alt="Image"
+                                className="shadow img-user-profile"
+                                style={{ borderRadius: "50%" }}
+                              />
+                            ) : (
+                              <></>
+                            )}
                           </div>
                           <h6 className="f-w-600" style={{ fontSize: "20px" }}>
                             {firstname} {lastname}

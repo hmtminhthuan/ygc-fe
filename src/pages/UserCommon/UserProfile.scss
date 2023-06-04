@@ -95,7 +95,12 @@
   .img-radius {
     border-radius: 5px;
   }
-
+  .img-user-profile {
+    box-shadow: 7px 7px 7px -3px #000 !important;
+  }
+  .update-profile-area {
+    min-width: 600px !important;
+  }
   h6 {
     font-size: 14px;
   }
@@ -206,4 +211,8 @@
   .scroll-user-profile {
     overflow-y: scroll;
   }
+}
+.swal2-input {
+  width: 80% !important;
+  margin: 0 auto !important;
 }

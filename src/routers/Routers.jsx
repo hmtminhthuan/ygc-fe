@@ -26,8 +26,8 @@ import FeedbackManagement1 from "../pages/Dashboard/Staff/Feedback/FeedbackManag
 // import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
-import UserProfile from "../pages/UserProfile";
-import UpdateProfile from "../pages/UpdateProfile";
+import UserProfile from "../pages/UserCommon/UserProfile";
+import UpdateProfile from "../pages/UserCommon/UpdateProfile";
 import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/AdminCourseEdit";
 import FeedbackManagement from "../pages/Staff/FeedbackManagement/FeedbackManagement";
 import CourseView from "../pages/Staff/CourseView/CourseView";
