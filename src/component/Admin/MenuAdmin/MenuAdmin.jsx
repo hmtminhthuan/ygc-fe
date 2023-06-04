@@ -3,7 +3,10 @@ import React, { useEffect } from "react";
 export default function MenuAdmin() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
-
+  const menu_active = localStorage.getItem("MENU_ACTIVE");
+  if (menu_active == null) {
+    localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
+  }
   useEffect(() => {
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
@@ -19,7 +22,17 @@ export default function MenuAdmin() {
     <div className="sidebar bg-dark">
       <ul className="sidebar--items">
         <li>
-          <a href="/admin/dashboard">
+          <a
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
+            }}
+            className={`${
+              menu_active == null || menu_active == "admin-dashboard"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            href="/admin/dashboard"
+          >
             <span className="icon icon-1">
               <i className="ri-layout-grid-line" />
             </span>
@@ -27,7 +40,17 @@ export default function MenuAdmin() {
           </a>
         </li>
         <li>
-          <a href="/admin/listStaff">
+          <a
+            className={`${
+              menu_active != null && menu_active == "admin-staff"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "admin-staff");
+            }}
+            href="/admin/listStaff"
+          >
             <span className="icon icon-4">
               <i className="ri-user-line" />
             </span>
@@ -36,7 +59,17 @@ export default function MenuAdmin() {
           </a>
         </li>
         <li>
-          <a href="/admin/courseManagement">
+          <a
+            className={`${
+              menu_active != null && menu_active == "admin-course"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "admin-course");
+            }}
+            href="/admin/courseManagement"
+          >
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
@@ -82,6 +115,7 @@ export default function MenuAdmin() {
             href="/"
             onClick={() => {
               localStorage.removeItem("USER_LOGIN");
+              localStorage.removeItem("MENU_ACTIVE");
               window.location.href = "/";
             }}
           >

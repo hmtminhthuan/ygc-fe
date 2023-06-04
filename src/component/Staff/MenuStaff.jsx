@@ -3,11 +3,15 @@ import React, { useEffect } from "react";
 export default function MenuStaff() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
+  const menu_active = localStorage.getItem("MENU_ACTIVE");
+  if (menu_active == null) {
+    localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+  }
+
   useEffect(() => {
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main--content");
-
     menu.onclick = function () {
       sidebar.classList.toggle("active");
       mainContent.classList.toggle("active");
@@ -20,7 +24,18 @@ export default function MenuStaff() {
     >
       <ul className="sidebar--items">
         <li>
-          <a href="/staff/dashboard" id="active--link">
+          <a
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+            }}
+            className={`${
+              menu_active == null || menu_active == "staff-dashboard"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            href="/staff/dashboard"
+            id="active--link"
+          >
             <span className="icon icon-1">
               <i className="ri-layout-grid-line" />
             </span>
@@ -29,7 +44,17 @@ export default function MenuStaff() {
         </li>
 
         <li>
-          <a href="/staff/listTrainer">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-trainer"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-trainer");
+            }}
+            href="/staff/listTrainer"
+          >
             <span className="icon icon-4">
               <i className="ri-user-2-line" />
             </span>
@@ -39,7 +64,17 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/staff/listTrainee">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-trainee"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-trainee");
+            }}
+            href="/staff/listTrainee"
+          >
             <span className="icon icon-4">
               <i className="ri-user-line" />
             </span>
@@ -47,7 +82,17 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/staff/course">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-course"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-course");
+            }}
+            href="/staff/course"
+          >
             <span className="icon icon-5">
               <i className="ri-folder-open-fill" />
             </span>
@@ -55,7 +100,17 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/staff/classManagement">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-class"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-class");
+            }}
+            href="/staff/classManagement"
+          >
             <span className="icon icon-3">
               <i className=" ri-community-line" />
             </span>
@@ -63,7 +118,17 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/staff/feedbackManagement">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-feedback"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-feedback");
+            }}
+            href="/staff/feedbackManagement"
+          >
             <span className="icon icon-6">
               <i className="fa-sharp fa-solid fa-comments"></i>
             </span>
@@ -76,7 +141,17 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href="/staff/blogManagement">
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-blog"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-blog");
+            }}
+            href="/staff/blogManagement"
+          >
             <span className="icon icon-2">
               <i className="  ri-terminal-window-fill" />
             </span>
@@ -106,6 +181,7 @@ export default function MenuStaff() {
             href="/"
             onClick={() => {
               localStorage.removeItem("USER_LOGIN");
+              localStorage.removeItem("MENU_ACTIVE");
               window.location.href = "/";
             }}
           >

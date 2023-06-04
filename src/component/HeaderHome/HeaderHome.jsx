@@ -57,6 +57,7 @@ export default function HeaderHome() {
                     className="px-4 nav-item"
                     onClick={() => {
                       localStorage.removeItem("USER_LOGIN");
+                      localStorage.removeItem("MENU_ACTIVE");
                       USER = {};
                       setUserLogin({});
                       window.location.href = "/";

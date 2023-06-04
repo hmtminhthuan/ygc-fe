@@ -155,7 +155,10 @@ body {
       padding: 10px;
       border-radius: 10px;
     }
-
+    .sidebar--items .sidebar--items--active {
+      background-color: #fff;
+      color: #333;
+    }
     .sidebar--items a:hover,
     .sidebar--bottom-items a:hover {
       background-color: #fff;
