@@ -56,7 +56,7 @@ export default function Register() {
               position: "center",
               icon: "success",
               title: `Register successfully</br>Welcome ${values.firstname} ${values.lastname}`,
-              showConfirmButton: true,
+              showConfirmButton: false,
               timer: 2000,
             }).then(function () {
               if (userList[pos].role.id == 1) {

@@ -47,7 +47,7 @@ export default function Login() {
             position: "center",
             icon: "success",
             title: `Log in successfully! </br> Welcome ${res.data.firstName} ${res.data.lastName}`,
-            showConfirmButton: true,
+            showConfirmButton: false,
             timer: 1600,
           }).then(function () {
             if (res.data.role.id == 1) {
