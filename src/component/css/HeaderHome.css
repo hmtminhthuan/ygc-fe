@@ -15,6 +15,11 @@
   }
 }
 
+.bg-header-scrolled .header-container .nav-item-after-login {
+  color: #d291bc !important;
+  font-weight: bold !important;
+}
+
 .bg-header-scrolled .nav-item {
   color: white !important;
 }

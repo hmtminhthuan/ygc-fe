@@ -1,9 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 .staff-list-area {
   margin: 0;
-  background: linear-gradient(45deg, #f2ced8, #f2acc6);
+  background: #fff !important;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
+}
+
+.staff-list-area tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .headerlist {
@@ -34,15 +44,6 @@
   margin: 0 auto;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-}
-
 th,
 td {
   padding: 15px;
@@ -70,21 +71,11 @@ tbody {
 }
 
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 tbody td {
   position: relative;
-}
-
-tbody td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .btn-home {
@@ -130,5 +121,40 @@ tbody td:hover:before {
           align-items: center;
   color: red;
   z-index: 5000 !important;
+}
+
+.main--content .staff-list-area {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+}
+
+.main--content .staff-list-area .trainee-containe table {
+  font-size: 14px;
+}
+
+.main--content .staff-list-area .trainee-containe tbody {
+  overflow: auto;
+  height: 300px;
+  text-align: center;
+}
+
+.main--content .staff-list-area .trainee-containe tbody tr:hover {
+  background-color: rgba(248, 208, 230, 0.764) !important;
+  color: #000 !important;
+}
+
+.main--content .staff-list-area .trainee-containe tbody td {
+  position: relative;
+}
+
+.main--content .staff-list-area .trainee-containe tbody td:hover:before {
+  content: "";
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  color: #000 !important;
 }
 /*# sourceMappingURL=ListTrainee.css.map */

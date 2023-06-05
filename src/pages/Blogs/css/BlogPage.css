@@ -62,6 +62,8 @@ main .box .inner-box .title {
 }
 
 main .box .inner-box .exit {
+  position: absolute;
+  z-index: 1000 !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

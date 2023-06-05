@@ -2,6 +2,21 @@
   background-color: #fff;
 }
 
+#admin-course-management-area .staff-course-view table thead .selection-button {
+  background-color: #4d9f76;
+  border: none;
+  color: #ffffff90;
+  cursor: pointer;
+}
+
+#admin-course-management-area .staff-course-view table thead .symbol-sorting {
+  color: #ffffff70;
+}
+
+#admin-course-management-area .staff-course-view table thead tr th {
+  background-color: #4d9f76;
+}
+
 #admin-course-management-area .main--content thead .selection-button {
   background-color: #333333;
   border: none;
@@ -29,6 +44,7 @@
 
 #admin-course-management-area .main--content table {
   position: relative;
+  font-size: 13px;
 }
 
 #admin-course-management-area .main--content table .table-head tr,
@@ -43,11 +59,11 @@
 }
 
 #admin-course-management-area .main--content table tbody .row-bg-1:hover {
-  background-color: #33333320;
+  background-color: #33333320 !important;
 }
 
 #admin-course-management-area .main--content table tbody .row-bg-0:hover {
-  background-color: #33333320;
+  background-color: #33333320 !important;
 }
 
 #admin-course-management-area .main--content table tbody button:hover {
@@ -66,5 +82,28 @@
   overflow-wrap: break-word !important;
   word-wrap: break-word !important;
   word-break: break-word !important;
+}
+
+#admin-course-management-area .preview-item label,
+#admin-course-management-area .preview-item label::after,
+#admin-course-management-area .preview-item .preview-item-content {
+  color: #0091ff;
+}
+
+.course-detail-come-back:hover span,
+.course-detail-come-back:hover i {
+  color: #e36ac8;
+}
+
+.row-bg-1 {
+  background-color: #33333315;
+}
+
+.row-bg-1:hover {
+  background-color: #33333315 !important;
+}
+
+.row-bg-0:hover {
+  background-color: #fff !important;
 }
 /*# sourceMappingURL=CourseManagement.css.map */

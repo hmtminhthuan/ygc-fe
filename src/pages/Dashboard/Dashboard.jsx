@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "remixicon/fonts/remixicon.css";
 import "./Dashboard.scss";
-import "./Slider.scss";
+
 import user from "../../assets/images/user.jpg";
 import { api } from "../../constants/api";
 import logo from "../../assets/images/logo.png";

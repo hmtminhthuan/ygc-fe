@@ -1,0 +1,114 @@
+.blog table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+}
+
+.blog th,
+.blog td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #333 !important;
+}
+
+.blog th {
+  text-align: center;
+}
+
+.blog thead th {
+  background-color: #333;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  color: #fff !important;
+  text-align: center;
+}
+
+.blog tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.blog tbody td {
+  position: relative;
+}
+
+.blog tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.blog .view-content {
+  position: absolute;
+  color: #333;
+  cursor: pointer;
+}
+
+.blog .setting {
+  font-size: 18px;
+  z-index: 1000 !important;
+}
+
+.blog .setting .ri-edit-2-line {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #00096f;
+  cursor: pointer;
+}
+
+.blog .setting .ri-delete-bin-line {
+  padding-right: 10px;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: red;
+  z-index: 5000 !important;
+  cursor: pointer;
+}
+
+.blog .tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+.blog .tab .create {
+  margin-left: 100px;
+  right: 0;
+  text-align: right;
+  background-color: green !important;
+}
+/*# sourceMappingURL=BlogManagement.css.map */

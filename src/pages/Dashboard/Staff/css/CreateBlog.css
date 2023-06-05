@@ -1,0 +1,27 @@
+.createblog {
+  background-color: #f2ced8;
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.createblog .tab-content {
+  border-radius: 17px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.createblog form {
+  margin: 0 auto !important;
+}
+
+.createblog button {
+  background-color: #d291bc;
+  color: #333;
+  font-weight: 800;
+}
+
+.createblog button:hover {
+  background-color: #8eff8e !important;
+  color: #333 !important;
+}
+/*# sourceMappingURL=CreateBlog.css.map */

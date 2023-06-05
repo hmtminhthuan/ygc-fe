@@ -1,9 +1,4 @@
-.create-trainee {
-  background-color: #f2ced8;
-  padding-top: 20px;
-}
-
-.create-trainee .containerud {
+.create-staff .containerud {
   max-width: 1140px !important;
   padding: 0 15px !important;
   margin: 0 189.6px !important;
@@ -16,28 +11,28 @@
   height: 100vh;
 }
 
-.create-trainee form {
+.create-staff form {
   margin: 0 auto !important;
 }
 
-.create-trainee button {
-  background-color: #d291bc;
+.create-staff button {
+  background-color: #f799d8;
   color: #333;
   font-weight: 800;
 }
 
-.create-trainee button:hover {
+.create-staff button:hover {
   background-color: #8eff8e !important;
   color: #333 !important;
 }
 
-.create-trainee .shadow {
+.create-staff .shadow {
   -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
   border-radius: 20px !important;
 }
 
-.create-trainee h1 {
+.create-staff h1 {
   font-size: 40px !important;
   font-weight: 600 !important;
   line-height: 48px;
@@ -45,19 +40,19 @@
   color: #333;
 }
 
-.create-trainee .profile-tab-nav {
+.create-staff .profile-tab-nav {
   min-width: 250px;
   border-right: 1px solid #dee2e6 !important;
 }
 
-.create-trainee .img-circle img {
+.create-staff .img-circle img {
   height: 100px;
   width: 100px;
   border-radius: 100%;
   border: 5px solid #fff;
 }
 
-.create-trainee .tab-content {
+.create-staff .tab-content {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -66,11 +61,16 @@
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.create-trainee .form-group {
+.create-staff .form-group {
   margin-bottom: 1.5rem;
 }
 
-.create-trainee .form-control {
+.create-staff .form-control {
   padding: 6px 12px !important;
 }
-/*# sourceMappingURL=CreateTrainee.css.map */
+
+.create-staff h1 {
+  margin: 20px auto !important;
+  color: rgba(218, 37, 179, 0.835);
+}
+/*# sourceMappingURL=CreateStaff.css.map */

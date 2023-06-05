@@ -144,7 +144,7 @@ body .main {
   top: 50px;
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 50px);
   background-color: #f2ced8;
   /* sidebar */
   /* main--content */
@@ -205,14 +205,22 @@ body .main .sidebar--bottom-items a {
   border-radius: 10px;
 }
 
+body .main .sidebar--items .sidebar--items--active {
+  background-color: #fff;
+  color: #333;
+}
+
 body .main .sidebar--items a:hover,
 body .main .sidebar--bottom-items a:hover {
   background-color: #fff;
   color: #333;
 }
 
-body .main #active--link {
+body .main .active--link {
   background-color: #fff;
+}
+
+body .main .active--link .sidebar--item {
   color: #333;
 }
 
@@ -319,10 +327,14 @@ body .main .cards {
   display: -ms-flexbox;
   display: flex;
   gap: 20px;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 body .main .cards .card {
-  padding: 20px;
+  padding: 40px;
+  margin-bottom: 20px;
   border-radius: 20px;
   min-width: 230px;
   height: auto;
@@ -336,15 +348,29 @@ body .main .cards .card:hover {
 }
 
 body .main .cards .card--data {
+  margin: 20px auto !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute !important;
+      justify-content: space-around !important;
+}
+
+body .main .cards .card--data h1 {
+  font-size: 50px !important;
+}
+
+body .main .cards .card--data .card--content {
+  margin: 0 20px;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
 }
 
 body .main .cards .card h1 {
@@ -354,28 +380,7 @@ body .main .cards .card h1 {
 
 body .main .cards .card--icon--lg {
   font-size: 80px;
-}
-
-body .main .cards .card--stats {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-top: 5px;
-}
-
-body .main .cards .card--stats span {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  margin: 0 20px !important;
 }
 
 body .main .cards .card--icon {
@@ -442,8 +447,8 @@ body .main .cards .card--icon {
   color: rgba(227, 106, 200, 0.4);
 }
 
-/* doctors */
-.doctors--right--btns {
+/* trainers */
+.trainers--right--btns {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,45 +458,14 @@ body .main .cards .card--icon {
   gap: 30px;
 }
 
-.add {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 5px 10px;
-  outline: none;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.add:hover {
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-.add i {
-  margin-right: 10px;
-  padding: 5px;
-  background-color: #fff;
-  border-radius: 50%;
-  color: #000;
-}
-
-.doctors--cards {
+.trainers--cards {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   gap: 20px;
 }
 
-.doctor--card {
+.trainer--card {
   padding: 20px;
   border-radius: 20px;
   height: auto;
@@ -512,7 +486,7 @@ body .main .cards .card--icon {
   background-color: #fff;
 }
 
-.doctor--card:hover {
+.trainer--card:hover {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -542,7 +516,7 @@ body .main .cards .card--icon {
 }
 
 /* recent--patients */
-.recent--patients {
+.recent--trainees {
   margin-bottom: 20px;
 }
 
@@ -590,7 +564,7 @@ th {
 /* responsive starts here */
 @media screen and (max-width: 1350px) {
   .cards,
-  .doctors--cards {
+  .trainers--cards {
     overflow-x: scroll;
   }
 }
@@ -663,7 +637,7 @@ th {
 }
 
 @media screen and (max-width: 450px) {
-  .doctor--filter {
+  .trainer--filter {
     display: none;
   }
   .main--content {

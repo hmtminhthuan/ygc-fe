@@ -20,7 +20,7 @@ main {
   position: relative;
   width: 100%;
   max-width: 1020px;
-  height: 640px;
+  height: auto;
   background-color: #fff;
   border-radius: 3.3rem;
   -webkit-box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
@@ -37,10 +37,56 @@ main {
           transform: translate(-50%, -50%);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 600px) {
   .inner-box {
     overflow-x: hidden;
     overflow-y: scroll;
+  }
+}
+
+@media (max-width: 1024px) {
+  .inner-log-in {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-register-container .ant-form {
+    -webkit-transform: translateY(15px) !important;
+            transform: translateY(15px) !important;
+  }
+}
+
+@media (max-width: 950px) {
+  .form-register-container .ant-form {
+    -webkit-transform: translateY(10px) !important;
+            transform: translateY(10px) !important;
+  }
+}
+
+@media (max-width: 550px) {
+  .form-register-container .ant-form {
+    -webkit-transform: translateY(230px) !important;
+            transform: translateY(230px) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-register-container {
+    height: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .regis-container {
+    height: 3000px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-register {
+    display: none !important;
   }
 }
 
