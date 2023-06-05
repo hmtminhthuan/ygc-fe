@@ -23,7 +23,7 @@ export default function AdminDashboard() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className="main--content staff-course-view pt-3">
+        <div className="main--content staff-course-view pt-3 px-4">
           <div className="overview">
             <div className="title">
               <h2 className="section--title">Overview</h2>
