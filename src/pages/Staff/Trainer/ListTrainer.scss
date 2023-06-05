@@ -21,80 +21,64 @@
   height: 100vh;
 }
 
-.trainee {
+.trainer {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-}
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  }
 
-th,
-td {
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #333 !important;
-}
+  th,
+  td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #333 !important;
+  }
 
-th {
-  text-align: center;
-}
+  th {
+    text-align: center;
+    background-color: #333 !important;
+  }
 
-thead th {
-  background-color: #333;
-  position: sticky;
-  top: 0;
-  color: #fff !important;
-  text-align: center;
-}
+  tbody {
+    overflow: auto;
+    height: 300px;
+    text-align: center;
+  }
 
-tbody {
-  overflow: auto;
-  height: 300px;
-  text-align: center;
-}
+  tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 
-tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
+  tbody td {
+    position: relative;
+  }
 
-tbody td {
-  position: relative;
-}
+  tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.1);
+    // z-index: -1;
+    // opacity: 1;
+  }
 
-// tbody td::before {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   top: 0;
-//   bottom: 0;
-//   background-color: rgba(255, 255, 255, 0.2);
-//   // z-index: -1;
-//   opacity: 0;
-//   transition: opacity 0.2s ease;
-// }
-
-// tbody td:hover td::before {
-//   opacity: 1;
-// }
-
-tbody td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.1);
-  // z-index: -1;
-  // opacity: 1;
+  thead th {
+    // background-color: #ff9aa2 !important;
+    position: sticky;
+    top: 0;
+    color: #fff !important;
+    text-align: center;
+  }
 }
 
 .btn-home {
