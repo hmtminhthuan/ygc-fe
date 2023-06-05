@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../../../../constants/api";
+import { api } from "../../../constants/api";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainer.scss";
-import HeaderStaff from "../../../../component/Staff/HeaderStaff";
-import MenuStaff from "../../../../component/Staff/MenuStaff";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
 export default function ListTrainer() {
   localStorage.setItem("MENU_ACTIVE", "staff-trainer");
   const [trainerList, setTrainerList] = useState([]);

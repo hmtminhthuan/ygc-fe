@@ -8,7 +8,7 @@ import Blog from "../pages/Blogs/Blog";
 import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
 import Course from "../pages/Courses/Course";
 import CourseDetail from "../pages/Courses/CourseDetail/CourseDetail";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import StaffDashboard from "../pages/Staff/StaffDashboard/StaffDashboard";
 import TrainerTemplate from "../templates/TrainerTemplate/TrainerTemplate";
 import TraineeTemplate from "../templates/TraineeTemplate/TraineeTemplate";
 import TraineeHome from "../pages/Trainee/Home/TraineeHome";
@@ -16,9 +16,9 @@ import TrainerHome from "../pages/Trainer/Home/TrainerHome";
 import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
 import ListTrainee from "../pages/Staff/Trainee/ListTrainee";
-import ListTrainer from "../pages/Dashboard/Staff/Trainer/ListTrainer";
+import ListTrainer from "../pages/Staff/Trainer/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
-import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
+import CreateTrainer from "../pages/Staff/Trainer/CreateTrainer";
 import CreateTrainee from "../pages/Staff/Trainee/CreateTrainee";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
@@ -81,8 +81,8 @@ export default function Routers() {
       path: "/staff",
       element: <StaffTemplate />,
       children: [
-        { path: "/staff", element: <Dashboard /> },
-        { path: "/staff/dashboard", element: <Dashboard /> },
+        { path: "/staff", element: <StaffDashboard /> },
+        { path: "/staff/dashboard", element: <StaffDashboard /> },
         { path: "/staff/course", element: <CourseView /> },
         { path: "/staff/listTrainee", element: <ListTrainee /> },
         { path: "/staff/listTrainer", element: <ListTrainer /> },

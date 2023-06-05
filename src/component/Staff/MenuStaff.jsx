@@ -37,7 +37,7 @@ export default function MenuStaff() {
             id="active--link"
           >
             <span className="icon icon-1">
-              <i className="ri-layout-grid-line" />
+              <i className="ri-layout-grid-line" style={{ color: "#59bea0" }} />
             </span>
             <span className="sidebar--item">Dashboard</span>
           </a>
@@ -56,7 +56,7 @@ export default function MenuStaff() {
             href="/staff/listTrainer"
           >
             <span className="icon icon-4">
-              <i className="ri-user-2-line" />
+              <i className="ri-user-2-line" style={{ color: "#ff9aa2" }} />
             </span>
             <span className="sidebar--item" style={{ whiteSpace: "nowrap" }}>
               Trainer
@@ -76,7 +76,7 @@ export default function MenuStaff() {
             href="/staff/listTrainee"
           >
             <span className="icon icon-4">
-              <i className="ri-user-line" />
+              <i className="ri-team-line" style={{ color: "#faa46a" }} />
             </span>
             <span className="sidebar--item">Trainee</span>
           </a>
@@ -94,7 +94,10 @@ export default function MenuStaff() {
             href="/staff/course"
           >
             <span className="icon icon-5">
-              <i className="ri-folder-open-fill" />
+              <i
+                className="ri-book-mark-line"
+                style={{ color: "rgba(241, 210, 67, 1)" }}
+              />
             </span>
             <span className="sidebar--item">Course</span>
           </a>
@@ -112,7 +115,7 @@ export default function MenuStaff() {
             href="/staff/classManagement"
           >
             <span className="icon icon-3">
-              <i className=" ri-community-line" />
+              <i className=" ri-community-line" style={{ color: "#bad569" }} />
             </span>
             <span className="sidebar--item">Class</span>
           </a>
@@ -163,7 +166,7 @@ export default function MenuStaff() {
         <li>
           <a href="/">
             <span className="icon icon-4">
-              <i className="fa-solid fa-house"></i>{" "}
+              <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
             <span className="sidebar--item">Home</span>
           </a>
@@ -171,7 +174,10 @@ export default function MenuStaff() {
         <li>
           <a href={`/profile/${USER.accountID}`}>
             <span className="icon icon-7">
-              <i className="fa-sharp fa-solid fa-address-card"></i>{" "}
+              <i
+                className="fa-sharp fa-solid fa-address-card"
+                style={{ color: "#97a7e4" }}
+              ></i>{" "}
             </span>
             <span className="sidebar--item">Profile</span>
           </a>
