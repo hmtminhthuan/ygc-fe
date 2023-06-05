@@ -1,10 +1,23 @@
 .blog {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 !important;
   table {
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
+  }
+
+  thead th {
+    background-color: #97a7e4 !important;
+    position: sticky;
+    top: 0;
+    color: #333 !important;
+    text-align: center;
+    font-size: 15px;
   }
 
   th,
@@ -14,17 +27,12 @@
     color: #333 !important;
   }
 
-  th {
+  tbody {
+    overflow: auto;
+    height: 300px;
     text-align: center;
   }
 
-  thead th {
-    background-color: #333;
-    position: sticky;
-    top: 0;
-    color: #fff !important;
-    text-align: center;
-  }
   tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.3);
   }
@@ -32,9 +40,10 @@
   tbody td {
     position: relative;
   }
+
   tbody td:hover:before {
     content: "";
-    position: absolute;
+    position: absolute !important;
     left: 0;
     right: 0;
     top: -9999px;
@@ -48,6 +57,7 @@
     position: absolute;
     color: #333;
     cursor: pointer;
+    width: 100%;
   }
 
   .setting {

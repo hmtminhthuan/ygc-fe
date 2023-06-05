@@ -140,11 +140,11 @@ function BlogManagement() {
       </div>
       <section className="main bg-none the-content" id="">
         <MenuStaff />
-        <div className="main--content pt-3 bg-white">
-          <div className="staff-list-area pt-3 pb-5">
-            <div className="row flex trainee-containe mt-1 mx-5 mb-5">
+        <div className="main--content bg-white">
+          <div className="staff-list-area pt-3 pb-3">
+            <div className="row flex blog-containe mt-1 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1 className="m-0 p-0 mb-2">
+                <h1 className="m-0 p-0 mb-2" style={{ color: "#97a7e4" }}>
                   <i className="ri-bookmark-line"></i> Blogs Management
                 </h1>
               </div>

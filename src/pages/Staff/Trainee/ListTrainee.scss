@@ -1,20 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-// .headerlist {
-//   text-align: center;
-//   color: linear-gradient(#e66465, #9198e5);
-//   h1 {
-//     font-weight: 900;
-//   }
-// }
-
-// .trainee-containe {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-// }
-
 .main--content {
   padding: 0 !important;
   .staff-list-area {
@@ -23,11 +8,13 @@
     background: #fff !important;
     font-family: "Montserrat", sans-serif;
     font-weight: 300;
+
     .trainee {
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 !important;
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -35,6 +22,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         border-radius: 15px;
       }
+
       thead th {
         background-color: #faa46a !important;
         position: sticky;
@@ -64,6 +52,7 @@
       tbody td {
         position: relative;
       }
+
       tbody td:hover:before {
         content: "";
         position: absolute !important;
