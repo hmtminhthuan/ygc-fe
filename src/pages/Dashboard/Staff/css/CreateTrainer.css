@@ -1,4 +1,9 @@
-.containerud {
+.create-trainer {
+  background-color: #f2ced8;
+  padding-top: 20px;
+}
+
+.create-trainer .containerud {
   max-width: 1140px !important;
   padding: 0 15px !important;
   margin: 0 189.6px !important;
@@ -11,13 +16,28 @@
   height: 100vh;
 }
 
-.shadow {
+.create-trainer form {
+  margin: 0 auto !important;
+}
+
+.create-trainer button {
+  background-color: #d291bc;
+  color: #333;
+  font-weight: 800;
+}
+
+.create-trainer button:hover {
+  background-color: #8eff8e !important;
+  color: #333 !important;
+}
+
+.create-trainer .shadow {
   -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
   border-radius: 20px !important;
 }
 
-h1 {
+.create-trainer h1 {
   font-size: 40px !important;
   font-weight: 600 !important;
   line-height: 48px;
@@ -25,29 +45,32 @@ h1 {
   color: #333;
 }
 
-.profile-tab-nav {
+.create-trainer .profile-tab-nav {
   min-width: 250px;
   border-right: 1px solid #dee2e6 !important;
 }
 
-.img-circle img {
+.create-trainer .img-circle img {
   height: 100px;
   width: 100px;
   border-radius: 100%;
   border: 5px solid #fff;
 }
 
-.tab-content {
+.create-trainer .tab-content {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  border-radius: 17px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.form-group {
+.create-trainer .form-group {
   margin-bottom: 1.5rem;
 }
 
-.form-control {
+.create-trainer .form-control {
   padding: 6px 12px !important;
 }
 /*# sourceMappingURL=CreateTrainer.css.map */

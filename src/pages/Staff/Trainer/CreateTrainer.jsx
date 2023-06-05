@@ -1,12 +1,12 @@
 import React from "react";
-import { api } from "../../../../constants/api";
+import { api } from "../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Select, Button } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./CreateTrainee.scss";
+import "./CreateTrainer.scss";
 
-export default function CreateTrainee() {
+export default function CreateTrainer() {
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -14,7 +14,7 @@ export default function CreateTrainee() {
 
   const formik = useFormik({
     initialValues: {
-      roleId: 4,
+      roleId: 3,
       firstname: "",
       lastname: "",
       gender: true,
@@ -30,21 +30,21 @@ export default function CreateTrainee() {
         .post("/Account/CreateAccount", values)
         .then((res) => {
           // Account trainer created successfully
-          const createdTrainee = res.data;
+          const createdTrainer = res.data;
           // Reset the form after successful creation
           resetForm();
-          // setSubmitting(false);
+          setSubmitting(false);
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Create new trainee successfully!",
+            title: "Create new trainer successfully!",
             showConfirmButton: true,
             timer: 3500,
           });
         })
         .catch((err) => {
           console.log(err);
-          // setSubmitting(false);
+          setSubmitting(false);
         });
     },
   });
@@ -54,13 +54,13 @@ export default function CreateTrainee() {
   };
 
   return (
-    <div className="create-trainee">
-      <div className="containerud">
-        <h1 className="mt-4 mb-3 mx-4">Create Trainee's Account</h1>
+    <div className="create-trainer">
+      <div className="containerud m-0 p-0">
+        <h1 className="mt-4 mb-3 mx-4">Create Trainer's Account</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
-              {/* <h3 className="mb-4">Account Settings</h3> */}
+              <h3 className="mb-4">Account Settings</h3>
               <Form
                 {...formItemLayout}
                 form={formik.form}
@@ -258,7 +258,7 @@ export default function CreateTrainee() {
                   </div>
                   <div className="col-6 flex align-items-center">
                     <Link
-                      to={"/staff/listTrainee"}
+                      to={"/staff/listTrainer"}
                       className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
                     text-decoration-none text-light"
                       style={{ borderRadius: "10px" }}
@@ -268,9 +268,6 @@ export default function CreateTrainee() {
                   </div>
                 </div>
               </Form>
-              {/* <Link to="/dashboard">
-                <button className="btn btn-light mx-2">Cancel</button>
-              </Link> */}
             </div>
           </div>
         </div>

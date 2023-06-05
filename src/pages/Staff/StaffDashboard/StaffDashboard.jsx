@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import "remixicon/fonts/remixicon.css";
-import "./Dashboard.scss";
-import "./Slider.scss";
-import user from "../../assets/images/user.jpg";
-import { api } from "../../constants/api";
-import logo from "../../assets/images/logo.png";
+import "./StaffDashboard.scss";
+import maleImg from "../../../assets/images/avt-male.jpg";
+import femaleImg from "../../../assets/images/avt-female.jpg";
+import user from "../../../assets/images/user.jpg";
+import { api } from "../../../constants/api";
+import logo from "../../../assets/images/logo.png";
 import { Link } from "react-router-dom";
-import MenuStaff from "../../component/Staff/MenuStaff";
-import HeaderStaff from "../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
 export default function Dashboard() {
   localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function Dashboard() {
                       <h5 className="card--title">Total Trainees</h5>
                       <h1>{countList.numOfTrainee}</h1>
                     </div>
-                    <i className=" ri-user-line card--icon--lg " />
+                    <i className="ri-team-line card--icon--lg " />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-3 text-center">
@@ -105,7 +106,7 @@ export default function Dashboard() {
                       <h5 className="card--title">Courses</h5>
                       <h1>{countList.numOfCourse}</h1>
                     </div>
-                    <i className="mr-4 ri-book-open-fill card--icon--lg" />
+                    <i className="mr-4 ri-book-mark-line card--icon--lg" />
                   </div>
                 </div>
                 <div className="col-sm-3 card card-4 text-center">
@@ -124,7 +125,7 @@ export default function Dashboard() {
                       <h5 className="card--title">Feedbacks</h5>
                       <h1>{countList.numOfFeedback}</h1>
                     </div>
-                    <i className="mr-4 ri-community-line card--icon--lg" />
+                    <i className="mr-4 ri-wechat-line card--icon--lg" />
                   </div>
                 </div>
 
@@ -159,10 +160,42 @@ export default function Dashboard() {
                     >
                       <div className="img--box--cover">
                         <div className="img--box">
-                          <img
+                          {/* <img
                             src={`/path/to/images/${trainer.img}.png`}
                             alt="Trainer"
-                          />
+                          /> */}
+                          {trainer.img == "male" ? (
+                            <img
+                              src={maleImg}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                          {trainer.img == "female" ? (
+                            <img
+                              src={femaleImg}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                          {trainer.img != "" &&
+                          trainer.img != "male" &&
+                          trainer.img != "female" ? (
+                            <img
+                              src={trainer.img}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
                         </div>
                       </div>
                       <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>

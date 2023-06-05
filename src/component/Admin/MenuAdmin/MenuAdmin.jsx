@@ -52,7 +52,7 @@ export default function MenuAdmin() {
             href="/admin/listStaff"
           >
             <span className="icon icon-4">
-              <i className="ri-user-line" />
+              <i className="ri-user-star-line" style={{ color: "#ff9aa2" }} />
             </span>
 
             <span className="sidebar--item">Staff</span>
@@ -71,7 +71,7 @@ export default function MenuAdmin() {
             href="/admin/courseManagement"
           >
             <span className="icon icon-5">
-              <i className="ri-folder-open-fill" />
+              <i className="ri-book-mark-line" style={{ color: "#a9c555" }} />
             </span>
             <span className="sidebar--item">Course</span>
           </a>
@@ -97,7 +97,7 @@ export default function MenuAdmin() {
         <li>
           <a href="/">
             <span className="icon icon-4">
-              <i className="fa-solid fa-house"></i>{" "}
+              <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
             <span className="sidebar--item">Home</span>
           </a>
@@ -105,7 +105,10 @@ export default function MenuAdmin() {
         <li>
           <a href={`/profile/${USER.accountID}`}>
             <span className="icon icon-7">
-              <i className="fa-sharp fa-solid fa-address-card"></i>{" "}
+              <i
+                className="fa-sharp fa-solid fa-address-card"
+                style={{ color: "#97a7e4" }}
+              ></i>{" "}
             </span>
             <span className="sidebar--item">Profile</span>
           </a>

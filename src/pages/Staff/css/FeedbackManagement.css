@@ -1,0 +1,86 @@
+#staff-feedback-management-area {
+  background-color: #fff;
+}
+
+#staff-feedback-management-area .main--content thead .selection-button {
+  background-color: #3b42a2 !important;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+#staff-feedback-management-area .main--content thead .symbol-sorting {
+  color: #ffffff70;
+}
+
+#staff-feedback-management-area .main--content thead tr th {
+  background-color: #3b42a2 !important;
+}
+
+#staff-feedback-management-area .main--content .admin-course-list {
+  background-color: #00000050;
+  color: #000;
+  -webkit-transform: none;
+          transform: none;
+  z-index: 1;
+}
+
+#staff-feedback-management-area .main--content .admin-course-list-active {
+  background-color: #333333;
+  color: #fff;
+  z-index: 10 !important;
+}
+
+#staff-feedback-management-area .main--content table {
+  position: relative;
+}
+
+#staff-feedback-management-area .main--content table .table-head tr,
+#staff-feedback-management-area .main--content table .table-head th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#staff-feedback-management-area .main--content table tbody .row-bg-1 {
+  background-color: #33333315;
+}
+
+#staff-feedback-management-area .main--content table tbody .row-bg-1:hover {
+  background-color: #33333320;
+}
+
+#staff-feedback-management-area .main--content table tbody .row-bg-0:hover {
+  background-color: #33333320;
+}
+
+#staff-feedback-management-area .main--content table tbody button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  font-weight: 600;
+}
+
+#staff-feedback-management-area .main--content table tbody td:hover:before {
+  display: none !important;
+  z-index: -100;
+}
+
+.new-row-feedback-handle {
+  background-color: #3b42a2 !important;
+  color: #fff !important;
+}
+
+.new-row-feedback-handle:hover {
+  background-color: #3b42a2 !important;
+  color: #fff !important;
+  z-index: 10;
+}
+
+.row-bg-pending-warning-0 {
+  background-color: #3b42a263;
+}
+
+.row-bg-pending-warning-1 {
+  background-color: #3b42a27f;
+}
+/*# sourceMappingURL=FeedbackManagement.css.map */

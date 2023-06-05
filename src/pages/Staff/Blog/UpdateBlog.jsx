@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Form, Input, Button } from "antd";
 import { useFormik } from "formik";
-import { api } from "../../../../constants/api";
+import { api } from "../../../constants/api";
 import moment from "moment";
 import "./UpdateBlog.scss";
 

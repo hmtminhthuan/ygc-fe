@@ -9,7 +9,6 @@
 
 .headerlist {
   text-align: center;
-  color: linear-gradient(#e66465, #9198e5);
 }
 
 .headerlist h1 {
@@ -131,5 +130,26 @@ tbody td:hover:before {
           align-items: center;
   color: red;
   z-index: 5000 !important;
+}
+
+#admin-list-staff-area table thead tr th {
+  font-size: 16px !important;
+  background-color: #d291bc;
+  color: #333 !important;
+}
+
+#admin-list-staff-area table tbody tr:hover {
+  background-color: rgba(248, 208, 230, 0.764) !important;
+  color: #000 !important;
+}
+
+#admin-list-staff-area table tbody td {
+  position: relative;
+}
+
+#admin-list-staff-area table tbody td:hover:before {
+  content: "";
+  z-index: -100;
+  display: none !important;
 }
 /*# sourceMappingURL=ListStaff.css.map */

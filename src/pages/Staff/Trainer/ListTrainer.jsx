@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../../../../constants/api";
+import { api } from "../../../constants/api";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainer.scss";
-import HeaderStaff from "../../../../component/Staff/HeaderStaff";
-import MenuStaff from "../../../../component/Staff/MenuStaff";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
 export default function ListTrainer() {
   localStorage.setItem("MENU_ACTIVE", "staff-trainer");
   const [trainerList, setTrainerList] = useState([]);
@@ -264,8 +264,8 @@ export default function ListTrainer() {
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Address</th>
-                      <th>Course</th>
-                      <th>Class</th>
+                      {/* <th>Course</th>
+                      <th>Class</th> */}
                       <th>
                         <Link
                           to={"/staff/createTrainer"}
@@ -313,8 +313,7 @@ export default function ListTrainer() {
                           <td>{`${trainer.phoneNumber}`}</td>
                           <td>{`${trainer.email}`}</td>
                           <td>{`${trainer.address}`}</td>
-                          <td></td>
-                          <td></td>
+
                           <td className="setting">
                             <i
                               className="ri-delete-bin-line mx-2"

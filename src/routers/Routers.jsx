@@ -8,18 +8,18 @@ import Blog from "../pages/Blogs/Blog";
 import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
 import Course from "../pages/Courses/Course";
 import CourseDetail from "../pages/Courses/CourseDetail/CourseDetail";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import StaffDashboard from "../pages/Staff/StaffDashboard/StaffDashboard";
 import TrainerTemplate from "../templates/TrainerTemplate/TrainerTemplate";
 import TraineeTemplate from "../templates/TraineeTemplate/TraineeTemplate";
 import TraineeHome from "../pages/Trainee/Home/TraineeHome";
 import TrainerHome from "../pages/Trainer/Home/TrainerHome";
 import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import StaffTemplate from "../templates/StaffTemplate/StaffTemplate";
-import ListTrainee from "../pages/Dashboard/Staff/Trainee/ListTrainee";
-import ListTrainer from "../pages/Dashboard/Staff/Trainer/ListTrainer";
+import ListTrainee from "../pages/Staff/Trainee/ListTrainee";
+import ListTrainer from "../pages/Staff/Trainer/ListTrainer";
 import CourseManagement from "../pages/Admin/CourseManagement/CourseManagement";
-import CreateTrainer from "../pages/Dashboard/Staff/Trainer/CreateTrainer";
-import CreateTrainee from "../pages/Dashboard/Staff/Trainee/CreateTrainee";
+import CreateTrainer from "../pages/Staff/Trainer/CreateTrainer";
+import CreateTrainee from "../pages/Staff/Trainee/CreateTrainee";
 import AdminCourseCreate from "../pages/Admin/CourseManagement/AdminCourseCreate/AdminCourseCreate";
 import ListStaff from "../pages/Admin/StaffManagement/ListStaff";
 import UserProfile from "../pages/UserCommon/UserProfile";
@@ -28,10 +28,10 @@ import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/Adm
 import FeedbackManagement from "../pages/Staff/FeedbackManagement/FeedbackManagement";
 import CourseView from "../pages/Staff/CourseView/CourseView";
 import CreateStaff from "../pages/Admin/StaffManagement/CreateStaff";
-import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
+import BlogManagement from "../pages/Staff/Blog/BlogManagement";
 import FeedbackManagementDetail from "../pages/Staff/FeedbackManagement/FeedbackManagementDetail/FeedbackManagementDetail";
-import CreateBlog from "../pages/Dashboard/Staff/Blog/CreateBlog";
-import UpdateBlog from "../pages/Dashboard/Staff/Blog/UpdateBlog";
+import CreateBlog from "../pages/Staff/Blog/CreateBlog";
+import UpdateBlog from "../pages/Staff/Blog/UpdateBlog";
 import CommonTemplate from "../templates/CommonTemplate/CommonTemplate";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
@@ -81,8 +81,8 @@ export default function Routers() {
       path: "/staff",
       element: <StaffTemplate />,
       children: [
-        { path: "/staff", element: <Dashboard /> },
-        { path: "/staff/dashboard", element: <Dashboard /> },
+        { path: "/staff", element: <StaffDashboard /> },
+        { path: "/staff/dashboard", element: <StaffDashboard /> },
         { path: "/staff/course", element: <CourseView /> },
         { path: "/staff/listTrainee", element: <ListTrainee /> },
         { path: "/staff/listTrainer", element: <ListTrainer /> },
