@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import "remixicon/fonts/remixicon.css";
 import Swal from "sweetalert2";
-import { api } from "../../../../constants/api";
+import { api } from "../../../constants/api";
 import { Link } from "react-router-dom";
-import HeaderStaff from "../../../../component/Staff/HeaderStaff";
-import MenuStaff from "../../../../component/Staff/MenuStaff";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
 
 function BlogManagement() {

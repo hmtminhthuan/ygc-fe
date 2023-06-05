@@ -28,10 +28,10 @@ import AdminCourseEdit from "../pages/Admin/CourseManagement/AdminCourseEdit/Adm
 import FeedbackManagement from "../pages/Staff/FeedbackManagement/FeedbackManagement";
 import CourseView from "../pages/Staff/CourseView/CourseView";
 import CreateStaff from "../pages/Admin/StaffManagement/CreateStaff";
-import BlogManagement from "../pages/Dashboard/Staff/Blog/BlogManagement";
+import BlogManagement from "../pages/Staff/Blog/BlogManagement";
 import FeedbackManagementDetail from "../pages/Staff/FeedbackManagement/FeedbackManagementDetail/FeedbackManagementDetail";
-import CreateBlog from "../pages/Dashboard/Staff/Blog/CreateBlog";
-import UpdateBlog from "../pages/Dashboard/Staff/Blog/UpdateBlog";
+import CreateBlog from "../pages/Staff/Blog/CreateBlog";
+import UpdateBlog from "../pages/Staff/Blog/UpdateBlog";
 import CommonTemplate from "../templates/CommonTemplate/CommonTemplate";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
