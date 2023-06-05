@@ -148,29 +148,6 @@ export default function ListTrainee() {
   //   });
   // }, [traineeList]);
 
-  //Tram
-
-  // useEffect(() => {
-  //   const traineeIds = traineeList.map((trainee) => trainee.accountID);
-  //   const updatedTraineeCourses = []; // Array to accumulate trainee courses
-
-  //   traineeIds.forEach((item) => {
-  //     api
-  //       .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
-  //       .then((res) => {
-  //         res.data.forEach((courseItem) => {
-  //           const course = { ...courseItem, traineeId: item };
-  //           updatedTraineeCourses.push(course); // Add course to the array
-  //         });
-  //       })
-  //       .catch((err) => {})
-  //       .finally(() => {
-  //         // Update the state with the complete array of trainee courses
-  //         setTraineeCourses(updatedTraineeCourses);
-  //       });
-  //   });
-  // }, [traineeList]);
-
   useEffect(() => {
     // Fetch trainee courses for each trainee
     const fetchTraineeCourses = async () => {
@@ -358,22 +335,10 @@ export default function ListTrainee() {
                             .includes(searchedName.trim().toLowerCase())
                       )
                       .map((trainee) => {
-                        // const traineeCoursesFiltered = traineeCourses.find(
-                        //   (course) => course.traineeId === trainee.accountID
-                        // );
-
                         const traineeCoursesFiltered = traineeCourses.find(
                           (course) => course.traineeId === trainee.accountID
                         );
-                        // const traineeCoursesFiltered = traineeCourses.filter(
-                        //   (course) => course.traineeId === trainee.accountID
-                        // );
-                        // const courseNames = traineeCoursesFiltered
-                        //   .map((course) => course.courseName)
-                        //   .join(",");
-                        // const classNames = traineeCoursesFiltered.map(
-                        //   (course) => course.className
-                        // );
+
                         return (
                           <tr key={trainee.accountID}>
                             <td>{`${trainee.firstName}`}</td>
@@ -398,12 +363,7 @@ export default function ListTrainee() {
                                 : "-"}
                             </td>
 
-                            {/* <td>
-                              {courseNames.length > 0 ? courseNames : "-"}
-                            </td>
-                            <td>{classNames.length > 0 ? classNames : "-"}</td> */}
                             <td className="setting">
-                              {/* <i className="ri-edit-2-fill mx-2"></i> */}
                               <i
                                 className="ri-delete-bin-line mx-2 "
                                 onClick={() => deleteTrainee(trainee.accountID)}
