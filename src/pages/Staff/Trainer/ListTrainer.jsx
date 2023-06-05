@@ -264,8 +264,8 @@ export default function ListTrainer() {
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Address</th>
-                      <th>Course</th>
-                      <th>Class</th>
+                      {/* <th>Course</th>
+                      <th>Class</th> */}
                       <th>
                         <Link
                           to={"/staff/createTrainer"}
@@ -313,8 +313,7 @@ export default function ListTrainer() {
                           <td>{`${trainer.phoneNumber}`}</td>
                           <td>{`${trainer.email}`}</td>
                           <td>{`${trainer.address}`}</td>
-                          <td></td>
-                          <td></td>
+
                           <td className="setting">
                             <i
                               className="ri-delete-bin-line mx-2"

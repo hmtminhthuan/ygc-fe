@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "remixicon/fonts/remixicon.css";
 import "./StaffDashboard.scss";
-
+import maleImg from "../../../assets/images/avt-male.jpg";
+import femaleImg from "../../../assets/images/avt-female.jpg";
 import user from "../../../assets/images/user.jpg";
 import { api } from "../../../constants/api";
 import logo from "../../../assets/images/logo.png";
@@ -159,10 +160,42 @@ export default function Dashboard() {
                     >
                       <div className="img--box--cover">
                         <div className="img--box">
-                          <img
+                          {/* <img
                             src={`/path/to/images/${trainer.img}.png`}
                             alt="Trainer"
-                          />
+                          /> */}
+                          {trainer.img == "male" ? (
+                            <img
+                              src={maleImg}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                          {trainer.img == "female" ? (
+                            <img
+                              src={femaleImg}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                          {trainer.img != "" &&
+                          trainer.img != "male" &&
+                          trainer.img != "female" ? (
+                            <img
+                              src={trainer.img}
+                              alt="Image"
+                              className="shadow img-user-profile"
+                              style={{ borderRadius: "50%" }}
+                            />
+                          ) : (
+                            <></>
+                          )}
                         </div>
                       </div>
                       <p className="free">{`${trainer.firstName} ${trainer.lastName}`}</p>

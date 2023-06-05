@@ -129,24 +129,24 @@ export default function ListTrainee() {
       });
   };
 
-  useEffect(() => {
-    const traineeIds = traineeList.map((trainee) => trainee.accountID);
+  // useEffect(() => {
+  //   const traineeIds = traineeList.map((trainee) => trainee.accountID);
 
-    traineeIds.forEach((item) => {
-      let course = {};
-      api
-        .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
-        .then((res) => {
-          res.data.forEach((courseItem) => {
-            course = courseItem;
-            course.traineeId = item;
-            setTraineeCourses([...traineeCourses, course]);
-          });
-        })
-        .catch((err) => {})
-        .finally(() => {});
-    });
-  }, [traineeList]);
+  //   traineeIds.forEach((item) => {
+  //     let course = {};
+  //     api
+  //       .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
+  //       .then((res) => {
+  //         res.data.forEach((courseItem) => {
+  //           course = courseItem;
+  //           course.traineeId = item;
+  //           setTraineeCourses([...traineeCourses, course]);
+  //         });
+  //       })
+  //       .catch((err) => {})
+  //       .finally(() => {});
+  //   });
+  // }, [traineeList]);
 
   //Tram
 
@@ -170,6 +170,29 @@ export default function ListTrainee() {
   //       });
   //   });
   // }, [traineeList]);
+
+  useEffect(() => {
+    // Fetch trainee courses for each trainee
+    const fetchTraineeCourses = async () => {
+      const updatedTraineeCourses = [];
+      for (const trainee of traineeList) {
+        try {
+          const res = await api.get(
+            `/Trainee/GetTraineeCourses?traineeId=${trainee.accountID}`
+          );
+          for (const courseItem of res.data) {
+            const course = { ...courseItem, traineeId: trainee.accountID };
+            updatedTraineeCourses.push(course);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      setTraineeCourses(updatedTraineeCourses);
+    };
+
+    fetchTraineeCourses();
+  }, [traineeList]);
 
   return (
     <>
@@ -293,6 +316,7 @@ export default function ListTrainee() {
                       <th>Address</th>
                       <th>Course</th>
                       <th>Class</th>
+                      <th>Level</th>
                       <th>
                         <Link
                           to={"/staff/createTrainee"}
@@ -334,6 +358,10 @@ export default function ListTrainee() {
                             .includes(searchedName.trim().toLowerCase())
                       )
                       .map((trainee) => {
+                        // const traineeCoursesFiltered = traineeCourses.find(
+                        //   (course) => course.traineeId === trainee.accountID
+                        // );
+
                         const traineeCoursesFiltered = traineeCourses.find(
                           (course) => course.traineeId === trainee.accountID
                         );
@@ -362,6 +390,11 @@ export default function ListTrainee() {
                             <td>
                               {traineeCoursesFiltered
                                 ? traineeCoursesFiltered.className
+                                : "-"}
+                            </td>
+                            <td>
+                              {traineeCoursesFiltered
+                                ? traineeCoursesFiltered.levelName
                                 : "-"}
                             </td>
 
