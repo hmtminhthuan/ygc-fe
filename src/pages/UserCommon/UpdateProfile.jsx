@@ -144,15 +144,24 @@ export default function UpdateProfile() {
           <div className="">
             <HeaderHome />
           </div>
-          <div className="update update-profile-area w-100 flex justify-content-center">
+          <div
+            className="update update-profile-area w-100 h-100 pb-5 flex justify-content-center"
+            style={{ backgroundColor: "#f2ced8" }}
+          >
             <div
               className="containerud w-100"
               style={{ margin: "0 auto", width: "100%" }}
             >
-              <h1 className="mb-4 pt-5 mt-5 text-primary text-center">
+              <h1
+                className="mb-4 pt-5 mt-5 text-center"
+                style={{ color: "333", fontWeight: "bold" }}
+              >
                 Update Account
               </h1>
-              <div className="row bg-white shadow rounded-lg d-md-flex justify-content-center mx-lg-5">
+              <div
+                className="row bg-white shadow rounded-lg d-md-flex justify-content-center mx-lg-5"
+                style={{ borderRadius: "15px" }}
+              >
                 <div className="profile-tab-nav col-lg-3 col-md-12 border-md-0">
                   <div className="p-4 mt-4 w-100">
                     <div className="">
@@ -401,7 +410,15 @@ export default function UpdateProfile() {
 
                           <div className="text-center row">
                             <div className="col-6">
-                              <Button type="primary" htmlType="submit">
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{
+                                  backgroundColor: "rgba(210, 145, 188, 1)",
+                                  color: "#333",
+                                  fontWeight: "bold",
+                                }}
+                              >
                                 Save
                               </Button>
                             </div>
