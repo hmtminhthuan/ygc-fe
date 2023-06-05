@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +10,8 @@ import Paper from "@mui/material/Paper";
 import moment from "moment/moment";
 
 export default function CourseClasses({ courseClasses, ...restParams }) {
+  const [available, setAvailable] = useState(false);
+  const [markAvailable, setMarkAvailable] = useState(false);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -29,10 +31,26 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
     },
   }));
 
+  useEffect(() => {
+    if (courseClasses.length > 0) {
+      for (i = 0; i < courseClasses.length; i++) {
+        let current = moment(new Date()).format("DD-MM-YYYY");
+        let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
+          "DD-MM-YYYY"
+        );
+        if (current <= end) {
+          setAvailable(true);
+          setMarkAvailable(true);
+          break;
+        }
+      }
+    }
+  }, []);
+
   return (
     <div className="row flex justify-content-center">
       <div className="course-detail-classes col-10">
-        {courseClasses.length <= 0 ? (
+        {courseClasses.length <= 0 || !available ? (
           <p
             className="text-danger text-center p-0 m-0"
             style={{ fontSize: "18px", fontWeight: "600" }}

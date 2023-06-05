@@ -172,8 +172,8 @@ export default function UpdateProfile() {
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
-                            width: "150px",
-                            height: "150px",
+                            width: "160px",
+                            height: "160px",
                             borderRadius: "5px",
                           }}
                         />
@@ -186,8 +186,8 @@ export default function UpdateProfile() {
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
-                            width: "150px",
-                            height: "150px",
+                            width: "160px",
+                            height: "160px",
                             borderRadius: "5px",
                           }}
                         />
@@ -202,8 +202,8 @@ export default function UpdateProfile() {
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
-                            width: "150px",
-                            height: "150px",
+                            width: "200px",
+                            height: "160px",
                             borderRadius: "5px",
                           }}
                         />

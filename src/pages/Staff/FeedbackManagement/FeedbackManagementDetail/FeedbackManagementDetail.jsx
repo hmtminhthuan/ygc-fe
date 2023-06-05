@@ -223,27 +223,43 @@ export default function FeedbackManagementDetail() {
                   if (item.detail != null && item.detail != undefined) {
                     if (listOfSearchedName.length <= 0) {
                       return true;
-                    }
-                    for (i = 0; i < listOfSearchedName.length; i++) {
+                    } else if (listOfSearchedName.length <= 1) {
+                      for (i = 0; i < listOfSearchedName.length; i++) {
+                        if (
+                          item.detail.firstname
+                            .trim()
+                            .toLowerCase()
+                            .includes(
+                              listOfSearchedName[i]
+                                .toString()
+                                .trim()
+                                .toLowerCase()
+                            ) ||
+                          item.detail.lastname
+                            .trim()
+                            .toLowerCase()
+                            .includes(
+                              listOfSearchedName[i]
+                                .toString()
+                                .trim()
+                                .toLowerCase()
+                            )
+                        ) {
+                          return true;
+                        }
+                      }
+                    } else {
+                      let fullname = `${item.detail.firstname} ${item.detail.lastname}`;
+                      let fullnameReverse = `${item.detail.lastname} ${item.detail.firstname}`;
                       if (
-                        item.detail.firstname
+                        searchedName
                           .trim()
                           .toLowerCase()
-                          .includes(
-                            listOfSearchedName[i]
-                              .toString()
-                              .trim()
-                              .toLowerCase()
-                          ) ||
-                        item.detail.lastname
+                          .includes(fullname.toLowerCase()) ||
+                        searchedName
                           .trim()
                           .toLowerCase()
-                          .includes(
-                            listOfSearchedName[i]
-                              .toString()
-                              .trim()
-                              .toLowerCase()
-                          )
+                          .includes(fullnameReverse.toLowerCase())
                       ) {
                         return true;
                       }

@@ -18,7 +18,7 @@ export default function Course() {
 
   useEffect(() => {
     api
-      .get("/Course/GetCourseList")
+      .get("/Course/GetAllCourseForAdmin")
       .then(async (res) => {
         setCourseList(res.data);
         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
@@ -191,20 +191,22 @@ export default function Course() {
 
         <div className="course-contaier flex justify-content-center align-content-center">
           <div className="row w-100">
-            {renderCourseList.map((course, index) => {
-              return (
-                <CourseDetail
-                  key={index}
-                  courseID={course.courseID}
-                  courseName={course.courseName}
-                  description={course.description}
-                  levelName={course.levelName}
-                  price={course.price.toString()}
-                  discount={course.discount}
-                  courseImg={course.courseImg}
-                />
-              );
-            })}
+            {renderCourseList
+              .filter((item) => !item.deleted)
+              .map((course, index) => {
+                return (
+                  <CourseDetail
+                    key={index}
+                    courseID={course.courseID}
+                    courseName={course.courseName}
+                    description={course.description}
+                    levelName={course.levelName}
+                    price={course.price.toString()}
+                    discount={course.discount}
+                    courseImg={course.courseImg}
+                  />
+                );
+              })}
           </div>
         </div>
       </section>

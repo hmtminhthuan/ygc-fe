@@ -13,6 +13,7 @@ export default function CourseDetail({
   price,
   discount,
   courseImg,
+  deleted,
   ...restParams
 }) {
   const [availablePayment, setAvailablePayment] = useState(false);

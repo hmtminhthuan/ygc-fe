@@ -17,6 +17,7 @@ export default function ListTrainee() {
   const [searchedPhone, setSearchedPhone] = useState("");
   const [searchedName, setSearchedName] = useState("");
   const [traineeCourses, setTraineeCourses] = useState([]);
+  const [listOfSearchedName, setListOfSearchedName] = useState([]);
 
   useEffect(() => {
     api
@@ -71,6 +72,21 @@ export default function ListTrainee() {
 
     setSortedTrainees(sortedTrainees);
   }, [firstNameSort, genderSort, traineeList]);
+
+  useEffect(() => {
+    if (searchedName == "") {
+      setListOfSearchedName([]);
+    } else {
+      let list = [];
+      let values = searchedName.split(" ");
+      values.forEach((item) => {
+        if (item.trim() != "") {
+          list = [...list, item.trim()];
+          setListOfSearchedName(list);
+        }
+      });
+    }
+  }, [searchedName]);
 
   const deleteTrainee = (traineeId) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -323,17 +339,56 @@ export default function ListTrainee() {
                           .toLowerCase()
                           .includes(searchedPhone.trim().toLowerCase())
                       )
-                      .filter(
-                        (item) =>
-                          item.firstName
-                            .trim()
-                            .toLowerCase()
-                            .includes(searchedName.trim().toLowerCase()) ||
-                          item.lastName
-                            .trim()
-                            .toLowerCase()
-                            .includes(searchedName.trim().toLowerCase())
-                      )
+                      .filter((item) => {
+                        if (item != null && item != undefined) {
+                          if (listOfSearchedName.length <= 0) {
+                            return true;
+                          } else if (listOfSearchedName.length <= 1) {
+                            for (i = 0; i < listOfSearchedName.length; i++) {
+                              if (
+                                item.firstName
+                                  .trim()
+                                  .toLowerCase()
+                                  .includes(
+                                    listOfSearchedName[i]
+                                      .toString()
+                                      .trim()
+                                      .toLowerCase()
+                                  ) ||
+                                item.lastName
+                                  .trim()
+                                  .toLowerCase()
+                                  .includes(
+                                    listOfSearchedName[i]
+                                      .toString()
+                                      .trim()
+                                      .toLowerCase()
+                                  )
+                              ) {
+                                return true;
+                              }
+                            }
+                          } else {
+                            let fullname = `${item.firstName} ${item.lastName}`;
+                            let fullnameReverse = `${item.lastName} ${item.firstName}`;
+                            if (
+                              searchedName
+                                .trim()
+                                .toLowerCase()
+                                .includes(fullname.toLowerCase()) ||
+                              searchedName
+                                .trim()
+                                .toLowerCase()
+                                .includes(fullnameReverse.toLowerCase())
+                            ) {
+                              return true;
+                            }
+                          }
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      })
                       .map((trainee) => {
                         const traineeCoursesFiltered = traineeCourses.find(
                           (course) => course.traineeId === trainee.accountID

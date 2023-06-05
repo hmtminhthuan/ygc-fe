@@ -137,7 +137,7 @@ function UserProfile() {
                                 className="shadow img-user-profile"
                                 style={{
                                   borderRadius: "50%",
-                                  width: "130px",
+                                  width: "140px",
                                   height: "130px",
                                 }}
                               />
