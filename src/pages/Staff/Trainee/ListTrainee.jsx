@@ -192,7 +192,7 @@ export default function ListTrainee() {
       <HeaderStaff />
       <section className="main bg-none" id="">
         <MenuStaff />
-        <div className="main--content pt-3 bg-white">
+        <div className="main--content bg-white">
           <section className="staff-list-area pt-3 pb-3">
             {/* <MenuStaff /> */}
             <div className="row flex trainee-containe mt-2 mx-5 mb-5">

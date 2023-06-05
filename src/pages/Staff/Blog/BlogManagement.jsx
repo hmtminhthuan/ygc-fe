@@ -203,10 +203,10 @@ function BlogManagement() {
                           <td>{formattedDate}</td>
                           <td>{`${blog.header}`}</td>
                           <td style={{ textAlign: "justify" }}>
-                            {blog.content.length >= 100
-                              ? blog.content.substring(0, 100).trim() + "..."
+                            {blog.content.length >= 80
+                              ? blog.content.substring(0, 80).trim() + "..."
                               : blog.content}{" "}
-                            {blog.content.length >= 100 ? (
+                            {blog.content.length >= 80 ? (
                               <a
                                 className="view-content mr-2"
                                 onClick={() => handleViewContent(blog.content)}

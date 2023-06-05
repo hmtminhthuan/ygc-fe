@@ -151,7 +151,7 @@ export default function ListTrainer() {
       </div>
       <section className="main bg-none the-content" id="">
         <MenuStaff />
-        <div className="main--content pt-3 bg-white">
+        <div className="main--content bg-white">
           <div className="staff-list-area pt-3 pb-5">
             <div className="row flex trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
