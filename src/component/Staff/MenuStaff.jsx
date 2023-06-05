@@ -55,13 +55,8 @@ export default function MenuStaff() {
             }}
             href="/staff/listTrainer"
           >
-<<<<<<< HEAD
-            <span className="icon icon-3">
-              <i className="ri-user-2-line" />
-=======
             <span className="icon icon-4">
               <i className="ri-user-2-line" style={{ color: "#ff9aa2" }} />
->>>>>>> e7deb51911f35301989c5b864ef36607f12ec4ad
             </span>
             <span className="sidebar--item" style={{ whiteSpace: "nowrap" }}>
               Trainer
@@ -119,13 +114,8 @@ export default function MenuStaff() {
             }}
             href="/staff/classManagement"
           >
-<<<<<<< HEAD
-            <span className="icon icon-7">
-              <i className=" ri-community-line" />
-=======
             <span className="icon icon-3">
               <i className=" ri-community-line" style={{ color: "#bad569" }} />
->>>>>>> e7deb51911f35301989c5b864ef36607f12ec4ad
             </span>
             <span className="sidebar--item">Class</span>
           </a>
