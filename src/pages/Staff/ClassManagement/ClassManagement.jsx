@@ -9,7 +9,7 @@ import ClassViewMore from "./ClassViewMore/ClassViewMore";
 import "./ClassManagement.scss";
 
 export default function ClassManagement() {
-  localStorage.setItem("MENU_ACTIVE", "admin-course");
+  localStorage.setItem("MENU_ACTIVE", "staff-class");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);
