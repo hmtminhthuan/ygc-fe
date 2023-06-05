@@ -202,8 +202,8 @@ export default function UpdateProfile() {
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
-                            width: "200px",
-                            height: "160px",
+                            width: "170px",
+                            height: "170px",
                             borderRadius: "5px",
                           }}
                         />
@@ -237,199 +237,203 @@ export default function UpdateProfile() {
                     <div
                       className="tab-pane fade show active w-100
             d-md-flex d-sm-flex justify-content-center"
+                      style={{ margin: "0 auto" }}
                     >
                       {/* <h3 className="mb-4">Account Settings</h3> */}
-                      <Form
-                        {...formItemLayout}
-                        form={formik.form}
-                        onFinish={formik.handleSubmit}
-                        size="large"
-                        autoComplete="off"
-                      >
-                        <div className="row">
-                          <div className="col-md-12 col-lg-6">
-                            <div className="form-group">
-                              <Form.Item
-                                name="firstname"
-                                label="Firstname"
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: "firstname cannot be blank",
-                                  },
-                                  { whitespace: true },
-                                ]}
-                                hasFeedback
-                                initialValue={profile.firstname}
-                              >
-                                <Input
+                      <div className="flex justify-content-center">
+                        <Form
+                          {...formItemLayout}
+                          form={formik.form}
+                          onFinish={formik.handleSubmit}
+                          size="large"
+                          autoComplete="off"
+                          className="text-center"
+                        >
+                          <div className="row">
+                            <div className="col-md-12">
+                              <div className="form-group w-100">
+                                <Form.Item
                                   name="firstname"
-                                  value={formik.values.firstname}
-                                  onChange={formik.handleChange}
-                                  onInput={(e) => {
-                                    setFirstname(e.target.value);
-                                  }}
-                                  placeholder="Enter firstname"
-                                />
-                              </Form.Item>
+                                  label="Firstname"
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "firstname cannot be blank",
+                                    },
+                                    { whitespace: true },
+                                  ]}
+                                  hasFeedback
+                                  initialValue={profile.firstname}
+                                >
+                                  <Input
+                                    name="firstname"
+                                    value={formik.values.firstname}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setFirstname(e.target.value);
+                                    }}
+                                    placeholder="Enter firstname"
+                                  />
+                                </Form.Item>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-md-12 col-lg-6">
-                            <div className="form-group">
-                              <Form.Item
-                                name="lastname"
-                                label="Lastname"
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: "lastname cannot be blank",
-                                  },
-                                  { whitespace: true },
-                                ]}
-                                hasFeedback
-                                initialValue={profile.lastname}
-                              >
-                                <Input
+                            <div className="col-md-12">
+                              <div className="form-group">
+                                <Form.Item
                                   name="lastname"
-                                  value={formik.values.lastname}
-                                  onChange={formik.handleChange}
-                                  onInput={(e) => {
-                                    setLastname(e.target.value);
-                                  }}
-                                  placeholder="Enter lastname"
-                                />
-                              </Form.Item>
+                                  label="Lastname"
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "lastname cannot be blank",
+                                    },
+                                    { whitespace: true },
+                                  ]}
+                                  hasFeedback
+                                  initialValue={profile.lastname}
+                                >
+                                  <Input
+                                    name="lastname"
+                                    value={formik.values.lastname}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setLastname(e.target.value);
+                                    }}
+                                    placeholder="Enter lastname"
+                                  />
+                                </Form.Item>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group flex m-0">
-                              <Form.Item
-                                name="phoneNumber"
-                                label="Phone"
-                                className="w-100"
-                                style={{ width: "" }}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: "Phone Number cannot be blank",
-                                  },
-                                  {
-                                    message: "Phone is not in correct form",
-                                    pattern: /(0|[1-9][0-9]*)$/,
-                                  },
-                                  {
-                                    min: 10,
-                                    message: "Phone must be 10-11 numbers",
-                                  },
-                                  {
-                                    max: 11,
-                                    message: "Phone must be 10-11 numbers",
-                                  },
-                                ]}
-                                hasFeedback
-                                initialValue={profile.phoneNumber}
-                              >
-                                <Input
-                                  style={{ width: "100%", flexGrow: "1" }}
+                            <div className="col-md-12">
+                              <div className="form-group flex m-0">
+                                <Form.Item
                                   name="phoneNumber"
-                                  value={formik.values.phoneNumber}
-                                  onChange={formik.handleChange}
-                                  onInput={(e) => {
-                                    setPhone(e.target.value);
-                                  }}
-                                  placeholder="Enter Phone Number"
-                                />
-                              </Form.Item>
+                                  label="Phone"
+                                  className="w-100"
+                                  style={{ width: "" }}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Phone Number cannot be blank",
+                                    },
+                                    {
+                                      message: "Phone is not in correct form",
+                                      pattern: /(0|[1-9][0-9]*)$/,
+                                    },
+                                    {
+                                      min: 10,
+                                      message: "Phone must be 10-11 numbers",
+                                    },
+                                    {
+                                      max: 11,
+                                      message: "Phone must be 10-11 numbers",
+                                    },
+                                  ]}
+                                  hasFeedback
+                                  initialValue={profile.phoneNumber}
+                                >
+                                  <Input
+                                    style={{ width: "100%", flexGrow: "1" }}
+                                    name="phoneNumber"
+                                    value={formik.values.phoneNumber}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setPhone(e.target.value);
+                                    }}
+                                    placeholder="Enter Phone Number"
+                                  />
+                                </Form.Item>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group flex m-0">
-                              <Form.Item
-                                name="address"
-                                label="Address"
-                                className="w-100"
-                                style={{ width: "" }}
-                                rules={[]}
-                                hasFeedback
-                                initialValue={profile.address}
-                              >
-                                <TextArea
-                                  style={{ width: "100%", flexGrow: "1" }}
+                            <div className="col-md-12">
+                              <div className="form-group flex m-0">
+                                <Form.Item
                                   name="address"
-                                  value={formik.values.address}
-                                  onChange={formik.handleChange}
-                                  onInput={(e) => {
-                                    setAddress(e.target.value);
-                                  }}
-                                  placeholder="Enter Address"
-                                />
-                              </Form.Item>
+                                  label="Address"
+                                  className="w-100"
+                                  style={{ width: "" }}
+                                  rules={[]}
+                                  hasFeedback
+                                  initialValue={profile.address}
+                                >
+                                  <TextArea
+                                    style={{ width: "100%", flexGrow: "1" }}
+                                    name="address"
+                                    value={formik.values.address}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setAddress(e.target.value);
+                                    }}
+                                    placeholder="Enter Address"
+                                  />
+                                </Form.Item>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group flex m-0">
-                              <Form.Item
-                                name="img"
-                                label="Image"
-                                className="w-100"
-                                rules={[]}
-                                hasFeedback
-                                initialValue={`${
-                                  profile.img != "male" &&
-                                  profile.img != "female"
-                                    ? profile.img
-                                    : ""
-                                }`}
-                              >
-                                <TextArea
-                                  style={{ width: "100%" }}
+                            <div className="col-md-12">
+                              <div className="form-group flex m-0">
+                                <Form.Item
                                   name="img"
-                                  value={formik.values.img}
-                                  onChange={formik.handleChange}
-                                  onInput={(e) => {
-                                    setPreviewImg(e.target.value);
-                                  }}
-                                  placeholder="Enter Link Of Image"
-                                />
-                              </Form.Item>
+                                  label="Image"
+                                  className="w-100"
+                                  rules={[]}
+                                  hasFeedback
+                                  initialValue={`${
+                                    profile.img != "male" &&
+                                    profile.img != "female"
+                                      ? profile.img
+                                      : ""
+                                  }`}
+                                >
+                                  <TextArea
+                                    style={{ width: "100%" }}
+                                    name="img"
+                                    value={formik.values.img}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setPreviewImg(e.target.value);
+                                    }}
+                                    placeholder="Enter Link Of Image"
+                                  />
+                                </Form.Item>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className="text-center row">
-                          <div className="col-6">
-                            <Button type="primary" htmlType="submit">
-                              Save
-                            </Button>
-                          </div>
-                          <div className="col-6 flex align-items-center">
-                            <Link
-                              to={`/profile/${profile.id}`}
-                              className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
-                    text-decoration-none text-light"
-                              style={{ borderRadius: "10px" }}
-                            >
-                              Cancel
-                            </Link>
-                          </div>
-                          <div
-                            className="col-12 mt-4"
-                            style={{ fontWeight: "bolder" }}
-                          >
-                            <h4>
-                              Want to change Password?
+                          <div className="text-center row">
+                            <div className="col-6">
+                              <Button type="primary" htmlType="submit">
+                                Save
+                              </Button>
+                            </div>
+                            <div className="col-6 flex align-items-center">
                               <Link
-                                className="mx-2 text-decoration-none"
-                                onClick={() => {
-                                  setChangePasswordMoniter(true);
-                                }}
+                                to={`/profile/${profile.id}`}
+                                className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
+                    text-decoration-none text-light"
+                                style={{ borderRadius: "10px" }}
                               >
-                                Click here
+                                Cancel
                               </Link>
-                            </h4>
+                            </div>
+                            <div
+                              className="col-12 mt-4"
+                              style={{ fontWeight: "bolder" }}
+                            >
+                              <h4>
+                                Want to change Password?
+                                <Link
+                                  className="mx-2 text-decoration-none"
+                                  onClick={() => {
+                                    setChangePasswordMoniter(true);
+                                  }}
+                                >
+                                  Click here
+                                </Link>
+                              </h4>
+                            </div>
                           </div>
-                        </div>
-                      </Form>
+                        </Form>
+                      </div>
                     </div>
                   </div>
                 ) : (
