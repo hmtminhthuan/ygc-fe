@@ -46,7 +46,8 @@
       }
 
       tbody tr:hover {
-        background-color: rgba(255, 255, 255, 0.3) !important;
+        // background-color: rgba(255, 255, 255, 0.3) !important;
+        background-color: #fbebe0 !important;
       }
 
       tbody td {
@@ -60,7 +61,7 @@
         right: 0;
         top: -9999px;
         bottom: -9999px;
-        // background-color: rgba(248, 208, 230, 0.764) !important;
+        // background-color: #ffddc6 !important;
         color: #000 !important;
       }
     }

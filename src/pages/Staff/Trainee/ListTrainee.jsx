@@ -21,7 +21,7 @@ export default function ListTrainee() {
 
   useEffect(() => {
     api
-      .get("/Account/AccountListByRole?id=4")
+      .get("/Trainee/GetAllInformationTraineeList")
       .then((res) => {
         setTraineeList(res.data);
       })
@@ -145,48 +145,6 @@ export default function ListTrainee() {
       });
   };
 
-  // useEffect(() => {
-  //   const traineeIds = traineeList.map((trainee) => trainee.accountID);
-
-  //   traineeIds.forEach((item) => {
-  //     let course = {};
-  //     api
-  //       .get(`/Trainee/GetTraineeCourses?traineeId=${item}`)
-  //       .then((res) => {
-  //         res.data.forEach((courseItem) => {
-  //           course = courseItem;
-  //           course.traineeId = item;
-  //           setTraineeCourses([...traineeCourses, course]);
-  //         });
-  //       })
-  //       .catch((err) => {})
-  //       .finally(() => {});
-  //   });
-  // }, [traineeList]);
-
-  useEffect(() => {
-    // Fetch trainee courses for each trainee
-    const fetchTraineeCourses = async () => {
-      const updatedTraineeCourses = [];
-      for (const trainee of traineeList) {
-        try {
-          const res = await api.get(
-            `/Trainee/GetTraineeCourses?traineeId=${trainee.accountID}`
-          );
-          for (const courseItem of res.data) {
-            const course = { ...courseItem, traineeId: trainee.accountID };
-            updatedTraineeCourses.push(course);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      setTraineeCourses(updatedTraineeCourses);
-    };
-
-    fetchTraineeCourses();
-  }, [traineeList]);
-
   return (
     <>
       <HeaderStaff />
@@ -301,6 +259,7 @@ export default function ListTrainee() {
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
+                      <th>UserID</th>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Gender</th>
@@ -390,33 +349,18 @@ export default function ListTrainee() {
                         }
                       })
                       .map((trainee) => {
-                        const traineeCoursesFiltered = traineeCourses.find(
-                          (course) => course.traineeId === trainee.accountID
-                        );
-
                         return (
                           <tr key={trainee.accountID}>
+                            <td>{`${trainee.accountID}`}</td>
                             <td>{`${trainee.firstName}`}</td>
                             <td>{`${trainee.lastName}`}</td>
                             <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
                             <td>{`${trainee.phoneNumber}`}</td>
                             <td>{`${trainee.email}`}</td>
                             <td>{`${trainee.address}`}</td>
-                            <td>
-                              {traineeCoursesFiltered
-                                ? traineeCoursesFiltered.courseName
-                                : "-"}
-                            </td>
-                            <td>
-                              {traineeCoursesFiltered
-                                ? traineeCoursesFiltered.className
-                                : "-"}
-                            </td>
-                            <td>
-                              {traineeCoursesFiltered
-                                ? traineeCoursesFiltered.levelName
-                                : "-"}
-                            </td>
+                            <td>{`${trainee.courseName}`}</td>
+                            <td>{`${trainee.className}`}</td>
+                            <td>{`${trainee.level}`}</td>
 
                             <td className="setting">
                               <i
