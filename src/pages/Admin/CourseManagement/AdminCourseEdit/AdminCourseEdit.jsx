@@ -40,7 +40,9 @@ export default function AdminCourseEdit() {
     },
 
     onSubmit: (values) => {
-      console.log("values", values);
+      if (values.discount == "") {
+        values.discount = 0;
+      }
       Swal.fire({
         title: `Are you sure to save all changes?`,
         inputAttributes: {
@@ -225,7 +227,11 @@ export default function AdminCourseEdit() {
                     value={formik.values.discount}
                     onChange={formik.handleChange}
                     onInput={(e) => {
-                      setPreviewDiscount(e.target.value);
+                      if (e.target.value == "") {
+                        setPreviewDiscount(0);
+                      } else {
+                        setPreviewDiscount(e.target.value);
+                      }
                     }}
                     placeholder="Enter Discount (optional)"
                   />

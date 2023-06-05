@@ -37,7 +37,9 @@ export default function AdminCourseCreate() {
     },
 
     onSubmit: (values) => {
-      console.log("values", values);
+      if (values.discount == "") {
+        values.discount = 0;
+      }
       Swal.fire({
         title: `Are you sure to create new course?`,
         inputAttributes: {
@@ -185,7 +187,11 @@ export default function AdminCourseCreate() {
                   value={formik.values.discount}
                   onChange={formik.handleChange}
                   onInput={(e) => {
-                    setPreviewDiscount(e.target.value);
+                    if (e.target.value == "") {
+                      setPreviewDiscount(0);
+                    } else {
+                      setPreviewDiscount(e.target.value);
+                    }
                   }}
                   placeholder="Enter Discount (default = 0)"
                 />

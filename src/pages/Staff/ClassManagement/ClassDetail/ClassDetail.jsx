@@ -170,7 +170,7 @@ export default function ClassDetail() {
                     <h4 className="p-0 m-0">Finished Classes</h4>
                   )}
                 </div>
-                <div className="">
+                <div className="flex">
                   {viewAllButton && courseClasses.length > 0 ? (
                     <div className="text-end">
                       <button
@@ -212,6 +212,17 @@ export default function ClassDetail() {
                   ) : (
                     <></>
                   )}
+                  <button
+                    className="border-0 mt-2 mx-1
+                    text-light py-1 px-2 bg-primary"
+                    style={{
+                      borderRadius: "5px",
+                      backgroundColor: "#000 ",
+                    }}
+                    onClick={() => {}}
+                  >
+                    Create New Class
+                  </button>
                 </div>
               </div>
               {courseClasses.length <= 0 || !available ? (
@@ -242,18 +253,18 @@ export default function ClassDetail() {
                         <StyledTableCell align="center">
                           Quantity
                         </StyledTableCell>
-                        {/* {viewAllButton ? (
+                        {viewAllButton ? (
                           <>
                             <StyledTableCell align="center">
-                              Delete
+                              Edit
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                              Edit
+                              Delete
                             </StyledTableCell>
                           </>
                         ) : (
                           <></>
-                        )} */}
+                        )}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -360,6 +371,37 @@ export default function ClassDetail() {
                                 <StyledTableCell align="center">
                                   {numberTrainee}
                                 </StyledTableCell>
+                                {viewAllButton ? (
+                                  <>
+                                    <StyledTableCell align="center">
+                                      <button
+                                        className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
+                                        style={{
+                                          borderRadius: "50%",
+                                          fontSize: "15px",
+                                        }}
+                                      >
+                                        <Link className="px-2 py-1 " to={``}>
+                                          <i className="fa-solid fa-pen-to-square py-2" />
+                                        </Link>
+                                      </button>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center">
+                                      <button
+                                        className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0  text-center"
+                                        style={{
+                                          borderRadius: "50%",
+                                          fontSize: "15px",
+                                        }}
+                                        onClick={() => {}}
+                                      >
+                                        <i className="fa-solid fa-trash" />
+                                      </button>
+                                    </StyledTableCell>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
                               </StyledTableRow>
                             );
                           }
