@@ -75,7 +75,7 @@ export default function Dashboard() {
           {/* Sidebar */}
           <MenuStaff />
 
-          <div className="main--content">
+          <div className="main--content px-5" style={{ overflowX: "hidden" }}>
             {/* Overview */}
             <div className="overview">
               <div className="title">
