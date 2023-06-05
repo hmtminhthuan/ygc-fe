@@ -328,7 +328,7 @@ export default function FeedbackManagement() {
       <HeaderStaff />
       <section className="main" id="staff-feedback-management-area">
         <MenuStaff />
-        <div className="main--content pt-3">
+        <div className="main--content pt-3 px-4">
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}

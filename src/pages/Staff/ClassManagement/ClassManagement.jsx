@@ -13,17 +13,10 @@ export default function ClassManagement() {
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);
-  const [isDeleted, setIsDeleted] = useState(false);
   const [searchedName, setSearchedName] = useState("");
   const [sortedLevel, setSortedLevel] = useState("");
   const [sortedName, setSortedName] = useState("Unsort");
-  const [sortedDiscount, setSortedDiscount] = useState("Unsort");
-  const [filteredPrice, setFilteredPrice] = useState();
-  const [filteredCalPrice, setFilteredCalPrice] = useState("");
-  const [sortedPrice, setSortedPrice] = useState("Unsort");
-  const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
   const [sortedClasses, setSortedClasses] = useState("Unsort");
-  const [sortedRating, setSortedRating] = useState("Unsort");
   const [priority, setPriority] = useState("");
 
   const symbolSorting = (item) => {
@@ -195,7 +188,10 @@ export default function ClassManagement() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3" id="staff-class-management-area">
+        <div
+          className="main--content pt-3 px-4"
+          id="staff-class-management-area"
+        >
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -319,7 +315,8 @@ export default function ClassManagement() {
                     <option value="Unsort">Unsort</option>
                   </select>
                 </th>
-                <th style={{ textAlign: "center" }}>More</th>
+                <th style={{ textAlign: "center" }}>Preview</th>
+                <th style={{ textAlign: "center" }}>Detail</th>
               </tr>
             </thead>
             <tbody style={{ height: "auto" }}>
@@ -389,9 +386,8 @@ export default function ClassManagement() {
                               }).length > 0 ? (
                                 classInfo.filter((item) => {
                                   return (
-                                    moment(new Date(`${item.endDate}`)).format(
-                                      "DD-MM-YYYY"
-                                    ) >= moment(new Date()).format("DD-MM-YYYY")
+                                    moment(new Date(`${item.endDate}`)) >=
+                                    moment(new Date())
                                   );
                                 }).length
                               ) : (
@@ -405,7 +401,7 @@ export default function ClassManagement() {
                           <td style={{ textAlign: "center" }}>
                             {pos >= 0 ? (
                               <button
-                                className="px-2 py-1 text-decoration-none text-light bg-dark border-0  text-center"
+                                className="px-2 py-1 text-decoration-none text-light bg-dark border-0 text-center"
                                 style={{
                                   borderRadius: "50%",
                                   fontSize: "12px",
@@ -424,7 +420,7 @@ export default function ClassManagement() {
                               </button>
                             ) : (
                               <button
-                                className="px-2 py-1 text-decoration-none staff-view-more-class-button border-0  text-center"
+                                className="px-2 py-1 text-decoration-none staff-view-more-class-button border-0 text-center"
                                 style={{
                                   borderRadius: "50%",
                                   fontSize: "15px",
@@ -439,6 +435,18 @@ export default function ClassManagement() {
                                 <i className="fa-solid fa-book-open-reader" />
                               </button>
                             )}
+                          </td>
+                          <td className="">
+                            <Link
+                              to={`/staff/classDetail/${courseID}`}
+                              className="px-2 py-1 text-decoration-none bg-black bg-opacity-100 text-light border-0 text-center"
+                              style={{
+                                borderRadius: "50%",
+                                fontSize: "15px",
+                              }}
+                            >
+                              <i className="fa-solid fa-magnifying-glass"></i>
+                            </Link>
                           </td>
                         </tr>
                         {pos != null && pos >= 0 ? (

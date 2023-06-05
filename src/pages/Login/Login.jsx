@@ -55,9 +55,11 @@ export default function Login() {
             } else if (res.data.role.id == 2) {
               window.location.href = "/staff";
             } else if (res.data.role.id == 3) {
-              window.location.href = "/trainer";
+              // window.location.href = "/trainer";
+              window.location.href = "/";
             } else if (res.data.role.id == 4) {
-              window.location.href = "/trainee";
+              // window.location.href = "/trainee";
+              window.location.href = "/";
             }
           });
         })
@@ -429,13 +431,18 @@ export default function Login() {
                   >
                     Log In
                   </button>
-                  <Link
-                    onClick={handleForgetPassword}
-                    className="mt-3 text-center text-decoration-none text-danger text-forget-password"
-                  >
-                    <span className="text-black">Forget Password?</span> Click
-                    here
-                  </Link>
+                  <div className="text-center mt-3">
+                    <span className="text-black" style={{ fontWeight: "500" }}>
+                      Forget Password?
+                    </span>{" "}
+                    <Link
+                      onClick={handleForgetPassword}
+                      className="mt-3 text-center text-decoration-none text-danger text-forget-password"
+                      style={{ fontWeight: "bolder" }}
+                    >
+                      Click here
+                    </Link>
+                  </div>
                 </Form>
               </div>
             </div>

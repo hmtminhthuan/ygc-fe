@@ -102,7 +102,7 @@ export default function FeedbackManagementDetail() {
       <HeaderStaff />
       <section className="main" id="staff-feedback-management-area">
         <MenuStaff />
-        <div className="main--content pt-3">
+        <div className="main--content pt-3 px-4">
           <div className="w-100">
             <div className="text-start">
               <Link

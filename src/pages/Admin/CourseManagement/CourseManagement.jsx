@@ -369,7 +369,7 @@ export default function CourseManagement() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className="main--content pt-3">
+        <div className="main--content pt-3 px-4">
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -723,9 +723,8 @@ export default function CourseManagement() {
                               }).length > 0 ? (
                                 classInfo.filter((item) => {
                                   return (
-                                    moment(new Date(`${item.endDate}`)).format(
-                                      "DD-MM-YYYY"
-                                    ) >= moment(new Date()).format("DD-MM-YYYY")
+                                    moment(new Date(`${item.endDate}`)) >=
+                                    moment(new Date())
                                   );
                                 }).length
                               ) : (

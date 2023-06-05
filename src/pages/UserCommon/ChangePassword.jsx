@@ -46,7 +46,7 @@ export default function ChangePassword({ userEmail, userId }) {
             Swal.fire({
               position: "center",
               icon: "error",
-              title: "Your old password is not correct. Please try again",
+              title: "Your current password is not correct. Please try again",
               showConfirmButton: true,
               timer: 2000,
             });
@@ -244,7 +244,7 @@ export default function ChangePassword({ userEmail, userId }) {
         <div className="form-group flex m-0 col-12">
           <Form.Item
             name="oldPassword"
-            label="Old Password"
+            label="Current Password"
             className="w-100"
             rules={[
               {
@@ -264,7 +264,7 @@ export default function ChangePassword({ userEmail, userId }) {
               type="password"
               value={formik.values.oldPassword}
               onChange={formik.handleChange}
-              placeholder="Enter Old Password"
+              placeholder="Enter Current Password"
             />
           </Form.Item>
         </div>
@@ -335,7 +335,7 @@ export default function ChangePassword({ userEmail, userId }) {
         className="form-group flex m-0 flex justify-content-center my-3 mt-4"
         style={{ fontWeight: "bolder", fontSize: "16px" }}
       >
-        Forget Old Password?
+        Forget Current Password?
         <button
           className="mx-2 text-decoration-none text-danger border-0 bg-transparent"
           style={{ fontWeight: "bolder" }}

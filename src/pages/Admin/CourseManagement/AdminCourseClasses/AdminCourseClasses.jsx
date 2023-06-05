@@ -77,8 +77,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
             {
               courseClasses.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length
             }{" "}
@@ -105,6 +104,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
               <TableHead>
                 <TableRow className=" bg-dark">
                   <StyledTableCell>No.</StyledTableCell>
+                  <StyledTableCell align="left">Name</StyledTableCell>
                   <StyledTableCell align="left">Start Date</StyledTableCell>
                   <StyledTableCell align="left">End Date</StyledTableCell>
                   <StyledTableCell align="left">Trainer</StyledTableCell>
@@ -116,9 +116,8 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
               <TableBody>
                 {courseClasses
                   .sort((a, b) => {
-                    return moment(new Date(`${b.endDate}`)).format(
-                      "DD-MM-YYYY"
-                    ) > moment(new Date(`${a.endDate}`)).format("DD-MM-YYYY")
+                    return moment(new Date(`${b.endDate}`)) >
+                      moment(new Date(`${a.endDate}`))
                       ? 1
                       : -1;
                   })
@@ -127,13 +126,14 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                       {
                         classId,
                         trainerId,
+                        className,
                         startDate,
                         endDate,
                         firstname,
                         lastname,
                         schedule,
                         room,
-                        numOfTrainee,
+                        numberTrainee,
                       },
                       index
                     ) => {
@@ -144,7 +144,10 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                       let end = moment(new Date(`${endDate}`)).format(
                         "DD-MM-YYYY"
                       );
-                      if (current > end && viewAllButton) {
+                      if (
+                        moment(new Date()) > moment(new Date(`${endDate}`)) &&
+                        viewAllButton
+                      ) {
                         return <></>;
                       }
                       return (
@@ -152,10 +155,16 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                           <StyledTableCell align="left">
                             {countNo++}
                           </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {className}
+                          </StyledTableCell>
                           <StyledTableCell
                             align="left"
                             className={`${
-                              current > start ? "bg-warning bg-opacity-10" : ""
+                              moment(new Date()) >
+                              moment(new Date(`${startDate}`))
+                                ? "bg-warning bg-opacity-10"
+                                : ""
                             }`}
                           >
                             {start}
@@ -163,7 +172,10 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                           <StyledTableCell
                             align="left"
                             className={`${
-                              current > end ? "bg-warning bg-opacity-10" : ""
+                              moment(new Date()) >
+                              moment(new Date(`${endDate}`))
+                                ? "bg-warning bg-opacity-10"
+                                : ""
                             }`}
                           >
                             {end}
@@ -182,7 +194,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
                             ))}
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                            {numOfTrainee}
+                            {numberTrainee}
                           </StyledTableCell>
                         </StyledTableRow>
                       );
@@ -195,7 +207,7 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
         {viewAllButton && courseClasses.length > 0 ? (
           <div className="text-end">
             <button
-              className="border-0 mt-2 mx-1
+              className="border-0 mt-2 mx-1 staff-course-view-all-class
                     text-black bg-info bg-opacity-75 py-1 px-2"
               style={{ borderRadius: "5px" }}
               onClick={() => {

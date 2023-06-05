@@ -122,7 +122,7 @@ export default function AdminCourseEdit() {
         levelList != null &&
         levelList.length > 0 ? (
           <div
-            className="main--content pt-3"
+            className="main--content pt-3 px-5"
             id="admin-course-management-create-course"
           >
             <div className="row justify-content-center">

@@ -70,7 +70,7 @@ export default function CourseView() {
       .finally(async () => {
         await courseListStart.forEach((course) => {
           api
-            .get("/Class/GetClassByCourseID", {
+            .get("/Class/GetClassByCourseIDForAdmin", {
               params: { courseid: course.courseID },
             })
             .then((res) => {
@@ -326,7 +326,7 @@ export default function CourseView() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content staff-course-view pt-3">
+        <div className="main--content px-4 staff-course-view pt-3">
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -668,11 +668,9 @@ export default function CourseView() {
                               </button>
                             ) : (
                               <button
-                                className="px-2 py-1 text-decoration-none border-0"
+                                className="px-2 py-1 text-decoration-none view-staff-course-more border-0"
                                 style={{
                                   borderRadius: "10px",
-                                  color: "#489970",
-                                  backgroundColor: "#569c7932",
                                 }}
                                 onClick={() => {
                                   setInfoMoreList([
@@ -694,7 +692,7 @@ export default function CourseView() {
                             >
                               <td></td>
                               <td
-                                className="text-success"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",
@@ -715,7 +713,7 @@ export default function CourseView() {
                             >
                               <td></td>
                               <td
-                                className="text-success"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",
@@ -744,7 +742,7 @@ export default function CourseView() {
                             >
                               <td></td>
                               <td
-                                className="text-success"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",

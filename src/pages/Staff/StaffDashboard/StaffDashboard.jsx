@@ -191,7 +191,11 @@ export default function Dashboard() {
                               src={trainer.img}
                               alt="Image"
                               className="shadow img-user-profile"
-                              style={{ borderRadius: "50%" }}
+                              style={{
+                                borderRadius: "50%",
+                                height: "100%",
+                                width: "100%",
+                              }}
                             />
                           ) : (
                             <></>

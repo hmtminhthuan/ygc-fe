@@ -4,20 +4,28 @@
     table {
       thead {
         .selection-button {
-          background-color: #4d9f76;
+          background-color: #efd243;
           border: none;
-          color: #ffffff90;
+          color: #000;
           cursor: pointer;
         }
         .symbol-sorting {
-          color: #ffffff70;
+          color: #00000070;
         }
         tr {
           th {
-            background-color: #4d9f76;
+            background-color: #efd243;
+            color: #000 !important;
           }
         }
       }
+      .staff-course-view-all-class {
+        background-color: #efd243 !important;
+      }
+    }
+    .view-staff-course-more {
+      background-color: #efd243bd;
+      color: #000;
     }
   }
   .main--content {

@@ -90,7 +90,7 @@ export default function AdminCourseCreate() {
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
         <div
-          className="main--content pt-3"
+          className="main--content pt-3 px-5"
           id="admin-course-management-create-course"
         >
           <div className="row justify-content-center">
