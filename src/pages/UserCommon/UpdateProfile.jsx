@@ -125,7 +125,7 @@ export default function UpdateProfile() {
               })
               .catch((err) => {})
               .finally(() => {
-                // window.location.href = `/updateProfile/${profile.id}`;
+                window.location.href = `/updateProfile/${profile.id}`;
               });
           });
         })

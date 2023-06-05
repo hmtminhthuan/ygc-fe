@@ -105,7 +105,11 @@ function UserProfile() {
                                 src={maleImg}
                                 alt="Image"
                                 className="shadow img-user-profile"
-                                style={{ borderRadius: "50%" }}
+                                style={{
+                                  borderRadius: "50%",
+                                  width: "130px",
+                                  height: "130px",
+                                }}
                               />
                             ) : (
                               <></>
@@ -115,7 +119,11 @@ function UserProfile() {
                                 src={femaleImg}
                                 alt="Image"
                                 className="shadow img-user-profile"
-                                style={{ borderRadius: "50%" }}
+                                style={{
+                                  borderRadius: "50%",
+                                  width: "130px",
+                                  height: "130px",
+                                }}
                               />
                             ) : (
                               <></>
@@ -127,7 +135,11 @@ function UserProfile() {
                                 src={profile.img}
                                 alt="Image"
                                 className="shadow img-user-profile"
-                                style={{ borderRadius: "50%" }}
+                                style={{
+                                  borderRadius: "50%",
+                                  width: "130px",
+                                  height: "130px",
+                                }}
                               />
                             ) : (
                               <></>
