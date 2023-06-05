@@ -190,14 +190,14 @@ export default function ListTrainee() {
   return (
     <>
       <HeaderStaff />
-      <section className="main bg-none" id="">
+      <section className="main bg-white" id="">
         <MenuStaff />
         <div className="main--content bg-white">
           <section className="staff-list-area pt-3 pb-3">
             {/* <MenuStaff /> */}
             <div className="row flex trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1 className="m-0 p-0 mb-2">
+                <h1 className="m-0 p-0 mb-2" style={{ color: "#faa46a" }}>
                   <i className="ri-bookmark-line"></i> List Trainees
                 </h1>
               </div>

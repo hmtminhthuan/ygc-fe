@@ -149,34 +149,16 @@ export default function ListTrainer() {
       <div className="the-menu">
         <HeaderStaff />
       </div>
-      <section className="main bg-none the-content" id="">
+      <section className="main bg-white the-content" id="">
         <MenuStaff />
         <div className="main--content bg-white">
           <div className="staff-list-area pt-3 pb-5">
-            <div className="row flex trainee-containe mt-2 mx-5 mb-5">
+            <div className="row flex trainer-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1 className="m-0 p-0 mb-2">
+                <h1 className="m-0 p-0 mb-2" style={{ color: "#ff9aa2" }}>
                   <i className="ri-bookmark-line"></i> List Trainers
                 </h1>
               </div>
-              {/* Sort by firstname */}
-              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-                <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by FirstName</h4>
-                <div className="w-50">
-                  <Select
-                    className="w-100 text-dark"
-                    name="firstname"
-                    value={firstNameSort}
-                    onChange={(value) => {
-                      setfirstNameSort(value);
-                    }}
-                  >
-                    <Select.Option value="asc">A - Z</Select.Option>
-                    <Select.Option value="desc">Z - A</Select.Option>
-                    <Select.Option value="all">All</Select.Option>
-                  </Select>
-                </div>
-              </div> */}
 
               {/* Search By Name */}
               <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">

@@ -25,12 +25,12 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-
+  padding: 0 !important;
   table {
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
   }
 
@@ -39,11 +39,6 @@
     padding: 15px;
     background-color: rgba(255, 255, 255, 0.2);
     color: #333 !important;
-  }
-
-  th {
-    text-align: center;
-    background-color: #333 !important;
   }
 
   tbody {
@@ -73,11 +68,12 @@
   }
 
   thead th {
-    // background-color: #ff9aa2 !important;
+    background-color: #ff9aa2 !important;
     position: sticky;
     top: 0;
-    color: #fff !important;
+    color: #333 !important;
     text-align: center;
+    font-size: 14px;
   }
 }
 
