@@ -55,7 +55,7 @@ export default function MenuStaff() {
             }}
             href="/staff/listTrainer"
           >
-            <span className="icon icon-4">
+            <span className="icon icon-3">
               <i className="ri-user-2-line" />
             </span>
             <span className="sidebar--item" style={{ whiteSpace: "nowrap" }}>
@@ -111,7 +111,7 @@ export default function MenuStaff() {
             }}
             href="/staff/classManagement"
           >
-            <span className="icon icon-3">
+            <span className="icon icon-7">
               <i className=" ri-community-line" />
             </span>
             <span className="sidebar--item">Class</span>
