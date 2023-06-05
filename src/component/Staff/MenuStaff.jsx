@@ -37,7 +37,10 @@ export default function MenuStaff() {
             id="active--link"
           >
             <span className="icon icon-1">
-              <i className="ri-layout-grid-line" style={{ color: "#59bea0" }} />
+              <i
+                className="ri-layout-grid-line"
+                //  style={{ color: "#59bea0" }}
+              />
             </span>
             <span className="sidebar--item">Dashboard</span>
           </a>
@@ -96,7 +99,7 @@ export default function MenuStaff() {
             <span className="icon icon-5">
               <i
                 className="ri-book-mark-line"
-                style={{ color: "rgba(241, 210, 67, 1)" }}
+                // style={{ color: "rgba(241, 210, 67, 1)" }}
               />
             </span>
             <span className="sidebar--item">Course</span>
@@ -114,8 +117,8 @@ export default function MenuStaff() {
             }}
             href="/staff/classManagement"
           >
-            <span className="icon icon-3">
-              <i className=" ri-community-line" style={{ color: "#bad569" }} />
+            <span className="icon icon-7">
+              <i className=" ri-community-line" />
             </span>
             <span className="sidebar--item">Class</span>
           </a>
