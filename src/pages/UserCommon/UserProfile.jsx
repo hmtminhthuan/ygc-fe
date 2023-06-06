@@ -75,11 +75,12 @@ function UserProfile() {
       {accept ? (
         <>
           <div
-            className="w-100 bg-light bg-opacity-75"
+            className="w-100"
             style={{
-              height: "55px",
+              height: "53px",
               position: "fixed",
               zIndex: "100",
+              backgroundColor: "rgb(248,249,250,0.9)",
             }}
           >
             <HeaderHome />
