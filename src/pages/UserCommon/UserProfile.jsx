@@ -95,8 +95,8 @@ function UserProfile() {
             </div>
             <div className="padding mx-5 mt-5">
               <div className="row container d-flex justify-content-center">
-                <div className="col-xl-6 col-md-12">
-                  <div className="card user-card-full">
+                <div className="col-xl-6 col-md-12 mt-md-4">
+                  <div className="card user-card-full mt-md-4">
                     <div className="row m-l-0 m-r-0">
                       <div className="col-sm-4 bg-c-lite-green user-profile">
                         <div className="card-block text-center">

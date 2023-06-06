@@ -333,7 +333,7 @@ export default function ChangePassword({ userEmail, userId }) {
       </Form>
       <div
         className="form-group flex m-0 flex justify-content-center my-3 mt-4"
-        style={{ fontWeight: "bolder", fontSize: "16px" }}
+        style={{ fontWeight: "bolder", fontSize: "17px" }}
       >
         Forget Current Password?
         <button

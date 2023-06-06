@@ -53,18 +53,6 @@ export default function HeaderHome() {
               userLogin.accountID != null &&
               userLogin.accountID != undefined ? (
                 <>
-                  <Nav.Link
-                    className="px-4 nav-item"
-                    onClick={() => {
-                      localStorage.removeItem("USER_LOGIN");
-                      localStorage.removeItem("MENU_ACTIVE");
-                      USER = {};
-                      setUserLogin({});
-                      window.location.href = "/";
-                    }}
-                  >
-                    Log out
-                  </Nav.Link>
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
@@ -133,6 +121,24 @@ export default function HeaderHome() {
                     Register
                   </Nav.Link>
                 </>
+              )}
+              {USER_LOGIN != null &&
+              userLogin.accountID != null &&
+              userLogin.accountID != undefined ? (
+                <Nav.Link
+                  className="px-4 nav-item"
+                  onClick={() => {
+                    localStorage.removeItem("USER_LOGIN");
+                    localStorage.removeItem("MENU_ACTIVE");
+                    USER = {};
+                    setUserLogin({});
+                    window.location.href = "/";
+                  }}
+                >
+                  <div className="flex p-0 m-0">Log Out</div>
+                </Nav.Link>
+              ) : (
+                <></>
               )}
             </Nav>
           </Navbar.Collapse>

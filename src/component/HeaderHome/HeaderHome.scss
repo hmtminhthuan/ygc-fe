@@ -4,7 +4,7 @@
   position: fixed !important;
   width: 100% !important;
   .header-container {
-    width: 72% !important;
+    width: 80% !important;
     @media only screen and (max-width: 940px) {
       width: 100% !important;
     }
@@ -30,11 +30,14 @@
   right: 0;
   margin: 0 auto !important;
   padding: 0;
-  width: 72%;
+  width: 100%;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   .header-container {
     height: auto !important;
+  }
+  @media only screen and (min-width: 1050px) {
+    width: 72%;
   }
   @media only screen and (max-width: 768px) {
     background-color: #000 !important;

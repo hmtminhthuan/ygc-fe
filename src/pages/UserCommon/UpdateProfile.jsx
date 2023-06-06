@@ -140,24 +140,44 @@ export default function UpdateProfile() {
   return (
     <>
       {accept ? (
-        <>
-          <div className="">
+        <div
+          className={`update-profile-area w-100
+          ${changePasswordMoniter ? "update-profile-password-area" : ""}`}
+          style={{
+            backgroundColor: "#f2ced8",
+            width: "100vw",
+          }}
+        >
+          <div
+            className="w-100 p-0 m-0"
+            style={{
+              height: "53px",
+              backgroundColor: "#fff",
+              position: "fixed",
+              zIndex: "100",
+            }}
+          >
             <HeaderHome />
           </div>
           <div
-            className="update update-profile-area w-100 h-100 pb-5 flex justify-content-center"
-            style={{ backgroundColor: "#f2ced8" }}
+            className="update update-profile-container w-100 h-100 m-0 p-0 pb-5 flex justify-content-center"
+            style={{ backgroundColor: "#f2ced8", width: "100%" }}
           >
             <div
-              className="containerud w-100"
-              style={{ margin: "0 auto", width: "100%" }}
+              className="containerud w-100 p-0 m-0"
+              style={{
+                margin: "0 auto",
+                width: "100%",
+              }}
             >
-              <h1
-                className="mb-4 pt-5 mt-5 text-center"
-                style={{ color: "333", fontWeight: "bold" }}
-              >
-                Update Account
-              </h1>
+              <div className="p-0 m-0 mt-lg-0 mt-5">
+                <h1
+                  className="mb-3 pt-5 mt-lg-4 mt-md-5 text-center text-dark"
+                  style={{ color: "333", fontWeight: "bold" }}
+                >
+                  Update Account
+                </h1>
+              </div>
               <div
                 className="row bg-white shadow rounded-lg d-md-flex justify-content-center mx-lg-5"
                 style={{ borderRadius: "15px" }}
@@ -366,7 +386,7 @@ export default function UpdateProfile() {
                                   initialValue={profile.address}
                                 >
                                   <TextArea
-                                    style={{ width: "100%", flexGrow: "1" }}
+                                    style={{ width: "100%", height: "75px" }}
                                     name="address"
                                     value={formik.values.address}
                                     onChange={formik.handleChange}
@@ -394,7 +414,7 @@ export default function UpdateProfile() {
                                   }`}
                                 >
                                   <TextArea
-                                    style={{ width: "100%" }}
+                                    style={{ width: "100%", height: "75px" }}
                                     name="img"
                                     value={formik.values.img}
                                     onChange={formik.handleChange}
@@ -437,7 +457,7 @@ export default function UpdateProfile() {
                               style={{ fontWeight: "bolder" }}
                             >
                               <h4>
-                                Want to change Password?
+                                Change Curret Password?
                                 <Link
                                   className="mx-2 text-decoration-none"
                                   onClick={() => {
@@ -486,7 +506,7 @@ export default function UpdateProfile() {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <></>
       )}
