@@ -5,6 +5,8 @@ import { Form, Input, Select, Button } from "antd";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./CreateTrainer.scss";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
 
 export default function CreateTrainer() {
   const formItemLayout = {
@@ -122,7 +124,7 @@ export default function CreateTrainer() {
                             </Form.Item>
                           </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                           <div className="form-group">
                             <Form.Item
                               label="Gender"
@@ -150,7 +152,7 @@ export default function CreateTrainer() {
                             </Form.Item>
                           </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                           <div className="form-group">
                             <Form.Item
                               label="Phone Number"
