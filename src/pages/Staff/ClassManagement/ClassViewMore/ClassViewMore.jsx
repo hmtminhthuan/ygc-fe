@@ -210,8 +210,8 @@ export default function ClassViewMore({ courseClasses, ...restParams }) {
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1
-                    text-light py-1 px-2"
-              style={{ borderRadius: "5px", backgroundColor: "#9bb448 " }}
+                    text-light py-1 px-2 bg-black"
+              style={{ borderRadius: "5px" }}
               onClick={() => {
                 setViewAllButton(false);
                 setHideButton(true);

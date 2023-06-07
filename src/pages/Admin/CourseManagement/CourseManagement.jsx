@@ -8,6 +8,7 @@ import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import moment from "moment/moment";
+import { Rating, Stack } from "@mui/material";
 
 export default function CourseManagement() {
   localStorage.setItem("MENU_ACTIVE", "admin-course");
@@ -427,7 +428,7 @@ export default function CourseManagement() {
             </div>
             <div className="my-1">
               <Link
-                className="px-2 py-1 my-1 text-decoration-none text-light bg-primary border-0"
+                className="px-2 py-1 my-1 text-decoration-none text-light bg-black bg-opacity-75 border-0"
                 style={{ borderRadius: "5px" }}
                 to="/admin/courseManagement/createCourse"
               >
@@ -439,7 +440,7 @@ export default function CourseManagement() {
             <thead className="table-head">
               <tr>
                 <th>No.</th>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Image</th>
                 <th style={{ textAlign: "left" }}>
                   Name
@@ -496,7 +497,7 @@ export default function CourseManagement() {
                   </select>
                 </th>
                 <th style={{ textAlign: "" }}>
-                  Discount
+                  Discount (%)
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -684,7 +685,7 @@ export default function CourseManagement() {
                       <>
                         <tr key={courseID} className={`row-bg-${index % 2}`}>
                           <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                          <td>{courseID}</td>
+                          {/* <td>{courseID}</td> */}
                           <td>
                             <img
                               src={courseImg}
@@ -757,9 +758,25 @@ export default function CourseManagement() {
                                 }
                               `}
                             >
-                              {feedbackInfo.length > 0
-                                ? `${rating}`
-                                : "Not yet"}
+                              {feedbackInfo.length > 0 ? (
+                                <>
+                                  <p className="p-0 m-0 text-center">
+                                    {rating}
+                                  </p>
+                                  <p className="p-0 m-0 text-center">
+                                    {" "}
+                                    <Rating
+                                      name="half-rating-read"
+                                      defaultValue={rating}
+                                      precision={0.5}
+                                      readOnly
+                                      style={{ fontSize: "15px" }}
+                                    />
+                                  </p>
+                                </>
+                              ) : (
+                                "Not yet"
+                              )}
                             </td>
                           ) : (
                             <td></td>
@@ -917,7 +934,7 @@ export default function CourseManagement() {
                                 className="px-2 py-1 "
                                 to={`/admin/courseManagement/editCourse/${courseID}`}
                               >
-                                <i className="fa-solid fa-pen-to-square" />
+                                <i className="fa-solid fa-pen-to-square py-2" />
                               </Link>
                             </button>
                           </td>
@@ -930,7 +947,7 @@ export default function CourseManagement() {
                             >
                               <td></td>
                               <td
-                                className="text-info"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",
@@ -951,7 +968,7 @@ export default function CourseManagement() {
                             >
                               <td></td>
                               <td
-                                className="text-info"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",
@@ -980,7 +997,7 @@ export default function CourseManagement() {
                             >
                               <td></td>
                               <td
-                                className="text-info"
+                                className="text-black"
                                 colSpan={2}
                                 style={{
                                   textAlign: "right",

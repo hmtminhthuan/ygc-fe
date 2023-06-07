@@ -8,6 +8,7 @@ import moment from "moment";
 import "./UpdateBlog.scss";
 
 export default function UpdateBlog() {
+  const [previewImg, setPreviewImg] = useState("");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -42,6 +43,7 @@ export default function UpdateBlog() {
         setHeader(res.data.header);
         setContent(res.data.content);
         setImg(res.data.img);
+        setPreviewImg(res.data.img);
       })
       .catch((err) => {
         console.log(err);
@@ -81,8 +83,8 @@ export default function UpdateBlog() {
   }
 
   return (
-    <div className="updateblog p-2">
-      <div className="containerud">
+    <div className="updateblog p-2" style={{ height: "200vh" }}>
+      <div className="containerud" style={{ height: "fit-content" }}>
         <h1 className="mt-4 mb-3 mx-4">Update Blog</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
@@ -193,9 +195,26 @@ export default function UpdateBlog() {
                           name="img"
                           value={formik.values.img}
                           onChange={formik.handleChange}
+                          onInput={(e) => {
+                            setPreviewImg(e.target.value);
+                          }}
                           placeholder="Enter Image URL"
                         />
                       </Form.Item>
+                      {previewImg == "" ? (
+                        <></>
+                      ) : (
+                        <Form.Item
+                          className="preview-item"
+                          label="Preview Image"
+                        >
+                          <img
+                            id="blah"
+                            src={previewImg}
+                            style={{ width: "50%", borderRadius: "5px" }}
+                          />
+                        </Form.Item>
+                      )}
                     </div>
                   </div>
                 </div>

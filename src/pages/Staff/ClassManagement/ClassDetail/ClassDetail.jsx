@@ -134,7 +134,7 @@ export default function ClassDetail() {
         <MenuStaff />
         <div
           className="main--content pt-3 px-4"
-          id="staff-class-management-area"
+          // id="staff-class-management-area"
         >
           <div className="text-start">
             <Link
@@ -147,13 +147,8 @@ export default function ClassDetail() {
             </Link>
           </div>
           <div className="">
-            <h2 className="m-0 p-0 text-center" style={{ color: "#7C903A" }}>
-              Classes Detail
-            </h2>
-            <h5
-              className="m-0 p-0 py-1 my-3 mt-0 text-center"
-              style={{ color: "#7C903A" }}
-            >
+            <h2 className="m-0 p-0 text-center">Classes Detail</h2>
+            <h5 className="m-0 p-0 py-1 my-3 mt-0 text-center">
               Course Name: {course.courseName}{" "}
             </h5>
           </div>
@@ -162,7 +157,7 @@ export default function ClassDetail() {
               <div className=" my-2 mt-0 flex justify-content-between align-items-end p-0">
                 <div
                   className="p-0 m-0 flex align-items-end"
-                  style={{ color: "#7C903A" }}
+                  // style={{ color: "#7C903A" }}
                 >
                   {viewAllButton ? (
                     <h4 className="p-0 m-0">Current Classes</h4>
@@ -175,10 +170,9 @@ export default function ClassDetail() {
                     <div className="text-end">
                       <button
                         className="border-0 mt-2 mx-1
-                    text-light py-1 px-2"
+                   py-1 px-2"
                         style={{
                           borderRadius: "5px",
-                          backgroundColor: "#9bb448 ",
                         }}
                         onClick={() => {
                           setViewAllButton(false);
@@ -214,10 +208,9 @@ export default function ClassDetail() {
                   )}
                   <button
                     className="border-0 mt-2 mx-1
-                    text-light py-1 px-2 bg-primary"
+                     py-1 px-2"
                     style={{
                       borderRadius: "5px",
-                      backgroundColor: "#000 ",
                     }}
                     onClick={() => {}}
                   >

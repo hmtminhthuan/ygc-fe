@@ -355,7 +355,6 @@ export default function FeedbackManagement() {
             <thead className="table-head">
               <tr>
                 <th>No.</th>
-                <th>ID</th>
                 <th>Image</th>
                 <th style={{ textAlign: "left" }}>
                   Name
@@ -383,34 +382,7 @@ export default function FeedbackManagement() {
                     <option value="Unsort">Unsort</option>
                   </select>
                 </th>
-                <th style={{ textAlign: "left" }}>
-                  Level
-                  <span style={{ marginLeft: "5px" }}>
-                    {sortedLevel != "" ? (
-                      <i
-                        className="fa fa-filter symbol-sorting"
-                        aria-hidden="true"
-                      ></i>
-                    ) : (
-                      <></>
-                    )}
-                  </span>
-                  <select
-                    name="sortedLevel"
-                    id="sortedLevel"
-                    className="selection-button"
-                    value={sortedLevel}
-                    onChange={(e) => {
-                      setSortedLevel(e.target.value);
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                    <option value="">All</option>
-                  </select>
-                </th>
+                {/* s */}
                 <th style={{ textAlign: "center" }}>
                   Pending
                   <span style={{ marginLeft: "5px" }}>
@@ -440,7 +412,7 @@ export default function FeedbackManagement() {
                     <option value="Unsort">Unsort</option>
                   </select>
                 </th>
-                <th style={{ textAlign: "center" }}>
+                {/* <th style={{ textAlign: "center" }}>
                   Censored
                   <span style={{ marginLeft: "5px" }}>
                     <i
@@ -526,7 +498,7 @@ export default function FeedbackManagement() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
-                </th>
+                </th> */}
                 <th style={{ textAlign: "center" }}>
                   Rate
                   <span style={{ marginLeft: "5px" }}>
@@ -604,7 +576,7 @@ export default function FeedbackManagement() {
                                                 }`}
                         >
                           <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                          <td>{courseID}</td>
+                          {/* <td>{courseID}</td> */}
                           <td>
                             <img
                               src={courseImg}
@@ -617,7 +589,7 @@ export default function FeedbackManagement() {
                             />
                           </td>
                           <td style={{ textAlign: "left" }}>{courseName}</td>
-                          <td style={{ textAlign: "left" }}>{levelName}</td>
+                          {/* <td style={{ textAlign: "left" }}>{levelName}</td> */}
                           <td
                             className={`${pending > 0 ? "text-danger" : ""}`}
                             style={{
@@ -628,9 +600,9 @@ export default function FeedbackManagement() {
                           >
                             {pending}
                           </td>
-                          <td style={{ textAlign: "center" }}>{censored}</td>
-                          <td style={{ textAlign: "center" }}>{deletedFb}</td>
-                          {feedbackInfo != null && feedbackInfo != undefined ? (
+                          {/* <td style={{ textAlign: "center" }}>{censored}</td>
+                          <td style={{ textAlign: "center" }}>{deletedFb}</td> */}
+                          {/* {feedbackInfo != null && feedbackInfo != undefined ? (
                             <td style={{ textAlign: "center" }}>
                               {feedbackInfo.length > 0
                                 ? feedbackInfo.length
@@ -638,7 +610,7 @@ export default function FeedbackManagement() {
                             </td>
                           ) : (
                             <td></td>
-                          )}
+                          )} */}
                           {feedbackInfo != null && feedbackInfo != undefined ? (
                             <td
                               style={{

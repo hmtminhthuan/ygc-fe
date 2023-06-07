@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { api } from "../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Button, DatePicker } from "antd";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import "./CreateBlog.scss";
 
 export default function CreateBlog() {
+  const [previewImg, setPreviewImg] = useState("");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -46,9 +47,9 @@ export default function CreateBlog() {
   });
 
   return (
-    <div className="createblog p-2">
-      <div className="containerud">
-        <h1 className="mt-4 mb-3 mx-4">Create New Blog</h1>
+    <div className="createblog p-2 w-100" style={{ height: "200vh" }}>
+      <div className="containerud w-100" style={{ height: "fit-content" }}>
+        <h1 className="mt-0 mb-0 mx-4">Create New Blog</h1>
         <div className="bg-white shadow rounded-lg d-sm-flex">
           <div className="tab-content p-4 p-md-5">
             <div className="tab-pane fade show active">
@@ -178,9 +179,26 @@ export default function CreateBlog() {
                           name="img"
                           value={formik.values.img}
                           onChange={formik.handleChange}
+                          onInput={(e) => {
+                            setPreviewImg(e.target.value);
+                          }}
                           placeholder="Enter Image URL"
                         />
                       </Form.Item>
+                      {previewImg == "" ? (
+                        <></>
+                      ) : (
+                        <Form.Item
+                          className="preview-item"
+                          label="Preview Image"
+                        >
+                          <img
+                            id="blah"
+                            src={previewImg}
+                            style={{ width: "50%", borderRadius: "5px" }}
+                          />
+                        </Form.Item>
+                      )}
                     </div>
                   </div>
                 </div>

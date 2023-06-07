@@ -63,6 +63,9 @@
         // z-index: -1;
         // opacity: 1;
       }
+      thead tr th:hover:before {
+        z-index: -1;
+      }
     }
 
     .setting {

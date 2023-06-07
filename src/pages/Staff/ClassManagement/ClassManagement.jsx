@@ -190,7 +190,7 @@ export default function ClassManagement() {
         <MenuStaff />
         <div
           className="main--content pt-3 px-4"
-          id="staff-class-management-area"
+          // id="staff-class-management-area"
         >
           <div
             className="flex justify-content-between align-items-end"

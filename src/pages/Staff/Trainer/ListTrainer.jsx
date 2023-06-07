@@ -17,6 +17,8 @@ export default function ListTrainer() {
   const [searchedPhone, setSearchedPhone] = useState("");
   const [searchedName, setSearchedName] = useState("");
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
+  const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
+  const [viewMailSearch, setViewMailSearch] = useState(false);
 
   useEffect(() => {
     api
@@ -161,7 +163,7 @@ export default function ListTrainer() {
               </div>
 
               {/* Search By Name */}
-              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              <div className="col-lg-6 col-md-12 flex justify-content-start mb-2">
                 <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Search by Name
                 </h5>
@@ -185,7 +187,7 @@ export default function ListTrainer() {
               </div>
 
               {/* Sort by gender */}
-              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
                 <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Sort by Gender
                 </h5>
@@ -203,10 +205,10 @@ export default function ListTrainer() {
                     <Select.Option value="all">All</Select.Option>
                   </Select>
                 </div>
-              </div>
+              </div> */}
 
               {/* Search By Phone */}
-              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
                 <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Search by Phone
                 </h5>
@@ -227,10 +229,10 @@ export default function ListTrainer() {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* Search By Email */}
-              <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+              {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
                 <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                   Search by Email
                 </h5>
@@ -251,7 +253,7 @@ export default function ListTrainer() {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="trainer">
                 <table style={{ fontSize: "13px" }}>
                   <thead>
@@ -259,9 +261,136 @@ export default function ListTrainer() {
                       <th>UserID</th>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>Gender</th>
-                      <th>Phone</th>
-                      <th>Email</th>
+                      <th>
+                        Gender
+                        {!genderSort.trim().toLowerCase().includes("all") ? (
+                          <i
+                            className="fa-solid fa-filter mx-1"
+                            style={{ opacity: "0.8" }}
+                          ></i>
+                        ) : (
+                          <></>
+                        )}
+                        <select
+                          className="text-dark border-0 mx-1"
+                          name="gender"
+                          value={genderSort}
+                          onChange={(e) => {
+                            setgenderSort(e.target.value);
+                          }}
+                          style={{
+                            width: "15px",
+                            cursor: "pointer",
+                            backgroundColor: "#ff9aa2",
+                          }}
+                        >
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="all">All</option>
+                        </select>
+                      </th>
+                      <th>
+                        Phone
+                        <button
+                          className="border-0 px-2 bg-transparent"
+                          style={{ position: "relative", cursor: "static" }}
+                        >
+                          <i
+                            className="fa-solid fa-magnifying-glass"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              if (viewPhoneSearch) {
+                                setViewPhoneSearch(false);
+                                setSearchedPhone("");
+                              } else {
+                                setViewMailSearch(false);
+                                setSearchedEmail("");
+                                setViewPhoneSearch(true);
+                              }
+                            }}
+                          ></i>
+                          {viewPhoneSearch ? (
+                            <div
+                              className=""
+                              style={{
+                                position: "absolute",
+                                top: "100%",
+                                right: "50%",
+                                width: "150px",
+                              }}
+                            >
+                              <input
+                                type="search"
+                                placeholder="Enter Phone..."
+                                style={{
+                                  borderRadius: "5px",
+                                  border: "1px solid gray",
+                                  outline: "none",
+                                  fontSize: "13px",
+                                }}
+                                className="px-1 py-1"
+                                value={searchedPhone}
+                                onChange={(e) => {
+                                  setSearchedPhone(e.target.value);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </button>
+                      </th>
+                      <th>
+                        Email
+                        <button
+                          className="border-0 px-2 bg-transparent"
+                          style={{ position: "relative", cursor: "static" }}
+                        >
+                          <i
+                            className="fa-solid fa-magnifying-glass"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              if (viewMailSearch) {
+                                setViewMailSearch(false);
+                                setSearchedEmail("");
+                              } else {
+                                setViewPhoneSearch(false);
+                                setSearchedPhone("");
+                                setViewMailSearch(true);
+                              }
+                            }}
+                          ></i>
+                          {viewMailSearch ? (
+                            <div
+                              className=""
+                              style={{
+                                position: "absolute",
+                                top: "100%",
+                                right: "50%",
+                                width: "150px",
+                              }}
+                            >
+                              <input
+                                type="search"
+                                placeholder="Enter Email..."
+                                style={{
+                                  borderRadius: "5px",
+                                  border: "1px solid gray",
+                                  outline: "none",
+                                  fontSize: "13px",
+                                }}
+                                className="px-1 py-1 w-100"
+                                value={searchedEmail}
+                                onChange={(e) => {
+                                  setSearchedEmail(e.target.value);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </button>
+                      </th>
                       <th>Address</th>
                       {/* <th>Course</th>
                       <th>Class</th> */}

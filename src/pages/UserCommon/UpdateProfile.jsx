@@ -457,7 +457,7 @@ export default function UpdateProfile() {
                               style={{ fontWeight: "bolder" }}
                             >
                               <h4>
-                                Change Curret Password?
+                                Change Current Password?
                                 <Link
                                   className="mx-2 text-decoration-none"
                                   onClick={() => {

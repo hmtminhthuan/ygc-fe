@@ -72,7 +72,7 @@ export default function ChangePassword({ userEmail, userId }) {
       .then(async (result) => {
         if (result.isDenied === true || result.isDismissed === true) {
           Swal.fire({
-            title: `Are you sure to cancel to change Password?`,
+            title: `Are you sure to cancel?`,
             icon: "warning",
             showCancelButton: true,
             showConfirmButton: true,
@@ -164,7 +164,7 @@ export default function ChangePassword({ userEmail, userId }) {
         let timeLeft = Swal.getTimerLeft();
         if (result.isDenied === true || result.isDismissed === true) {
           Swal.fire({
-            title: `Are you sure to cancel to change Password?`,
+            title: `Are you sure to cancel?`,
             icon: "warning",
             showCancelButton: true,
             showConfirmButton: true,

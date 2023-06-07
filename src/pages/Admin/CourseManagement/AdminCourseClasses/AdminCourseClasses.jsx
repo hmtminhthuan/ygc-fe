@@ -207,8 +207,8 @@ export default function AdminCourseClasses({ courseClasses, ...restParams }) {
         {viewAllButton && courseClasses.length > 0 ? (
           <div className="text-end">
             <button
-              className="border-0 mt-2 mx-1 staff-course-view-all-class
-                    text-black bg-info bg-opacity-75 py-1 px-2"
+              className="border-0 mt-2 mx-1 
+                    text-light bg-black bg-opacity-75 py-1 px-2"
               style={{ borderRadius: "5px" }}
               onClick={() => {
                 setViewAllButton(false);

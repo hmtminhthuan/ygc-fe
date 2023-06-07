@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import { Rating } from "@mui/material";
 
 export default function CourseView() {
   localStorage.setItem("MENU_ACTIVE", "staff-course");
@@ -326,7 +327,11 @@ export default function CourseView() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content px-4 staff-course-view pt-3">
+        <div
+          className="main--content px-4 pt-3
+        "
+        >
+          {/* staff-course-view  */}
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -353,7 +358,7 @@ export default function CourseView() {
             <thead className="table-head">
               <tr>
                 <th>No.</th>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Image</th>
                 <th style={{ textAlign: "left" }}>
                   Name
@@ -410,7 +415,7 @@ export default function CourseView() {
                   </select>
                 </th>
                 <th style={{ textAlign: "" }}>
-                  Discount
+                  Discount (%)
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -591,7 +596,7 @@ export default function CourseView() {
                       <>
                         <tr key={courseID} className={`row-bg-${index % 2}`}>
                           <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                          <td>{courseID}</td>
+                          {/* <td>{courseID}</td> */}
                           <td>
                             <img
                               src={courseImg}
@@ -642,9 +647,25 @@ export default function CourseView() {
                                 }
                               `}
                             >
-                              {feedbackInfo.length > 0
-                                ? `${rating}`
-                                : "Not yet"}
+                              {feedbackInfo.length > 0 ? (
+                                <>
+                                  <p className="p-0 m-0 text-center">
+                                    {rating}
+                                  </p>
+                                  <p className="p-0 m-0 text-center">
+                                    {" "}
+                                    <Rating
+                                      name="half-rating-read"
+                                      defaultValue={rating}
+                                      precision={0.5}
+                                      readOnly
+                                      style={{ fontSize: "15px" }}
+                                    />
+                                  </p>
+                                </>
+                              ) : (
+                                "Not yet"
+                              )}
                             </td>
                           ) : (
                             <td></td>
