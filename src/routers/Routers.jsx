@@ -37,6 +37,7 @@ import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
 import ClassDetail from "../pages/Staff/ClassManagement/ClassDetail/ClassDetail";
 
+import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -50,6 +51,7 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
+        { path: "/schedule", element: <ScheduleTrainee /> },
       ],
     },
     {

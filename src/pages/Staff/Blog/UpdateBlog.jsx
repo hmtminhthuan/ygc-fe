@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import { api } from "../../../constants/api";
 import moment from "moment";
 import "./UpdateBlog.scss";
+import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import MenuStaff from "../../../component/Staff/MenuStaff";
 
 export default function UpdateBlog() {
   const [previewImg, setPreviewImg] = useState("");
@@ -16,7 +18,7 @@ export default function UpdateBlog() {
 
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
-  const [date, setDate] = useState("");
+
   const [header, setHeader] = useState("");
   const [content, setContent] = useState("");
   const [img, setImg] = useState("");
@@ -29,7 +31,7 @@ export default function UpdateBlog() {
       .then((res) => {
         const blogDetail = res.data;
         setBlog(blogDetail);
-        setDate(res.data.date);
+
         setHeader(res.data.header);
         setContent(res.data.content);
         setImg(res.data.img);
@@ -39,7 +41,7 @@ export default function UpdateBlog() {
           content: blogDetail.content,
           img: blogDetail.img,
         });
-        setDate(res.data.date);
+
         setHeader(res.data.header);
         setContent(res.data.content);
         setImg(res.data.img);
@@ -52,7 +54,6 @@ export default function UpdateBlog() {
 
   const formik = useFormik({
     initialValues: {
-      // date: "",
       header: "",
       content: "",
       img: "",
@@ -83,163 +84,146 @@ export default function UpdateBlog() {
   }
 
   return (
-    <div className="updateblog p-2" style={{ height: "200vh" }}>
-      <div className="containerud" style={{ height: "fit-content" }}>
-        <h1 className="mt-4 mb-3 mx-4">Update Blog</h1>
-        <div className="bg-white shadow rounded-lg d-sm-flex">
-          <div className="tab-content p-4 p-md-5">
-            <div className="tab-pane fade show active">
-              <Form
-                {...formItemLayout}
-                form={formik.form}
-                onFinish={formik.handleSubmit}
-                size="large"
-                autoComplete="off"
-              >
-                <div className="row mx-4">
-                  {/* <div className="col-md-12">
-                    <div className="form-group">
-                      <Form.Item
-                        label="Date"
-                        name="date"
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //     message: "Date cannot be blank",
-                        //   },
-                        //   {
-                        //     pattern: /^(\d{4})-(\d{2})-(\d{2})$/,
-                        //     message: "Date must be in the format YYYY-MM-DD",
-                        //   },
-                        // ]}
-                        initialValue={moment(blog.date).format("YYYY-MM-DD")}
-                        readOnly
-                      >
-                        <Input
-                          name="date"
-                          value={formik.values.date}
-                          onChange={formik.handleChange}
-                          placeholder="Enter Date (YYYY-MM-DD)"
-                        />
-                      </Form.Item>
-                    </div>
-                  </div> */}
-
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <Form.Item
-                        label="Header"
-                        name="header"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Header cannot be blank",
-                          },
-                          { whitespace: true },
-                        ]}
-                        initialValue={blog.header}
-                        hasFeedback
-                      >
-                        <Input
-                          name="header"
-                          value={formik.values.header}
-                          onChange={formik.handleChange}
-                          placeholder="Enter Header"
-                        />
-                      </Form.Item>
-                    </div>
-                  </div>
-
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <Form.Item
-                        label="Content"
-                        name="content"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Content cannot be blank",
-                          },
-                          { whitespace: true },
-                        ]}
-                        initialValue={blog.content}
-                        hasFeedback
-                      >
-                        <Input.TextArea
-                          style={{ width: "100%" }}
-                          name="content"
-                          value={formik.values.content}
-                          onChange={formik.handleChange}
-                          placeholder="Enter Content"
-                          rows={10}
-                        />
-                      </Form.Item>
-                    </div>
-                  </div>
-
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <Form.Item
-                        label="Image"
-                        name="img"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Image cannot be blank",
-                          },
-                        ]}
-                        initialValue={blog.img}
-                        hasFeedback
-                      >
-                        <Input
-                          name="img"
-                          value={formik.values.img}
-                          onChange={formik.handleChange}
-                          onInput={(e) => {
-                            setPreviewImg(e.target.value);
-                          }}
-                          placeholder="Enter Image URL"
-                        />
-                      </Form.Item>
-                      {previewImg == "" ? (
-                        <></>
-                      ) : (
-                        <Form.Item
-                          className="preview-item"
-                          label="Preview Image"
-                        >
-                          <img
-                            id="blah"
-                            src={previewImg}
-                            style={{ width: "50%", borderRadius: "5px" }}
-                          />
-                        </Form.Item>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-center row">
-                  <div className="col-6">
-                    <Button type="primary" htmlType="submit">
-                      Update
-                    </Button>
-                  </div>
-                  <div className="col-6 flex align-items-center">
-                    <Link
-                      to={"/staff/blogManagement"}
-                      className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center text-decoration-none text-light"
-                      style={{ borderRadius: "10px" }}
+    <>
+      <HeaderStaff />
+      <section className="main" id="admin-course-management-area">
+        <MenuStaff />
+        <div className="main--content staff-course-view ">
+          <div className="updateblog ">
+            <div
+              className="containerud m-0 p-0"
+              style={{ height: "fit-content" }}
+            >
+              <h1>Update Blog</h1>
+              <div className="bg-white shadow rounded-lg d-sm-flex">
+                <div className="tab-content p-4 p-md-5">
+                  <div className="tab-pane fade show active">
+                    <Form
+                      {...formItemLayout}
+                      form={formik.form}
+                      onFinish={formik.handleSubmit}
+                      size="large"
+                      autoComplete="off"
                     >
-                      Cancel
-                    </Link>
+                      <div className="row mx-4">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <Form.Item
+                              label="Header"
+                              name="header"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Header cannot be blank",
+                                },
+                                { whitespace: true },
+                              ]}
+                              initialValue={blog.header}
+                              hasFeedback
+                            >
+                              <Input
+                                name="header"
+                                value={formik.values.header}
+                                onChange={formik.handleChange}
+                                placeholder="Enter Header"
+                              />
+                            </Form.Item>
+                          </div>
+                        </div>
+
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <Form.Item
+                              label="Content"
+                              name="content"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Content cannot be blank",
+                                },
+                                { whitespace: true },
+                              ]}
+                              initialValue={blog.content}
+                              hasFeedback
+                            >
+                              <Input.TextArea
+                                style={{ width: "100%" }}
+                                name="content"
+                                value={formik.values.content}
+                                onChange={formik.handleChange}
+                                placeholder="Enter Content"
+                                rows={10}
+                              />
+                            </Form.Item>
+                          </div>
+                        </div>
+
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <Form.Item
+                              label="Image"
+                              name="img"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Image cannot be blank",
+                                },
+                              ]}
+                              initialValue={blog.img}
+                              hasFeedback
+                            >
+                              <Input
+                                name="img"
+                                value={formik.values.img}
+                                onChange={formik.handleChange}
+                                onInput={(e) => {
+                                  setPreviewImg(e.target.value);
+                                }}
+                                placeholder="Enter Image URL"
+                              />
+                            </Form.Item>
+                            {previewImg == "" ? (
+                              <></>
+                            ) : (
+                              <Form.Item
+                                className="preview-item"
+                                label="Preview Image"
+                              >
+                                <img
+                                  id="blah"
+                                  src={previewImg}
+                                  style={{ width: "50%", borderRadius: "5px" }}
+                                />
+                              </Form.Item>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="text-center row">
+                        <div className="col-6">
+                          <Button type="primary" htmlType="submit">
+                            Update
+                          </Button>
+                        </div>
+                        <div className="col-6 flex align-items-center">
+                          <Link
+                            to={"/staff/blogManagement"}
+                            className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                            style={{ borderRadius: "10px" }}
+                          >
+                            Cancel
+                          </Link>
+                        </div>
+                      </div>
+                    </Form>
                   </div>
                 </div>
-              </Form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
