@@ -20,6 +20,8 @@ export default function ListTrainee() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
+  const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
+  const [viewMailSearch, setViewMailSearch] = useState(false);
 
   useEffect(() => {
     api
@@ -265,108 +267,8 @@ export default function ListTrainee() {
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Gender</th>
-                      <th>
-                        Phone
-                        <button
-                          className="border-0 px-2 bg-transparent"
-                          style={{ position: "relative", cursor: "static" }}
-                        >
-                          <i
-                            className="fa-solid fa-magnifying-glass"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              if (viewPhoneSearch) {
-                                setViewPhoneSearch(false);
-                                setSearchedPhone("");
-                              } else {
-                                setViewMailSearch(false);
-                                setSearchedEmail("");
-                                setViewPhoneSearch(true);
-                              }
-                            }}
-                          ></i>
-                          {viewPhoneSearch ? (
-                            <div
-                              className=""
-                              style={{
-                                position: "absolute",
-                                top: "100%",
-                                right: "50%",
-                                width: "150px",
-                              }}
-                            >
-                              <input
-                                type="search"
-                                placeholder="Enter Phone..."
-                                style={{
-                                  borderRadius: "5px",
-                                  border: "1px solid gray",
-                                  outline: "none",
-                                  fontSize: "13px",
-                                }}
-                                className="px-1 py-1"
-                                value={searchedPhone}
-                                onChange={(e) => {
-                                  setSearchedPhone(e.target.value);
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </button>
-                      </th>
-                      <th>
-                        Email
-                        <button
-                          className="border-0 px-2 bg-transparent"
-                          style={{ position: "relative", cursor: "static" }}
-                        >
-                          <i
-                            className="fa-solid fa-magnifying-glass"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              if (viewMailSearch) {
-                                setViewMailSearch(false);
-                                setSearchedEmail("");
-                              } else {
-                                setViewPhoneSearch(false);
-                                setSearchedPhone("");
-                                setViewMailSearch(true);
-                              }
-                            }}
-                          ></i>
-                          {viewMailSearch ? (
-                            <div
-                              className=""
-                              style={{
-                                position: "absolute",
-                                top: "100%",
-                                right: "50%",
-                                width: "150px",
-                              }}
-                            >
-                              <input
-                                type="search"
-                                placeholder="Enter Email..."
-                                style={{
-                                  borderRadius: "5px",
-                                  border: "1px solid gray",
-                                  outline: "none",
-                                  fontSize: "13px",
-                                }}
-                                className="px-1 py-1 w-100"
-                                value={searchedEmail}
-                                onChange={(e) => {
-                                  setSearchedEmail(e.target.value);
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </button>
-                      </th>
+                      <th>Phone</th>
+                      <th>Email</th>
                       <th>Address</th>
                       <th>Course</th>
                       <th>Class</th>
