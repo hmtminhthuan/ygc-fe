@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import { Rating } from "@mui/material";
+import moment from "moment/moment";
 
 export default function CourseView() {
   localStorage.setItem("MENU_ACTIVE", "staff-course");
@@ -29,7 +30,7 @@ export default function CourseView() {
 
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
-      style: "currency",
+      // style: "currency",
       currency: "VND",
     }).format(price);
   };
@@ -414,9 +415,8 @@ export default function CourseView() {
                     <option value="">All</option>
                   </select>
                 </th>
-                <th style={{ textAlign: "" }}>
-                  Discount (%)
-                  <span style={{ marginLeft: "5px" }}>
+                <th style={{ textAlign: "right" }}>
+                  <span>
                     <i
                       className={`${symbolSorting(
                         sortedDiscount
@@ -442,9 +442,9 @@ export default function CourseView() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
+                  {`Discount (%)`}
                 </th>
                 <th style={{ textAlign: "right" }}>
-                  Price
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -471,9 +471,9 @@ export default function CourseView() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
+                  {`Price (VND)`}
                 </th>
                 <th style={{ textAlign: "right" }}>
-                  Total
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -500,9 +500,9 @@ export default function CourseView() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
+                  {`Total (VND)`}
                 </th>
-                <th style={{ textAlign: "center" }}>
-                  Class
+                <th style={{ textAlign: "right" }}>
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -529,6 +529,7 @@ export default function CourseView() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
+                  Classes
                 </th>
                 <th style={{ textAlign: "center" }}>
                   Rate
@@ -610,7 +611,7 @@ export default function CourseView() {
                           </td>
                           <td style={{ textAlign: "left" }}>{courseName}</td>
                           <td style={{ textAlign: "left" }}>{levelName}</td>
-                          <td style={{ textAlign: "" }}>{discount}</td>
+                          <td style={{ textAlign: "right" }}>{discount}</td>
                           <td style={{ textAlign: "right" }}>
                             {formatPrice(price)}
                           </td>
@@ -618,8 +619,24 @@ export default function CourseView() {
                             {formatPrice(price * (1 - discount / 100))}
                           </td>
                           {classInfo != null && classInfo != undefined ? (
-                            <td>
-                              {classInfo != null ? classInfo.length : "0"}
+                            <td style={{ textAlign: "right" }}>
+                              {classInfo != null &&
+                              classInfo.filter((item) => {
+                                return (
+                                  moment(new Date(`${item.endDate}`)).format(
+                                    "DD-MM-YYYY"
+                                  ) >= moment(new Date()).format("DD-MM-YYYY")
+                                );
+                              }).length > 0 ? (
+                                classInfo.filter((item) => {
+                                  return (
+                                    moment(new Date(`${item.endDate}`)) >=
+                                    moment(new Date())
+                                  );
+                                }).length
+                              ) : (
+                                <span>Not yet</span>
+                              )}
                             </td>
                           ) : (
                             <td></td>
@@ -689,7 +706,7 @@ export default function CourseView() {
                               </button>
                             ) : (
                               <button
-                                className="px-2 py-1 text-decoration-none view-staff-course-more border-0"
+                                className="px-2 py-1 text-decoration-none text-light bg-dark bg-opacity-75 view-staff-course-more border-0"
                                 style={{
                                   borderRadius: "10px",
                                 }}

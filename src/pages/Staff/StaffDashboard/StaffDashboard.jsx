@@ -75,7 +75,10 @@ export default function Dashboard() {
           {/* Sidebar */}
           <MenuStaff />
 
-          <div className="main--content px-5" style={{ overflowX: "hidden" }}>
+          <div
+            className="main--content px-5 bg-light"
+            style={{ overflowX: "hidden" }}
+          >
             {/* Overview */}
             <div className="overview">
               <div className="title">
@@ -83,7 +86,7 @@ export default function Dashboard() {
               </div>
               <div className="row cards ">
                 <div className="col-sm-3 card card-1 text-center">
-                  <div className="card--data ">
+                  <div className="card--data">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
                       <h1>{countList.numOfTrainer}</h1>
@@ -155,10 +158,13 @@ export default function Dashboard() {
                   {trainerList.map((trainer, index) => (
                     <a
                       href="#"
-                      className="trainer--card"
+                      className="trainer--card bg-dark"
                       key={trainer.accountID}
                     >
-                      <div className="img--box--cover">
+                      <div
+                        className="img--box--cover"
+                        style={{ border: "2px solid #fff" }}
+                      >
                         <div className="img--box">
                           {/* <img
                             src={`/path/to/images/${trainer.img}.png`}

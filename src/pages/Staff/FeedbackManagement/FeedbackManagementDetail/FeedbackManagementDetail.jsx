@@ -114,12 +114,15 @@ export default function FeedbackManagementDetail() {
                 <span className="mx-2">Back</span>
               </Link>
             </div>
-            <h2 className="m-0 p-0 text-center" style={{ color: "#3b42c9" }}>
+            <h2
+              className="m-0 p-0 text-center"
+              // style={{ color: "#3b42c9" }}
+            >
               Feedback Details
             </h2>
             <h5
               className="m-0 p-0 py-1 my-3 mt-0 text-center"
-              style={{ color: "#3b42c9" }}
+              // style={{ color: "#3b42c9" }}
             >
               Course Name: {course.courseName}{" "}
             </h5>

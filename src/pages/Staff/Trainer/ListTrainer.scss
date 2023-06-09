@@ -23,10 +23,10 @@
       }
 
       thead th {
-        background-color: #ff9aa2 !important;
+        background-color: #333333 !important;
         position: sticky;
         top: 0;
-        color: #333 !important;
+        color: #fff !important;
         text-align: center;
         font-size: 14px;
       }
@@ -52,17 +52,17 @@
       //   position: relative;
       // }
 
-      // tbody td:hover:before {
-      //   content: "";
-      //   position: absolute !important;
-      //   left: 0;
-      //   right: 0;
-      //   top: -9999px;
-      //   bottom: -9999px;
-      //   // background-color: rgba(255, 255, 255, 0.1);
-      //   // z-index: -1;
-      //   // opacity: 1;
-      // }
+      tbody td:hover:before {
+        content: "";
+        position: absolute !important;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        // background-color: rgba(255, 255, 255, 0.1);
+        z-index: -1;
+        // opacity: 1;
+      }
       // thead tr th:hover:before {
       //   z-index: -1;
       // }

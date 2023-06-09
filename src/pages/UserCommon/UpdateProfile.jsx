@@ -238,7 +238,10 @@ export default function UpdateProfile() {
                         />
                       )}
                     </div>
-                    <h2 className="text-center text-primary" style={{}}>
+                    <h2
+                      className="text-center"
+                      style={{ color: "rgba(210, 145, 188, 1)" }}
+                    >
                       {profile.firstname} {profile.lastname}
                     </h2>
                     <h5 className="text-center mt-3" style={{}}>
@@ -460,6 +463,7 @@ export default function UpdateProfile() {
                                 Change Current Password?
                                 <Link
                                   className="mx-2 text-decoration-none"
+                                  style={{ color: "rgba(210, 145, 188, 1)" }}
                                   onClick={() => {
                                     setChangePasswordMoniter(true);
                                   }}
@@ -490,6 +494,7 @@ export default function UpdateProfile() {
                           <h4>
                             <Link
                               className="mx-2 text-decoration-none"
+                              style={{ color: "rgba(210, 145, 188, 1)" }}
                               onClick={() => {
                                 setChangePasswordMoniter(false);
                               }}

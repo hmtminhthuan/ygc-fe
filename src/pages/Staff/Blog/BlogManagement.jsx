@@ -144,22 +144,16 @@ function BlogManagement() {
           <div className="staff-list-area pt-3 pb-3">
             <div className="row flex blog-containe mt-1 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1 className="m-0 p-0 mb-2" style={{ color: "#97a7e4" }}>
+                <h1
+                  className="m-0 p-0 mb-2"
+                  // style={{ color: "#97a7e4" }}
+                >
                   <i className="ri-bookmark-line"></i> Blogs Management
                 </h1>
               </div>
               {/* Sort by date */}
               <div className="tab row">
-                <div className="col-lg-6 create flex mb-2 ">
-                  <Link
-                    to={"/staff/createBlog"}
-                    className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
-                    style={{ borderRadius: "10px", backgroundColor: "green" }}
-                  >
-                    Create new blog
-                  </Link>
-                </div>
-                <div className="col-lg-6 flex mb-2">
+                <div className="col-lg-6 flex mb-2 justify-content-start">
                   <h4 className="p-0 m-0 py-2 p-0 text-end px-2">
                     Sort by Date
                   </h4>
@@ -178,18 +172,28 @@ function BlogManagement() {
                     </Select>
                   </div>
                 </div>
+                <div className="col-lg-6 create flex mb-2 justify-content-end">
+                  <Link
+                    to={"/staff/createBlog"}
+                    className="p-2 h-100 flex align-items-center justify-content-end text-decoration-none text-light"
+                    style={{ borderRadius: "10px", backgroundColor: "#000" }}
+                  >
+                    Create new blog
+                  </Link>
+                </div>
               </div>
 
               <div className="blog text-justify">
-                <table>
+                <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
                       <th>ID</th>
                       <th>Date</th>
+                      <th></th>
                       <th>Header</th>
                       <th>Content</th>
                       <th>Image</th>
-                      <th>Upload by</th>
+                      <th>Uploader</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -200,9 +204,13 @@ function BlogManagement() {
                       return (
                         <tr key={blog.blogID}>
                           <td>{`${blog.blogID}`}</td>
-                          <td>{formattedDate}</td>
-                          <td>{`${blog.header}`}</td>
-                          <td style={{ textAlign: "justify" }}>
+                          <td colSpan={2}>{formattedDate}</td>
+                          <td
+                            style={{ fontSize: "12px" }}
+                          >{`${blog.header}`}</td>
+                          <td
+                            style={{ textAlign: "justify", fontSize: "12px" }}
+                          >
                             {blog.content.length >= 80
                               ? blog.content.substring(0, 80).trim() + "..."
                               : blog.content}{" "}

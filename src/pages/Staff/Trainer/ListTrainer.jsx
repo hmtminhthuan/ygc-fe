@@ -157,7 +157,10 @@ export default function ListTrainer() {
           <div className="staff-list-area pt-3 pb-5">
             <div className="row flex trainer-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1 className="m-0 p-0 mb-2" style={{ color: "#ff9aa2" }}>
+                <h1
+                  className="m-0 p-0 mb-2"
+                  //  style={{ color: "#ff9aa2" }}
+                >
                   <i className="ri-bookmark-line"></i> List Trainers
                 </h1>
               </div>
@@ -272,7 +275,7 @@ export default function ListTrainer() {
                           <></>
                         )}
                         <select
-                          className="text-dark border-0 mx-1"
+                          className="text-light border-0 mx-1"
                           name="gender"
                           value={genderSort}
                           onChange={(e) => {
@@ -281,7 +284,7 @@ export default function ListTrainer() {
                           style={{
                             width: "15px",
                             cursor: "pointer",
-                            backgroundColor: "#ff9aa2",
+                            backgroundColor: "#333333",
                           }}
                         >
                           <option value="male">Male</option>
@@ -297,7 +300,11 @@ export default function ListTrainer() {
                         >
                           <i
                             className="fa-solid fa-magnifying-glass"
-                            style={{ cursor: "pointer" }}
+                            style={{
+                              cursor: "pointer",
+                              transform: "scale(0.8)",
+                              color: "#fff",
+                            }}
                             onClick={() => {
                               if (viewPhoneSearch) {
                                 setViewPhoneSearch(false);
@@ -344,7 +351,12 @@ export default function ListTrainer() {
                         Email
                         <button
                           className="border-0 px-2 bg-transparent"
-                          style={{ position: "relative", cursor: "static" }}
+                          style={{
+                            position: "relative",
+                            cursor: "static",
+                            transform: "scale(0.8)",
+                            color: "#fff",
+                          }}
                         >
                           <i
                             className="fa-solid fa-magnifying-glass"
@@ -396,10 +408,11 @@ export default function ListTrainer() {
                       <th>
                         <Link
                           to={"/staff/createTrainer"}
-                          className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                          className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none"
                           style={{
                             borderRadius: "10px",
-                            backgroundColor: "#71c55b",
+                            backgroundColor: "#fff",
+                            color: "#333333",
                           }}
                         >
                           Create

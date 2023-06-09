@@ -140,7 +140,7 @@ export default function AdminCourseEdit() {
               </div>{" "}
             </div>
             <div className="title flex justify-content-center m-0 p-0 mt-2">
-              <h1 className="m-0 p-0 text-info">Edit Course</h1>
+              <h1 className="m-0 p-0 text-dark">Edit Course</h1>
             </div>
             <div className="row create-course-content mt-4">
               <Form
@@ -238,7 +238,7 @@ export default function AdminCourseEdit() {
                 </Form.Item>
                 {previewPrice > 0 && previewDiscount <= 0 ? (
                   <Form.Item className="preview-item" label="Preview Price">
-                    <p className="p-0 m-0 preview-item-content">
+                    <p className="p-0 m-0 preview-item-content text-primary">
                       {formatPrice(previewPrice)}
                     </p>
                   </Form.Item>
@@ -249,9 +249,11 @@ export default function AdminCourseEdit() {
                 previewDiscount > 0 &&
                 previewDiscount <= 100 ? (
                   <Form.Item className="preview-item" label="Preview Price">
-                    <p className="p-0 m-0 preview-item-content">
-                      {formatPrice(previewPrice)}{" "}
+                    <p className="p-0 m-0 preview-item-content text-primary">
                       <span className="text-danger">
+                        {formatPrice(previewPrice)}{" "}
+                      </span>
+                      <span className="">
                         <i className="fa-solid fa-arrow-right px-2" />{" "}
                         {formatPrice(
                           previewPrice * (1 - previewDiscount / 100)
@@ -375,8 +377,12 @@ export default function AdminCourseEdit() {
                 <button
                   className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
-                          shadow-lg mt-3 bg-primary text-light"
+                          shadow-lg mt-3 bg-dark"
                   type="submit"
+                  style={{
+                    color: "#fff",
+                    backgroundColor: "rgba(210, 145, 188, 1)",
+                  }}
                 >
                   Save
                 </button>

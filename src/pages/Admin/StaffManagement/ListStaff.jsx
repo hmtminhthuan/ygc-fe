@@ -19,6 +19,8 @@ export default function ListStaff() {
   const [searchedPhone, setSearchedPhone] = useState("");
   const [searchedName, setSearchedName] = useState("");
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
+  const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
+  const [viewMailSearch, setViewMailSearch] = useState(false);
 
   useEffect(() => {
     api
@@ -149,12 +151,15 @@ export default function ListStaff() {
         <div className="main--content pt-3 bg-white">
           <div className=" row flex trainee-containe mt-2 mx-5 mb-5">
             <div className="headerlist mb-2">
-              <h1 className="m-0 p-0 mb-2" style={{ color: "#da25b3d5" }}>
+              <h1
+                className="m-0 p-0 mb-2"
+                // style={{ color: "#da25b3d5" }}
+              >
                 <i className="ri-bookmark-line"></i> List Staffs
               </h1>
             </div>
             {/* Search By Name */}
-            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+            <div className="col-lg-6 col-md-12 flex justify-content-start mb-2">
               <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Search by Name</h5>
               <div className="w-50 flex justify-content-end">
                 <input
@@ -176,7 +181,7 @@ export default function ListStaff() {
             </div>
 
             {/* Sort by gender */}
-            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
               <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h5>
               <div
                 className="w-50 flex justify-content-end"
@@ -195,10 +200,10 @@ export default function ListStaff() {
                   <Select.Option value="all">All</Select.Option>
                 </Select>
               </div>
-            </div>
+            </div> */}
 
             {/* Search By Phone */}
-            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
               <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                 Search by Phone
               </h5>
@@ -219,10 +224,10 @@ export default function ListStaff() {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Search By Email */}
-            <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
+            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
               <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
                 Search by Email
               </h5>
@@ -243,24 +248,165 @@ export default function ListStaff() {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="trainee">
               <table style={{ fontSize: "13px" }}>
                 <thead>
                   <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                    <th>Email</th>
+                    <th>
+                      Gender
+                      {!genderSort.trim().toLowerCase().includes("all") ? (
+                        <i
+                          className="fa-solid fa-filter mx-1"
+                          style={{ opacity: "0.8" }}
+                        ></i>
+                      ) : (
+                        <></>
+                      )}
+                      <select
+                        className="text-light border-0 mx-1"
+                        name="gender"
+                        value={genderSort}
+                        onChange={(e) => {
+                          setgenderSort(e.target.value);
+                        }}
+                        style={{
+                          width: "15px",
+                          cursor: "pointer",
+                          backgroundColor: "#333333",
+                        }}
+                      >
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="all">All</option>
+                      </select>
+                    </th>
+                    <th>
+                      Phone
+                      <button
+                        className="border-0 p-0 mx-2 bg-transparent"
+                        style={{ position: "relative", cursor: "auto" }}
+                      >
+                        <i
+                          className="fa-solid fa-magnifying-glass"
+                          style={{
+                            cursor: "pointer",
+                            transform: "scale(0.8)",
+                            color: "#fff",
+                          }}
+                          onClick={() => {
+                            if (viewPhoneSearch) {
+                              setViewPhoneSearch(false);
+                              setSearchedPhone("");
+                            } else {
+                              setViewMailSearch(false);
+                              setSearchedEmail("");
+                              setViewPhoneSearch(true);
+                            }
+                          }}
+                        ></i>
+                        {viewPhoneSearch ? (
+                          <div
+                            className=""
+                            style={{
+                              position: "absolute",
+                              top: "100%",
+                              right: "50%",
+                              width: "150px",
+                            }}
+                          >
+                            <input
+                              type="search"
+                              placeholder="Enter Phone..."
+                              style={{
+                                borderRadius: "5px",
+                                border: "1px solid gray",
+                                outline: "none",
+                                fontSize: "13px",
+                              }}
+                              className="px-1 py-1"
+                              value={searchedPhone}
+                              onChange={(e) => {
+                                setSearchedPhone(e.target.value);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </button>
+                    </th>
+                    <th>
+                      Email
+                      <button
+                        className="border-0 p-0 mx-2 bg-transparent"
+                        style={{
+                          position: "relative",
+                          cursor: "auto",
+                          color: "#fff",
+                        }}
+                      >
+                        <i
+                          className="fa-solid fa-magnifying-glass"
+                          style={{
+                            cursor: "pointer",
+                            transform: "scale(0.8)",
+                            color: "#fff",
+                          }}
+                          onClick={() => {
+                            if (viewMailSearch) {
+                              setViewMailSearch(false);
+                              setSearchedEmail("");
+                            } else {
+                              setViewPhoneSearch(false);
+                              setSearchedPhone("");
+                              setViewMailSearch(true);
+                            }
+                          }}
+                        ></i>
+                        {viewMailSearch ? (
+                          <div
+                            className=""
+                            style={{
+                              position: "absolute",
+                              top: "100%",
+                              right: "50%",
+                              width: "150px",
+                            }}
+                          >
+                            <input
+                              type="search"
+                              placeholder="Enter Email..."
+                              style={{
+                                borderRadius: "5px",
+                                border: "1px solid gray",
+                                outline: "none",
+                                fontSize: "13px",
+                              }}
+                              className="px-1 py-1"
+                              value={searchedEmail}
+                              onChange={(e) => {
+                                setSearchedEmail(e.target.value);
+                              }}
+                              onClick={() => {}}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </button>
+                    </th>
                     <th>Address</th>
                     <th>
                       <Link
                         to={"/admin/createStaff"}
-                        className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none text-light"
+                        className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none"
                         style={{
                           borderRadius: "10px",
-                          backgroundColor: "#71c55b",
+                          backgroundColor: "#fff",
+                          color: "#333333",
                         }}
                       >
                         Create

@@ -664,11 +664,12 @@ export default function FeedbackManagement() {
                           )}
                           <td style={{ textAlign: "center" }}>
                             <button
-                              className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0 text-center"
+                              className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"
                               style={{ borderRadius: "50%" }}
                             >
                               <Link
-                                className="px-2 py-1 "
+                                className="px-2 py-1 text-dark bg-dark bg-opacity-10"
+                                style={{ borderRadius: "50%" }}
                                 to={`/staff/feedbackManagement/${courseID}`}
                               >
                                 <i className="fa-solid fa-eye" />

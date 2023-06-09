@@ -108,7 +108,7 @@ export default function AdminCourseCreate() {
             </div>{" "}
           </div>
           <div className="title flex justify-content-center m-0 p-0 mt-2">
-            <h1 className="m-0 p-0 text-primary">Create New Course</h1>
+            <h1 className="m-0 p-0 text-dark">Create New Course</h1>
           </div>
           <div className="row create-course-content mt-4">
             <Form

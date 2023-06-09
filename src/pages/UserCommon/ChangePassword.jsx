@@ -326,7 +326,15 @@ export default function ChangePassword({ userEmail, userId }) {
           </Form.Item>
         </div>
         <div className="form-group flex m-0">
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{
+              backgroundColor: "rgba(210, 145, 188, 1)",
+              color: "#333333",
+              fontWeight: "bolder",
+            }}
+          >
             Save
           </Button>
         </div>
