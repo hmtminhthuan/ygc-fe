@@ -118,57 +118,67 @@ export default function AdminCourseCreate() {
               size="large"
               autoComplete="off"
             >
-              <Form.Item
-                name="courseName"
-                label={`Course Name`}
-                rules={[
-                  {
-                    required: true,
-                    message: "Course Name cannot be blank",
-                  },
-                  {
-                    max: 50,
-                    message: "Course Name must not be over 50 characters",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  name="courseName"
-                  value={formik.values.courseName}
-                  onChange={formik.handleChange}
-                  placeholder="Enter Course Name"
-                />
-              </Form.Item>
-              <Form.Item
-                name="price"
-                label="Price"
-                rules={[
-                  {
-                    required: true,
-                    message: "Price is not in correct form",
-                  },
-                  {
-                    pattern:
-                      /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
-                    message: "Price must be a positive number",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input
-                  style={{ width: "100%" }}
-                  name="price"
-                  type="number"
-                  value={formik.values.price}
-                  onChange={formik.handleChange}
-                  onInput={(e) => {
-                    setPreviewPrice(e.target.value);
-                  }}
-                  placeholder="Enter Price"
-                />
-              </Form.Item>
+              <div className="row flex align-items-start">
+                <p className="col-2 p-0 m-0 px-3 pt-2">Course Name:</p>
+                <div className="col-10">
+                  <Form.Item
+                    name="courseName"
+                    label={``}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Course Name cannot be blank",
+                      },
+                      {
+                        max: 50,
+                        message: "Course Name must not be over 50 characters",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      style={{ width: "100%" }}
+                      name="courseName"
+                      value={formik.values.courseName}
+                      onChange={formik.handleChange}
+                      placeholder="Enter Course Name"
+                    />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className="row flex align-items-start">
+                <p className="col-2 p-0 m-0 px-3 pt-2">Price:</p>
+                <div className="col-10">
+                  <Form.Item
+                    name="price"
+                    // label="Price"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Price is not in correct form",
+                      },
+                      {
+                        pattern:
+                          /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
+                        message: "Price must be a positive number",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      style={{ width: "100%" }}
+                      name="price"
+                      type="number"
+                      value={formik.values.price}
+                      onChange={formik.handleChange}
+                      onInput={(e) => {
+                        setPreviewPrice(e.target.value);
+                      }}
+                      placeholder="Enter Price"
+                    />
+                  </Form.Item>
+                </div>
+              </div>
               <Form.Item
                 name="discount"
                 label="Discount"
