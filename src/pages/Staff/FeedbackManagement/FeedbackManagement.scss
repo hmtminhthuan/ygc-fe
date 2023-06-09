@@ -1,22 +1,29 @@
 #staff-feedback-management-area {
   background-color: #fff;
+  .symbol-sorting {
+    color: #ffffff70 !important;
+  }
+  .selection-button {
+    background-color: #333333 !important;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+  }
   .main--content {
-    thead {
-      .selection-button {
-        background-color: rgb(59, 66, 162) !important;
-        border: none;
-        color: #fff;
-        cursor: pointer;
-      }
-      .symbol-sorting {
-        color: #ffffff70;
-      }
-      tr {
-        th {
-          background-color: rgb(59, 66, 162) !important;
-        }
-      }
-    }
+    // thead {
+    //   .selection-button {
+    //     background-color: rgb(59, 66, 162) !important;
+    //     border: none;
+    //     color: #fff;
+    //     cursor: pointer;
+    //   }\
+    //   tr {
+    //     th {
+    //       background-color: rgb(59, 66, 162) !important;
+    //     }
+    //   }
+    // }
     .admin-course-list {
       background-color: #00000050;
       color: #000;
@@ -66,7 +73,7 @@
   }
 }
 .new-row-feedback-handle {
-  background-color: #3b42a2 !important;
+  background-color: #333333 !important;
   color: #fff !important;
   &:hover {
     background-color: #3b42a2 !important;
@@ -74,9 +81,9 @@
     z-index: 10;
   }
 }
-.row-bg-pending-warning-0 {
-  background-color: #767bc163;
-}
-.row-bg-pending-warning-1 {
-  background-color: #5056ca63;
-}
+// .row-bg-pending-warning-0 {
+//   background-color: #767bc163;
+// }
+// .row-bg-pending-warning-1 {
+//   background-color: #5056ca63;
+// }

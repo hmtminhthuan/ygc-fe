@@ -20,7 +20,7 @@ export default function AdminCourseCreate() {
     }).format(price);
   };
   const formItemLayout = {
-    labelCol: { xs: { span: 10 }, sm: { span: 9 } },
+    labelCol: { xs: { span: 10 }, sm: { span: 4 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
   const [form] = Form.useForm();
@@ -120,7 +120,7 @@ export default function AdminCourseCreate() {
             >
               <Form.Item
                 name="courseName"
-                label="Course Name"
+                label={`Course Name`}
                 rules={[
                   {
                     required: true,
@@ -173,17 +173,23 @@ export default function AdminCourseCreate() {
                 name="discount"
                 label="Discount"
                 rules={[
+                  // {
+                  //   pattern: /^[1-9]?[0-9]{1}$|^100$/,
+                  //   message: "Discount must be from 0-100",
+                  // },
                   {
-                    pattern: /^[1-9]?[0-9]{1}$|^100$/,
-                    message: "Discount must be from 0-100",
+                    type: "number",
+                    min: 0,
+                    max: 100,
+                    // message: "Discount must be a number between 0-100",
                   },
                 ]}
                 hasFeedback
               >
-                <Input
+                <InputNumber
                   style={{ width: "100%" }}
                   name="discount"
-                  type="number"
+                  // type="number"
                   value={formik.values.discount}
                   onChange={formik.handleChange}
                   onInput={(e) => {

@@ -230,7 +230,7 @@ export default function ClassManagement() {
             <thead className="table-head">
               <tr>
                 <th>No.</th>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Image</th>
                 <th style={{ textAlign: "left" }}>
                   Name
@@ -286,7 +286,7 @@ export default function ClassManagement() {
                     <option value="">All</option>
                   </select>
                 </th>
-                <th style={{ textAlign: "center" }}>
+                <th style={{ textAlign: "right" }}>
                   Class
                   <span style={{ marginLeft: "5px" }}>
                     <i
@@ -354,7 +354,7 @@ export default function ClassManagement() {
                       <>
                         <tr key={courseID} className={`row-bg-${index % 2}`}>
                           <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                          <td>{courseID}</td>
+                          {/* <td>{courseID}</td> */}
                           <td>
                             <img
                               src={courseImg}
@@ -375,7 +375,7 @@ export default function ClassManagement() {
                           <td style={{ textAlign: "left" }}>{courseName}</td>
                           <td style={{ textAlign: "left" }}>{levelName}</td>
                           {classInfo != null && classInfo != undefined ? (
-                            <td style={{ textAlign: "center" }}>
+                            <td style={{ textAlign: "right" }}>
                               {classInfo != null &&
                               classInfo.filter((item) => {
                                 return (

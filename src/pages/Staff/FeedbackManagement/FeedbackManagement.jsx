@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import { Rating } from "@mui/material";
 
 export default function FeedbackManagement() {
   localStorage.setItem("MENU_ACTIVE", "staff-feedback");
@@ -326,7 +327,7 @@ export default function FeedbackManagement() {
   return (
     <>
       <HeaderStaff />
-      <section className="main" id="staff-feedback-management-area">
+      <section className="main bg-light" id="staff-feedback-management-area">
         <MenuStaff />
         <div className="main--content pt-3 px-4">
           <div
@@ -564,16 +565,17 @@ export default function FeedbackManagement() {
                       <>
                         <tr
                           key={courseID}
-                          className={`${
-                            pending <= 0 ? `row-bg-${index % 2}` : ""
-                          } 
-                                                ${
-                                                  pending > 0
-                                                    ? `row-bg-pending-warning-${
-                                                        index % 2
-                                                      }`
-                                                    : ""
-                                                }`}
+                          className={`row-bg-${index % 2}`}
+                          // {`${
+                          //   pending <= 0 ? `row-bg-${index % 2}` : ""
+                          // }
+                          //                       ${
+                          //                         pending > 0
+                          //                           ? `row-bg-pending-warning-${
+                          //                               index % 2
+                          //                             }`
+                          //                           : ""
+                          //                       }`}
                         >
                           <td style={{ fontWeight: "600" }}>{index + 1}</td>
                           {/* <td>{courseID}</td> */}
@@ -637,9 +639,25 @@ export default function FeedbackManagement() {
                                 }
                               `}
                             >
-                              {feedbackInfo.length > 0
-                                ? `${rating}`
-                                : "Not yet"}
+                              {feedbackInfo.length > 0 ? (
+                                <>
+                                  <p className="p-0 m-0 text-center">
+                                    {rating}
+                                  </p>
+                                  <p className="p-0 m-0 text-center">
+                                    {" "}
+                                    <Rating
+                                      name="half-rating-read"
+                                      defaultValue={rating}
+                                      precision={0.5}
+                                      readOnly
+                                      style={{ fontSize: "15px" }}
+                                    />
+                                  </p>
+                                </>
+                              ) : (
+                                "Not yet"
+                              )}
                             </td>
                           ) : (
                             <td></td>
