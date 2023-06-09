@@ -20,8 +20,6 @@ export default function ListTrainee() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
-  const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
-  const [viewMailSearch, setViewMailSearch] = useState(false);
 
   useEffect(() => {
     api
