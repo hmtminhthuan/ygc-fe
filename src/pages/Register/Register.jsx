@@ -329,18 +329,22 @@ export default function Register() {
                       name="phoneNumber"
                       label=""
                       rules={[
+                        // {
+                        //   required: true,
+                        //   message: "Phone Number cannot be blank",
+                        // },
+                        // {
+                        //   message: "Phone is not in correct form",
+                        //   pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
+                        // },
+                        // { min: 10, message: "Phone must be 10-11 numbers" },
+                        // {
+                        //   max: 11,
+                        //   message: "Phone must be 10-11 numbers",
+                        // },
                         {
-                          required: true,
-                          message: "Phone Number cannot be blank",
-                        },
-                        {
-                          message: "Phone is not in correct form",
-                          pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
-                        },
-                        { min: 10, message: "Phone must be 10-11 numbers" },
-                        {
-                          max: 11,
                           message: "Phone must be 10-11 numbers",
+                          pattern: /^([0][1-9]{9,10})$/,
                         },
                       ]}
                       hasFeedback
@@ -526,6 +530,10 @@ export default function Register() {
                       rules={[
                         {
                           required: false,
+                        },
+                        {
+                          pattern: /^(([]{0,0})|([\w]{1,1}[\w\s,]{0,}))$/,
+                          message: "Address is not in correct form",
                         },
                       ]}
                       hasFeedback
