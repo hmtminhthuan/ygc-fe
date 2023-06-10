@@ -8,8 +8,6 @@ export default function StaffTemplate() {
   let USER = {};
   USER = JSON.parse(USER_LOGIN);
 
-  alert.alertSuccess("Successfully", "Create Staff Successfully", () => {});
-
   if (USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 2)) {
     Swal.fire({
       position: "top-right",
