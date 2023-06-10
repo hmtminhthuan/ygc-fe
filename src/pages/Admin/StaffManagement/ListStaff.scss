@@ -61,9 +61,9 @@ tbody {
   text-align: center;
 }
 
-tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
+// tbody tr:hover {
+//   background-color: rgba(255, 255, 255, 0.3);
+// }
 
 tbody td {
   position: relative;
@@ -86,17 +86,17 @@ tbody td {
 //   opacity: 1;
 // }
 
-tbody td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.1);
-  // z-index: -1;
-  // opacity: 1;
-}
+// tbody td:hover:before {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: -9999px;
+//   bottom: -9999px;
+//   background-color: rgba(255, 255, 255, 0.1);
+//   // z-index: -1;
+//   // opacity: 1;
+// }
 
 .btn-home {
   background-color: #71c55b;

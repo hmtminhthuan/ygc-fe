@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
-import "./ScheduleTrainee.scss";
+import "./ScheduleTrainer.scss";
 
-export default function ScheduleTrainee() {
+export default function ScheduleTrainer() {
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
 
@@ -17,7 +17,7 @@ export default function ScheduleTrainee() {
       .catch((err) => {});
 
     api
-      .get("/Trainee/getListClassForTrainee", {
+      .get("/Trainer/getListClassForTrainer", {
         params: { id: id },
       })
       .then((res) => {
@@ -30,8 +30,8 @@ export default function ScheduleTrainee() {
       {/* <div className="timetable-img text-center">
         <img src="img/content/timetable.png" alt />
       </div> */}
-      <section className="trainee-area pt-3 pb-3">
-        <div className="row flex trainee mt-2 mx-5 mb-5">
+      <section className="trainer-area pt-3 pb-3">
+        <div className="row flex trainer mt-2 mx-5 mb-5">
           <div className="headerlist mt-3">
             <h1 className="m-0 p-0 mb-4">
               <i className="ri-bookmark-line"></i> Schedule
@@ -47,7 +47,7 @@ export default function ScheduleTrainee() {
               <span className="mx-2">Back</span>
             </Link>
           </div>
-          <div className="schedule-trainee">
+          <div className="schedule-trainer">
             <table className="table-bordered text-center ">
               <thead>
                 <tr className="bg-light-gray">

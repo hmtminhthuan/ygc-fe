@@ -37,7 +37,11 @@ import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
 import ClassDetail from "../pages/Staff/ClassManagement/ClassDetail/ClassDetail";
 
+import ScheduleTrainer from "../pages/Trainer/ScheduleTrainer";
+import Transaction from "../pages/Trainee/Transaction";
 import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
+
+import ClassOfTrainer from "../pages/Trainer/ClassOfTrainer";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -51,7 +55,9 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-        { path: "/schedule", element: <ScheduleTrainee /> },
+
+        { path: "/transaction", element: <Transaction /> },
+        { path: "/classDetail/:id", element: <ClassOfTrainer /> },
       ],
     },
     {
@@ -106,12 +112,19 @@ export default function Routers() {
     {
       path: "/trainer",
       element: <TrainerTemplate />,
-      children: [{ path: "/trainer", element: <TrainerHome /> }],
+
+      children: [
+        { path: "/trainer", element: <TrainerHome /> },
+        { path: "/trainer/schedule/:id", element: <ScheduleTrainer /> },
+      ],
     },
     {
       path: "/trainee",
       element: <TraineeTemplate />,
-      children: [{ path: "/trainee", element: <TraineeHome /> }],
+      children: [
+        { path: "/trainee", element: <TraineeHome /> },
+        { path: "/trainee/schedule/:id", element: <ScheduleTrainee /> },
+      ],
     },
   ]);
 

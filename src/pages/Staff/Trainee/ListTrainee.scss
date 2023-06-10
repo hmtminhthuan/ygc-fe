@@ -49,17 +49,17 @@
         position: relative;
       }
 
-      tbody td:hover:before {
-        content: "";
-        position: absolute !important;
-        left: 0;
-        right: 0;
-        top: -9999px;
-        bottom: -9999px;
-        // background-color: #ffddc6 !important;
-        color: #000 !important;
-        z-index: -1;
-      }
+      // tbody td:hover:before {
+      //   content: "";
+      //   position: absolute !important;
+      //   left: 0;
+      //   right: 0;
+      //   top: -9999px;
+      //   bottom: -9999px;
+      //   // background-color: #ffddc6 !important;
+      //   color: #000 !important;
+      //   z-index: -1;
+      // }
     }
 
     .setting {
