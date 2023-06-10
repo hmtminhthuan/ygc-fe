@@ -87,6 +87,62 @@ export default function ClassOfTrainer() {
                 </div>
               </div>
             </div>
+
+            <div className="col-md-12 mt-5 list-container">
+              <div className="card-container mx-5">
+                <div className="card-header">
+                  <h4>Assign Project List</h4>
+                </div>
+                <div className="card-body">
+                  <div
+                    className="table-responsive"
+                    id="proTeamScroll"
+                    tabIndex={2}
+                    style={{ height: 400, overflow: "hidden", outline: "none" }}
+                  >
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Image</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Gender</th>
+                          <th>Phone</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="table-img">
+                            <img
+                              src="https://bootdey.com/img/Content/avatar/avatar8.png"
+                              alt
+                            />
+                          </td>
+
+                          <td>
+                            <h6 className="mb-0 font-13">Wordpress Website</h6>
+                            <p className="m-0 font-12">
+                              Assigned to
+                              <span className="col-green font-weight-bold">
+                                {" "}
+                                Airi Satou
+                              </span>
+                            </p>
+                          </td>
+
+                          <td>20-02-2018</td>
+
+                          <td></td>
+                          <td>
+                            <div className="badge-outline col-red">High</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
