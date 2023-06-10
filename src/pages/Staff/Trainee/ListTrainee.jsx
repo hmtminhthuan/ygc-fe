@@ -353,17 +353,20 @@ export default function ListTrainee() {
                       <th>
                         Email
                         <button
-                          className="border-0 px-2 bg-transparent"
+                          className="border-0 p-0 mx-2 bg-transparent"
                           style={{
                             position: "relative",
-                            cursor: "static",
-                            transform: "scale(0.8)",
+                            cursor: "auto",
                             color: "#fff",
                           }}
                         >
                           <i
                             className="fa-solid fa-magnifying-glass"
-                            style={{ cursor: "pointer" }}
+                            style={{
+                              cursor: "pointer",
+                              transform: "scale(0.8)",
+                              color: "#fff",
+                            }}
                             onClick={() => {
                               if (viewMailSearch) {
                                 setViewMailSearch(false);
@@ -394,11 +397,12 @@ export default function ListTrainee() {
                                   outline: "none",
                                   fontSize: "13px",
                                 }}
-                                className="px-1 py-1 w-100"
+                                className="px-1 py-1"
                                 value={searchedEmail}
                                 onChange={(e) => {
                                   setSearchedEmail(e.target.value);
                                 }}
+                                onClick={() => {}}
                               />
                             </div>
                           ) : (

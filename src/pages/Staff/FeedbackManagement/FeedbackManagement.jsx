@@ -384,8 +384,7 @@ export default function FeedbackManagement() {
                   </select>
                 </th>
                 {/* s */}
-                <th style={{ textAlign: "center" }}>
-                  Pending
+                <th style={{ textAlign: "right" }}>
                   <span style={{ marginLeft: "5px" }}>
                     <i
                       className={`${symbolSorting(
@@ -412,6 +411,7 @@ export default function FeedbackManagement() {
                     <option value="DESC">DESC</option>
                     <option value="Unsort">Unsort</option>
                   </select>
+                  Number Of Pending
                 </th>
                 {/* <th style={{ textAlign: "center" }}>
                   Censored
@@ -595,24 +595,14 @@ export default function FeedbackManagement() {
                           <td
                             className={`${pending > 0 ? "text-danger" : ""}`}
                             style={{
-                              textAlign: "center",
+                              textAlign: "right",
                               fontWeight: `${pending > 0 ? "bolder" : ""}`,
-                              fontSize: `${pending > 0 ? "18px" : ""}`,
+                              fontSize: "16px",
+                              // fontSize: `${pending > 0 ? "18px" : ""}`,
                             }}
                           >
                             {pending}
                           </td>
-                          {/* <td style={{ textAlign: "center" }}>{censored}</td>
-                          <td style={{ textAlign: "center" }}>{deletedFb}</td> */}
-                          {/* {feedbackInfo != null && feedbackInfo != undefined ? (
-                            <td style={{ textAlign: "center" }}>
-                              {feedbackInfo.length > 0
-                                ? feedbackInfo.length
-                                : "Not yet"}
-                            </td>
-                          ) : (
-                            <td></td>
-                          )} */}
                           {feedbackInfo != null && feedbackInfo != undefined ? (
                             <td
                               style={{
@@ -651,7 +641,7 @@ export default function FeedbackManagement() {
                                       defaultValue={rating}
                                       precision={0.5}
                                       readOnly
-                                      style={{ fontSize: "15px" }}
+                                      style={{ fontSize: "14px" }}
                                     />
                                   </p>
                                 </>

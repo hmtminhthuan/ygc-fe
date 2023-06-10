@@ -142,14 +142,12 @@ export default function ClassManagement() {
             (a, b) =>
               a.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length -
               b.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length
           )
@@ -161,14 +159,12 @@ export default function ClassManagement() {
             (a, b) =>
               b.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length -
               a.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length
           )
@@ -379,9 +375,8 @@ export default function ClassManagement() {
                               {classInfo != null &&
                               classInfo.filter((item) => {
                                 return (
-                                  moment(new Date(`${item.endDate}`)).format(
-                                    "DD-MM-YYYY"
-                                  ) >= moment(new Date()).format("DD-MM-YYYY")
+                                  moment(new Date(`${item.endDate}`)) >=
+                                  moment(new Date())
                                 );
                               }).length > 0 ? (
                                 classInfo.filter((item) => {

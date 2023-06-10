@@ -151,8 +151,8 @@ export default function FeedbackManagementDetail() {
             <div className="my-1">
               {recently.length > 0 && !sortedRecently ? (
                 <button
-                  className="border-0 p-0 m-0 px-2 bg-primary bg-opacity-100 text-light"
-                  style={{ borderRadius: "3px" }}
+                  className="border-0 p-0 m-0 px-2 text-light"
+                  style={{ borderRadius: "3px", backgroundColor: "#e36bc9" }}
                   onClick={() => {
                     setSortedStatus("");
                     setSortedRecently(true);

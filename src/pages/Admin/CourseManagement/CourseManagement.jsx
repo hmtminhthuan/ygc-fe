@@ -267,14 +267,12 @@ export default function CourseManagement() {
             (a, b) =>
               a.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length -
               b.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length
           )
@@ -286,14 +284,12 @@ export default function CourseManagement() {
             (a, b) =>
               b.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length -
               a.classInfo.filter((item) => {
                 return (
-                  moment(new Date(`${item.endDate}`)).format("DD-MM-YYYY") >=
-                  moment(new Date()).format("DD-MM-YYYY")
+                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
                 );
               }).length
           )
@@ -717,9 +713,8 @@ export default function CourseManagement() {
                               {classInfo != null &&
                               classInfo.filter((item) => {
                                 return (
-                                  moment(new Date(`${item.endDate}`)).format(
-                                    "DD-MM-YYYY"
-                                  ) >= moment(new Date()).format("DD-MM-YYYY")
+                                  moment(new Date(`${item.endDate}`)) >=
+                                  moment(new Date())
                                 );
                               }).length > 0 ? (
                                 classInfo.filter((item) => {
@@ -873,10 +868,8 @@ export default function CourseManagement() {
                                     classInfo != null &&
                                     classInfo.filter((item) => {
                                       return (
-                                        moment(
-                                          new Date(`${item.endDate}`)
-                                        ).format("DD-MM-YYYY") >=
-                                        moment(new Date()).format("DD-MM-YYYY")
+                                        moment(new Date(`${item.endDate}`)) >=
+                                        moment(new Date())
                                       );
                                     }).length > 0
                                   ) {
@@ -945,10 +938,9 @@ export default function CourseManagement() {
                               className="bg-dark bg-opacity-10"
                               key={`description-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -966,10 +958,9 @@ export default function CourseManagement() {
                               className="bg-dark bg-opacity-10"
                               key={`classes-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -995,10 +986,9 @@ export default function CourseManagement() {
                               className="bg-dark bg-opacity-10"
                               key={`feedback-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",

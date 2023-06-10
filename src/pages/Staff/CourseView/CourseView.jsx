@@ -623,9 +623,8 @@ export default function CourseView() {
                               {classInfo != null &&
                               classInfo.filter((item) => {
                                 return (
-                                  moment(new Date(`${item.endDate}`)).format(
-                                    "DD-MM-YYYY"
-                                  ) >= moment(new Date()).format("DD-MM-YYYY")
+                                  moment(new Date(`${item.endDate}`)) >=
+                                  moment(new Date())
                                 );
                               }).length > 0 ? (
                                 classInfo.filter((item) => {
@@ -728,10 +727,9 @@ export default function CourseView() {
                               className="bg-dark bg-opacity-10"
                               key={`description-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -749,10 +747,9 @@ export default function CourseView() {
                               className="bg-dark bg-opacity-10"
                               key={`classes-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -761,7 +758,11 @@ export default function CourseView() {
                               >
                                 Classes
                               </td>
-                              <td colSpan={9} style={{ textAlign: "left" }}>
+                              <td
+                                colSpan={9}
+                                className=""
+                                style={{ textAlign: "left" }}
+                              >
                                 {classInfo != null && classInfo.length > 0 ? (
                                   <AdminCourseClasses
                                     courseClasses={classInfo}
@@ -778,10 +779,9 @@ export default function CourseView() {
                               className="bg-dark bg-opacity-10"
                               key={`feedback-${courseID}`}
                             >
-                              <td></td>
                               <td
                                 className="text-black"
-                                colSpan={2}
+                                colSpan={1}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
