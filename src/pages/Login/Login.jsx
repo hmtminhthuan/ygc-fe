@@ -372,61 +372,92 @@ export default function Login() {
                   size="large"
                   autoComplete="off"
                 >
-                  <Form.Item
-                    name="phoneNumber"
-                    label="Phone Number"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Phone Number cannot be blank",
-                      },
-                      {
-                        message: "Phone is not in correct form",
-                        pattern: /(0|[1-9][0-9]*)$/,
-                      },
-                      { min: 10, message: "Phone must be 10-11 numbers" },
-                      {
-                        max: 11,
-                        message: "Phone must be 10-11 numbers",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      style={{ width: "100%" }}
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Phone Number:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
                       name="phoneNumber"
-                      value={formik.values.phoneNumber}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Phone Number"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="password"
-                    label="Password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Password cannot be blank",
-                      },
-                      {
-                        min: 6,
-                        message: "Password must be at least 6 characters",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input.Password
+                      // label="Phone Number"
+                      rules={[
+                        // {
+                        //   required: true,
+                        //   message: "Phone Number cannot be blank",
+                        // },
+                        {
+                          message: "Phone is not in correct form",
+                          pattern: /(0|[1-9][0-9]*)$/,
+                        },
+                        { min: 10, message: "Phone must be 10-11 numbers" },
+                        {
+                          max: 11,
+                          message: "Phone must be 10-11 numbers",
+                        },
+                        { whitespace: true },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input
+                        style={{ width: "100%" }}
+                        name="phoneNumber"
+                        value={formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Phone Number"
+                      />
+                    </Form.Item>
+                  </div>
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Password:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
                       name="password"
-                      type="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Password"
-                    />
-                  </Form.Item>
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Password cannot be blank",
+                        },
+                        {
+                          min: 6,
+                          message: "Password must be at least 6 characters",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input.Password
+                        name="password"
+                        type="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Password"
+                      />
+                    </Form.Item>{" "}
+                  </div>
                   <button
                     className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
-                          shadow-lg mt-3"
+                          shadow-lg mt-3 pt-1"
                     type="submit"
                   >
                     Log In

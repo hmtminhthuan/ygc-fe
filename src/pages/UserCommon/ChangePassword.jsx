@@ -241,89 +241,137 @@ export default function ChangePassword({ userEmail, userId }) {
         autoComplete="off"
         style={{ margin: "0 auto", width: "100%" }}
       >
-        <div className="form-group flex m-0 col-12">
-          <Form.Item
-            name="oldPassword"
-            label="Current Password"
-            className="w-100"
-            rules={[
-              {
-                required: true,
-                message: "Password cannot be blank",
-              },
-              {
-                min: 6,
-                message: "Password must be at least 6 characters",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password
-              style={{ width: "100%", flexGrow: "1" }}
-              name="oldPassword"
-              type="password"
-              value={formik.values.oldPassword}
-              onChange={formik.handleChange}
-              placeholder="Enter Current Password"
-            />
-          </Form.Item>
+        <div className="form-group col-12">
+          <div className="row flex align-items-start justify-content-between">
+            <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+              <span className="text-danger px-1">
+                <i
+                  className="fa-solid fa-star-of-life"
+                  style={{
+                    fontSize: "6px",
+                    verticalAlign: "middle",
+                  }}
+                ></i>{" "}
+              </span>
+              <span>Current Password:</span>
+            </p>
+            <div className="col-9">
+              <Form.Item
+                name="oldPassword"
+                label=""
+                className="w-100"
+                rules={[
+                  {
+                    required: true,
+                    message: "Password cannot be blank",
+                  },
+                  {
+                    min: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password
+                  style={{ width: "100%", flexGrow: "1" }}
+                  name="oldPassword"
+                  type="password"
+                  value={formik.values.oldPassword}
+                  onChange={formik.handleChange}
+                  placeholder="Enter Current Password"
+                />
+              </Form.Item>
+            </div>
+          </div>
         </div>
-        <div className="form-group flex m-0">
-          <Form.Item
-            name="password"
-            label="New Password"
-            className="w-100"
-            rules={[
-              {
-                required: true,
-                message: "Password cannot be blank",
-              },
-              {
-                min: 6,
-                message: "Password must be at least 6 characters",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password
-              style={{ width: "100%", flexGrow: "1" }}
-              name="password"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              placeholder="Enter New Password"
-            />
-          </Form.Item>
+        <div className="form-group col-12">
+          <div className="row flex align-items-start justify-content-between">
+            <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+              <span className="text-danger px-1">
+                <i
+                  className="fa-solid fa-star-of-life"
+                  style={{
+                    fontSize: "6px",
+                    verticalAlign: "middle",
+                  }}
+                ></i>{" "}
+              </span>
+              <span>New Password:</span>
+            </p>
+            <div className="col-9">
+              <Form.Item
+                name="password"
+                label=""
+                className="w-100"
+                rules={[
+                  {
+                    required: true,
+                    message: "Password cannot be blank",
+                  },
+                  {
+                    min: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password
+                  style={{ width: "100%", flexGrow: "1" }}
+                  name="password"
+                  type="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  placeholder="Enter New Password"
+                />
+              </Form.Item>
+            </div>
+          </div>
         </div>
-        <div className="form-group flex m-0">
-          <Form.Item
-            name="confirm_password"
-            label="Confirm New Password"
-            dependencies={["password"]}
-            className="w-100"
-            rules={[
-              {
-                required: true,
-                message: "Password cannot be blank",
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject("Confirm Password does not match");
-                },
-              }),
-            ]}
-            hasFeedback
-          >
-            <Input.Password
-              style={{ width: "100%", flexGrow: "1" }}
-              name="confirm_password"
-              type="password"
-              placeholder="Enter New Password Again"
-            />
-          </Form.Item>
+        <div className="form-group col-12">
+          <div className="row flex align-items-start justify-content-between">
+            <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+              <span className="text-danger px-1">
+                <i
+                  className="fa-solid fa-star-of-life"
+                  style={{
+                    fontSize: "6px",
+                    verticalAlign: "middle",
+                  }}
+                ></i>{" "}
+              </span>
+              <span>Confirm New Password:</span>
+            </p>
+            <div className="col-9">
+              <Form.Item
+                name="confirm_password"
+                label=""
+                dependencies={["password"]}
+                className="w-100"
+                rules={[
+                  {
+                    required: true,
+                    message: "Password cannot be blank",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject("Confirm Password does not match");
+                    },
+                  }),
+                ]}
+                hasFeedback
+              >
+                <Input.Password
+                  style={{ width: "100%", flexGrow: "1" }}
+                  name="confirm_password"
+                  type="password"
+                  placeholder="Enter New Password Again"
+                />
+              </Form.Item>
+            </div>
+          </div>
         </div>
         <div className="form-group flex m-0">
           <Button

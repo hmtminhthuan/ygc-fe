@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
+import TextArea from "antd/es/input/TextArea";
 
 export default function Register() {
   const formItemLayout = {
@@ -230,193 +231,313 @@ export default function Register() {
                   size="large"
                   autoComplete="off"
                 >
-                  <Form.Item
-                    name="firstname"
-                    label="Firstname"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Firstname cannot be blank",
-                      },
-                      { whitespace: true },
-                      // { min: 3, message: '' },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Firstname:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
                       name="firstname"
-                      value={formik.values.firstname}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Firstname"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="lastname"
-                    label="Lastname"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Lastname cannot be blank",
-                      },
-                      { whitespace: true },
-                      // { min: 3, message: '' },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      name="lastname"
-                      value={formik.values.lastname}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Lastname"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="phoneNumber"
-                    label="Phone Number"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Phone Number cannot be blank",
-                      },
-                      {
-                        message: "Phone is not in correct form",
-                        pattern: /(0|[1-9][0-9]*)$/,
-                      },
-                      { min: 10, message: "Phone must be 10-11 numbers" },
-                      {
-                        max: 11,
-                        message: "Phone must be 10-11 numbers",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      style={{ width: "100%" }}
-                      name="phoneNumber"
-                      value={formik.values.phoneNumber}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Phone Number"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="email"
-                    label="Email"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Email cannot be blank",
-                      },
-                      {
-                        type: "email",
-                        message: "Email is not in correct form",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      name="email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Email"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="password"
-                    label="Password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Password cannot be blank",
-                      },
-                      {
-                        min: 6,
-                        message: "Password must be at least 6 characters",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input.Password
-                      name="password"
-                      type="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Password"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="confirm_password"
-                    label="Confirm Password"
-                    dependencies={["password"]}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Confirm Password cannot be blank",
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || getFieldValue("password") === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            "Confirm Password does not match"
-                          );
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Firstname cannot be blank",
                         },
-                      }),
-                    ]}
-                    hasFeedback
-                  >
-                    <Input.Password
-                      name="confirm_password"
-                      type="password"
-                      placeholder="Enter Password Again"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Gender"
-                    name="gender"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Gender must be selected",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Select
-                      name="gender"
-                      width="200px"
-                      placeholder="Select Gender"
-                      value={formik.values.gender}
-                      onChange={handleChangeGender}
+                        {
+                          message: "Firstname is not in correct form",
+                          pattern:
+                            /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
+                        },
+                        // { min: 3, message: '' },
+                      ]}
+                      hasFeedback
                     >
-                      <Select.Option value={true}>Male</Select.Option>
-                      <Select.Option value={false}>Female</Select.Option>
-                    </Select>
-                  </Form.Item>
+                      <Input
+                        name="firstname"
+                        value={formik.values.firstname}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Firstname"
+                      />
+                    </Form.Item>
+                  </div>
 
-                  <Form.Item
-                    name="address"
-                    label="Address"
-                    rules={[
-                      {
-                        required: false,
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Lastname:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      name="lastname"
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Lastname cannot be blank",
+                        },
+                        {
+                          message: "Lastname is not in correct form",
+                          pattern:
+                            /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
+                        },
+                        // { min: 3, message: '' },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input
+                        name="lastname"
+                        value={formik.values.lastname}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Lastname"
+                      />
+                    </Form.Item>{" "}
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Phone Number:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      name="phoneNumber"
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Phone Number cannot be blank",
+                        },
+                        {
+                          message: "Phone is not in correct form",
+                          pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
+                        },
+                        { min: 10, message: "Phone must be 10-11 numbers" },
+                        {
+                          max: 11,
+                          message: "Phone must be 10-11 numbers",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input
+                        style={{ width: "100%" }}
+                        name="phoneNumber"
+                        value={formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Phone Number"
+                      />
+                    </Form.Item>
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Email:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      name="email"
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Email cannot be blank",
+                        },
+                        {
+                          type: "email",
+                          message: "Email is not in correct form",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Email"
+                      />
+                    </Form.Item>
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Password:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      name="password"
+                      label=""
+                      rules={[
+                        {
+                          required: true,
+                          message: "Password cannot be blank",
+                        },
+                        {
+                          min: 6,
+                          message: "Password must be at least 6 characters",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input.Password
+                        name="password"
+                        type="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Password"
+                      />
+                    </Form.Item>{" "}
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Confirm Password:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      name="confirm_password"
+                      label=""
+                      dependencies={["password"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Confirm Password cannot be blank",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              "Confirm Password does not match"
+                            );
+                          },
+                        }),
+                      ]}
+                      hasFeedback
+                    >
+                      <Input.Password
+                        name="confirm_password"
+                        type="password"
+                        placeholder="Enter Password Again"
+                      />
+                    </Form.Item>
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life text-danger"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      <span>Gender:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
+                      label=""
+                      name="gender"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Gender must be selected",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Select
+                        name="gender"
+                        width="200px"
+                        placeholder="Select Gender"
+                        value={formik.values.gender}
+                        onChange={handleChangeGender}
+                      >
+                        <Select.Option value={true}>Male</Select.Option>
+                        <Select.Option value={false}>Female</Select.Option>
+                      </Select>
+                    </Form.Item>
+                  </div>
+
+                  <div className="flex row align-items-start justify-content-between">
+                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                      <span className="text-danger px-1"></span>
+                      <span>Address:</span>
+                    </p>
+                    <Form.Item
+                      className="mx-0 px-0 col-sm-12 col-md-7"
                       name="address"
-                      value={formik.values.address}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Address (Optional)"
-                    />
-                  </Form.Item>
+                      label=""
+                      rules={[
+                        {
+                          required: false,
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <TextArea
+                        name="address"
+                        value={formik.values.address}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Address (Optional)"
+                      />
+                    </Form.Item>
+                  </div>
 
                   <Form.Item className="text-center">
                     <button

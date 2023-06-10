@@ -118,8 +118,19 @@ export default function AdminCourseCreate() {
               size="large"
               autoComplete="off"
             >
-              <div className="row flex align-items-start">
-                <p className="col-2 p-0 m-0 px-3 pt-2">Course Name:</p>
+              <div className="row flex align-items-start justify-content-between">
+                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                  <span className="text-danger px-1">
+                    <i
+                      className="fa-solid fa-star-of-life"
+                      style={{
+                        fontSize: "6px",
+                        verticalAlign: "middle",
+                      }}
+                    ></i>{" "}
+                  </span>
+                  Course Name:
+                </p>
                 <div className="col-10">
                   <Form.Item
                     name="courseName"
@@ -132,6 +143,10 @@ export default function AdminCourseCreate() {
                       {
                         max: 50,
                         message: "Course Name must not be over 50 characters",
+                      },
+                      {
+                        whitespace: true,
+                        message: "Course Name cannot be empty",
                       },
                     ]}
                     hasFeedback
@@ -146,8 +161,62 @@ export default function AdminCourseCreate() {
                   </Form.Item>
                 </div>
               </div>
-              <div className="row flex align-items-start">
-                <p className="col-2 p-0 m-0 px-3 pt-2">Price:</p>
+              <div className="row flex align-items-start justify-content-between">
+                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                  <span className="text-danger px-1">
+                    <i
+                      className="fa-solid fa-star-of-life"
+                      style={{
+                        fontSize: "6px",
+                        verticalAlign: "middle",
+                      }}
+                    ></i>{" "}
+                  </span>
+                  Level:
+                </p>
+                <div className="col-10">
+                  <Form.Item
+                    label=""
+                    name="levelId"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Level must be selected",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Select
+                      name="levelId"
+                      width="200px"
+                      placeholder="Select Level"
+                      value={formik.values.levelId}
+                      onChange={handleChangeLevel}
+                    >
+                      {levelList.map(({ levelId, levelName }, index) => {
+                        return (
+                          <Select.Option key={index} value={levelId}>
+                            {levelName}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                </div>
+              </div>
+              <div className="row flex align-items-start justify-content-between">
+                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                  <span className="text-danger px-1">
+                    <i
+                      className="fa-solid fa-star-of-life"
+                      style={{
+                        fontSize: "6px",
+                        verticalAlign: "middle",
+                      }}
+                    ></i>{" "}
+                  </span>
+                  {"Price (VND):"}
+                </p>
                 <div className="col-10">
                   <Form.Item
                     name="price"
@@ -161,6 +230,10 @@ export default function AdminCourseCreate() {
                         pattern:
                           /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
                         message: "Price must be a positive number",
+                      },
+                      {
+                        whitespace: true,
+                        message: "Price cannot be empty",
                       },
                     ]}
                     hasFeedback
@@ -179,42 +252,51 @@ export default function AdminCourseCreate() {
                   </Form.Item>
                 </div>
               </div>
-              <Form.Item
-                name="discount"
-                label="Discount"
-                rules={[
-                  // {
-                  //   pattern: /^[1-9]?[0-9]{1}$|^100$/,
-                  //   message: "Discount must be from 0-100",
-                  // },
-                  {
-                    type: "number",
-                    min: 0,
-                    max: 100,
-                    // message: "Discount must be a number between 0-100",
-                  },
-                ]}
-                hasFeedback
-              >
-                <InputNumber
-                  style={{ width: "100%" }}
-                  name="discount"
-                  // type="number"
-                  value={formik.values.discount}
-                  onChange={formik.handleChange}
-                  onInput={(e) => {
-                    if (e.target.value == "") {
-                      setPreviewDiscount(0);
-                    } else {
-                      setPreviewDiscount(e.target.value);
-                    }
-                  }}
-                  placeholder="Enter Discount (default = 0)"
-                />
-              </Form.Item>
+              <div className="row flex align-items-start">
+                <p className="col-2 p-0 m-0 px-3 pt-2">{"Discount (%):"}</p>
+                <div className="col-10">
+                  <Form.Item
+                    name="discount"
+                    label=""
+                    rules={[
+                      // {
+                      //   pattern: /^[1-9]?[0-9]{1}$|^100$/,
+                      //   message: "Discount must be from 0-100",
+                      // },
+                      // {
+                      //   type: "number",
+                      //   min: 0,
+                      //   max: 100,
+                      //   message: "Discount must be between 0 and 100",
+                      // },
+                      {
+                        pattern: /^[1-9]?[0-9]{1}$|^100$/,
+                        message: "Discount must be between 0 and 100",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      style={{ width: "100%" }}
+                      name="discount"
+                      // type="number"
+                      value={formik.values.discount}
+                      onChange={formik.handleChange}
+                      onInput={(e) => {
+                        if (e.target.value == "") {
+                          setPreviewDiscount(0);
+                        } else {
+                          setPreviewDiscount(e.target.value);
+                        }
+                      }}
+                      placeholder="Enter Discount (default = 0)"
+                    />
+                  </Form.Item>{" "}
+                </div>
+              </div>
               {previewPrice > 0 && previewDiscount <= 0 ? (
                 <Form.Item className="preview-item" label="Preview Price">
-                  <p className="p-0 m-0 preview-item-content">
+                  <p className="p-0 m-0 preview-item-content text-primary">
                     {formatPrice(previewPrice)}
                   </p>
                 </Form.Item>
@@ -225,9 +307,11 @@ export default function AdminCourseCreate() {
               previewDiscount > 0 &&
               previewDiscount <= 100 ? (
                 <Form.Item className="preview-item" label="Preview Price">
-                  <p className="p-0 m-0 preview-item-content">
-                    {formatPrice(previewPrice)}{" "}
+                  <p className="p-0 m-0 preview-item-content text-primary">
                     <span className="text-danger">
+                      {formatPrice(previewPrice)}{" "}
+                    </span>
+                    <span className="">
                       <i className="fa-solid fa-arrow-right px-2" />{" "}
                       {formatPrice(previewPrice * (1 - previewDiscount / 100))}
                       <span className="px-2">
@@ -239,66 +323,72 @@ export default function AdminCourseCreate() {
               ) : (
                 <></>
               )}
-              <Form.Item
-                label="Level"
-                name="levelId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Level must be selected",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Select
-                  name="levelId"
-                  width="200px"
-                  placeholder="Select Level"
-                  value={formik.values.levelId}
-                  onChange={handleChangeLevel}
-                >
-                  {levelList.map(({ levelId, levelName }, index) => {
-                    return (
-                      <Select.Option key={index} value={levelId}>
-                        {levelName}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
 
-              <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                  {
-                    required: true,
-                    message: "Description cannot be blank",
-                  },
-                  {
-                    min: 0,
-                    max: 1000,
-                    message: "Description must be from 0-1000 characters",
-                  },
-                ]}
-                hasFeedback
-              >
-                <TextArea
-                  style={{
-                    width: "100%",
-                    height: "150px",
-                    verticalAlign: "top",
-                  }}
-                  name="description"
-                  className="create-course-level"
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  placeholder="Enter Description"
-                />
-              </Form.Item>
-
-              <Form.Item name="img" label="Image" rules={[]} hasFeedback>
-                {/* <Input
+              <div className="row flex align-items-start justify-content-between">
+                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                  <span className="text-danger px-1">
+                    <i
+                      className="fa-solid fa-star-of-life"
+                      style={{
+                        fontSize: "6px",
+                        verticalAlign: "middle",
+                      }}
+                    ></i>{" "}
+                  </span>
+                  Description:
+                </p>
+                <div className="col-10">
+                  <Form.Item
+                    name="description"
+                    label=""
+                    rules={[
+                      {
+                        required: true,
+                        message: "Description cannot be blank",
+                      },
+                      {
+                        min: 0,
+                        max: 1000,
+                        message: "Description must be from 0-1000 characters",
+                      },
+                      {
+                        whitespace: true,
+                        message: "Description cannot be empty",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <TextArea
+                      style={{
+                        width: "100%",
+                        height: "150px",
+                        verticalAlign: "top",
+                      }}
+                      name="description"
+                      className="create-course-level"
+                      value={formik.values.description}
+                      onChange={formik.handleChange}
+                      placeholder="Enter Description"
+                    />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className="row flex align-items-start justify-content-between">
+                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                  <span className="text-danger px-1">
+                    <i
+                      className="fa-solid fa-star-of-life"
+                      style={{
+                        fontSize: "6px",
+                        verticalAlign: "middle",
+                      }}
+                    ></i>{" "}
+                  </span>
+                  Image:
+                </p>
+                <div className="col-10">
+                  <Form.Item name="img" label="" rules={[]} hasFeedback>
+                    {/* <Input
                                     style={{ width: "100%" }}
                                     name="img"
                                     value={formik.values.img}
@@ -316,21 +406,23 @@ export default function AdminCourseCreate() {
                                     type="file"
                                     accept="image/png, image/jpeg, image/jpg"
                                 /> */}
-                <Input
-                  style={{ width: "100%" }}
-                  name="img"
-                  value={formik.values.img}
-                  onChange={formik.handleChange}
-                  onInput={(e) => {
-                    setPreviewImg(e.target.value);
-                  }}
-                  placeholder="Enter Link Of Image"
-                />
-              </Form.Item>
+                    <Input
+                      style={{ width: "100%" }}
+                      name="img"
+                      value={formik.values.img}
+                      onChange={formik.handleChange}
+                      onInput={(e) => {
+                        setPreviewImg(e.target.value);
+                      }}
+                      placeholder="Enter Link Of Image"
+                    />
+                  </Form.Item>
+                </div>
+              </div>
               {previewImg == "" ? (
                 <></>
               ) : (
-                <Form.Item className="preview-item" label="Preview Image">
+                <Form.Item className="preview-item px-1" label="Preview Image">
                   <img
                     id="blah"
                     src={previewImg}

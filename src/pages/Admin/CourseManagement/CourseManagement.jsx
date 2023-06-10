@@ -6,7 +6,7 @@ import { api } from "../../../constants/api";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import moment from "moment/moment";
 import { Rating, Stack } from "@mui/material";
 
@@ -366,7 +366,7 @@ export default function CourseManagement() {
   };
 
   return (
-    <>
+    <section style={{ position: "relative" }}>
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
@@ -1032,6 +1032,9 @@ export default function CourseManagement() {
           </table>
         </div>
       </section>
-    </>
+      <div style={{ position: "fixed", bottom: "0", top: "0" }}>
+        <Outlet />
+      </div>
+    </section>
   );
 }

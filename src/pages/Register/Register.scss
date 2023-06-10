@@ -53,13 +53,13 @@ main {
 .form-register-container {
   .ant-form {
     @media (max-width: 1024px) {
-      transform: translateY(15px) !important;
+      transform: translateY(10px) !important;
     }
     @media (max-width: 950px) {
       transform: translateY(10px) !important;
     }
     @media (max-width: 550px) {
-      transform: translateY(230px) !important;
+      transform: translateY(180px) !important;
     }
   }
   @media (max-width: 1024px) {
