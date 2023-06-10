@@ -10,7 +10,18 @@ export default function CommonTemplate() {
     USER_LOGIN == undefined ||
     USER.role.id == undefined
   ) {
-    window.location.href = "/";
+    Swal.fire({
+      position: "top-right",
+      icon: "warning",
+      background: "#fefbe2",
+      title: `You are not allwed to access this`,
+      width: "100rem",
+      padding: "2rem",
+      showConfirmButton: false,
+      toast: true,
+      timer: 2000,
+    });
+    return <Navigate to="/" />;
   }
   return (
     <>
