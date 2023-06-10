@@ -1,10 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Swal from "sweetalert2";
+import { alert } from "../../component/AlertComponent/Alert";
 
 export default function StaffTemplate() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   let USER = {};
   USER = JSON.parse(USER_LOGIN);
+
+  alert.alertSuccess("Successfully", "Create Staff Successfully", () => {});
 
   if (USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 2)) {
     Swal.fire({
