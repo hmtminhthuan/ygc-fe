@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import "./HeaderHome.scss";
 export default function HeaderHome() {
+  const menu_active = localStorage.getItem("MENU_ACTIVE");
   const [userLogin, setUserLogin] = useState({});
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
@@ -40,13 +41,46 @@ export default function HeaderHome() {
             className="flex justify-content-end header-small navbar-item"
           >
             <Nav className="">
-              <Nav.Link href="/" className="px-4 nav-item">
+              <Nav.Link
+                href="/"
+                className={`px-4 nav-item
+              ${
+                menu_active != null && menu_active == "home-home"
+                  ? "nav-item-after-login"
+                  : ""
+              }`}
+                onClick={() => {
+                  localStorage.setItem("MENU_ACTIVE", "home-home");
+                }}
+              >
                 Home
               </Nav.Link>
-              <Nav.Link href="/course" className="px-4 nav-item">
+              <Nav.Link
+                href="/course"
+                className={`px-4 nav-item
+              ${
+                menu_active != null && menu_active == "home-course"
+                  ? "nav-item-after-login"
+                  : ""
+              }`}
+                onClick={() => {
+                  localStorage.setItem("MENU_ACTIVE", "home-course");
+                }}
+              >
                 Course
               </Nav.Link>
-              <Nav.Link href="/blog" className="px-4 nav-item">
+              <Nav.Link
+                href="/blog"
+                className={`px-4 nav-item
+              ${
+                menu_active != null && menu_active == "home-blog"
+                  ? "nav-item-after-login"
+                  : ""
+              }`}
+                onClick={() => {
+                  localStorage.setItem("MENU_ACTIVE", "home-blog");
+                }}
+              >
                 Blog
               </Nav.Link>
               {USER_LOGIN != null &&
@@ -57,7 +91,7 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
                     <Nav.Link
-                      className="px-4 nav-item nav-item-after-login hello-user"
+                      className={`px-4 nav-item`}
                       onClick={() => {
                         if (userLogin.role.id == 1) {
                           window.location.href = "/admin";
@@ -76,8 +110,14 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   userLogin.role.id == 3 ? (
                     <Nav.Link
-                      className="px-4 nav-item nav-item-after-login"
+                      className={`px-4 nav-item
+                    ${
+                      menu_active != null && menu_active == "home-schedule"
+                        ? "nav-item-after-login"
+                        : ""
+                    }`}
                       onClick={() => {
+                        localStorage.setItem("MENU_ACTIVE", "home-schedule");
                         window.location.href = "/trainer";
                       }}
                     >
@@ -90,8 +130,14 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   userLogin.role.id == 4 ? (
                     <Nav.Link
-                      className="px-4 nav-item nav-item-after-login"
+                      className={`px-4 nav-item
+                    ${
+                      menu_active != null && menu_active == "home-schedule"
+                        ? "nav-item-after-login"
+                        : ""
+                    }`}
                       onClick={() => {
+                        localStorage.setItem("MENU_ACTIVE", "home-schedule");
                         window.location.href = "/trainee";
                       }}
                     >
@@ -100,12 +146,18 @@ export default function HeaderHome() {
                   ) : (
                     <></>
                   )}
-                  {/* <p className="p-0 m-0 flex align-items-center px-2 hello-user">
+                  {/* <p className="p-0 m-0 flex align-items-center px-2">
                     Welcome, {userLogin.firstName} {userLogin.lastName}
                   </p> */}
                   <Nav.Link
-                    className="px-4 nav-item nav-item-after-login hello-user"
+                    className={`px-4 nav-item
+                     ${
+                       menu_active != null && menu_active == "home-profile"
+                         ? "nav-item-after-login"
+                         : ""
+                     }`}
                     onClick={() => {
+                      localStorage.setItem("MENU_ACTIVE", "home-profile");
                       window.location.href = `/profile/${userLogin.accountID}`;
                     }}
                   >
@@ -114,10 +166,32 @@ export default function HeaderHome() {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/login" className="px-4 nav-item">
+                  <Nav.Link
+                    href="/login"
+                    className={`px-4 nav-item
+              ${
+                menu_active != null && menu_active == "home-login"
+                  ? "nav-item-after-login"
+                  : ""
+              }`}
+                    onClick={() => {
+                      localStorage.setItem("MENU_ACTIVE", "home-login");
+                    }}
+                  >
                     Log in
                   </Nav.Link>
-                  <Nav.Link href="/register" className="px-4 nav-item">
+                  <Nav.Link
+                    href="/register"
+                    className={`px-4 nav-item
+              ${
+                menu_active != null && menu_active == "home-register"
+                  ? "nav-item-after-login"
+                  : ""
+              }`}
+                    onClick={() => {
+                      localStorage.setItem("MENU_ACTIVE", "home-register");
+                    }}
+                  >
                     Register
                   </Nav.Link>
                 </>
@@ -126,7 +200,7 @@ export default function HeaderHome() {
               userLogin.accountID != null &&
               userLogin.accountID != undefined ? (
                 <Nav.Link
-                  className="px-4 nav-item"
+                  className={`px-4 nav-item`}
                   onClick={() => {
                     localStorage.removeItem("USER_LOGIN");
                     localStorage.removeItem("MENU_ACTIVE");

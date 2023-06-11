@@ -11,6 +11,7 @@ import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 
 export default function Login() {
+  localStorage.setItem("MENU_ACTIVE", "home-login");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },

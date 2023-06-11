@@ -11,6 +11,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import ChangePassword from "./ChangePassword";
 import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 export default function UpdateProfile() {
+  localStorage.setItem("MENU_ACTIVE", "home-profile");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },

@@ -16,6 +16,11 @@
   .nav-item {
     color: white !important;
   }
+  .nav-item-after-login {
+    color: rgba(210, 145, 188, 1) !important;
+    font-weight: bold !important;
+    transform: scale(1.3);
+  }
 }
 .hello-user {
   font-size: 20px;
@@ -97,4 +102,11 @@
 .nav-item-after-login {
   color: rgba(210, 145, 188, 1) !important;
   font-weight: bold !important;
+  transform: scale(1.3);
+  text-decoration: underline !important;
+}
+.nav-item-after-login-not-underline {
+  color: rgba(210, 145, 188, 1) !important;
+  font-weight: bold !important;
+  transform: scale(1.3);
 }

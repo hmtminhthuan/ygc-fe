@@ -9,6 +9,7 @@ import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 
 function Blog() {
+  localStorage.setItem("MENU_ACTIVE", "home-blog");
   let [blogList, setBlogList] = useState([]);
 
   useEffect(() => {

@@ -10,6 +10,7 @@ import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 
 function BlogPage() {
+  localStorage.setItem("MENU_ACTIVE", "home-blog");
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
 

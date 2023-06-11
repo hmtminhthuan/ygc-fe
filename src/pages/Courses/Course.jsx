@@ -10,6 +10,7 @@ import { Select } from "antd";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 export default function Course() {
+  localStorage.setItem("MENU_ACTIVE", "home-course");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [levelSort, setLevelSort] = useState("All");

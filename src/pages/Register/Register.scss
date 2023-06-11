@@ -620,6 +620,11 @@ form {
       color: rgba(210, 145, 188, 1) !important;
     }
   }
+  .nav-item-after-login {
+    color: rgba(210, 145, 188, 1) !important;
+    font-weight: bold !important;
+    transform: scale(1.3);
+  }
 }
 
 .form-register-container {

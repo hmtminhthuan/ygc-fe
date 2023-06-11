@@ -14,6 +14,7 @@ import FooterHome from "../../../component/FooterHome/FooterHome";
 import Swal from "sweetalert2";
 
 export default function CourseDetail() {
+  localStorage.setItem("MENU_ACTIVE", "home-course");
   const param = useParams();
   const [courseDetail, setCourseDetail] = useState([]);
   const [courseClasses, setCourseClasses] = useState([]);

@@ -12,6 +12,7 @@ import FooterHome from "../../component/FooterHome/FooterHome";
 import TextArea from "antd/es/input/TextArea";
 
 export default function Register() {
+  localStorage.setItem("MENU_ACTIVE", "home-register");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },

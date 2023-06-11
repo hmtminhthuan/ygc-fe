@@ -167,7 +167,12 @@ export default function MenuStaff() {
       </ul>
       <ul className="sidebar--bottom-items">
         <li>
-          <a href="/">
+          <a
+            href="/"
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "home-home");
+            }}
+          >
             <span className="icon icon-4">
               <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
@@ -175,7 +180,12 @@ export default function MenuStaff() {
           </a>
         </li>
         <li>
-          <a href={`/profile/${USER.accountID}`}>
+          <a
+            href={`/profile/${USER.accountID}`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "home-profile");
+            }}
+          >
             <span className="icon icon-7">
               <i
                 className="fa-sharp fa-solid fa-address-card"

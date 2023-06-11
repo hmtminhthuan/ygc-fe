@@ -10,6 +10,7 @@ import femaleImg from "../../assets/images/avt-female.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 
 function UserProfile() {
+  localStorage.setItem("MENU_ACTIVE", "home-profile");
   const { paramID } = useParams();
   const [profile, setProfile] = useState([]);
   const [accept, setAccept] = useState(false);
