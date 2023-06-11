@@ -51,28 +51,44 @@ export default function ClassManagement() {
         courseListStart = res.data;
       })
       .catch((err) => {})
-      .finally(async () => {
-        await courseListStart.forEach((course) => {
+      .finally(() => {
+        courseListStart.forEach((course) => {
           api
-            .get("/Class/GetClassByCourseIDForAdmin", {
-              params: { courseid: course.courseID },
-            })
+            .get(
+              `/Class/GetClassByCourseIDForAdmin?courseid=${course.courseID}`
+            )
             .then((res) => {
               let classInfo = res.data;
               course = { ...course, classInfo };
-              courseListEnd = [...courseListEnd, course];
+              // courseListEnd = [...courseListEnd, course];
             })
             .catch((err) => {
               let classInfo = [];
               course = { ...course, classInfo };
-              courseListEnd = [...courseListEnd, course];
+              // courseListEnd = [...courseListEnd, course];
             })
             .finally(() => {
-              courseListEnd = courseListEnd.sort(
-                (a, b) => a.courseID - b.courseID
-              );
-              setCourseList(courseListEnd);
-              setRenderCourseList(courseListEnd);
+              api
+                .get(
+                  `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
+                )
+                .then((res) => {
+                  let classInfoFinished = [...res.data];
+                  course = { ...course, classInfoFinished };
+                  courseListEnd = [...courseListEnd, course];
+                })
+                .catch((err) => {
+                  let classInfoFinished = [];
+                  course = { ...course, classInfoFinished };
+                  courseListEnd = [...courseListEnd, course];
+                })
+                .finally(() => {
+                  courseListEnd = courseListEnd.sort(
+                    (a, b) => a.courseID - b.courseID
+                  );
+                  setCourseList(courseListEnd);
+                  setRenderCourseList(courseListEnd);
+                });
             });
         });
       });
@@ -178,7 +194,7 @@ export default function ClassManagement() {
         break;
     }
   }, [sortedClasses]);
-
+  console.log("haha", courseList);
   return (
     <>
       <HeaderStaff />
@@ -335,6 +351,7 @@ export default function ClassManagement() {
                       description,
                       courseImg,
                       classInfo,
+                      classInfoFinished,
                       feedbackInfo,
                       deleted,
                       rating,
@@ -470,6 +487,7 @@ export default function ClassManagement() {
                               {classInfo != null && classInfo.length > 0 ? (
                                 <ClassViewMore
                                   courseClasses={classInfo}
+                                  courseFinishedClasses={classInfoFinished}
                                   className="flex justify-content-start"
                                 />
                               ) : (

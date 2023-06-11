@@ -66,9 +66,7 @@ export default function CourseView() {
         setRenderCourseList(res.data);
         courseListStart = res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(async () => {
         await courseListStart.forEach((course) => {
           api
@@ -85,34 +83,48 @@ export default function CourseView() {
             })
             .finally(() => {
               api
-                .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
-                  params: { courseid: course.courseID },
-                })
+                .get(
+                  `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
+                )
                 .then((res) => {
-                  let feedbackInfo = res.data;
-                  let rating = 0;
-                  feedbackInfo.forEach((item) => {
-                    rating += item.rating;
-                  });
-                  if (feedbackInfo.length > 0) {
-                    rating = rating / feedbackInfo.length;
-                    rating = rating.toFixed(2);
-                  }
-                  course = { ...course, feedbackInfo, rating };
-                  courseListEnd = [...courseListEnd, course];
+                  let classInfoFinished = [...res.data];
+                  course = { ...course, classInfoFinished };
                 })
                 .catch((err) => {
-                  let feedbackInfo = [];
-                  let rating = 0;
-                  course = { ...course, feedbackInfo, rating };
-                  courseListEnd = [...courseListEnd, course];
+                  let classInfoFinished = [];
+                  course = { ...course, classInfoFinished };
                 })
-                .finally(async () => {
-                  courseListEnd = await courseListEnd.sort(
-                    (a, b) => a.courseID - b.courseID
-                  );
-                  setCourseList(courseListEnd);
-                  setRenderCourseList(courseListEnd);
+                .finally(() => {
+                  api
+                    .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
+                      params: { courseid: course.courseID },
+                    })
+                    .then((res) => {
+                      let feedbackInfo = res.data;
+                      let rating = 0;
+                      feedbackInfo.forEach((item) => {
+                        rating += item.rating;
+                      });
+                      if (feedbackInfo.length > 0) {
+                        rating = rating / feedbackInfo.length;
+                        rating = rating.toFixed(2);
+                      }
+                      course = { ...course, feedbackInfo, rating };
+                      courseListEnd = [...courseListEnd, course];
+                    })
+                    .catch((err) => {
+                      let feedbackInfo = [];
+                      let rating = 0;
+                      course = { ...course, feedbackInfo, rating };
+                      courseListEnd = [...courseListEnd, course];
+                    })
+                    .finally(async () => {
+                      courseListEnd = await courseListEnd.sort(
+                        (a, b) => a.courseID - b.courseID
+                      );
+                      setCourseList(courseListEnd);
+                      setRenderCourseList(courseListEnd);
+                    });
                 });
             });
         });
@@ -322,7 +334,7 @@ export default function CourseView() {
         break;
     }
   }, [sortedRating]);
-
+  console.log("list", courseList);
   return (
     <>
       <HeaderStaff />
@@ -584,6 +596,7 @@ export default function CourseView() {
                       description,
                       courseImg,
                       classInfo,
+                      classInfoFinished,
                       feedbackInfo,
                       deleted,
                       rating,
@@ -766,6 +779,7 @@ export default function CourseView() {
                                 {classInfo != null && classInfo.length > 0 ? (
                                   <AdminCourseClasses
                                     courseClasses={classInfo}
+                                    courseFinishedClasses={classInfoFinished}
                                     className="flex justify-content-start"
                                   />
                                 ) : (

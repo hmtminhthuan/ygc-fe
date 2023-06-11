@@ -6,10 +6,10 @@ export const alert = {
       toast: true,
       position: "top-end",
       width: "30rem",
-      background: "green",
-      color: " red",
+      background: "#eef6ec",
+      // color: " red",
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2500,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);

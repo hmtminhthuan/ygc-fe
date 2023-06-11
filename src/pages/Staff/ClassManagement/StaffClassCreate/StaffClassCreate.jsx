@@ -39,6 +39,7 @@ export default function StaffClassCreate() {
   const [slotDto, setSlotDto] = useState([]);
   const [listOfTrainer, setListOfTrainer] = useState([]);
   const [suitableScheDuleAndDate, setSuitableScheDuleAndDate] = useState(true);
+  const [suitableTrainer, setSuitableTrainer] = useState(true);
   const [selectedTrainer, setSelectedTrainer] = useState({});
   const [selectedSchedule, setSelectedSchedule] = useState([]);
 
@@ -61,10 +62,11 @@ export default function StaffClassCreate() {
     initialValues: {
       className: "",
       trainerId: 0,
-      courseId: param.id,
+      courseId: parseInt(param.id),
       room: "",
       startDate: "",
       endDate: "",
+      status: 0,
       finished: false,
     },
     onSubmit: (values) => {
@@ -94,6 +96,12 @@ export default function StaffClassCreate() {
           "You need to add trainer",
           () => {}
         );
+      } else if (!suitableTrainer) {
+        alert.alertFailed(
+          "Create Class Failed",
+          "The schedule of Trainer cannot be duplicated",
+          () => {}
+        );
       } else {
         let theSlotDTOs = [];
         slotDto.forEach((item) => {
@@ -105,10 +113,22 @@ export default function StaffClassCreate() {
             },
           ];
         });
+        alert.alertSuccess("Create Class Successfully", "", () => {});
         console.log("obj", {
           classDTO: values,
           slotDTOs: theSlotDTOs,
         });
+        // api
+        //   .post(`/Class/CreateClass`, {
+        //     classDTO: values,
+        //     slotDTOs: theSlotDTOs,
+        //   })
+        //   .then((res) => {
+        //     console.log(res);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
       }
     },
   });
@@ -240,8 +260,10 @@ export default function StaffClassCreate() {
       });
       setSuitableScheDuleAndDate(valid);
     }
-  }, [slotDto]);
+  }, [slotDto, courseStartDate, courseEndDate]);
   useEffect(() => {
+    setSuitableTrainer(true);
+    let schedule = [];
     if (
       selectedTrainer.accountID != null &&
       selectedTrainer.accountID != undefined
@@ -251,11 +273,45 @@ export default function StaffClassCreate() {
           params: { id: selectedTrainer.accountID },
         })
         .then((res) => {
+          schedule = res.data;
           setSelectedSchedule(res.data);
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          if (slotDto.length > 0) {
+            schedule
+              .filter(
+                (item) =>
+                  (styleInputDate(item.endDate) ==
+                    styleInputDate(currentDate) ||
+                    styleRealDate(item.endDate) >=
+                      styleRealDate(currentDate)) &&
+                  (styleInputDate(item.endDate) ==
+                    styleInputDate(courseStartDate) ||
+                    styleRealDate(item.endDate) >=
+                      styleRealDate(courseStartDate)) &&
+                  (styleInputDate(item.startDate) ==
+                    styleInputDate(courseEndDate) ||
+                    styleRealDate(item.startDate) <=
+                      styleRealDate(courseEndDate))
+              )
+              .forEach((item) => {
+                item.schedule.forEach((sche) => {
+                  slotDto.forEach((slot) => {
+                    if (
+                      slot.dayOfWeek.trim().toLowerCase() ==
+                        sche.date.trim().toLowerCase() &&
+                      slot.timeFrameId == sche.timeframeId
+                    ) {
+                      setSuitableTrainer(false);
+                    }
+                  });
+                });
+              });
+          }
+        });
     }
-  }, [selectedTrainer]);
+  }, [selectedTrainer, slotDto, courseStartDate, courseEndDate]);
   const handleChangeStartDate = (value) => {
     setRealCourseStartDate(styleRealDateWithDay(value));
     let startDate = styleInputDate(value);
@@ -365,11 +421,12 @@ export default function StaffClassCreate() {
       setSlotDto([...listOfSlot].filter((item) => item.dayOfWeek != ""));
     }
   };
-  // console.log(slotDto);
+  // console.log("slotdto", slotDto);
   // console.log(timetable);
-  console.log(listOfTrainer);
-  console.log("trainer", selectedTrainer);
-  console.log("trainerSche", selectedSchedule);
+  // console.log(listOfTrainer);
+  // console.log("trainer", selectedTrainer);
+  // console.log("trainerSche", selectedSchedule);
+  // console.log(suitableTrainer);
   return (
     <>
       <HeaderStaff />
@@ -692,72 +749,132 @@ export default function StaffClassCreate() {
                                   verticalAlign: "middle",
                                 }}
                               >
-                                {timetable
-                                  .filter(
-                                    (s) =>
-                                      s.schedule.date
+                                <div className="p-0 m-0">
+                                  {timetable
+                                    .filter(
+                                      (s) =>
+                                        s.schedule.date
+                                          .trim()
+                                          .toLowerCase()
+                                          .includes(
+                                            `${dayOfTheWeek}`
+                                              .trim()
+                                              .toLowerCase()
+                                          ) &&
+                                        s.schedule.timeframeId == timeFrame.id
+                                    )
+                                    .filter((item) =>
+                                      item.room
                                         .trim()
                                         .toLowerCase()
                                         .includes(
-                                          `${dayOfTheWeek}`.trim().toLowerCase()
-                                        ) &&
-                                      s.schedule.timeframeId == timeFrame.id
-                                  )
-                                  .filter((item) =>
-                                    item.room
-                                      .trim()
-                                      .toLowerCase()
-                                      .includes(
-                                        `${courseRoom}`.trim().toLowerCase()
-                                      )
-                                  )
-                                  .filter((item) => {
-                                    if (courseStartDate == "") {
-                                      return true;
-                                    }
-                                    if (
-                                      styleInputDate(courseStartDate) ==
-                                      styleInputDate(item.endDate)
-                                    ) {
-                                      return true;
-                                    }
+                                          `${courseRoom}`.trim().toLowerCase()
+                                        )
+                                    )
+                                    .filter((item) => {
+                                      if (courseStartDate == "") {
+                                        return true;
+                                      }
+                                      if (
+                                        styleInputDate(courseStartDate) ==
+                                        styleInputDate(item.endDate)
+                                      ) {
+                                        return true;
+                                      }
+                                      return (
+                                        styleRealDate(courseStartDate) <=
+                                        styleRealDate(item.endDate)
+                                      );
+                                    }).length <= 0 &&
+                                  slotDto.filter((item) => {
                                     return (
-                                      styleRealDate(courseStartDate) <=
-                                      styleRealDate(item.endDate)
+                                      item.dayOfWeek.trim().toLowerCase() ==
+                                        dayOfTheWeek.trim().toLowerCase() &&
+                                      item.timeFrameId == timeFrame.id
                                     );
+                                    // aa;
                                   }).length <= 0 ? (
-                                  <div className="p-0 m-0">
-                                    <i
-                                      className="fa-solid fa-plus bg-success text-success bg-opacity-10 p-2 mx-2"
-                                      style={{
-                                        borderRadius: "50%",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() => {
-                                        handleAddSlot(
-                                          dayOfTheWeek,
-                                          timeFrame.id
-                                        );
-                                      }}
-                                    ></i>
-                                    <i
-                                      className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
-                                      style={{
-                                        borderRadius: "50%",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() => {
-                                        handleDeleteSlot(
-                                          dayOfTheWeek,
-                                          timeFrame.id
-                                        );
-                                      }}
-                                    ></i>
-                                  </div>
-                                ) : (
-                                  <></>
-                                )}
+                                    <>
+                                      <i
+                                        className="fa-solid fa-plus bg-success text-success bg-opacity-10 p-2 mx-2"
+                                        style={{
+                                          borderRadius: "50%",
+                                          cursor: "pointer",
+                                        }}
+                                        onClick={() => {
+                                          handleAddSlot(
+                                            dayOfTheWeek,
+                                            timeFrame.id
+                                          );
+                                        }}
+                                      ></i>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
 
+                                  {timetable
+                                    .filter(
+                                      (s) =>
+                                        s.schedule.date
+                                          .trim()
+                                          .toLowerCase()
+                                          .includes(
+                                            `${dayOfTheWeek}`
+                                              .trim()
+                                              .toLowerCase()
+                                          ) &&
+                                        s.schedule.timeframeId == timeFrame.id
+                                    )
+                                    .filter((item) =>
+                                      item.room
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(
+                                          `${courseRoom}`.trim().toLowerCase()
+                                        )
+                                    )
+                                    .filter((item) => {
+                                      if (courseStartDate == "") {
+                                        return true;
+                                      }
+                                      if (
+                                        styleInputDate(courseStartDate) ==
+                                        styleInputDate(item.endDate)
+                                      ) {
+                                        return true;
+                                      }
+                                      return (
+                                        styleRealDate(courseStartDate) <=
+                                        styleRealDate(item.endDate)
+                                      );
+                                    }).length <= 0 &&
+                                  slotDto.filter((item) => {
+                                    return (
+                                      item.dayOfWeek.trim().toLowerCase() ==
+                                        dayOfTheWeek.trim().toLowerCase() &&
+                                      item.timeFrameId == timeFrame.id
+                                    );
+                                  }).length > 0 ? (
+                                    <>
+                                      <i
+                                        className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                                        style={{
+                                          borderRadius: "50%",
+                                          cursor: "pointer",
+                                        }}
+                                        onClick={() => {
+                                          handleDeleteSlot(
+                                            dayOfTheWeek,
+                                            timeFrame.id
+                                          );
+                                        }}
+                                      ></i>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
                                 {slotDto.findIndex(
                                   (item) =>
                                     item.dayOfWeek
@@ -987,49 +1104,353 @@ export default function StaffClassCreate() {
                 <></>
               )}
 
-              <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Trainer:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    label=""
-                    name="trainerId"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Trainer must be selected",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Select
+              {courseStartDate != "" &&
+              courseEndDate != "" &&
+              courseRoom != "" ? (
+                <div className="row flex align-items-start justify-content-between">
+                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                    <span className="text-danger px-1">
+                      <i
+                        className="fa-solid fa-star-of-life"
+                        style={{
+                          fontSize: "6px",
+                          verticalAlign: "middle",
+                        }}
+                      ></i>{" "}
+                    </span>
+                    Trainer:
+                  </p>
+                  <div className="col-10">
+                    <Form.Item
+                      label=""
                       name="trainerId"
-                      width="200px"
-                      placeholder="Select Trainer"
-                      value={formik.values.trainerId}
-                      onChange={handleChangeTrainer}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Trainer must be selected",
+                        },
+                      ]}
+                      hasFeedback
                     >
-                      {listOfTrainer.map((item, index) => {
+                      <Select
+                        name="trainerId"
+                        width="200px"
+                        placeholder="Select Trainer"
+                        value={formik.values.trainerId}
+                        onChange={handleChangeTrainer}
+                      >
+                        {listOfTrainer.map((item, index) => {
+                          return (
+                            <Select.Option key={index} value={item.accountID}>
+                              {item.fullname}
+                            </Select.Option>
+                          );
+                        })}
+                      </Select>
+                    </Form.Item>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {selectedTrainer.accountID == null ||
+              selectedTrainer.accountID == undefined ? (
+                <></>
+              ) : (
+                <table className="table-bordered text-center ">
+                  <thead>
+                    <tr className="bg-light-gray">
+                      <th
+                        className="text-uppercase text-dark"
+                        style={{ background: "#ec88ad" }}
+                      >
+                        Time
+                      </th>
+                      {listOfDay.map((item) => {
                         return (
-                          <Select.Option key={index} value={item.accountID}>
-                            {item.fullname}
-                          </Select.Option>
+                          <th
+                            key={item}
+                            className="text-uppercase text-dark"
+                            style={{ background: "#ec88ad" }}
+                          >
+                            {item}
+                          </th>
                         );
                       })}
-                    </Select>
-                  </Form.Item>
-                </div>
-              </div>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {listOfTimeFrame.map((timeFrame) => (
+                      <tr key={timeFrame.id}>
+                        <td className="align-middle">{timeFrame.timeFrame1}</td>
+                        {listOfDay.map((theDay, index) => {
+                          return (
+                            <td
+                              key={theDay + index}
+                              className={`p-0 m-0 bg-opacity-25
+                            ${
+                              slotDto.filter((item) => {
+                                return (
+                                  item.dayOfWeek.trim().toLowerCase() ==
+                                    theDay.trim().toLowerCase() &&
+                                  item.timeFrameId == timeFrame.id
+                                );
+                              }).length > 0 &&
+                              selectedSchedule.filter(
+                                (item) =>
+                                  (styleInputDate(item.endDate) ==
+                                    styleInputDate(currentDate) ||
+                                    styleRealDate(item.endDate) >=
+                                      styleRealDate(currentDate)) &&
+                                  (styleInputDate(item.endDate) ==
+                                    styleInputDate(courseStartDate) ||
+                                    styleRealDate(item.endDate) >=
+                                      styleRealDate(courseStartDate)) &&
+                                  (styleInputDate(item.startDate) ==
+                                    styleInputDate(courseEndDate) ||
+                                    styleRealDate(item.startDate) <=
+                                      styleRealDate(courseEndDate)) &&
+                                  item.schedule.some(
+                                    (s) =>
+                                      s.date == `${theDay}` &&
+                                      s.timeframeId === timeFrame.id
+                                  )
+                              ).length <= 0
+                                ? "bg-success"
+                                : ""
+                            }
+                            ${
+                              slotDto.filter((item) => {
+                                return (
+                                  item.dayOfWeek.trim().toLowerCase() ==
+                                    theDay.trim().toLowerCase() &&
+                                  item.timeFrameId == timeFrame.id
+                                );
+                              }).length > 0 &&
+                              selectedSchedule.filter(
+                                (item) =>
+                                  (styleInputDate(item.endDate) ==
+                                    styleInputDate(currentDate) ||
+                                    styleRealDate(item.endDate) >=
+                                      styleRealDate(currentDate)) &&
+                                  (styleInputDate(item.endDate) ==
+                                    styleInputDate(courseStartDate) ||
+                                    styleRealDate(item.endDate) >=
+                                      styleRealDate(courseStartDate)) &&
+                                  (styleInputDate(item.startDate) ==
+                                    styleInputDate(courseEndDate) ||
+                                    styleRealDate(item.startDate) <=
+                                      styleRealDate(courseEndDate)) &&
+                                  item.schedule.some(
+                                    (s) =>
+                                      s.date == `${theDay}` &&
+                                      s.timeframeId === timeFrame.id
+                                  )
+                              ).length > 0
+                                ? "bg-danger"
+                                : ""
+                            }`}
+                            >
+                              {selectedSchedule
+                                .filter(
+                                  (item) =>
+                                    (styleInputDate(item.endDate) ==
+                                      styleInputDate(currentDate) ||
+                                      styleRealDate(item.endDate) >=
+                                        styleRealDate(currentDate)) &&
+                                    item.schedule.some(
+                                      (s) =>
+                                        s.date == `${theDay}` &&
+                                        s.timeframeId === timeFrame.id
+                                    )
+                                )
+                                .map((filteredItem) => (
+                                  <div
+                                    className="content m-0 p-0"
+                                    key={filteredItem.courseId}
+                                  >
+                                    {/* <Link
+                                      className="title m-0 p-0"
+                                      to={`/trainer/classDetail/${filteredItem.classId}`}
+                                    > */}
+                                    <p
+                                      className="p-0 m-0"
+                                      style={{ fontWeight: "bolder" }}
+                                    >
+                                      {filteredItem.courseName}
+                                    </p>
+                                    {/* </Link> */}
+
+                                    <p className="p-0 m-0">
+                                      Class: {filteredItem.className}
+                                    </p>
+                                    <p className="p-0 m-0">
+                                      Room: {filteredItem.room}
+                                    </p>
+                                    <p className="p-0 m-0">
+                                      Start:{" "}
+                                      {styleViewDate(filteredItem.startDate)}
+                                    </p>
+                                    <p className="p-0 m-0">
+                                      End: {styleViewDate(filteredItem.endDate)}
+                                    </p>
+                                  </div>
+                                ))}
+                            </td>
+                          );
+                        })}
+                        {/* <td>
+                      {selectedSchedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Tuesday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div
+                            className="content"
+                            key={filteredItem.courseId}
+                          >
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
+                            >
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td>
+                    <td>
+                      {selectedSchedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Wednesday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div
+                            className="content"
+                            key={filteredItem.courseId}
+                          >
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
+                            >
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td>
+                    <td>
+                      {selectedSchedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Thursday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div
+                            className="content"
+                            key={filteredItem.courseId}
+                          >
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
+                            >
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td>
+                    <td>
+                      {selectedSchedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Friday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div
+                            className="content"
+                            key={filteredItem.courseId}
+                          >
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+                            <Link
+                              className="title"
+                              to={`/trainer/classDetail/${filteredItem.classId}`}
+                            >
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td>
+                    <td>
+                      {selectedSchedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Saturday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div
+                            className="content"
+                            key={filteredItem.courseId}
+                          >
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
+                            >
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td> */}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
 
               <button
                 className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
