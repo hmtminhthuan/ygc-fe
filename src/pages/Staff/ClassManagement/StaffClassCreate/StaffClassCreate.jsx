@@ -7,6 +7,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import moment from "moment/moment";
+import { api } from "../../../../constants/api";
+import { alert } from "../../../../component/AlertComponent/Alert";
 
 export default function StaffClassCreate() {
   localStorage.setItem("MENU_ACTIVE", "staff-class");
@@ -28,8 +30,17 @@ export default function StaffClassCreate() {
   const [listOfTimeFrame, setListOfTimeFrame] = useState([]);
   const [comeback, setComeback] = useState("");
   const [courseName, setCourseName] = useState("");
+  const [courseRoom, setCourseRoom] = useState("");
+  const [courseStartDate, setCourseStartDate] = useState("");
+  const [courseEndDate, setCourseEndDate] = useState("");
+  const [timetable, setTimetable] = useState([]);
+  const [slotDto, setSlotDto] = useState([]);
+
   const styleInputDate = (date) => {
     return moment(new Date(`${date}`)).format("YYYY-MM-DD");
+  };
+  const styleViewDate = (date) => {
+    return moment(new Date(`${date}`)).format("DD-MM-YYYY");
   };
   const styleRealDate = (date) => {
     return moment(new Date(`${date}`));
@@ -48,10 +59,72 @@ export default function StaffClassCreate() {
       finished: false,
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log("values", values);
+      console.log("slotDto", slotDto);
+      if (slotDto.length <= 0) {
+        alert.alertFailed(
+          "Create Class Failed",
+          "You need to add schedule",
+          () => {}
+        );
+      } else {
+        let theSlotDTOs = [];
+        slotDto.forEach((item) => {
+          theSlotDTOs = [
+            ...theSlotDTOs,
+            {
+              dayOfWeek: item.dayOfWeek,
+              timeFrameId: item.timeFrameId,
+            },
+          ];
+        });
+        console.log("obj", {
+          classDTO: values,
+          slotDTOs: theSlotDTOs,
+        });
+      }
     },
   });
   useEffect(() => {
+    let listOfTime = [];
+    api
+      .get(`Timeframe/GetTimeFrameList`)
+      .then((res) => {
+        listOfTime = res.data;
+        listOfTime.forEach((item) => {
+          let str = item.timeFrame1.split("-");
+          item.timeFrame1 = `${str[0].trim()} - ${str[1].trim()}`;
+        });
+      })
+      .catch((err) => {})
+      .finally(() => {
+        setListOfTimeFrame([...listOfTime]);
+      });
+
+    let timetableList = [];
+    listOfRoom.forEach((room) => {
+      let listClassOfRoom = [];
+      api
+        .get(`Class/GetClassesOfRoom?room=${room}`)
+        .then((res) => {
+          listClassOfRoom = res.data;
+          listClassOfRoom.forEach((classItem) => {
+            if (styleRealDate(classItem.endDate) <= currentDate) {
+              return;
+            }
+            classItem.schedule.forEach((theSchedule) => {
+              let classAdd = { ...classItem };
+              classAdd.schedule = theSchedule;
+              timetableList = [...timetableList, classAdd];
+            });
+          });
+        })
+        .catch((err) => {})
+        .finally(() => {
+          setTimetable([...timetableList]);
+        });
+    });
+
     const BACK_TO_CLASS = localStorage.getItem("BACK_TO_CLASS");
     const COURSE_NAME_CREATE_CLASS = localStorage.getItem(
       "COURSE_NAME_CREATE_CLASS"
@@ -71,14 +144,136 @@ export default function StaffClassCreate() {
       localStorage.removeItem("COURSE_NAME_CREATE_CLASS");
     }
   }, []);
+  useEffect(() => {
+    setSlotDto([]);
+  }, [courseRoom]);
+  useEffect(() => {
+    let listOfSlot = [...slotDto];
+    listOfSlot.forEach((slot) => {
+      if (
+        timetable.filter(
+          (item) =>
+            item.schedule.date
+              .trim()
+              .toLowerCase()
+              .includes(slot.dayOfWeek.trim().toLowerCase()) &&
+            item.room
+              .trim()
+              .toLowerCase()
+              .includes(courseRoom.trim().toLowerCase()) &&
+            item.schedule.timeframeId == slot.timeFrameId &&
+            (styleRealDate(item.endDate) >= styleRealDate(courseStartDate) ||
+              styleInputDate(item.endDate) == styleInputDate(courseStartDate))
+        ).length > 0
+      ) {
+        slot.validSlot = false;
+        setSlotDto([...listOfSlot]);
+      }
+    });
+  }, [courseStartDate]);
   const handleChangeStartDate = (value) => {
     let startDate = styleInputDate(value);
+    setCourseStartDate(value);
     formik.setFieldValue("startDate", startDate);
   };
   const handleChangeEndDate = (value) => {
     let endDate = styleInputDate(value);
+    setCourseEndDate(value);
     formik.setFieldValue("endDate", endDate);
   };
+  const handleChangeRoom = (value) => {
+    setCourseRoom(value);
+    formik.setFieldValue("room", value);
+  };
+  const handleAddSlot = async (theDay, theTime) => {
+    let listOfSlot = [...slotDto];
+    let pos = listOfSlot.findIndex(
+      (item) =>
+        item.dayOfWeek
+          .trim()
+          .toLowerCase()
+          .includes(theDay.trim().toLowerCase()) && item.timeFrameId == theTime
+    );
+    if (pos < 0) {
+      let valid = true;
+      timetable
+        .filter(
+          (item) =>
+            item.schedule.date
+              .trim()
+              .toLowerCase()
+              .includes(theDay.trim().toLowerCase()) &&
+            item.room
+              .trim()
+              .toLowerCase()
+              .includes(courseRoom.trim().toLowerCase()) &&
+            item.schedule.timeframeId == theTime &&
+            item.room
+              .trim()
+              .toLowerCase()
+              .includes(courseRoom.trim().toLowerCase())
+        )
+        .forEach((item) => {
+          if (
+            styleRealDate(item.endDate) >= styleRealDate(courseStartDate) ||
+            styleInputDate(item.endDate) == styleInputDate(courseStartDate)
+          ) {
+            valid = false;
+          }
+        });
+      let slot = {
+        dayOfWeek: theDay,
+        timeFrameId: theTime,
+        validSlot: valid,
+      };
+      listOfSlot = [...listOfSlot, slot];
+      setSlotDto(
+        [...listOfSlot]
+          .sort((a, b) => {
+            return a.timeFrameId - b.timeFrameId;
+          })
+          .sort((a, b) => {
+            let posA = -1;
+            let posB = -1;
+            for (i = 0; i < listOfDay.length; i++) {
+              if (
+                a.dayOfWeek
+                  .trim()
+                  .toLowerCase()
+                  .includes(listOfDay[i].trim().toLowerCase())
+              ) {
+                posA = i;
+              }
+              if (
+                b.dayOfWeek
+                  .trim()
+                  .toLowerCase()
+                  .includes(listOfDay[i].trim().toLowerCase())
+              ) {
+                posB = i;
+              }
+            }
+            return posA - posB;
+          })
+      );
+    }
+  };
+  const handleDeleteSlot = (theDay, theTime) => {
+    let listOfSlot = [...slotDto];
+    let pos = listOfSlot.findIndex(
+      (item) =>
+        item.dayOfWeek
+          .trim()
+          .toLowerCase()
+          .includes(theDay.trim().toLowerCase()) && item.timeFrameId == theTime
+    );
+    if (pos >= 0) {
+      listOfSlot[pos].dayOfWeek = "";
+      setSlotDto([...listOfSlot].filter((item) => item.dayOfWeek != ""));
+    }
+  };
+  console.log(slotDto);
+  console.log(timetable);
   return (
     <>
       <HeaderStaff />
@@ -182,7 +377,7 @@ export default function StaffClassCreate() {
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          if (!(currentDate < styleRealDate(value))) {
+                          if (!(currentDate < styleRealDate(value)) && value) {
                             return Promise.reject(
                               "End Date cannot be before or equal to Current Date"
                             );
@@ -245,7 +440,7 @@ export default function StaffClassCreate() {
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          if (!(currentDate < styleRealDate(value))) {
+                          if (!(currentDate < styleRealDate(value)) && value) {
                             return Promise.reject(
                               "End Date cannot be before or equal to Current Date"
                             );
@@ -284,7 +479,7 @@ export default function StaffClassCreate() {
                 </div>
               </div>
 
-              {/* <div className="row flex align-items-start justify-content-between">
+              <div className="row flex align-items-start justify-content-between">
                 <p className="col-2 p-0 m-0 px-3 mt-2 flex">
                   <span className="text-danger px-1">
                     <i
@@ -295,38 +490,336 @@ export default function StaffClassCreate() {
                       }}
                     ></i>{" "}
                   </span>
-                  Level:
+                  Room:
                 </p>
                 <div className="col-10">
                   <Form.Item
                     label=""
-                    name="levelId"
+                    name="room"
                     rules={[
                       {
                         required: true,
-                        message: "Level must be selected",
+                        message: "Room must be selected",
                       },
                     ]}
                     hasFeedback
                   >
                     <Select
-                      name="levelId"
+                      name="room"
                       width="200px"
-                      placeholder="Select Level"
-                      value={formik.values.levelId}
-                      onChange={handleChangeLevel}
+                      placeholder="Select Room"
+                      value={formik.values.room}
+                      onChange={handleChangeRoom}
                     >
-                      {levelList.map(({ levelId, levelName }, index) => {
-                      return (
-                        <Select.Option key={index} value={levelId}>
-                          {levelName}
-                        </Select.Option>
-                      );
-                    })}
+                      {listOfRoom.map((room, index) => {
+                        return (
+                          <Select.Option key={index} value={room}>
+                            {room}
+                          </Select.Option>
+                        );
+                      })}
                     </Select>
                   </Form.Item>
                 </div>
-              </div> */}
+              </div>
+
+              {courseRoom != "" &&
+              courseStartDate != "" &&
+              courseEndDate != "" ? (
+                <>
+                  <div className="row flex align-items-start justify-content-between">
+                    <p className="col-12 p-0 m-0 px-3 my-2 mt-0 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      Schedule:
+                    </p>
+                  </div>
+                  <table className="table-bordered text-center ">
+                    <thead>
+                      <tr className="bg-light-gray">
+                        <th className="text-uppercase">Time</th>
+                        {listOfDay.map((day) => {
+                          return <th className="text-uppercase">{day}</th>;
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listOfTimeFrame.map((timeFrame) => (
+                        <tr key={timeFrame.id}>
+                          <td className="align-middle">
+                            {timeFrame.timeFrame1}
+                          </td>
+                          {listOfDay.map((dayOfTheWeek, index) => {
+                            return (
+                              <td
+                                key={dayOfTheWeek}
+                                className={`m-0 p-0 py-1 bg-opacity-25
+                                ${
+                                  slotDto.findIndex(
+                                    (item) =>
+                                      item.dayOfWeek
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(
+                                          dayOfTheWeek.trim().toLowerCase()
+                                        ) &&
+                                      item.timeFrameId == timeFrame.id &&
+                                      item.validSlot
+                                  ) >= 0
+                                    ? "bg-success"
+                                    : ""
+                                }
+                                ${
+                                  slotDto.findIndex(
+                                    (item) =>
+                                      item.dayOfWeek
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(
+                                          dayOfTheWeek.trim().toLowerCase()
+                                        ) &&
+                                      item.timeFrameId == timeFrame.id &&
+                                      !item.validSlot
+                                  ) >= 0
+                                    ? "bg-danger"
+                                    : ""
+                                }`}
+                                style={{
+                                  position: "relative",
+                                  verticalAlign: "middle",
+                                }}
+                              >
+                                {timetable
+                                  .filter(
+                                    (s) =>
+                                      s.schedule.date
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(
+                                          `${dayOfTheWeek}`.trim().toLowerCase()
+                                        ) &&
+                                      s.schedule.timeframeId == timeFrame.id
+                                  )
+                                  .filter((item) =>
+                                    item.room
+                                      .trim()
+                                      .toLowerCase()
+                                      .includes(
+                                        `${courseRoom}`.trim().toLowerCase()
+                                      )
+                                  )
+                                  .filter((item) => {
+                                    if (courseStartDate == "") {
+                                      return true;
+                                    }
+                                    if (
+                                      styleInputDate(courseStartDate) ==
+                                      styleInputDate(item.endDate)
+                                    ) {
+                                      return true;
+                                    }
+                                    return (
+                                      styleRealDate(courseStartDate) <=
+                                      styleRealDate(item.endDate)
+                                    );
+                                  }).length <= 0 ? (
+                                  <div className="p-0 m-0">
+                                    <i
+                                      className="fa-solid fa-plus bg-success text-success bg-opacity-10 p-2 mx-2"
+                                      style={{
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                      onClick={() => {
+                                        handleAddSlot(
+                                          dayOfTheWeek,
+                                          timeFrame.id
+                                        );
+                                      }}
+                                    ></i>
+                                    <i
+                                      className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                                      style={{
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                      onClick={() => {
+                                        handleDeleteSlot(
+                                          dayOfTheWeek,
+                                          timeFrame.id
+                                        );
+                                      }}
+                                    ></i>
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
+
+                                {slotDto.findIndex(
+                                  (item) =>
+                                    item.dayOfWeek
+                                      .trim()
+                                      .toLowerCase()
+                                      .includes(
+                                        dayOfTheWeek.trim().toLowerCase()
+                                      ) &&
+                                    item.timeFrameId == timeFrame.id &&
+                                    !item.validSlot
+                                ) >= 0 ? (
+                                  <div className="p-0 m-0">
+                                    <i
+                                      className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                                      style={{
+                                        borderRadius: "50%",
+                                        cursor: "pointer",
+                                      }}
+                                      onClick={() => {
+                                        handleDeleteSlot(
+                                          dayOfTheWeek,
+                                          timeFrame.id
+                                        );
+                                      }}
+                                    ></i>
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
+
+                                {timetable
+                                  .filter(
+                                    (s) =>
+                                      s.schedule.date
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(
+                                          `${dayOfTheWeek}`.trim().toLowerCase()
+                                        ) &&
+                                      s.schedule.timeframeId == timeFrame.id
+                                  )
+                                  .filter((item) =>
+                                    item.room
+                                      .trim()
+                                      .toLowerCase()
+                                      .includes(
+                                        `${courseRoom}`.trim().toLowerCase()
+                                      )
+                                  )
+                                  .filter((item) => {
+                                    if (courseStartDate == "") {
+                                      return true;
+                                    }
+                                    if (
+                                      styleInputDate(courseStartDate) ==
+                                      styleInputDate(item.endDate)
+                                    ) {
+                                      return true;
+                                    }
+                                    return (
+                                      styleRealDate(courseStartDate) <=
+                                      styleRealDate(item.endDate)
+                                    );
+                                  })
+                                  .map((filteredItem, index) => (
+                                    <div
+                                      className="content"
+                                      key={`${dayOfTheWeek}+${timeFrame.id}+${filteredItem.startDate}`}
+                                    >
+                                      {index != 0 ? (
+                                        <hr className="my-1 mt-2" />
+                                      ) : (
+                                        <></>
+                                      )}
+                                      {/* <hr className="m-0 p-0 mt-1" /> */}
+                                      <p
+                                        className="p-0 m-0"
+                                        style={{
+                                          fontWeight: "bold",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {filteredItem.courseName}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        Class: {filteredItem.className}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        Start:{" "}
+                                        {styleViewDate(filteredItem.startDate)}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        End:{" "}
+                                        {styleViewDate(filteredItem.endDate)}
+                                      </p>
+                                    </div>
+                                  ))}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <div className="">
+                    {slotDto.length > 0 ? (
+                      <h5 className="m-0 p-0 px-4 mt-2">Preview Schedule</h5>
+                    ) : (
+                      <></>
+                    )}
+                    {slotDto.map((slot, index) => {
+                      return (
+                        <p
+                          className={`p-0 m-0 px-4 mt-2 
+                          ${!slot.validSlot ? "text-danger" : ""}`}
+                          style={{ fontWeight: "500" }}
+                        >
+                          <span>
+                            <i
+                              className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                              style={{
+                                borderRadius: "50%",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                handleDeleteSlot(
+                                  slot.dayOfWeek,
+                                  slot.timeFrameId
+                                );
+                              }}
+                            ></i>
+                          </span>
+                          <span className="px-2">{slot.dayOfWeek},</span>{" "}
+                          <span>
+                            {
+                              listOfTimeFrame[
+                                listOfTimeFrame.findIndex(
+                                  (item) => item.id == slot.timeFrameId
+                                )
+                              ].timeFrame1
+                            }
+                          </span>
+                          {!slot.validSlot ? (
+                            <span className="px-3">
+                              {"(Duplicate Schedule)"}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </p>
+                      );
+                    })}
+                    <hr className="m-0 p-0 mt-3" />
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
 
               {/* <div className="row flex align-items-start justify-content-between">
                 <p className="col-2 p-0 m-0 px-3 mt-2 flex">

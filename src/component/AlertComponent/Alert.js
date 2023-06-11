@@ -25,4 +25,27 @@ export const alert = {
       callback();
     });
   },
+  alertFailed: function (title, html, callback) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: "25rem",
+      background: "#fee3e2",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "error",
+      title: `${title}`,
+      html: `${html}`,
+    }).then(function () {
+      callback();
+    });
+  },
 };
