@@ -34,10 +34,8 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
   useEffect(() => {
     if (courseClasses.length > 0) {
       for (i = 0; i < courseClasses.length; i++) {
-        let current = moment(new Date()).format("DD-MM-YYYY");
-        let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
-          "DD-MM-YYYY"
-        );
+        let current = moment(new Date());
+        let end = moment(new Date(`${courseClasses[i].endDate}`));
         if (current <= end) {
           setAvailable(true);
           setMarkAvailable(true);
@@ -69,7 +67,7 @@ export default function CourseClasses({ courseClasses, ...restParams }) {
                   <StyledTableCell align="left">Schedule</StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ height: "auto" }}>
                 {courseClasses.map(
                   (
                     {

@@ -107,7 +107,20 @@ export default function AdminCourseClasses({
             No available class till present!
           </p>
         ) : (
-          <TableContainer component={Paper} style={{ height: "360px" }}>
+          <TableContainer
+            component={Paper}
+            style={{
+              height: `${
+                courseClasses.length >= 2 && viewAllButton ? "290px" : ""
+              }
+              ${
+                [...courseClasses, ...courseFinishedClasses].length >= 2 &&
+                !viewAllButton
+                  ? "290px"
+                  : ""
+              }`,
+            }}
+          >
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow className=" bg-dark">
@@ -121,7 +134,7 @@ export default function AdminCourseClasses({
                   <StyledTableCell align="right">Trainees</StyledTableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ height: "auto" }}>
                 {viewAllButton ? (
                   <>
                     {courseClasses
