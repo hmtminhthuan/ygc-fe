@@ -13,7 +13,12 @@ export default function ClassOfTrainer() {
         params: { id: id },
       })
       .then((res) => {
-        setClassDetail(res.data[0]);
+        if (res.data && res.data.length > 0) {
+          setClassDetail(res.data[0]);
+        } else {
+          // Handle the case where no class data is available
+          console.log("No class data available");
+        }
       })
       .catch((err) => {});
 
@@ -56,7 +61,7 @@ export default function ClassOfTrainer() {
                       className="header-fullname"
                       style={{ fontSize: "24px", fontWeight: "bold" }}
                     >
-                      Class:
+                      Class: {classDetail.className}
                     </div>
                     <a
                       href="#"
@@ -70,13 +75,15 @@ export default function ClassOfTrainer() {
                       style={{ fontSize: "20px" }}
                     >
                       <p>Course name: {classDetail.courseName}</p>
-                      <p>Room:</p>
+                      <p>Room: {classDetail.room}</p>
                     </div>
                   </div>
                   <div className="col-md-12 col-sm-12 col-xs-12 profile-stats">
                     <div className="row">
                       <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div className="stats-value pink">?</div>
+                        <div className="stats-value pink">
+                          {trainees.length}
+                        </div>
                         <div className="stats-title">TRAINEES</div>
                       </div>
                       <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
@@ -120,43 +127,29 @@ export default function ClassOfTrainer() {
                         </tr>
                       </thead>
                       <tbody>
-                        {trainees.map((trainee) => {
-                          <tr key={trainee.classId}>
+                        {trainees.map((trainee) => (
+                          <tr key={trainee.id}>
                             <td className="table-img">
-                              {/* <img
-                              src="https://bootdey.com/img/Content/avatar/avatar8.png"
-                              alt
-                            /> */}
                               <img
                                 src={trainee.img}
                                 alt={`${trainee.firstName} ${trainee.lastName}`}
                                 className="trainee-image"
                               />
                             </td>
-
                             <td>
                               <h6 className="mb-0 font-13">
                                 {trainee.firstName}
                               </h6>
-                              {/* <p className="m-0 font-12">
-                                Assigned to
-                                <span className="col-green font-weight-bold">
-                                  {" "}
-                                  Airi Satou
-                                </span>
-                              </p> */}
                             </td>
-
                             <td>{trainee.lastName}</td>
-
                             <td>{trainee.gender ? "Male" : "Female"}</td>
                             <td>
                               <div className="badge-outline col-red">
                                 {trainee.phone}
                               </div>
                             </td>
-                          </tr>;
-                        })}
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>

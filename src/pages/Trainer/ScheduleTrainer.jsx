@@ -79,13 +79,16 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+
+                            <Link
+                              className="title"
+                              to={`/trainer/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -104,13 +107,15 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -129,13 +134,14 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -154,13 +160,14 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -179,13 +186,14 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainer/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -204,13 +212,14 @@ export default function ScheduleTrainer() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p>{filteredItem.courseName}</p>
+                            </Link>
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>

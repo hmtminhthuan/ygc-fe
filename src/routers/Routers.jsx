@@ -60,7 +60,6 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
-        { path: "/classDetail/:id", element: <ClassOfTrainer /> },
       ],
     },
     {
@@ -121,6 +120,7 @@ export default function Routers() {
       children: [
         { path: "/trainer", element: <TrainerHome /> },
         { path: "/trainer/schedule/:id", element: <ScheduleTrainer /> },
+        { path: "/trainer/classDetail/:id", element: <ClassOfTrainer /> },
       ],
     },
     {
