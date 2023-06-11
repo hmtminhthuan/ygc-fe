@@ -10,15 +10,15 @@ export default function ClassOfTrainer() {
   useEffect(() => {
     api
       .get("/Trainer/getListClassForTrainer", {
-        params: { id: id },
+        params: {
+          id: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
+        },
       })
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setClassDetail(res.data[0]);
-        } else {
-          // Handle the case where no class data is available
-          console.log("No class data available");
-        }
+        let list = [];
+        list = res.data;
+        list = [...list].filter((item) => item.classId == id);
+        setClassDetail(list[0]);
       })
       .catch((err) => {});
 

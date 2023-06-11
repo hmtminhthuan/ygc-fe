@@ -29,7 +29,7 @@ export const alert = {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
-      width: "25rem",
+      width: "30rem",
       background: "#fee3e2",
       showConfirmButton: false,
       timer: 2000,

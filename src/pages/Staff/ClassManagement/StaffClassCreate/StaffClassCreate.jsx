@@ -33,8 +33,14 @@ export default function StaffClassCreate() {
   const [courseRoom, setCourseRoom] = useState("");
   const [courseStartDate, setCourseStartDate] = useState("");
   const [courseEndDate, setCourseEndDate] = useState("");
+  const [realCourseStartDate, setRealCourseStartDate] = useState("");
+  const [realCourseEndDate, setRealCourseEndDate] = useState("");
   const [timetable, setTimetable] = useState([]);
   const [slotDto, setSlotDto] = useState([]);
+  const [listOfTrainer, setListOfTrainer] = useState([]);
+  const [suitableScheDuleAndDate, setSuitableScheDuleAndDate] = useState(true);
+  const [selectedTrainer, setSelectedTrainer] = useState({});
+  const [selectedSchedule, setSelectedSchedule] = useState([]);
 
   const styleInputDate = (date) => {
     return moment(new Date(`${date}`)).format("YYYY-MM-DD");
@@ -44,6 +50,9 @@ export default function StaffClassCreate() {
   };
   const styleRealDate = (date) => {
     return moment(new Date(`${date}`));
+  };
+  const styleRealDateWithDay = (date) => {
+    return moment(new Date(`${date}`)).format("dddd, DD-MM-YYYY");
   };
   const currentDate = moment(new Date());
   const [form] = Form.useForm();
@@ -65,6 +74,18 @@ export default function StaffClassCreate() {
         alert.alertFailed(
           "Create Class Failed",
           "You need to add schedule",
+          () => {}
+        );
+      } else if (slotDto.filter((item) => !item.validSlot).length > 0) {
+        alert.alertFailed(
+          "Create Class Failed",
+          "Schedule cannot be duplicated",
+          () => {}
+        );
+      } else if (!suitableScheDuleAndDate) {
+        alert.alertFailed(
+          "Create Class Failed",
+          "Start Date and End Date must be in schedule",
           () => {}
         );
       } else if (values.trainerId <= 0) {
@@ -149,6 +170,20 @@ export default function StaffClassCreate() {
       setCourseName(COURSE_NAME_CREATE_CLASS);
       localStorage.removeItem("COURSE_NAME_CREATE_CLASS");
     }
+
+    let listTrainer = [];
+    api
+      .get(`Account/AccountListByRole?id=3`)
+      .then((res) => {
+        listTrainer = res.data;
+        listTrainer.forEach((item) => {
+          item.fullname = `${item.firstName} ${item.lastName}`;
+        });
+      })
+      .catch((err) => {})
+      .finally(() => {
+        setListOfTrainer([...listTrainer].filter((item) => !item.deleted));
+      });
   }, []);
   useEffect(() => {
     setSlotDto([]);
@@ -177,12 +212,58 @@ export default function StaffClassCreate() {
       }
     });
   }, [courseStartDate]);
+  useEffect(() => {
+    let valid = false;
+    slotDto.forEach((item) => {
+      if (
+        realCourseStartDate
+          .trim()
+          .toLowerCase()
+          .includes(item.dayOfWeek.trim().toLowerCase())
+      ) {
+        valid = true;
+      }
+    });
+    if (!valid) {
+      setSuitableScheDuleAndDate(valid);
+    } else {
+      valid = false;
+      slotDto.forEach((item) => {
+        if (
+          realCourseEndDate
+            .trim()
+            .toLowerCase()
+            .includes(item.dayOfWeek.trim().toLowerCase())
+        ) {
+          valid = true;
+        }
+      });
+      setSuitableScheDuleAndDate(valid);
+    }
+  }, [slotDto]);
+  useEffect(() => {
+    if (
+      selectedTrainer.accountID != null &&
+      selectedTrainer.accountID != undefined
+    ) {
+      api
+        .get("/Trainer/getListClassForTrainer", {
+          params: { id: selectedTrainer.accountID },
+        })
+        .then((res) => {
+          setSelectedSchedule(res.data);
+        })
+        .catch((err) => {});
+    }
+  }, [selectedTrainer]);
   const handleChangeStartDate = (value) => {
+    setRealCourseStartDate(styleRealDateWithDay(value));
     let startDate = styleInputDate(value);
     setCourseStartDate(value);
     formik.setFieldValue("startDate", startDate);
   };
   const handleChangeEndDate = (value) => {
+    setRealCourseEndDate(styleRealDateWithDay(value));
     let endDate = styleInputDate(value);
     setCourseEndDate(value);
     formik.setFieldValue("endDate", endDate);
@@ -190,6 +271,12 @@ export default function StaffClassCreate() {
   const handleChangeRoom = (value) => {
     setCourseRoom(value);
     formik.setFieldValue("room", value);
+  };
+  const handleChangeTrainer = (value) => {
+    setSelectedTrainer(
+      listOfTrainer[listOfTrainer.findIndex((item) => item.accountID == value)]
+    );
+    formik.setFieldValue("trainerId", value);
   };
   const handleAddSlot = async (theDay, theTime) => {
     let listOfSlot = [...slotDto];
@@ -278,8 +365,11 @@ export default function StaffClassCreate() {
       setSlotDto([...listOfSlot].filter((item) => item.dayOfWeek != ""));
     }
   };
-  console.log(slotDto);
-  console.log(timetable);
+  // console.log(slotDto);
+  // console.log(timetable);
+  console.log(listOfTrainer);
+  console.log("trainer", selectedTrainer);
+  console.log("trainerSche", selectedSchedule);
   return (
     <>
       <HeaderStaff />
@@ -413,7 +503,7 @@ export default function StaffClassCreate() {
                     <DatePicker
                       name="startDate"
                       className="w-100"
-                      format={"DD/MM/YYYY"}
+                      format={"dddd, DD-MM-YYYY"}
                       value={formik.values.startDate}
                       onChange={handleChangeStartDate}
                       placeholder="Enter Start Date"
@@ -476,7 +566,7 @@ export default function StaffClassCreate() {
                     <DatePicker
                       name="endDate"
                       className="w-100"
-                      format={"DD/MM/YYYY"}
+                      format={"dddd, DD-MM-YYYY"}
                       value={formik.values.endDate}
                       onChange={handleChangeEndDate}
                       placeholder="Enter End Date"
@@ -772,9 +862,79 @@ export default function StaffClassCreate() {
                       ))}
                     </tbody>
                   </table>
-                  <div className="">
+                  <p
+                    style={{ fontSize: "15px", fontWeight: "500" }}
+                    className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
+                      slotDto.length > 0 &&
+                      slotDto.filter((item) =>
+                        realCourseStartDate
+                          .trim()
+                          .toLowerCase()
+                          .includes(item.dayOfWeek.trim().toLowerCase())
+                      ).length > 0
+                        ? "text-success"
+                        : ""
+                    }`}
+                  >
+                    {`Start Date:${"  "}${realCourseStartDate}`}
+                    <span className="px-2 text-danger">
+                      {slotDto.length > 0 &&
+                      slotDto.filter((item) =>
+                        realCourseStartDate
+                          .trim()
+                          .toLowerCase()
+                          .includes(item.dayOfWeek.trim().toLowerCase())
+                      ).length <= 0
+                        ? "(Start Date are not contained in schedule)"
+                        : ""}
+                    </span>
+                  </p>
+                  <p
+                    style={{ fontSize: "15px", fontWeight: "500" }}
+                    className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
+                      slotDto.length > 0 &&
+                      slotDto.filter((item) =>
+                        realCourseEndDate
+                          .trim()
+                          .toLowerCase()
+                          .includes(item.dayOfWeek.trim().toLowerCase())
+                      ).length > 0
+                        ? "text-success"
+                        : ""
+                    }`}
+                  >
+                    {`End Date:${"  "}${realCourseEndDate}`}
+                    <span className="px-2 text-danger">
+                      {slotDto.length > 0 &&
+                      slotDto.filter((item) =>
+                        realCourseEndDate
+                          .trim()
+                          .toLowerCase()
+                          .includes(item.dayOfWeek.trim().toLowerCase())
+                      ).length <= 0
+                        ? "(End Date are not contained in schedule)"
+                        : ""}
+                    </span>
+                  </p>
+                  {/* {slotDto.length > 0 && !suitableScheDuleAndDate ? (
+                    <p
+                      style={{ fontSize: "15px", fontWeight: "500" }}
+                      className="col-12 p-0 m-0 px-4 mt-1 mt-0 flex text-danger"
+                    >
+                      Warning: Start Date or End Date are not contained in
+                      schedule
+                    </p>
+                  ) : (
+                    <></>
+                  )} */}
+                  <div className="m-0 p-0">
                     {slotDto.length > 0 ? (
-                      <h5 className="m-0 p-0 px-4 mt-2">Preview Schedule</h5>
+                      <p
+                        style={{ fontSize: "15px", fontWeight: "500" }}
+                        className="m-0 p-0 px-4 mt-1"
+                      >
+                        Preview Schedule
+                      </p>
                     ) : (
                       <></>
                     )}
@@ -820,14 +980,14 @@ export default function StaffClassCreate() {
                         </p>
                       );
                     })}
-                    <hr className="m-0 p-0 mt-3" />
+                    <hr className="m-0 p-0 my-3 mt-2" />
                   </div>
                 </>
               ) : (
                 <></>
               )}
 
-              {/* <div className="row flex align-items-start justify-content-between">
+              <div className="row flex align-items-start justify-content-between">
                 <p className="col-2 p-0 m-0 px-3 mt-2 flex">
                   <span className="text-danger px-1">
                     <i
@@ -838,155 +998,38 @@ export default function StaffClassCreate() {
                       }}
                     ></i>{" "}
                   </span>
-                  {"Price (VND):"}
+                  Trainer:
                 </p>
                 <div className="col-10">
                   <Form.Item
-                    name="price"
-                    // label="Price"
+                    label=""
+                    name="trainerId"
                     rules={[
                       {
                         required: true,
-                        message: "Price is not in correct form",
-                      },
-                      {
-                        pattern:
-                          /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
-                        message: "Price must be a positive number",
-                      },
-                      {
-                        whitespace: true,
-                        message: "Price cannot be empty",
+                        message: "Trainer must be selected",
                       },
                     ]}
                     hasFeedback
                   >
-                    <Input
-                      style={{ width: "100%" }}
-                      name="price"
-                      type="number"
-                      value={formik.values.price}
-                      onChange={formik.handleChange}
-                      onInput={(e) => {
-                        setPreviewPrice(e.target.value);
-                      }}
-                      placeholder="Enter Price"
-                    />
+                    <Select
+                      name="trainerId"
+                      width="200px"
+                      placeholder="Select Trainer"
+                      value={formik.values.trainerId}
+                      onChange={handleChangeTrainer}
+                    >
+                      {listOfTrainer.map((item, index) => {
+                        return (
+                          <Select.Option key={index} value={item.accountID}>
+                            {item.fullname}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
                   </Form.Item>
                 </div>
-              </div> */}
-
-              {/* <div className="row flex align-items-start">
-                <p className="col-2 p-0 m-0 px-3 pt-2">{"Discount (%):"}</p>
-                <div className="col-10">
-                  <Form.Item
-                    name="discount"
-                    label=""
-                    rules={[
-                      {
-                        pattern: /^[1-9]?[0-9]{1}$|^100$/,
-                        message: "Discount must be between 0 and 100",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      style={{ width: "100%" }}
-                      name="discount"
-                      // type="number"
-                      value={formik.values.discount}
-                      onChange={formik.handleChange}
-                      onInput={(e) => {
-                        if (e.target.value == "") {
-                          setPreviewDiscount(0);
-                        } else {
-                          setPreviewDiscount(e.target.value);
-                        }
-                      }}
-                      placeholder="Enter Discount (default = 0)"
-                    />
-                  </Form.Item>{" "}
-                </div>
-              </div> */}
-
-              {/* <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Description:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    name="description"
-                    label=""
-                    rules={[
-                      {
-                        required: true,
-                        message: "Description cannot be blank",
-                      },
-                      {
-                        min: 0,
-                        max: 1000,
-                        message: "Description must be from 0-1000 characters",
-                      },
-                      {
-                        whitespace: true,
-                        message: "Description cannot be empty",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <TextArea
-                      style={{
-                        width: "100%",
-                        height: "150px",
-                        verticalAlign: "top",
-                      }}
-                      name="description"
-                      className="create-course-level"
-                      value={formik.values.description}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Description"
-                    />
-                  </Form.Item>
-                </div>
-              </div> */}
-
-              {/* <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Image:
-                </p>
-                <div className="col-10">
-                  <Form.Item name="img" label="" rules={[]} hasFeedback>
-                    <Input
-                      style={{ width: "100%" }}
-                      name="img"
-                      value={formik.values.img}
-                      onChange={formik.handleChange}
-                      onInput={(e) => {
-                        setPreviewImg(e.target.value);
-                      }}
-                      placeholder="Enter Link Of Image"
-                    />
-                  </Form.Item>
-                </div>
-              </div> */}
+              </div>
 
               <button
                 className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
