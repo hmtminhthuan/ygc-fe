@@ -5,7 +5,7 @@ import "./ClassOfTrainer.scss";
 
 export default function ClassOfTrainer() {
   const [classDetail, setClassDetail] = useState({});
-
+  const [trainees, setTrainees] = useState([]);
   const { id } = useParams();
   useEffect(() => {
     api
@@ -14,6 +14,15 @@ export default function ClassOfTrainer() {
       })
       .then((res) => {
         setClassDetail(res.data[0]);
+      })
+      .catch((err) => {});
+
+    api
+      .get("/Trainer/GetTraineesListOfClass", {
+        params: { classId: id },
+      })
+      .then((res) => {
+        setTrainees(res.data);
       })
       .catch((err) => {});
   }, [id]);
@@ -91,7 +100,7 @@ export default function ClassOfTrainer() {
             <div className="col-md-12 mt-5 list-container">
               <div className="card-container mx-5">
                 <div className="card-header">
-                  <h4>Assign Project List</h4>
+                  <h4>Trainee List</h4>
                 </div>
                 <div className="card-body">
                   <div
@@ -111,32 +120,43 @@ export default function ClassOfTrainer() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="table-img">
-                            <img
+                        {trainees.map((trainee) => {
+                          <tr key={trainee.classId}>
+                            <td className="table-img">
+                              {/* <img
                               src="https://bootdey.com/img/Content/avatar/avatar8.png"
                               alt
-                            />
-                          </td>
+                            /> */}
+                              <img
+                                src={trainee.img}
+                                alt={`${trainee.firstName} ${trainee.lastName}`}
+                                className="trainee-image"
+                              />
+                            </td>
 
-                          <td>
-                            <h6 className="mb-0 font-13">Wordpress Website</h6>
-                            <p className="m-0 font-12">
-                              Assigned to
-                              <span className="col-green font-weight-bold">
-                                {" "}
-                                Airi Satou
-                              </span>
-                            </p>
-                          </td>
+                            <td>
+                              <h6 className="mb-0 font-13">
+                                {trainee.firstName}
+                              </h6>
+                              {/* <p className="m-0 font-12">
+                                Assigned to
+                                <span className="col-green font-weight-bold">
+                                  {" "}
+                                  Airi Satou
+                                </span>
+                              </p> */}
+                            </td>
 
-                          <td>20-02-2018</td>
+                            <td>{trainee.lastName}</td>
 
-                          <td></td>
-                          <td>
-                            <div className="badge-outline col-red">High</div>
-                          </td>
-                        </tr>
+                            <td>{trainee.gender ? "Male" : "Female"}</td>
+                            <td>
+                              <div className="badge-outline col-red">
+                                {trainee.phone}
+                              </div>
+                            </td>
+                          </tr>;
+                        })}
                       </tbody>
                     </table>
                   </div>
