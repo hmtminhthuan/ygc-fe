@@ -44,6 +44,7 @@ import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
 import ClassOfTrainer from "../pages/Trainer/ClassOfTrainer";
 import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyEmail";
 import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
+import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -102,6 +103,7 @@ export default function Routers() {
         { path: "/staff/createTrainee", element: <CreateTrainee /> },
         { path: "/staff/classManagement", element: <ClassManagement /> },
         { path: "/staff/classDetail/:id", element: <ClassDetail /> },
+        { path: "/staff/createClass/:id", element: <StaffClassCreate /> },
         { path: "/staff/blogManagement", element: <BlogManagement /> },
         { path: "/staff/createBlog", element: <CreateBlog /> },
         { path: "/staff/updateBlog/:id", element: <UpdateBlog /> },

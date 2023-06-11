@@ -173,6 +173,8 @@ export default function ClassDetail() {
                    py-1 px-2"
                         style={{
                           borderRadius: "5px",
+                          backgroundColor: "#e36ac8",
+                          fontWeight: "500",
                         }}
                         onClick={() => {
                           setViewAllButton(false);
@@ -206,16 +208,23 @@ export default function ClassDetail() {
                   ) : (
                     <></>
                   )}
-                  <button
+                  <Link
+                    to={`/staff/createClass/${param.id}`}
                     className="border-0 mt-2 mx-1
-                     py-1 px-2"
+                     py-1 px-2 text-light"
                     style={{
                       borderRadius: "5px",
+                      backgroundColor: "#e36ac8",
                     }}
-                    onClick={() => {}}
+                    onClick={() => {
+                      localStorage.setItem(
+                        "COURSE_NAME_CREATE_CLASS",
+                        `${course.courseName}`
+                      );
+                    }}
                   >
                     Create New Class
-                  </button>
+                  </Link>
                 </div>
               </div>
               {courseClasses.length <= 0 || !available ? (

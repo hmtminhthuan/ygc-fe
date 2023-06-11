@@ -184,10 +184,7 @@ export default function ClassManagement() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div
-          className="main--content pt-3 px-4"
-          // id="staff-class-management-area"
-        >
+        <div className="main--content pt-3 px-4">
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -313,6 +310,7 @@ export default function ClassManagement() {
                 </th>
                 <th style={{ textAlign: "center" }}>Preview</th>
                 <th style={{ textAlign: "center" }}>Detail</th>
+                <th style={{ textAlign: "center" }}>Create Class</th>
               </tr>
             </thead>
             <tbody style={{ height: "auto" }}>
@@ -441,6 +439,25 @@ export default function ClassManagement() {
                               }}
                             >
                               <i className="fa-solid fa-magnifying-glass"></i>
+                            </Link>
+                          </td>
+                          <td className="">
+                            <Link
+                              to={`/staff/createClass/${courseID}`}
+                              className="px-2 py-1 text-decoration-none bg-dark bg-opacity-100 text-light border-0 text-center"
+                              style={{
+                                borderRadius: "50%",
+                                fontSize: "15px",
+                              }}
+                              onClick={() => {
+                                localStorage.setItem("BACK_TO_CLASS", "1");
+                                localStorage.setItem(
+                                  "COURSE_NAME_CREATE_CLASS",
+                                  `${courseName}`
+                                );
+                              }}
+                            >
+                              <i className="fa-solid fa-plus"></i>
                             </Link>
                           </td>
                         </tr>
