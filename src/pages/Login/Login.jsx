@@ -46,7 +46,7 @@ export default function Login() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: `Log in successfully! </br> Welcome ${res.data.firstName} ${res.data.lastName}`,
+            title: `Log in successfully</br> Welcome ${res.data.firstName} ${res.data.lastName}`,
             showConfirmButton: false,
             timer: 1600,
           }).then(function () {
@@ -254,7 +254,9 @@ export default function Login() {
           });
         } else if (result.isConfirmed === true) {
           if (result.value == validationCode) {
-            handleChangePassword(accountID);
+            localStorage.setItem("CHECK_VERIFY_EMAIL_FORGET", "true");
+            localStorage.setItem("accountID", `${accountID}`);
+            window.location.href = `/resetPassword`;
           } else {
             Swal.fire({
               position: "center",

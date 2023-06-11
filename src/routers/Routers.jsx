@@ -42,6 +42,8 @@ import Transaction from "../pages/Trainee/Transaction";
 import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
 
 import ClassOfTrainer from "../pages/Trainer/ClassOfTrainer";
+import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyEmail";
+import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -55,7 +57,7 @@ export default function Routers() {
         { path: "/blogPage/:id", element: <BlogPage /> },
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
-
+        { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
         { path: "/classDetail/:id", element: <ClassOfTrainer /> },
       ],
@@ -84,6 +86,7 @@ export default function Routers() {
       children: [
         { path: "/profile/:paramID", element: <UserProfile /> },
         { path: "/updateProfile/:id", element: <UpdateProfile /> },
+        { path: "/changePassword/:id", element: <ChangePasswordVerifyEmail /> },
       ],
     },
     {

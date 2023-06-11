@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import { useFormik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { api } from "../../constants/api";
 
 export default function ChangePassword({ userEmail, userId }) {
@@ -186,7 +186,8 @@ export default function ChangePassword({ userEmail, userId }) {
           });
         } else if (result.isConfirmed === true) {
           if (result.value == validationCode) {
-            handleChangePassword(accountID);
+            localStorage.setItem("CHECK_VERIFY_EMAIL", "true");
+            window.location.href = `/changePassword/${userId}`;
           } else {
             Swal.fire({
               position: "center",

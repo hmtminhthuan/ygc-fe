@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
@@ -9,6 +9,7 @@ import female from "../../assets/images/avt-female.jpg";
 import male from "../../assets/images/avt-male.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import ChangePassword from "./ChangePassword";
+import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 export default function UpdateProfile() {
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -30,7 +31,7 @@ export default function UpdateProfile() {
 
   if (!(USER_LOGIN != null && !accept)) {
     if (!accept) {
-      window.location.href = "/";
+      return <Navigate to={"/"} />;
     }
   } else {
     USER = JSON.parse(USER_LOGIN);
@@ -41,7 +42,7 @@ export default function UpdateProfile() {
     ) {
       setAccept(true);
     } else {
-      window.location.href = "/";
+      return <Navigate to={"/"} />;
     }
   }
 
@@ -159,6 +160,7 @@ export default function UpdateProfile() {
           >
             <HeaderHome />
           </div>
+
           <div
             className="update update-profile-container w-100 h-100 m-0 p-0 pb-5 flex justify-content-center"
             style={{ backgroundColor: "#f2ced8", width: "100%" }}
@@ -250,17 +252,6 @@ export default function UpdateProfile() {
                     <h5 className="text-center" style={{}}>
                       Address: {profile.address}
                     </h5>
-                    {/* <p className="text-left p-0 m-0 mt-2" style={{}}>
-                Phone: {phone}
-              </p>
-              <p
-                className="text-left p-0 m-0 mt-2"
-                // style={{ maxWidth: "200px" }}
-              >
-                Address: {address}
-              </p> */}
-                    {/* <p className="text-center">Account ID: {id}</p>
-              <p className="text-center">Role: {roleName}</p> */}
                   </div>
                 </div>
 
@@ -284,7 +275,7 @@ export default function UpdateProfile() {
                             <div className="col-md-12">
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
-                                  <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+                                  <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1">
                                       <i
                                         className="fa-solid fa-star-of-life"
@@ -296,7 +287,7 @@ export default function UpdateProfile() {
                                     </span>
                                     <span>Firstname:</span>
                                   </p>
-                                  <div className="col-9">
+                                  <div className="col-md-9 col-sm-12">
                                     <Form.Item
                                       name="firstname"
                                       label=""
@@ -330,7 +321,7 @@ export default function UpdateProfile() {
                             <div className="col-md-12">
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
-                                  <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+                                  <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1">
                                       <i
                                         className="fa-solid fa-star-of-life"
@@ -342,7 +333,7 @@ export default function UpdateProfile() {
                                     </span>
                                     <span>Lastname:</span>
                                   </p>
-                                  <div className="col-9">
+                                  <div className="col-md-9 col-sm-12">
                                     <Form.Item
                                       name="lastname"
                                       label=""
@@ -376,7 +367,7 @@ export default function UpdateProfile() {
                             <div className="col-md-12">
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
-                                  <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+                                  <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1">
                                       <i
                                         className="fa-solid fa-star-of-life"
@@ -388,7 +379,7 @@ export default function UpdateProfile() {
                                     </span>
                                     <span>Phone Number:</span>
                                   </p>
-                                  <div className="col-9">
+                                  <div className="col-md-9 col-sm-12">
                                     <Form.Item
                                       name="phoneNumber"
                                       label=""
@@ -434,11 +425,11 @@ export default function UpdateProfile() {
                             <div className="col-md-12">
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
-                                  <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+                                  <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1"></span>
                                     <span>Address:</span>
                                   </p>
-                                  <div className="col-9">
+                                  <div className="col-md-9 col-sm-12">
                                     <Form.Item
                                       name="address"
                                       label=""
@@ -475,11 +466,11 @@ export default function UpdateProfile() {
                             <div className="col-md-12">
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
-                                  <p className="col-3 p-0 m-0 px-3 mt-2 flex">
+                                  <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1"></span>
                                     <span>Image:</span>
                                   </p>
-                                  <div className="col-9">
+                                  <div className="col-md-9 col-sm-12">
                                     <Form.Item
                                       name="img"
                                       label=""
