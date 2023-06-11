@@ -67,6 +67,12 @@ export default function StaffClassCreate() {
           "You need to add schedule",
           () => {}
         );
+      } else if (values.trainerId <= 0) {
+        alert.alertFailed(
+          "Create Class Failed",
+          "You need to add trainer",
+          () => {}
+        );
       } else {
         let theSlotDTOs = [];
         slotDto.forEach((item) => {
