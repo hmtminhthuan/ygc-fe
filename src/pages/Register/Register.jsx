@@ -66,9 +66,9 @@ export default function Register() {
               } else if (userList[pos].role.id == 2) {
                 window.location.href = "/staff";
               } else if (userList[pos].role.id == 3) {
-                window.location.href = "/trainer";
+                window.location.href = "/";
               } else if (userList[pos].role.id == 4) {
-                window.location.href = "/trainee";
+                window.location.href = "/";
               }
             });
           })

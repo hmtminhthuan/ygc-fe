@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 
 import "./ClassOfTrainee.scss";
@@ -62,6 +62,16 @@ export default function ClassOfTrainee() {
             <div className="col-md-12 ">
               <div className="profile-container mx-5">
                 <div className="profile-header row">
+                  <div className="">
+                    <Link
+                      to={"/trainee/schedule"}
+                      className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                      style={{ fontSize: "18px", fontWeight: "500" }}
+                    >
+                      <i className="fa-solid fa-arrow-left"></i>
+                      <span className="mx-2">Back</span>
+                    </Link>
+                  </div>
                   <div className="col-md-4 col-sm-12 text-center mt-5">
                     <img
                       src={classDetail.courseImg}

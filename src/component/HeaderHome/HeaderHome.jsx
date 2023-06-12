@@ -118,7 +118,7 @@ export default function HeaderHome() {
                     }`}
                       onClick={() => {
                         localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                        window.location.href = "/trainer";
+                        window.location.href = "/trainer/schedule";
                       }}
                     >
                       Schedule
@@ -138,7 +138,7 @@ export default function HeaderHome() {
                     }`}
                       onClick={() => {
                         localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                        window.location.href = "/trainee";
+                        window.location.href = "/trainee/schedule";
                       }}
                     >
                       Schedule
