@@ -109,40 +109,58 @@ export default function HeaderHome() {
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   userLogin.role.id == 3 ? (
-                    <Nav.Link
-                      className={`px-4 nav-item
+                    <>
+                      <Nav.Link
+                        className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
                         ? "nav-item-after-login"
                         : ""
                     }`}
-                      onClick={() => {
-                        localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                        window.location.href = "/trainer/schedule";
-                      }}
-                    >
-                      Schedule
-                    </Nav.Link>
+                        onClick={() => {
+                          localStorage.setItem("MENU_ACTIVE", "home-schedule");
+                          window.location.href = "/trainer/schedule";
+                        }}
+                      >
+                        Schedule
+                      </Nav.Link>
+                    </>
                   ) : (
                     <></>
                   )}
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   userLogin.role.id == 4 ? (
-                    <Nav.Link
-                      className={`px-4 nav-item
+                    <>
+                      <Nav.Link
+                        className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
                         ? "nav-item-after-login"
                         : ""
                     }`}
-                      onClick={() => {
-                        localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                        window.location.href = "/trainee/schedule";
-                      }}
-                    >
-                      Schedule
-                    </Nav.Link>
+                        onClick={() => {
+                          localStorage.setItem("MENU_ACTIVE", "home-schedule");
+                          window.location.href = "/trainee/schedule";
+                        }}
+                      >
+                        Schedule
+                      </Nav.Link>
+                      <Nav.Link
+                        className={`px-4 nav-item
+                    ${
+                      menu_active != null && menu_active == "home-booking"
+                        ? "nav-item-after-login"
+                        : ""
+                    }`}
+                        onClick={() => {
+                          localStorage.setItem("MENU_ACTIVE", "home-booking");
+                          window.location.href = "/transaction";
+                        }}
+                      >
+                        History
+                      </Nav.Link>
+                    </>
                   ) : (
                     <></>
                   )}

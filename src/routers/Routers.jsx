@@ -46,6 +46,7 @@ import ClassOfTrainee from "../pages/Trainee/ClassOfTrainee";
 import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyEmail";
 import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
+import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -111,6 +112,10 @@ export default function Routers() {
         {
           path: "/staff/feedbackManagement/:id",
           element: <FeedbackManagementDetail />,
+        },
+        {
+          path: "/staff/booking",
+          element: <StaffBooking />,
         },
       ],
     },

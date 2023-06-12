@@ -164,6 +164,24 @@ export default function MenuStaff() {
             <span className="sidebar--item">Blog</span>
           </a>
         </li>
+        <li>
+          <a
+            className={`${
+              menu_active != null && menu_active == "staff-booking"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "staff-booking");
+            }}
+            href="/staff/booking"
+          >
+            <span className="icon icon-5">
+              <i className="  ri-terminal-window-fill" />
+            </span>
+            <span className="sidebar--item">Booking</span>
+          </a>
+        </li>
       </ul>
       <ul className="sidebar--bottom-items">
         <li>

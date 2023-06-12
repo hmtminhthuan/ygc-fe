@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../constants/api";
 import moment from "moment/moment";
-
+import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import "./Transaction.scss";
 export default function Transaction() {
+  localStorage.setItem("MENU_ACTIVE", "home-booking");
   const [listOfBooking, setListOfBooking] = useState([]);
   useEffect(() => {
     api
@@ -32,9 +34,15 @@ export default function Transaction() {
   console.log(listOfBooking[0]);
   return (
     <>
-      <div>
+      <div className=" m-0 p-0">
+        <HeaderHome />
+      </div>
+      <div className="mt-5 pt-3">
         <h1 className="m-0 p-0 my-3 text-center">Billing History</h1>
-        <div className="main--content transaction-trainee m-0 px-4 w-50">
+        <div
+          className="main--content transaction-trainee m-0 px-5 w-100"
+          style={{ margin: "0 auto" }}
+        >
           <table>
             <thead>
               <tr>
@@ -43,13 +51,15 @@ export default function Transaction() {
                 <th style={{ textAlign: "left" }}>Booking Date</th>
                 <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                 <th style={{ textAlign: "center" }}>Status</th>
-                <th style={{ textAlign: "center" }}></th>
+                {/* <th style={{ textAlign: "center" }}></th> */}
               </tr>
             </thead>
 
             <tbody style={{ height: "auto" }}>
               {listOfBooking.map(
-                ({ bookingDate, amount, status, course }, index) => {
+                ({ bookingDate, amount, status, course, account }, index) => {
+                  let { firstName, lastName, phone } = account;
+                  let { courseName, courseID } = course;
                   return (
                     <tr key={index}>
                       <td style={{ textAlign: "left" }}>{index + 1}</td>
@@ -77,7 +87,7 @@ export default function Transaction() {
                               style={{ borderRadius: "10px" }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
                             >
-                              Success
+                              Paid
                             </span>
                           </>
                         ) : (
@@ -109,7 +119,7 @@ export default function Transaction() {
                           <></>
                         )}
                       </td>
-                      <td style={{ textAlign: "center" }}>Action</td>
+                      {/* <td style={{ textAlign: "center" }}>Action</td> */}
                     </tr>
                   );
                 }
