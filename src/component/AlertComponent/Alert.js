@@ -48,4 +48,28 @@ export const alert = {
       callback();
     });
   },
+  alertInfoNotiForTrainee: function (title, html, callback) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: "35rem",
+      padding: "2rem",
+      background: "#e8ffff",
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "info",
+      title: `${title}`,
+      html: `${html}`,
+    }).then(function () {
+      callback();
+    });
+  },
 };

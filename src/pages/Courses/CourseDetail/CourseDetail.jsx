@@ -12,9 +12,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 import Swal from "sweetalert2";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseDetail() {
   localStorage.setItem("MENU_ACTIVE", "home-course");
+  if (localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true") {
+    alert.alertInfoNotiForTrainee(
+      "Please choose the class you want to register",
+      "",
+      () => {}
+    );
+    localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+  }
+
   const param = useParams();
   const [courseDetail, setCourseDetail] = useState([]);
   const [courseClasses, setCourseClasses] = useState([]);
@@ -71,16 +81,16 @@ export default function CourseDetail() {
         )
       ) {
         setAvailablePayment(true);
-        api
-          .post(`/CheckOutVNPAY`, {
-            amount: parseInt(price * (1 - discount / 100)),
-            accId: USER.accountID,
-            courseId: param.id,
-          })
-          .then((res) => {
-            setLinkPayment(res.data);
-          })
-          .catch((err) => {});
+        // api
+        //   .post(`/CheckOutVNPAY`, {
+        //     amount: parseInt(price * (1 - discount / 100)),
+        //     accId: USER.accountID,
+        //     courseId: param.id,
+        //   })
+        //   .then((res) => {
+        //     setLinkPayment(res.data);
+        //   })
+        //   .catch((err) => {});
       }
     }
   }, []);
@@ -118,7 +128,7 @@ export default function CourseDetail() {
               {courseName}
             </h2>
             <div className="row d-lg-flex align-items-stretch justify-content-center">
-              <div className="course-detail-img col-lg-5 col-10 flex justify-content-start">
+              <div className="course-detail-img col-lg-4 col-10 flex justify-content-start">
                 <img
                   className="h-100"
                   style={{ width: "100%" }}
@@ -161,7 +171,7 @@ export default function CourseDetail() {
                     </p>
                   )}
                 </div>
-                <div className="flex justify-content-center mt-2">
+                {/* <div className="flex justify-content-center mt-2">
                   {availablePayment ? (
                     <Button
                       href={linkPayment}
@@ -218,13 +228,18 @@ export default function CourseDetail() {
                       Register Now
                     </button>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
             <h2 className="sub-title course-detail-title mt-4">
               Available Classes
             </h2>
-            <CourseClasses courseClasses={courseClasses} />
+            <CourseClasses
+              courseClasses={courseClasses}
+              courseId={param.id}
+              discount={discount}
+              price={price}
+            />
             <h2 className="sub-title course-detail-title mt-4">
               Rating &amp; Feedbacks
             </h2>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import image from "../../assets/images/img-demo.jpg";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
+import { alert } from "../../component/AlertComponent/Alert";
 export default function CourseDetail({
   courseID,
   courseName,
@@ -42,16 +43,16 @@ export default function CourseDetail({
         )
       ) {
         setAvailablePayment(true);
-        api
-          .post(`/CheckOutVNPAY`, {
-            amount: parseInt(price * (1 - discount / 100)),
-            accId: USER.accountID,
-            courseId: courseID,
-          })
-          .then((res) => {
-            setLinkPayment(res.data);
-          })
-          .catch((err) => {});
+        // api
+        //   .post(`/CheckOutVNPAY`, {
+        //     amount: parseInt(price * (1 - discount / 100)),
+        //     accId: USER.accountID,
+        //     courseId: courseID,
+        //   })
+        //   .then((res) => {
+        //     setLinkPayment(res.data);
+        //   })
+        //   .catch((err) => {});
       }
     }
   }, []);
@@ -116,10 +117,13 @@ export default function CourseDetail({
             </Button>
             {availablePayment ? (
               <Button
-                href={linkPayment}
+                href={`courseDetail/${courseID}`}
                 className="course-register-now mx-1 mt-1"
                 variant=""
-                target="blank"
+                onClick={() => {
+                  localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
+                }}
+                // target="blank"
               >
                 Register Now
               </Button>
