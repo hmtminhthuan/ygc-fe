@@ -7,7 +7,8 @@ export default function ScheduleTrainee() {
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
 
-  const { id } = useParams();
+  // const { id } = useParams();
+  const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   useEffect(() => {
     api
       .get("/Timeframe/GetTimeFrameList")

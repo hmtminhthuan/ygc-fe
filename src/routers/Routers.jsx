@@ -120,7 +120,7 @@ export default function Routers() {
 
       children: [
         { path: "/trainer", element: <TrainerHome /> },
-        { path: "/trainer/schedule/:id", element: <ScheduleTrainer /> },
+        { path: "/trainer/schedule", element: <ScheduleTrainer /> },
         { path: "/trainer/classDetail/:id", element: <ClassOfTrainer /> },
       ],
     },
@@ -129,7 +129,7 @@ export default function Routers() {
       element: <TraineeTemplate />,
       children: [
         { path: "/trainee", element: <TraineeHome /> },
-        { path: "/trainee/schedule/:id", element: <ScheduleTrainee /> },
+        { path: "/trainee/schedule", element: <ScheduleTrainee /> },
         { path: "/trainee/classDetail/:id", element: <ClassOfTrainee /> },
       ],
     },
