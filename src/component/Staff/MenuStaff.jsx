@@ -181,7 +181,7 @@ export default function MenuStaff() {
         </li>
         <li>
           <a
-            href={`/profile/${USER.accountID}`}
+            href={`/profile`}
             onClick={() => {
               localStorage.setItem("MENU_ACTIVE", "home-profile");
             }}

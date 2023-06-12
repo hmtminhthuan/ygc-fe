@@ -158,7 +158,7 @@ export default function HeaderHome() {
                      }`}
                     onClick={() => {
                       localStorage.setItem("MENU_ACTIVE", "home-profile");
-                      window.location.href = `/profile/${userLogin.accountID}`;
+                      window.location.href = `/profile`;
                     }}
                   >
                     Profile

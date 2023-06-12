@@ -16,7 +16,8 @@ export default function UpdateProfile() {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
-  const { id } = useParams();
+  // const { id } = useParams();
+  const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const [accept, setAccept] = useState(false);
   const [profile, setProfile] = useState(null);
 
@@ -189,7 +190,7 @@ export default function UpdateProfile() {
                   <div className="p-4 mt-4 w-100">
                     <div className="">
                       <Link
-                        to={`/profile/${id}`}
+                        to={`/profile`}
                         className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                         style={{ fontSize: "18px", fontWeight: "500" }}
                       >
@@ -521,7 +522,7 @@ export default function UpdateProfile() {
                             </div>
                             <div className="col-6 flex align-items-center">
                               <Link
-                                to={`/profile/${profile.id}`}
+                                to={`/profile`}
                                 className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
                     text-decoration-none text-light"
                                 style={{ borderRadius: "10px" }}

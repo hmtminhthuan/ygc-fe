@@ -11,7 +11,8 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 
 function UserProfile() {
   localStorage.setItem("MENU_ACTIVE", "home-profile");
-  const { paramID } = useParams();
+  // const { paramID } = useParams();
+  const paramID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const [profile, setProfile] = useState([]);
   const [accept, setAccept] = useState(false);
   let USER = {};
@@ -165,7 +166,7 @@ function UserProfile() {
                             </div> */}
                             <div className="p-0">
                               <Link
-                                to={`/updateProfile/${id}`}
+                                to={`/updateProfile`}
                                 className="updateInfo"
                               >
                                 <i className="ri-edit-2-line mt-2 "></i>

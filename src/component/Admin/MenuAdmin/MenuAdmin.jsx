@@ -103,7 +103,7 @@ export default function MenuAdmin() {
           </a>
         </li>
         <li>
-          <a href={`/profile/${USER.accountID}`}>
+          <a href={`/profile`}>
             <span className="icon icon-7">
               <i
                 className="fa-sharp fa-solid fa-address-card"

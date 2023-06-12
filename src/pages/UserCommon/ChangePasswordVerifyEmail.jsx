@@ -5,7 +5,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 
 export default function ChangePasswordVerifyEmail() {
-  const { id } = useParams();
+  // const { id } = useParams();
+  const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const [accept, setAccept] = useState(false);

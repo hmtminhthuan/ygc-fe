@@ -85,9 +85,9 @@ export default function Routers() {
     {
       element: <CommonTemplate />,
       children: [
-        { path: "/profile/:paramID", element: <UserProfile /> },
-        { path: "/updateProfile/:id", element: <UpdateProfile /> },
-        { path: "/changePassword/:id", element: <ChangePasswordVerifyEmail /> },
+        { path: "/profile", element: <UserProfile /> },
+        { path: "/updateProfile", element: <UpdateProfile /> },
+        { path: "/changePassword", element: <ChangePasswordVerifyEmail /> },
       ],
     },
     {
