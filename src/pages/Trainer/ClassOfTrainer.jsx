@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
+import maleImg from "../../assets/images/avt-male.jpg";
+import femaleImg from "../../assets/images/avt-female.jpg";
 import "./ClassOfTrainer.scss";
 
 export default function ClassOfTrainer() {
@@ -157,69 +159,61 @@ export default function ClassOfTrainer() {
                   </div>
                 </div>
 
-                <div className="col-md-12 mt-5 list-container">
-                  <div className="card-container mx-5">
-                    <div className="card-header">
-                      <h4>Trainee List</h4>
-                    </div>
-                    <div className="card-body">
-                      <div
-                        className="table-responsive"
-                        id="proTeamScroll"
-                        tabIndex={2}
-                        style={{
-                          height: 400,
-                          overflow: "hidden",
-                          outline: "none",
-                        }}
-                      >
-                        <table className="table table-striped">
-                          <thead>
-                            <tr>
-                              <th>Image</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Gender</th>
-                              <th>Phone</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {trainees.map((trainee) => (
-                              <tr key={trainee.id}>
-                                <td className="table-img">
-                                  <img
-                                    src={trainee.img}
-                                    alt={`${trainee.firstName} ${trainee.lastName}`}
-                                    className="trainee-image"
-                                  />
-                                </td>
-                                <td>
-                                  <h6 className="mb-0 font-13">
-                                    {trainee.firstName}
-                                  </h6>
-                                </td>
-                                <td>{trainee.lastName}</td>
-                                <td>{trainee.gender ? "Male" : "Female"}</td>
-                                <td>
-                                  <div className="badge-outline col-red">
-                                    {trainee.phone}
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+            <div className="col-md-12 mt-5 list-container">
+              <div className="card-container mx-5">
+                <div className="card-header">
+                  <h4>Trainee List</h4>
+                </div>
+                <div className="card-body">
+                  <div
+                    className="table-responsive"
+                    id="proTeamScroll"
+                    tabIndex={2}
+                    style={{ height: 400, overflow: "hidden", outline: "none" }}
+                  >
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Image</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Gender</th>
+                          <th>Phone</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {trainees.map((trainee) => (
+                          <tr key={trainee.id}>
+                            <td className="table-img">
+                              <img
+                                src={trainee.img}
+                                alt={`${trainee.firstName} ${trainee.lastName}`}
+                                className="trainee-image"
+                              />
+                            </td>
+                            <td>
+                              <h6 className="mb-0 font-13">
+                                {trainee.firstName}
+                              </h6>
+                            </td>
+                            <td>{trainee.lastName}</td>
+                            <td>{trainee.gender ? "Male" : "Female"}</td>
+                            <td>
+                              <div className="badge-outline col-red">
+                                {trainee.phone}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
         </div>
-      ) : (
-        <></>
-      )}
-    </>
+      </section>
+    </div>
   );
 }

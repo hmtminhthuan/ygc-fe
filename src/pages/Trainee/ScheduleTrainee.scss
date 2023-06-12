@@ -3,6 +3,9 @@
   padding: 0 !important;
 
   .trainee-area {
+    .trainee {
+      margin: auto !important;
+    }
     margin: 0;
     padding: 0;
     // background: #f2ced8;
@@ -16,6 +19,12 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 !important;
+
+      .title {
+        color: rgb(229, 64, 174);
+        font-weight: bold;
+        text-decoration: none;
+      }
 
       table {
         width: 100%;

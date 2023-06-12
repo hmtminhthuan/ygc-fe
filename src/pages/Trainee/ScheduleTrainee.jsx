@@ -59,6 +59,7 @@ export default function ScheduleTrainee() {
                   <th className="text-uppercase">Thursday</th>
                   <th className="text-uppercase">Friday</th>
                   <th className="text-uppercase">Saturday</th>
+                  <th className="text-uppercase">Sunday</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,13 +81,17 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -105,13 +110,17 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -130,13 +139,17 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -155,13 +168,17 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -180,13 +197,17 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
@@ -205,13 +226,46 @@ export default function ScheduleTrainee() {
                               src={filteredItem.courseImg}
                               style={{ width: "100px" }}
                             />
-                            <p
-                              style={{ fontWeight: "bold", cursor: "pointer" }}
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
                             >
-                              {filteredItem.courseName}
-                            </p>
-                            <p>Class:</p>
-                            <p>Room: </p>
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
+                          </div>
+                        ))}
+                    </td>
+                    <td>
+                      {schedule
+                        .filter((item) =>
+                          item.schedule.some(
+                            (s) =>
+                              s.date === "Sunday" &&
+                              s.timeframeId === timeFrame.id
+                          )
+                        )
+                        .map((filteredItem) => (
+                          <div className="content" key={filteredItem.courseId}>
+                            <img
+                              src={filteredItem.courseImg}
+                              style={{ width: "100px" }}
+                            />
+                            <Link
+                              className="title"
+                              to={`/trainee/classDetail/${filteredItem.classId}`}
+                            >
+                              <p title="View detail">
+                                {filteredItem.courseName}
+                              </p>
+                            </Link>
+
+                            <p>Class: {filteredItem.className}</p>
+                            <p>Room: {filteredItem.room}</p>
                           </div>
                         ))}
                     </td>
