@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import Swal from "sweetalert2";
 import { alert } from "../../component/AlertComponent/Alert";
 

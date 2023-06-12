@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 export default function CommonTemplate() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
@@ -21,7 +21,7 @@ export default function CommonTemplate() {
       toast: true,
       timer: 2000,
     });
-    return <Navigate to="/" />;
+    return <Navigatee to="/" />;
   }
   return (
     <>
