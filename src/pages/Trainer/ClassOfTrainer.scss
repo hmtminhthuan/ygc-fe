@@ -107,8 +107,7 @@
   }
 
   .card .card-header,
-  .card .card-body,
-  .card .card-footer {
+  .card .card-body {
     background-color: transparent;
     padding: 20px 25px;
   }
@@ -133,48 +132,16 @@
   }
 
   .table .table-img img {
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     border: 2px solid #bbbbbb;
     box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
     text-shadow: 0 0 black;
   }
 
-  .table .team-member-sm {
-    width: 32px;
-    transition: all 0.25s ease;
-  }
-
-  .table .team-member {
-    position: relative;
-    width: 30px;
-    white-space: nowrap;
-    border-radius: 1000px;
-    vertical-align: bottom;
-    display: inline-block;
-  }
-
-  .table .order-list li img {
-    border: 2px solid #ffffff;
-    box-shadow: 4px 3px 6px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  .table .team-member img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border: 0;
-    border-radius: 1000px;
-  }
-
   .rounded-circle {
     border-radius: 50% !important;
-  }
-
-  .table .order-list li + li {
-    margin-left: -14px;
-    background: transparent;
   }
 
   .avatar.avatar-sm {
@@ -196,12 +163,6 @@
     line-height: 1.28;
     height: 45px;
     width: 45px;
-  }
-
-  .table .order-list li .badge {
-    background: rgba(228, 222, 222, 0.8);
-    color: #6b6f82;
-    margin-bottom: 6px;
   }
 
   .badge {

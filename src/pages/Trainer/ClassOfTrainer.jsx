@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
+import maleImg from "../../assets/images/avt-male.jpg";
+import femaleImg from "../../assets/images/avt-female.jpg";
 import "./ClassOfTrainer.scss";
 
 export default function ClassOfTrainer() {
@@ -130,11 +132,40 @@ export default function ClassOfTrainer() {
                         {trainees.map((trainee) => (
                           <tr key={trainee.id}>
                             <td className="table-img">
-                              <img
+                              {/* <img
                                 src={trainee.img}
                                 alt={`${trainee.firstName} ${trainee.lastName}`}
                                 className="trainee-image"
-                              />
+                              /> */}
+                              {trainee.img == "male" ? (
+                                <img
+                                  src={maleImg}
+                                  alt="Image"
+                                  className="shadow img-user-profile"
+                                />
+                              ) : (
+                                <></>
+                              )}
+                              {trainee.img == "female" ? (
+                                <img
+                                  src={femaleImg}
+                                  alt="Image"
+                                  className="shadow img-user-profile"
+                                />
+                              ) : (
+                                <></>
+                              )}
+                              {trainee.img != "" &&
+                              trainee.img != "male" &&
+                              trainee.img != "female" ? (
+                                <img
+                                  src={trainee.img}
+                                  alt="Image"
+                                  className="shadow img-user-profile"
+                                />
+                              ) : (
+                                <></>
+                              )}
                             </td>
                             <td>
                               <h6 className="mb-0 font-13">

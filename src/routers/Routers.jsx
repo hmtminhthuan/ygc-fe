@@ -42,6 +42,7 @@ import Transaction from "../pages/Trainee/Transaction";
 import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
 
 import ClassOfTrainer from "../pages/Trainer/ClassOfTrainer";
+import ClassOfTrainee from "../pages/Trainee/ClassOfTrainee";
 import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyEmail";
 import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
@@ -129,6 +130,7 @@ export default function Routers() {
       children: [
         { path: "/trainee", element: <TraineeHome /> },
         { path: "/trainee/schedule/:id", element: <ScheduleTrainee /> },
+        { path: "/trainee/classDetail/:id", element: <ClassOfTrainee /> },
       ],
     },
   ]);
