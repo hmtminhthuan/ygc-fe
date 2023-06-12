@@ -11,7 +11,6 @@ export default function ClassOfTrainer() {
   const [trainees, setTrainees] = useState([]);
   const [available, setAvailable] = useState(false);
   const { id } = useParams();
-  console.log(classDetail);
   const comeBackHomeInvalid = () => {
     Swal.fire({
       position: "middle",

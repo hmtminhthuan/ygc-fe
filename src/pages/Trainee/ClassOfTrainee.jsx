@@ -6,8 +6,22 @@ import "./ClassOfTrainee.scss";
 
 export default function ClassOfTrainee() {
   const [classDetail, setClassDetail] = useState({});
-
   const { id } = useParams();
+  const comeBackHomeInvalid = () => {
+    Swal.fire({
+      position: "middle",
+      icon: "warning",
+      background: "#fefbe2",
+      title: `You are not allwed to access this`,
+      width: "50rem",
+      padding: "2rem",
+      showConfirmButton: false,
+      toast: true,
+      timer: 1200,
+    }).then(function () {
+      window.location.href = "/";
+    });
+  };
   useEffect(() => {
     api
       .get("/Trainee/getListClassForTrainee", {
@@ -20,8 +34,13 @@ export default function ClassOfTrainee() {
         list = res.data;
         list = [...list].filter((item) => item.classId == id);
         setClassDetail(list[0]);
+        if (list[0] == null || list[0] == undefined) {
+          comeBackHomeInvalid();
+        }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        comeBackHomeInvalid();
+      });
   }, [id]);
 
   const formatDate = (dateString) => {
