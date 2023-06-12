@@ -48,7 +48,10 @@ export default function ScheduleTrainee() {
         <section className="trainer-area pt-3 pb-3">
           <div className="row flex trainer mt-2 mx-5 mb-5">
             <div className="headerlist mt-5">
-              <h1 className="m-0 p-0 mb-4">
+              <h1
+                className="m-0 p-0 mb-4"
+                style={{ color: "rgb(229, 64, 174)" }}
+              >
                 <i className="ri-bookmark-line"></i> Schedule
               </h1>
             </div>
@@ -68,9 +71,11 @@ export default function ScheduleTrainee() {
                   <tr className="bg-light-gray">
                     <th className="text-uppercase">Time</th>
                     {listOfDay.map((item, index) => {
-                      <th key={`${theDay}${index}`} className="text-uppercase">
-                        {item}
-                      </th>;
+                      return (
+                        <th key={`${item}${index}`} className="text-uppercase">
+                          {`${item}`}
+                        </th>
+                      );
                     })}
                   </tr>
                 </thead>
@@ -97,7 +102,7 @@ export default function ScheduleTrainee() {
                               )
                               .map((filteredItem) => (
                                 <div
-                                  className="content"
+                                  className="content py-3"
                                   key={filteredItem.courseId}
                                 >
                                   <img
@@ -114,6 +119,7 @@ export default function ScheduleTrainee() {
                                     <p
                                       className="m-0 p-0 mt-2"
                                       title="View detail"
+                                      style={{ color: "rgb(229, 64, 174)" }}
                                     >
                                       {filteredItem.courseName}
                                     </p>

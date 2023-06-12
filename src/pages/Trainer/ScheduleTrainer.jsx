@@ -47,7 +47,10 @@ export default function ScheduleTrainer() {
         <section className="trainer-area pt-3 pb-3">
           <div className="row flex trainer mt-2 mx-5 mb-5">
             <div className="headerlist mt-5">
-              <h1 className="m-0 p-0 mb-4">
+              <h1
+                className="m-0 p-0 mb-4"
+                style={{ color: "rgb(229, 64, 174)" }}
+              >
                 <i className="ri-bookmark-line"></i> Schedule
               </h1>
             </div>
@@ -61,15 +64,17 @@ export default function ScheduleTrainer() {
                 <span className="mx-2">Back</span>
               </Link>
             </div> */}
-            <div className="schedule-trainer">
+            <div className="schedule-trainee">
               <table className="table-bordered text-center ">
                 <thead>
                   <tr className="bg-light-gray">
                     <th className="text-uppercase">Time</th>
                     {listOfDay.map((item, index) => {
-                      <th key={`${theDay}${index}`} className="text-uppercase">
-                        {item}
-                      </th>;
+                      return (
+                        <th key={`${item}${index}`} className="text-uppercase">
+                          {item}
+                        </th>
+                      );
                     })}
                   </tr>
                 </thead>
@@ -96,7 +101,7 @@ export default function ScheduleTrainer() {
                               )
                               .map((filteredItem) => (
                                 <div
-                                  className="content"
+                                  className="content py-3"
                                   key={filteredItem.courseId}
                                 >
                                   <img
@@ -107,13 +112,18 @@ export default function ScheduleTrainer() {
                                     }}
                                   />
                                   <Link
-                                    className="title"
+                                    className="title text-decoration-none"
                                     to={`/trainer/classDetail/${filteredItem.classId}`}
                                   >
-                                    <p title="View detail">
+                                    <p
+                                      className="m-0 p-0 mt-2"
+                                      title="View detail"
+                                      style={{ color: "rgb(229, 64, 174)" }}
+                                    >
                                       {filteredItem.courseName}
                                     </p>
                                   </Link>
+
                                   <p className="m-0 p-0">
                                     Class: {filteredItem.className}
                                   </p>

@@ -74,7 +74,7 @@ export default function ClassOfTrainer() {
       {available ? (
         <div className="main--content bg-white">
           <section className="trainer-area pt-3 pb-3">
-            <div className="row flex trainer mt-2 mx-5 mb-5">
+            <div className="row flex trainer mt-2 mx-5 my-0">
               <div className="container bootstrap snippets bootdey">
                 <div className="col-md-12 ">
                   <div className="profile-container mx-5">
@@ -155,12 +155,15 @@ export default function ClassOfTrainer() {
                         id="proTeamScroll"
                         tabIndex={2}
                         style={{
-                          height: 400,
+                          // height: 400,
                           overflow: "hidden",
                           outline: "none",
                         }}
                       >
-                        <table className="table table-striped">
+                        <table
+                          className="table table-striped"
+                          style={{ verticalAlign: "middle" }}
+                        >
                           <thead>
                             <tr>
                               <th>Image</th>
@@ -170,7 +173,7 @@ export default function ClassOfTrainer() {
                               <th>Phone</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody style={{ height: "auto" }}>
                             {trainees.map((trainee) => (
                               <tr key={trainee.id}>
                                 <td className="table-img">
