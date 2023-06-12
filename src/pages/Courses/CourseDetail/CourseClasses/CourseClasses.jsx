@@ -94,6 +94,7 @@ export default function CourseClasses({
       },
     }).then((result) => {
       if (result.isConfirmed === true) {
+        window.location.href = "/transaction";
       }
     });
   };
