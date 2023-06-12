@@ -120,7 +120,7 @@ export default function Routers() {
 
       children: [
         { path: "/trainer", element: <TrainerHome /> },
-        { path: "/trainer/schedule", element: <ScheduleTrainer /> },
+        { path: "/trainer/schedule/:id", element: <ScheduleTrainer /> },
         { path: "/trainer/classDetail/:id", element: <ClassOfTrainer /> },
       ],
     },
