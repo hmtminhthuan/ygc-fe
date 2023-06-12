@@ -67,13 +67,11 @@ export default function ScheduleTrainee() {
                 <thead>
                   <tr className="bg-light-gray">
                     <th className="text-uppercase">Time</th>
-                    <th className="text-uppercase">Monday</th>
-                    <th className="text-uppercase">Tuesday</th>
-                    <th className="text-uppercase">Wednesday</th>
-                    <th className="text-uppercase">Thursday</th>
-                    <th className="text-uppercase">Friday</th>
-                    <th className="text-uppercase">Saturday</th>
-                    <th className="text-uppercase">Sunday</th>
+                    {listOfDay.map((item, index) => {
+                      <th key={`${theDay}${index}`} className="text-uppercase">
+                        {item}
+                      </th>;
+                    })}
                   </tr>
                 </thead>
                 <tbody>
@@ -82,12 +80,18 @@ export default function ScheduleTrainee() {
                       <td className="align-middle">{timeFrame.timeFrame1}</td>
                       {listOfDay.map((theDay, index) => {
                         return (
-                          <td key={`${theDay}+${timeFrame.id}`} className="p-1">
+                          <td
+                            key={`${theDay}+${timeFrame.id}+${index}`}
+                            className="p-1"
+                          >
                             {schedule
                               .filter((item) =>
                                 item.schedule.some(
                                   (s) =>
-                                    s.date.trim().includes(theDay) &&
+                                    s.date
+                                      .trim()
+                                      .toLowerCase()
+                                      .includes(theDay.toLowerCase()) &&
                                     s.timeframeId === timeFrame.id
                                 )
                               )

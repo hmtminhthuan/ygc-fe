@@ -7,7 +7,15 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 export default function ScheduleTrainer() {
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
-
+  const listOfDay = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   // const { id } = useParams();
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   useEffect(() => {
@@ -58,239 +66,65 @@ export default function ScheduleTrainer() {
                 <thead>
                   <tr className="bg-light-gray">
                     <th className="text-uppercase">Time</th>
-                    <th className="text-uppercase">Monday</th>
-                    <th className="text-uppercase">Tuesday</th>
-                    <th className="text-uppercase">Wednesday</th>
-                    <th className="text-uppercase">Thursday</th>
-                    <th className="text-uppercase">Friday</th>
-                    <th className="text-uppercase">Saturday</th>
-                    <th className="text-uppercase">Sunday</th>
+                    {listOfDay.map((item, index) => {
+                      <th key={`${theDay}${index}`} className="text-uppercase">
+                        {item}
+                      </th>;
+                    })}
                   </tr>
                 </thead>
                 <tbody>
                   {timeFrames.map((timeFrame) => (
                     <tr key={timeFrame.id}>
                       <td className="align-middle">{timeFrame.timeFrame1}</td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Monday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Tuesday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Wednesday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Thursday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Friday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Saturday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
-                      <td>
-                        {schedule
-                          .filter((item) =>
-                            item.schedule.some(
-                              (s) =>
-                                s.date === "Sunday" &&
-                                s.timeframeId === timeFrame.id
-                            )
-                          )
-                          .map((filteredItem) => (
-                            <div
-                              className="content"
-                              key={filteredItem.courseId}
-                            >
-                              <img
-                                src={filteredItem.courseImg}
-                                style={{ width: "100px" }}
-                              />
-                              <Link
-                                className="title"
-                                to={`/trainer/classDetail/${filteredItem.classId}`}
-                              >
-                                <p title="View detail">
-                                  {filteredItem.courseName}
-                                </p>
-                              </Link>
-                              <p>Class: {filteredItem.className}</p>
-                              <p>Room: {filteredItem.room}</p>
-                            </div>
-                          ))}
-                      </td>
+                      {listOfDay.map((theDay, index) => {
+                        return (
+                          <td
+                            key={`${theDay}+${timeFrame.id}+${index}`}
+                            className="p-1"
+                          >
+                            {schedule
+                              .filter((item) =>
+                                item.schedule.some(
+                                  (s) =>
+                                    s.date
+                                      .trim()
+                                      .toLowerCase()
+                                      .includes(theDay.toLowerCase()) &&
+                                    s.timeframeId === timeFrame.id
+                                )
+                              )
+                              .map((filteredItem) => (
+                                <div
+                                  className="content"
+                                  key={filteredItem.courseId}
+                                >
+                                  <img
+                                    src={filteredItem.courseImg}
+                                    style={{
+                                      width: "100px",
+                                      borderRadius: "8px",
+                                    }}
+                                  />
+                                  <Link
+                                    className="title"
+                                    to={`/trainer/classDetail/${filteredItem.classId}`}
+                                  >
+                                    <p title="View detail">
+                                      {filteredItem.courseName}
+                                    </p>
+                                  </Link>
+                                  <p className="m-0 p-0">
+                                    Class: {filteredItem.className}
+                                  </p>
+                                  <p className="m-0 p-0">
+                                    Room: {filteredItem.room}
+                                  </p>
+                                </div>
+                              ))}
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
