@@ -27,7 +27,7 @@ export default function StaffTemplate() {
       {USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 2) ? (
         <></>
       ) : (
-        <div style={{}}>
+        <div style={{}} className="staff-template-scss">
           <Outlet />
         </div>
       )}

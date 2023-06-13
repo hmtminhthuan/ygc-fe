@@ -153,7 +153,7 @@ export default function ListTrainee() {
         <div className="main--content bg-white">
           <section className="staff-list-area pt-3 pb-3">
             {/* <MenuStaff /> */}
-            <div className="row flex trainee-containe mt-2 mx-5 mb-5">
+            <div className="row flex-column trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
                 <h1
                   className="m-0 p-0 mb-2"
@@ -258,7 +258,7 @@ export default function ListTrainee() {
                   />
                 </div>
               </div> */}
-              <div className="trainee">
+              <div className="trainee staff-template-scss">
                 <table style={{ fontSize: "12px" }}>
                   <thead>
                     <tr>

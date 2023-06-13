@@ -87,3 +87,20 @@
     }
   }
 }
+.staff-template-scss table {
+  overflow-y: scroll !important;
+}
+.staff-template-scss th,
+.staff-template-scss th button {
+  position: sticky !important;
+  z-index: 1100 !important;
+}
+.staff-template-scss table tr {
+  z-index: 1100 !important;
+}
+.staff-template-scss table th:first-child {
+  border-top-left-radius: 10px !important;
+}
+.staff-template-scss table th:last-child {
+  border-top-right-radius: 10px !important;
+}
