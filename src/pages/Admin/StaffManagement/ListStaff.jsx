@@ -157,98 +157,31 @@ export default function ListStaff() {
                 <i className="ri-bookmark-line"></i> List Staffs
               </h1>
             </div>
-            {/* Search By Name */}
-            <div className="col-lg-6 col-md-12 flex justify-content-start mb-2">
-              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Search by Name</h5>
-              <div className="w-50 flex justify-content-end">
-                <input
-                  type="search"
-                  placeholder="Enter part of Name..."
-                  style={{
-                    borderRadius: "5px",
-                    border: "1px solid gray",
-                    outline: "none",
-                    fontSize: "13px",
-                  }}
-                  className="px-1 py-1 w-100"
-                  value={searchedName}
-                  onChange={(e) => {
-                    setSearchedName(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
 
-            {/* Sort by gender */}
-            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Gender</h5>
-              <div
-                className="w-50 flex justify-content-end"
-                style={{ fontSize: "13px" }}
-              >
-                <Select
-                  className="w-100 text-dark mx-1"
-                  name="gender"
-                  value={genderSort}
-                  onChange={(value) => {
-                    setgenderSort(value);
-                  }}
-                >
-                  <Select.Option value="male">Male</Select.Option>
-                  <Select.Option value="female">Female</Select.Option>
-                  <Select.Option value="all">All</Select.Option>
-                </Select>
-              </div>
-            </div> */}
-
-            {/* Search By Phone */}
-            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
-                Search by Phone
-              </h5>
-              <div className="w-50 flex justify-content-end">
-                <input
-                  type="search"
-                  placeholder="Enter Phone..."
-                  style={{
-                    borderRadius: "5px",
-                    border: "1px solid gray",
-                    outline: "none",
-                    fontSize: "13px",
-                  }}
-                  className="px-1 py-1 w-100"
-                  value={searchedPhone}
-                  onChange={(e) => {
-                    setSearchedPhone(e.target.value);
-                  }}
-                />
-              </div>
-            </div> */}
-
-            {/* Search By Email */}
-            {/* <div className="col-lg-6 col-md-12 flex justify-content-center mb-2">
-              <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
-                Search by Email
-              </h5>
-              <div className="w-50 flex justify-content-end">
-                <input
-                  type="search"
-                  placeholder="Enter Email..."
-                  style={{
-                    borderRadius: "5px",
-                    border: "1px solid gray",
-                    outline: "none",
-                    fontSize: "13px",
-                  }}
-                  className="px-1 py-1 w-100"
-                  value={searchedEmail}
-                  onChange={(e) => {
-                    setSearchedEmail(e.target.value);
-                  }}
-                />
-              </div>
-            </div> */}
             <div className="trainee">
+              {/* Search By Name */}
+              <div className="col-lg-6 col-md-12 flex justify-content-start mb-2">
+                <h5 className="p-0 m-0 py-2 p-0 text-end px-2">
+                  Search by Name
+                </h5>
+                <div className="w-50 flex justify-content-end">
+                  <input
+                    type="search"
+                    placeholder="Enter part of Name..."
+                    style={{
+                      borderRadius: "5px",
+                      border: "1px solid gray",
+                      outline: "none",
+                      fontSize: "13px",
+                    }}
+                    className="px-1 py-1 w-100"
+                    value={searchedName}
+                    onChange={(e) => {
+                      setSearchedName(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
               <table style={{ fontSize: "13px" }}>
                 <thead>
                   <tr>

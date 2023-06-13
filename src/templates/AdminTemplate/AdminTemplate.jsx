@@ -24,7 +24,7 @@ export default function AdminTemplate() {
       {USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 1) ? (
         <></>
       ) : (
-        <div style={{}}>
+        <div style={{}} className="staff-template-scss">
           <Outlet />
         </div>
       )}
