@@ -110,7 +110,8 @@ export default function ClassDetail() {
   }, [courseClasses]);
 
   let countNo = 1;
-
+  console.log("finished", courseFinishedClasses);
+  console.log("current", courseClasses);
   return (
     <>
       <HeaderStaff />
@@ -150,7 +151,8 @@ export default function ClassDetail() {
                   )}
                 </div>
                 <div className="flex">
-                  {viewAllButton && courseClasses.length > 0 ? (
+                  {viewAllButton &&
+                  [...courseClasses, ...courseFinishedClasses].length > 0 ? (
                     <div className="text-end">
                       <button
                         className="border-0 mt-2 mx-1
@@ -211,7 +213,8 @@ export default function ClassDetail() {
                   </Link>
                 </div>
               </div>
-              {courseClasses.length <= 0 || !available ? (
+              {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
+              !available ? (
                 <p
                   className="text-danger text-center p-0 m-0"
                   style={{ fontSize: "18px", fontWeight: "600" }}

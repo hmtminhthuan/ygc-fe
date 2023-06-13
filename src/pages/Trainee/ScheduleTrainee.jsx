@@ -131,6 +131,12 @@ export default function ScheduleTrainee() {
                                   <p className="m-0 p-0">
                                     Room: {filteredItem.room}
                                   </p>
+                                  <p className="m-0 p-0">
+                                    Start: {filteredItem.startDate}
+                                  </p>
+                                  <p className="m-0 p-0">
+                                    End: {filteredItem.endDate}
+                                  </p>
                                 </div>
                               ))}
                           </td>

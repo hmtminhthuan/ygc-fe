@@ -155,7 +155,12 @@ export default function StaffBooking() {
                       </td>
                       <td style={{ textAlign: "right" }}>{amount}</td>
                       <td style={{ textAlign: "center" }}>
-                        {styleDateAndTime(bookingDate)}
+                        {
+                          // moment(new Date(`${bookingDate}`)).format(
+                          //   `DD-MM-YYYY, HH:mm`
+                          // )
+                          styleDateAndTime(bookingDate)
+                        }
                       </td>
                       <td style={{ textAlign: "center" }}>
                         {payDate != null &&

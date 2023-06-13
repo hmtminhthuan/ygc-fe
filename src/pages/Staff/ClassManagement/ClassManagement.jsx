@@ -194,7 +194,6 @@ export default function ClassManagement() {
         break;
     }
   }, [sortedClasses]);
-  console.log("haha", courseList);
   return (
     <>
       <HeaderStaff />
@@ -484,7 +483,10 @@ export default function ClassManagement() {
                             key={`classes-${courseID}`}
                           >
                             <td colSpan={9} style={{ textAlign: "center" }}>
-                              {classInfo != null && classInfo.length > 0 ? (
+                              {classInfo != null &&
+                              classInfoFinished != null &&
+                              [...classInfo, ...classInfoFinished].length >
+                                0 ? (
                                 <ClassViewMore
                                   courseClasses={classInfo}
                                   courseFinishedClasses={classInfoFinished}

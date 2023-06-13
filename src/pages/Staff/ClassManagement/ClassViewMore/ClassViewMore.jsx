@@ -69,9 +69,8 @@ export default function ClassViewMore({
     // }
     setViewAllButton(true);
   }, []);
-
+  console.log(courseClasses, courseFinishedClasses);
   let countNo = 1;
-  console.log("list", courseClasses);
   return (
     <div className="row flex justify-content-center">
       <div className="course-detail-classes col-10">
@@ -101,7 +100,8 @@ export default function ClassViewMore({
             {[...courseClasses, ...courseFinishedClasses].length}{" "}
           </p>
         </div>
-        {courseClasses.length <= 0 || !available ? (
+        {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
+        !available ? (
           <p
             className="text-danger text-center p-0 m-0"
             style={{ fontSize: "18px", fontWeight: "600" }}
@@ -307,7 +307,10 @@ export default function ClassViewMore({
             </Table>
           </TableContainer>
         )}
-        {viewAllButton && courseClasses.length > 0 ? (
+        {viewAllButton &&
+        [...courseClasses, ...courseFinishedClasses].length > 0 &&
+        [...courseClasses, ...courseFinishedClasses].length >
+          [...courseClasses].length ? (
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1

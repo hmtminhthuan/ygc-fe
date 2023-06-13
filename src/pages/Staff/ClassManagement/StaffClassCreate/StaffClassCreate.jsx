@@ -118,17 +118,17 @@ export default function StaffClassCreate() {
           classDTO: values,
           slotDTOs: theSlotDTOs,
         });
-        // api
-        //   .post(`/Class/CreateClass`, {
-        //     classDTO: values,
-        //     slotDTOs: theSlotDTOs,
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        api
+          .post(`/Class/CreateClass`, {
+            classDTO: values,
+            slotDTOs: theSlotDTOs,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
   });

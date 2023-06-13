@@ -985,7 +985,10 @@ export default function CourseManagement() {
                                 Classes
                               </td>
                               <td colSpan={10} style={{ textAlign: "left" }}>
-                                {classInfo != null && classInfo.length > 0 ? (
+                                {classInfo != null &&
+                                classInfoFinished != null &&
+                                [...classInfo, ...classInfoFinished].length >
+                                  0 ? (
                                   <AdminCourseClasses
                                     courseClasses={classInfo}
                                     courseFinishedClasses={classInfoFinished}

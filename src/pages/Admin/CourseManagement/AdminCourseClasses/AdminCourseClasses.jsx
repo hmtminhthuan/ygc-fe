@@ -71,7 +71,7 @@ export default function AdminCourseClasses({
   }, []);
 
   let countNo = 1;
-  console.log("list", courseClasses);
+  console.log(courseClasses, courseFinishedClasses);
   return (
     <div className="row flex justify-content-start">
       <div className="course-detail-classes col-10">
@@ -99,7 +99,8 @@ export default function AdminCourseClasses({
           Number of Total Classes:{" "}
           {[...courseClasses, ...courseFinishedClasses].length}{" "}
         </p>
-        {courseClasses.length <= 0 || !available ? (
+        {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
+        !available ? (
           <p
             className="text-danger text-center p-0 m-0"
             style={{ fontSize: "18px", fontWeight: "600" }}
@@ -167,13 +168,6 @@ export default function AdminCourseClasses({
                           let end = moment(new Date(`${endDate}`)).format(
                             "DD-MM-YYYY"
                           );
-                          if (
-                            moment(new Date()) >
-                              moment(new Date(`${endDate}`)) &&
-                            viewAllButton
-                          ) {
-                            return <></>;
-                          }
                           return (
                             <StyledTableRow key={index}>
                               <StyledTableCell align="left">
@@ -227,7 +221,7 @@ export default function AdminCourseClasses({
                   </>
                 ) : (
                   <>
-                    {[...courseClasses, ...courseFinishedClasses]
+                    {[courseClasses, courseFinishedClasses]
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
@@ -257,13 +251,6 @@ export default function AdminCourseClasses({
                           let end = moment(new Date(`${endDate}`)).format(
                             "DD-MM-YYYY"
                           );
-                          if (
-                            moment(new Date()) >
-                              moment(new Date(`${endDate}`)) &&
-                            viewAllButton
-                          ) {
-                            return <></>;
-                          }
                           return (
                             <StyledTableRow key={index}>
                               <StyledTableCell align="left">
@@ -320,7 +307,10 @@ export default function AdminCourseClasses({
             </Table>
           </TableContainer>
         )}
-        {viewAllButton && courseClasses.length > 0 ? (
+        {viewAllButton &&
+        [...courseClasses, ...courseFinishedClasses].length > 0 &&
+        [...courseClasses, ...courseFinishedClasses].length >
+          [...courseClasses].length ? (
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1 
