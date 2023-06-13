@@ -38,19 +38,22 @@ export default function CreateTrainee() {
           // Reset the form after successful creation
           resetForm();
           // setSubmitting(false);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Create new trainee successfully!",
-            showConfirmButton: true,
-            timer: 3500,
-          }).then(function () {
-            window.location.href = "/staff/createTrainee";
-          });
+          alert.alertSuccessWithTime(
+            "Create Trainee Successfully",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
         })
         .catch((err) => {
-          console.log(err);
-          // setSubmitting(false);
+          alert.alertFailedWithTime(
+            "Failed To Create",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
         });
     },
   });
@@ -453,8 +456,8 @@ export default function CreateTrainee() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <Link
-                            to={"/staff/listTrainee"}
+                          <button
+                            type="reset"
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
                             style={{
@@ -462,8 +465,8 @@ export default function CreateTrainee() {
                               height: "100%",
                             }}
                           >
-                            Cancel
-                          </Link>
+                            Reset
+                          </button>
                         </div>
                       </div>
                     </Form>

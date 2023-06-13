@@ -44,89 +44,26 @@ export default function ChangePassword({ userEmail, userId }) {
               })
               .catch((err) => {});
           } else {
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Your current password is not correct. Please try again",
-              showConfirmButton: true,
-              timer: 2000,
-            });
+            alert.alertFailedWithTime(
+              "Failed To Update",
+              "Your current password is not correct",
+              2500,
+              "33",
+              () => {}
+            );
           }
         })
         .catch((err) => {});
     },
   });
 
-  const handleChangePassword = (accountID) => {
-    Swal.fire({
-      title: `Enter your new Password`,
-      html: `Your Password must be at least 6 chacracters`,
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
-      },
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: "Confirm",
-      allowOutsideClick: false,
-    })
-      .then(async (result) => {
-        if (result.isDenied === true || result.isDismissed === true) {
-          Swal.fire({
-            title: `Are you sure to cancel?`,
-            icon: "warning",
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            allowOutsideClick: false,
-            confirmButtonColor: "red",
-            cancelButtonColor: "green",
-            focusCancel: true,
-          }).then((result) => {
-            if (result.isDenied === true || result.isDismissed === true) {
-              handleChangePassword(accountID);
-            } else if (result.isConfirmed === true) {
-            }
-          });
-        } else if (result.isConfirmed === true) {
-          if (result.value.trim().length < 6) {
-            await Swal.fire({
-              position: "center",
-              icon: "error",
-              title:
-                "Your password must be at least 6 chacracters. </br> Please enter again!",
-              showConfirmButton: false,
-              timer: 2000,
-            }).then(function () {
-              handleChangePassword(accountID);
-            });
-          } else {
-            api
-              .put(`/Account/UpdatePasswordAccount?id=${accountID}`, {
-                password: result.value.trim(),
-              })
-              .then((res) => {
-                if (res.status == 200) {
-                  Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Update Password Successfully",
-                    showConfirmButton: true,
-                    timer: 1500,
-                  }).then(function () {
-                    window.location.href = `/updateProfile/${userId}`;
-                  });
-                }
-              })
-              .catch((err) => {});
-          }
-        }
-      })
-      .catch((err) => {});
-  };
-
-  const handleResetPassword = (validationCode, email, accountID, time) => {
+  const handleResetPassword = (
+    validationCode,
+    email,
+    accountID,
+    time,
+    alertWrongCode
+  ) => {
     Swal.fire({
       title: `Verify your Account`,
       html: `We have sent a code to your Email: </br> ${email}. <br/>
@@ -186,7 +123,7 @@ export default function ChangePassword({ userEmail, userId }) {
                 position: "center",
                 icon: "error",
                 title: "Reset Password failed!</br>Please try again",
-                showConfirmButton: true,
+                showConfirmButton: false,
                 timer: 1000,
               });
             }
@@ -199,9 +136,9 @@ export default function ChangePassword({ userEmail, userId }) {
             Swal.fire({
               position: "center",
               icon: "error",
-              title: "Wrong verify code! </br> Please enter again",
+              title: "Incorrect Code</br> Please enter again",
               showConfirmButton: false,
-              timer: 1000,
+              timer: 1300,
             }).then(function () {
               handleResetPassword(validationCode, email, accountID, timeLeft);
             });
@@ -216,7 +153,7 @@ export default function ChangePassword({ userEmail, userId }) {
     Swal.fire({
       title: "Loading...",
       html: "Please wait a few seconds",
-      timer: 1200,
+      timer: 1500,
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
@@ -233,7 +170,8 @@ export default function ChangePassword({ userEmail, userId }) {
           res.data.validationCode,
           userEmail,
           res.data.accountID,
-          180000
+          180000,
+          false
         );
       })
       .catch((err) => {});

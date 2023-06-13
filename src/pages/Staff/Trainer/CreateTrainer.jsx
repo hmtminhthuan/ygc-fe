@@ -31,36 +31,35 @@ export default function CreateTrainer() {
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      formik.resetForm();
-      // api
-      //   .post("/Account/CreateAccount", values)
-      //   .then((res) => {
-      //     // Account trainer created successfully
-      //     const createdTrainer = res.data;
-      //     // Reset the form after successful creation
-      //     resetForm();
-      //     // setSubmitting(false);
+      console.log(values);
+      formik.setFieldValue("firstname", "");
 
-      //     Swal.fire({
-      //       position: "center",
-      //       icon: "success",
-      //       title: "Create new trainer successfully!",
-      //       showConfirmButton: true,
-      //       timer: 3500,
-      //     });
-      //     // .then(function () {
-      //     //   window.location.href = "/staff/createTrainer";
-      //     // });
-      //   })
-      //   .catch((err) => {
-      //     alert.alertFailedWithTime(
-      //       "Failed To Create",
-      //       "",
-      //       2000,
-      //       "25",
-      //       () => {}
-      //     );
-      //   });
+      api
+        .post("/Account/CreateAccount", values)
+        .then((res) => {
+          // Account trainer created successfully
+          const createdTrainer = res.data;
+          // Reset the form after successful creation
+          resetForm();
+          // setSubmitting(false);
+
+          alert.alertSuccessWithTime(
+            "Create Trainer Successfully",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        })
+        .catch((err) => {
+          alert.alertFailedWithTime(
+            "Failed To Create",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        });
     },
   });
 
@@ -462,8 +461,8 @@ export default function CreateTrainer() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <Link
-                            to={"/staff/listTrainer"}
+                          <button
+                            type="reset"
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
                             style={{
@@ -471,8 +470,8 @@ export default function CreateTrainer() {
                               height: "100%",
                             }}
                           >
-                            Cancel
-                          </Link>
+                            Reset
+                          </button>
                         </div>
                       </div>
                     </Form>

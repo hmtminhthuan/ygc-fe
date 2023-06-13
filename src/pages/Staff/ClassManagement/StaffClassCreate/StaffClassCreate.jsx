@@ -49,6 +49,9 @@ export default function StaffClassCreate() {
   const styleViewDate = (date) => {
     return moment(new Date(`${date}`)).format("DD-MM-YYYY");
   };
+  const styleTypeDate = (date) => {
+    return moment(new Date(`${date}`)).format("YYYY-MM-DD");
+  };
   const styleRealDate = (date) => {
     return moment(new Date(`${date}`));
   };
@@ -70,8 +73,6 @@ export default function StaffClassCreate() {
       finished: false,
     },
     onSubmit: (values) => {
-      console.log("values", values);
-      console.log("slotDto", slotDto);
       if (slotDto.length <= 0) {
         alert.alertFailed(
           "Create Class Failed",
@@ -114,21 +115,13 @@ export default function StaffClassCreate() {
           ];
         });
         alert.alertSuccess("Create Class Successfully", "", () => {});
-        console.log("obj", {
-          classDTO: values,
-          slotDTOs: theSlotDTOs,
-        });
         api
           .post(`/Class/CreateClass`, {
             classDTO: values,
             slotDTOs: theSlotDTOs,
           })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          .then((res) => {})
+          .catch((err) => {});
       }
     },
   });
@@ -321,7 +314,6 @@ export default function StaffClassCreate() {
   const handleChangeEndDate = (value) => {
     setRealCourseEndDate(styleRealDateWithDay(value));
     let endDate = styleInputDate(value);
-    setCourseEndDate(value);
     formik.setFieldValue("endDate", endDate);
   };
   const handleChangeRoom = (value) => {
@@ -421,12 +413,6 @@ export default function StaffClassCreate() {
       setSlotDto([...listOfSlot].filter((item) => item.dayOfWeek != ""));
     }
   };
-  // console.log("slotdto", slotDto);
-  // console.log(timetable);
-  // console.log(listOfTrainer);
-  // console.log("trainer", selectedTrainer);
-  // console.log("trainerSche", selectedSchedule);
-  // console.log(suitableTrainer);
   return (
     <>
       <HeaderStaff />
@@ -563,7 +549,7 @@ export default function StaffClassCreate() {
                       format={"dddd, DD-MM-YYYY"}
                       value={formik.values.startDate}
                       onChange={handleChangeStartDate}
-                      placeholder="Enter Start Date"
+                      placeholder="Enter Start Date (DD-MM-YYYY)"
                     />
                   </Form.Item>
                 </div>
@@ -623,10 +609,10 @@ export default function StaffClassCreate() {
                     <DatePicker
                       name="endDate"
                       className="w-100"
-                      format={"dddd, DD-MM-YYYY"}
+                      format={"DD-MM-YYYY"}
                       value={formik.values.endDate}
                       onChange={handleChangeEndDate}
-                      placeholder="Enter End Date"
+                      placeholder="Enter End Date (DD-MM-YYYY)"
                     />
                   </Form.Item>
                 </div>

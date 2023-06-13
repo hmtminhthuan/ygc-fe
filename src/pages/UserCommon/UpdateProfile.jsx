@@ -21,7 +21,7 @@ export default function UpdateProfile() {
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const [accept, setAccept] = useState(false);
   const [profile, setProfile] = useState(null);
-
+  const [updateDone, setUpdateDone] = useState(1);
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [phone, setPhone] = useState("");
@@ -71,7 +71,7 @@ export default function UpdateProfile() {
         });
       })
       .catch((err) => {});
-  }, []);
+  }, [updateDone]);
 
   const formik = useFormik({
     initialValues: {
@@ -92,37 +92,47 @@ export default function UpdateProfile() {
       api
         .put(`/Account/UpdateAccount?id=${profile.id}`, values)
         .then((res) => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Update profile successfully!",
-            showConfirmButton: true,
+          setUpdateDone((prev) => prev + 1);
+          api
+            .get("/Account/AccountList")
+            .then((res) => {
+              let userList = [];
+              userList = res.data;
+              localStorage.removeItem("USER_LOGIN");
+              localStorage.setItem(
+                "USER_LOGIN",
+                JSON.stringify(
+                  userList[
+                    userList.findIndex((obj) => {
+                      return (
+                        obj.phoneNumber.toString().trim() ==
+                        values.phoneNumber.toString().trim()
+                      );
+                    })
+                  ]
+                )
+              );
+            })
+            .catch((err) => {});
+          const Toast = Swal.mixin({
+            // toast: true,
+            position: "middle",
+            width: `30rem`,
+            padding: "1rem",
+            background: "#eef6ec",
+            showConfirmButton: false,
             timer: 1000,
-          }).then(function () {
-            api
-              .get("/Account/AccountList")
-              .then((res) => {
-                let userList = [];
-                userList = res.data;
-                localStorage.removeItem("USER_LOGIN");
-                localStorage.setItem(
-                  "USER_LOGIN",
-                  JSON.stringify(
-                    userList[
-                      userList.findIndex((obj) => {
-                        return (
-                          obj.phoneNumber.toString().trim() ==
-                          values.phoneNumber.toString().trim()
-                        );
-                      })
-                    ]
-                  )
-                );
-              })
-              .catch((err) => {})
-              .finally(() => {
-                window.location.href = `/updateProfile/${profile.id}`;
-              });
+            // timerProgressBar: true,
+            didOpen: (toast) => {
+              // toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: `Update Successfully`,
+            html: ``,
           });
         })
         .catch((err) => {});

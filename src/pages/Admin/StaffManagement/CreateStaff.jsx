@@ -38,18 +38,22 @@ export default function CreateStaff() {
           // Reset the form after successful creation
           resetForm();
 
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Create new staff successfully!",
-            showConfirmButton: true,
-            timer: 2000,
-          }).then(function () {
-            window.location.href = "/admin/createStaff";
-          });
+          alert.alertSuccessWithTime(
+            "Create Trainer Successfully",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
         })
         .catch((err) => {
-          console.log(err);
+          alert.alertFailedWithTime(
+            "Failed To Create",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
         });
     },
   });
@@ -452,8 +456,8 @@ export default function CreateStaff() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <Link
-                            to={"/admin/listStaff"}
+                          <button
+                            type="reset"
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
                             style={{
@@ -461,8 +465,8 @@ export default function CreateStaff() {
                               height: "100%",
                             }}
                           >
-                            Cancel
-                          </Link>
+                            Reset
+                          </button>
                         </div>
                       </div>
                     </Form>
