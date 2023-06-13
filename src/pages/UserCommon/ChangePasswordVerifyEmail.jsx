@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
+import Swal from "sweetalert2";
 
 export default function ChangePasswordVerifyEmail() {
   // const { id } = useParams();
@@ -67,8 +68,8 @@ export default function ChangePasswordVerifyEmail() {
               position: "center",
               icon: "success",
               title: "Reset Password Successfully",
-              showConfirmButton: true,
-              timer: 1500,
+              showConfirmButton: false,
+              timer: 1200,
             }).then(function () {
               window.location.href = `/updateProfile/${id}`;
             });
@@ -87,6 +88,9 @@ export default function ChangePasswordVerifyEmail() {
       confirmButtonText: "Yes",
       cancelButtonText: "No",
       allowOutsideClick: false,
+      confirmButtonColor: "red",
+      cancelButtonColor: "green",
+      focusCancel: true,
     }).then((result) => {
       if (result.isDenied === true || result.isDismissed === true) {
       } else if (result.isConfirmed === true) {

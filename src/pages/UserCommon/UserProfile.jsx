@@ -14,6 +14,7 @@ function UserProfile() {
   // const { paramID } = useParams();
   const paramID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const [profile, setProfile] = useState([]);
+  const [linkImg, setLinkImg] = useState("");
   const [accept, setAccept] = useState(false);
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
@@ -41,10 +42,11 @@ function UserProfile() {
         params: { id: paramID },
       })
       .then((res) => {
+        setLinkImg(res.data.img);
         setProfile(res.data);
       })
       .catch((err) => {});
-  }, [paramID]);
+  }, []);
 
   if (profile === null) {
     return null;
@@ -103,7 +105,7 @@ function UserProfile() {
                       <div className="col-sm-4 bg-c-lite-green user-profile">
                         <div className="card-block text-center">
                           <div className="m-b-25">
-                            {profile.img == "male" ? (
+                            {linkImg == "male" ? (
                               <img
                                 src={maleImg}
                                 alt="Image"
@@ -117,7 +119,7 @@ function UserProfile() {
                             ) : (
                               <></>
                             )}
-                            {profile.img == "female" ? (
+                            {linkImg == "female" ? (
                               <img
                                 src={femaleImg}
                                 alt="Image"
@@ -131,9 +133,9 @@ function UserProfile() {
                             ) : (
                               <></>
                             )}
-                            {profile.img != "" &&
-                            profile.img != "male" &&
-                            profile.img != "female" ? (
+                            {linkImg != "" &&
+                            linkImg != "male" &&
+                            linkImg != "female" ? (
                               <img
                                 src={profile.img}
                                 alt="Image"

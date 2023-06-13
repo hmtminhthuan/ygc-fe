@@ -65,7 +65,7 @@ export default function ChangePasswordLogin() {
                   position: "center",
                   icon: "success",
                   title: `Reset Password Successfully</br>Welcome ${userList[pos].firstName} ${userList[pos].lastName}`,
-                  showConfirmButton: true,
+                  showConfirmButton: false,
                   timer: 1500,
                 }).then(function () {
                   if (userList[pos].role.id == 1) {
@@ -95,6 +95,9 @@ export default function ChangePasswordLogin() {
       confirmButtonText: "Yes",
       cancelButtonText: "No",
       allowOutsideClick: false,
+      confirmButtonColor: "red",
+      cancelButtonColor: "green",
+      focusCancel: true,
     }).then((result) => {
       if (result.isDenied === true || result.isDismissed === true) {
       } else if (result.isConfirmed === true) {

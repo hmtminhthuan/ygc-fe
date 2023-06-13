@@ -7,6 +7,7 @@ import "remixicon/fonts/remixicon.css";
 import "./ListTrainer.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
+import { alert } from "../../../component/AlertComponent/Alert";
 export default function ListTrainer() {
   localStorage.setItem("MENU_ACTIVE", "staff-trainer");
   const [trainerList, setTrainerList] = useState([]);
@@ -121,31 +122,27 @@ export default function ListTrainer() {
               setTrainerList((prevList) =>
                 prevList.filter((trainer) => trainer.accountID !== trainerId)
               );
-              swalWithBootstrapButtons.fire(
-                "Deleted!",
-                "Trainer deleted successfully.",
-                "success"
+              alert.alertSuccessWithTime(
+                "Delete Successfully",
+                "",
+                2000,
+                "25",
+                () => {}
               );
             })
             .catch((error) => {
-              // console.log("Failed to delete trainer. Please try again.");
-              console.log(error);
-              swalWithBootstrapButtons.fire(
+              alert.alertFailedWithTime(
                 "Failed to delete",
-                "Please try again.",
-                "error"
+                "",
+                2000,
+                "25",
+                () => {}
               );
             });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            "Cancelled",
-            "Failed to delete!",
-            "error"
-          );
         }
       });
   };
-
   return (
     <section className="the-container">
       <div className="the-menu">

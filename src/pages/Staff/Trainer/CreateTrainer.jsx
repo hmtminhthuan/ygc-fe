@@ -8,6 +8,7 @@ import "./CreateTrainer.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import TextArea from "antd/es/input/TextArea";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CreateTrainer() {
   const [form] = Form.useForm();
@@ -30,28 +31,36 @@ export default function CreateTrainer() {
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      api
-        .post("/Account/CreateAccount", values)
-        .then((res) => {
-          // Account trainer created successfully
-          const createdTrainer = res.data;
-          // Reset the form after successful creation
-          resetForm();
-          // setSubmitting(false);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Create new trainer successfully!",
-            showConfirmButton: true,
-            timer: 3500,
-          }).then(function () {
-            window.location.href = "/staff/createTrainer";
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          // setSubmitting(false);
-        });
+      formik.resetForm();
+      // api
+      //   .post("/Account/CreateAccount", values)
+      //   .then((res) => {
+      //     // Account trainer created successfully
+      //     const createdTrainer = res.data;
+      //     // Reset the form after successful creation
+      //     resetForm();
+      //     // setSubmitting(false);
+
+      //     Swal.fire({
+      //       position: "center",
+      //       icon: "success",
+      //       title: "Create new trainer successfully!",
+      //       showConfirmButton: true,
+      //       timer: 3500,
+      //     });
+      //     // .then(function () {
+      //     //   window.location.href = "/staff/createTrainer";
+      //     // });
+      //   })
+      //   .catch((err) => {
+      //     alert.alertFailedWithTime(
+      //       "Failed To Create",
+      //       "",
+      //       2000,
+      //       "25",
+      //       () => {}
+      //     );
+      //   });
     },
   });
 

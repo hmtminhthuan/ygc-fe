@@ -10,6 +10,7 @@ import male from "../../assets/images/avt-male.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import ChangePassword from "./ChangePassword";
 import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
+import { alert } from "../../component/AlertComponent/Alert";
 export default function UpdateProfile() {
   localStorage.setItem("MENU_ACTIVE", "home-profile");
   const formItemLayout = {
@@ -54,13 +55,13 @@ export default function UpdateProfile() {
         params: { id: id },
       })
       .then((res) => {
+        if (res.data.img != "male" && res.data.img != "female") {
+          setPreviewImg(res.data.img);
+        }
         const userProfile = res.data;
         setProfile(userProfile);
         setPhone(res.data.phoneNumber);
         setAddress(res.data.address);
-        if (res.data.img != "male" && res.data.img != "female") {
-          setPreviewImg(res.data.img);
-        }
         formik.setValues({
           firstname: userProfile.firstname,
           lastname: userProfile.lastname,
@@ -68,17 +69,9 @@ export default function UpdateProfile() {
           address: userProfile.address,
           img: userProfile.img,
         });
-        setLastname(res.data.lastname);
-        setFirstname(res.data.firstname);
-        // setRoleName(res.data.role.name);
-        setPhone(res.data.phoneNumber);
-        setAddress(res.data.address);
-        if (res.data.img == "male" && res.data.img == "female") {
-          setPreviewImg(res.data.img);
-        }
       })
       .catch((err) => {});
-  }, [id]);
+  }, []);
 
   const formik = useFormik({
     initialValues: {

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { api } from "../../constants/api";
+import { alert } from "../../component/AlertComponent/Alert";
 
 export default function ChangePassword({ userEmail, userId }) {
   const formItemLayout = {
@@ -34,8 +35,8 @@ export default function ChangePassword({ userEmail, userId }) {
                     position: "center",
                     icon: "success",
                     title: "Update Password Successfully",
-                    showConfirmButton: true,
-                    timer: 1500,
+                    showConfirmButton: false,
+                    timer: 1200,
                   }).then(function () {
                     window.location.href = `/updateProfile/${userId}`;
                   });
@@ -79,6 +80,9 @@ export default function ChangePassword({ userEmail, userId }) {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             allowOutsideClick: false,
+            confirmButtonColor: "red",
+            cancelButtonColor: "green",
+            focusCancel: true,
           }).then((result) => {
             if (result.isDenied === true || result.isDismissed === true) {
               handleChangePassword(accountID);
@@ -171,6 +175,9 @@ export default function ChangePassword({ userEmail, userId }) {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             allowOutsideClick: false,
+            confirmButtonColor: "red",
+            cancelButtonColor: "green",
+            focusCancel: true,
           }).then((result) => {
             if (result.isDenied === true || result.isDismissed === true) {
               handleResetPassword(validationCode, email, accountID, timeLeft);

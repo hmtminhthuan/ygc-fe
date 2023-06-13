@@ -48,6 +48,52 @@ export const alert = {
       callback();
     });
   },
+  alertSuccessWithTime: function (title, html, time, width, callback) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: `${width.toString()}rem`,
+      background: "#eef6ec",
+      showConfirmButton: false,
+      timer: time,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: `${title}`,
+      html: `${html}`,
+    }).then(function () {
+      callback();
+    });
+  },
+  alertFailedWithTime: function (title, html, time, width, callback) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: `${width.toString()}rem`,
+      background: "#fee3e2",
+      showConfirmButton: false,
+      timer: time,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "error",
+      title: `${title}`,
+      html: `${html}`,
+    }).then(function () {
+      callback();
+    });
+  },
   alertInfoNotiForTrainee: function (title, html, callback) {
     const Toast = Swal.mixin({
       toast: true,

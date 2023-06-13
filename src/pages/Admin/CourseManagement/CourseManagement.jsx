@@ -20,13 +20,14 @@ export default function CourseManagement() {
   const [sortedLevel, setSortedLevel] = useState("");
   const [sortedName, setSortedName] = useState("Unsort");
   const [sortedDiscount, setSortedDiscount] = useState("Unsort");
-  const [filteredPrice, setFilteredPrice] = useState();
-  const [filteredCalPrice, setFilteredCalPrice] = useState("");
   const [sortedPrice, setSortedPrice] = useState("Unsort");
   const [sortedTotalPrice, setSortedTotalPrice] = useState("Unsort");
   const [sortedClasses, setSortedClasses] = useState("Unsort");
   const [sortedRating, setSortedRating] = useState("Unsort");
   const [priority, setPriority] = useState("");
+  const [courseListClass, setCourseListClass] = useState([]);
+  const [courseListClassFinished, setCourseListClassFinished] = useState([]);
+  const [courseListFeedbacks, setCourseListFeedbacks] = useState([]);
 
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
@@ -57,75 +58,92 @@ export default function CourseManagement() {
   };
 
   const renderCourseForAdmin = () => {
-    let courseListStart = [];
     let courseListEnd = [];
     api
       .get("/Course/GetAllCourseForAdmin")
-      .then(async (res) => {
-        setCourseList(res.data);
-        setRenderCourseList(res.data);
-        courseListStart = res.data;
-      })
-      .catch((err) => {})
-      .finally(async () => {
-        await courseListStart.forEach((course) => {
+      .then((res) => {
+        let courseListEnd1 = [];
+        let courseListEnd2 = [];
+        courseListEnd = res.data.sort((a, b) => a.courseID - b.courseID);
+        setCourseList(courseListEnd);
+        setRenderCourseList(courseListEnd);
+        [...courseListEnd].forEach((course) => {
           api
             .get("/Class/GetClassByCourseIDForAdmin", {
               params: { courseid: course.courseID },
             })
             .then((res) => {
               let classInfo = res.data;
-              course = { ...course, classInfo };
+              let courseID = course.courseID;
+              courseListEnd1 = [...courseListEnd1, { courseID, classInfo }];
             })
             .catch((err) => {
               let classInfo = [];
-              course = { ...course, classInfo };
+              let courseID = course.courseID;
+              courseListEnd1 = [...courseListEnd1, { courseID, classInfo }];
             })
             .finally(() => {
-              api
-                .get(
-                  `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
-                )
-                .then((res) => {
-                  let classInfoFinished = [...res.data];
-                  course = { ...course, classInfoFinished };
-                })
-                .catch((err) => {
-                  let classInfoFinished = [];
-                  course = { ...course, classInfoFinished };
-                })
-                .finally(() => {
-                  api
-                    .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
-                      params: { courseid: course.courseID },
-                    })
-                    .then((res) => {
-                      let feedbackInfo = res.data;
-                      let rating = 0;
-                      feedbackInfo.forEach((item) => {
-                        rating += item.rating;
-                      });
-                      if (feedbackInfo.length > 0) {
-                        rating = rating / feedbackInfo.length;
-                        rating = rating.toFixed(2);
-                      }
-                      course = { ...course, feedbackInfo, rating };
-                      courseListEnd = [...courseListEnd, course];
-                    })
-                    .catch((err) => {
-                      let feedbackInfo = [];
-                      let rating = 0;
-                      course = { ...course, feedbackInfo, rating };
-                      courseListEnd = [...courseListEnd, course];
-                    })
-                    .finally(async () => {
-                      courseListEnd = await courseListEnd.sort(
-                        (a, b) => a.courseID - b.courseID
-                      );
-                      setCourseList(courseListEnd);
-                      setRenderCourseList(courseListEnd);
-                    });
-                });
+              if (courseListEnd1.length == [...courseListEnd].length) {
+                setCourseListClass([...courseListEnd1]);
+              }
+            });
+
+          api
+            .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
+              params: { courseid: course.courseID },
+            })
+            .then((res) => {
+              let feedbackInfo = res.data;
+              let rating = 0;
+              let courseID = course.courseID;
+              feedbackInfo.forEach((item) => {
+                rating += item.rating;
+              });
+              if (feedbackInfo.length > 0) {
+                rating = rating / feedbackInfo.length;
+                rating = rating.toFixed(2);
+              }
+              course = { courseID, feedbackInfo, rating };
+              courseListEnd2 = [...courseListEnd2, course];
+            })
+            .catch((err) => {
+              let feedbackInfo = [];
+              let rating = 0;
+              let courseID = course.courseID;
+              course = { courseID, feedbackInfo, rating };
+              courseListEnd2 = [...courseListEnd2, course];
+            })
+            .finally(() => {
+              if (courseListEnd2.length == courseListEnd.length) {
+                setCourseListFeedbacks(courseListEnd2);
+              }
+            });
+        });
+      })
+      .catch((err) => {})
+      .finally(() => {
+        let courseListEnd3 = [];
+        courseListEnd.forEach((course) => {
+          api
+            .get(
+              `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
+            )
+            .then((res) => {
+              let classInfoFinished = [...res.data];
+              let courseID = course.courseID;
+              course = { courseID, classInfoFinished };
+              courseListEnd3 = [...courseListEnd3, course];
+            })
+            .catch((err) => {
+              let classInfoFinished = [];
+              let courseID = course.courseID;
+              course = { courseID, classInfoFinished };
+              courseListEnd3 = [...courseListEnd3, course];
+            })
+            .finally(() => {
+              if (courseListEnd3.length == courseListEnd.length) {
+                setCourseListClassFinished(courseListEnd3);
+              }
             });
         });
       });
@@ -133,8 +151,7 @@ export default function CourseManagement() {
 
   useEffect(() => {
     renderCourseForAdmin();
-  }, []);
-
+  });
   const resetSort = () => {
     if (
       sortedName.trim().toLowerCase().includes("unsort") &&
@@ -689,6 +706,24 @@ export default function CourseManagement() {
                     },
                     index
                   ) => {
+                    if (courseListClass.length > 0) {
+                      classInfo = courseListClass.filter(
+                        (item) => item.courseID == courseID
+                      )[0].classInfo;
+                    }
+                    if (courseListFeedbacks.length > 0) {
+                      feedbackInfo = courseListFeedbacks.filter(
+                        (item) => item.courseID == courseID
+                      )[0].feedbackInfo;
+                      rating = courseListFeedbacks.filter(
+                        (item) => item.courseID == courseID
+                      )[0].rating;
+                    }
+                    if (courseListClassFinished.length > 0) {
+                      classInfoFinished = courseListClassFinished.filter(
+                        (item) => item.courseID == courseID
+                      )[0].classInfoFinished;
+                    }
                     let pos = infoMoreList.findIndex((obj) => {
                       return obj == `more-info-id-${courseID}`;
                     });
@@ -955,7 +990,7 @@ export default function CourseManagement() {
                             >
                               <td
                                 className="text-black"
-                                colSpan={1}
+                                colSpan={2}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -975,7 +1010,7 @@ export default function CourseManagement() {
                             >
                               <td
                                 className="text-black"
-                                colSpan={1}
+                                colSpan={2}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",
@@ -1007,7 +1042,7 @@ export default function CourseManagement() {
                             >
                               <td
                                 className="text-black"
-                                colSpan={1}
+                                colSpan={2}
                                 style={{
                                   textAlign: "right",
                                   fontWeight: "600",

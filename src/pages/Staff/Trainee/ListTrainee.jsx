@@ -122,27 +122,24 @@ export default function ListTrainee() {
               setTraineeList((prevList) =>
                 prevList.filter((trainee) => trainee.accountID !== traineeId)
               );
-              swalWithBootstrapButtons.fire(
-                "Deleted!",
-                "Trainee deleted successfully.",
-                "success"
+              alert.alertSuccessWithTime(
+                "Delete Successfully",
+                "",
+                2000,
+                "25",
+                () => {}
               );
             })
             .catch((error) => {
-              // console.log("Failed to delete trainee. Please try again.");
-              console.log(error);
-              swalWithBootstrapButtons.fire(
+              alert.alertFailedWithTime(
                 "Failed to delete",
-                "Please try again.",
-                "error"
+                "",
+                2000,
+                "25",
+                () => {}
               );
             });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            "Cancelled",
-            "Failed to delete!",
-            "error"
-          );
         }
       });
   };

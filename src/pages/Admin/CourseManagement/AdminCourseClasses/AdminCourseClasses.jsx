@@ -221,7 +221,7 @@ export default function AdminCourseClasses({
                   </>
                 ) : (
                   <>
-                    {[courseClasses, courseFinishedClasses]
+                    {[...courseClasses, ...courseFinishedClasses]
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
