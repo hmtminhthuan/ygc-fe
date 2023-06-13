@@ -10,6 +10,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 import TextArea from "antd/es/input/TextArea";
+import { alert } from "../../component/AlertComponent/Alert";
 
 export default function Register() {
   localStorage.setItem("MENU_ACTIVE", "home-register");
@@ -75,17 +76,15 @@ export default function Register() {
           .catch((err) => {});
       })
       .catch((err) => {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title:
-            "This Email or Phone number has been registered! </br> Please try again",
-          showConfirmButton: true,
-          timer: 10000,
-        });
+        alert.alertFailedWithTime(
+          "Failed To Register",
+          "This Email or Phone number has been registered",
+          3300,
+          "33",
+          () => {}
+        );
       });
   };
-
   const handleEnterVerifyCode = (values, validationCode, email, time) => {
     Swal.fire({
       title: `Verify your Account`,
@@ -135,6 +134,9 @@ export default function Register() {
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             allowOutsideClick: false,
+            focusCancel: true,
+            cancelButtonColor: "green",
+            confirmButtonColor: "red",
           }).then((result) => {
             if (result.isDenied === true || result.isDismissed === true) {
               handleEnterVerifyCode(values, validationCode, email, timeLeft);
@@ -142,8 +144,8 @@ export default function Register() {
               Swal.fire({
                 position: "center",
                 icon: "error",
-                title: "Register failed!</br>Please try again",
-                showConfirmButton: true,
+                title: "Failed To Register</br>Please try again",
+                showConfirmButton: false,
                 timer: 1000,
               });
             }
@@ -155,7 +157,7 @@ export default function Register() {
             Swal.fire({
               position: "center",
               icon: "error",
-              title: "Wrong verify code! </br> Please enter again",
+              title: "Incorrect Code</br> Please enter again",
               showConfirmButton: false,
               timer: 1000,
             }).then(function () {
@@ -172,7 +174,7 @@ export default function Register() {
     Swal.fire({
       title: "Loading...",
       html: "Please wait a few seconds",
-      timer: 1200,
+      timer: 1800,
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
