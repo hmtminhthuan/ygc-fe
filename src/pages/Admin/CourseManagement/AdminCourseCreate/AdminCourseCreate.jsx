@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
+import { alert } from "../../../../component/AlertComponent/Alert";
 
 export default function AdminCourseCreate() {
   const [previewImg, setPreviewImg] = useState("");
@@ -60,15 +61,13 @@ export default function AdminCourseCreate() {
             .post("Course/CreateCourse", values)
             .then((res) => {
               console.log("res", res);
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Create course successfully!",
-                showConfirmButton: true,
-                timer: 1000,
-              }).then(function () {
-                window.location.href = "/admin/courseManagement";
-              });
+              alert.alertSuccessWithTime(
+                "Create Course Successfully",
+                "",
+                2000,
+                "25",
+                () => {}
+              );
             })
             .catch((err) => {
               console.log(err);
@@ -431,14 +430,34 @@ export default function AdminCourseCreate() {
                 </Form.Item>
               )}
 
-              <button
-                className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+              <div className="row">
+                <div className="col-6">
+                  <button
+                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
-                          shadow-lg mt-3"
-                type="submit"
-              >
-                Create
-              </button>
+                          shadow-lg mt-3 text-dark"
+                    type="submit"
+                    style={{ backgroundColor: "#d08fba", fontWeight: "bolder" }}
+                  >
+                    Create
+                  </button>
+                </div>
+                <div className="col-6">
+                  <button
+                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
+                          shadow-lg mt-3 bg-black text-light"
+                    type="reset"
+                    onClick={() => {
+                      setPreviewImg("");
+                      setPreviewDiscount(-1);
+                      setPreviewPrice(-1);
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
             </Form>
           </div>
         </div>

@@ -177,9 +177,14 @@ export default function MenuStaff() {
             href="/staff/booking"
           >
             <span className="icon icon-5">
-              <i className="  ri-terminal-window-fill" />
+              <i className="fa-solid fa-money-bill"></i>
             </span>
-            <span className="sidebar--item">Booking</span>
+            <span
+              className="sidebar--item"
+              style={{ transform: "translateX(-4px)" }}
+            >
+              Booking
+            </span>
           </a>
         </li>
       </ul>

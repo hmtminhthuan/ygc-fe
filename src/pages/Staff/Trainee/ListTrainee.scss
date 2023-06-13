@@ -64,7 +64,7 @@
 
     .setting {
       font-size: 18px;
-      z-index: 1000 !important;
+      // z-index: 1000 !important;
 
       .ri-delete-bin-line {
         position: absolute;
@@ -76,7 +76,7 @@
         justify-content: center;
         align-items: center;
         color: red;
-        z-index: 5000 !important;
+        // z-index: 5000 !important;
       }
     }
   }

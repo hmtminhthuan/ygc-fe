@@ -19,9 +19,14 @@ export const timeLeft = {
       }${hour}:${minute <= 9 ? "0" : ""}${minute}:${
         second <= 9 ? "0" : ""
       }${second}`;
-      if (seconds < 0) {
+      if (
+        seconds < 0 ||
+        document.querySelector(`p#timeleft-id-${bookingID}`) == null
+      ) {
         clearInterval();
-        document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
+        if (document.querySelector(`p#timeleft-id-${bookingID}`) == null) {
+          document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
+        }
       }
     }, 1000);
   },

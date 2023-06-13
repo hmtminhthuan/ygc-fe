@@ -106,9 +106,10 @@ export default function ListStaff() {
         text: `Do you want to delete ${staffToDelete.firstName} ${staffToDelete.lastName}?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
+        confirmButtonText: "Yes, delete it",
+        cancelButtonText: "No, cancel",
         reverseButtons: true,
+        focusConfirm: false,
       })
       .then((result) => {
         if (result.isConfirmed) {

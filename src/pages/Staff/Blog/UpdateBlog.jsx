@@ -8,6 +8,7 @@ import moment from "moment";
 import "./UpdateBlog.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function UpdateBlog() {
   const [previewImg, setPreviewImg] = useState("");
@@ -62,16 +63,15 @@ export default function UpdateBlog() {
       api
         .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
         .then((res) => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Update blog successfully!",
-            showConfirmButton: true,
-            timer: 1000,
-          }).then(function () {
-            // Redirect to the blog management page after successful update
-            window.location.href = "/staff/blogManagement";
-          });
+          alert.alertSuccessWithTime(
+            "Update Blog Successfully",
+            "",
+            2000,
+            "30",
+            () => {
+              window.location.href = "/staff/blogManagement";
+            }
+          );
         })
         .catch((err) => {
           console.log(err);

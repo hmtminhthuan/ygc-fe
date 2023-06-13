@@ -70,7 +70,7 @@
 
     .setting {
       font-size: 18px;
-      z-index: 1000 !important;
+      // z-index: 1000 !important;
 
       .ri-delete-bin-line {
         position: absolute;
@@ -82,7 +82,7 @@
         justify-content: center;
         align-items: center;
         color: red;
-        z-index: 5000 !important;
+        // z-index: 5000 !important;
       }
     }
   }
@@ -93,10 +93,10 @@
 .staff-template-scss th,
 .staff-template-scss th button {
   position: sticky !important;
-  z-index: 1100 !important;
+  z-index: 1 !important;
 }
 .staff-template-scss table tr {
-  z-index: 1100 !important;
+  z-index: 1 !important;
 }
 .staff-template-scss table th:first-child {
   border-top-left-radius: 10px !important;
@@ -104,3 +104,22 @@
 .staff-template-scss table th:last-child {
   border-top-right-radius: 10px !important;
 }
+
+.staff-template-none-scss table {
+  overflow-y: hidden !important;
+}
+.staff-template-none-scss th,
+.staff-template-none-scss th button {
+  position: static !important;
+  // z-index: 0 !important;
+}
+.staff-template-none-scss table tr {
+  // z-index: 0 !important;
+}
+
+// .staff-template-none-scss table th:first-child {
+//   border-top-left-radius: 10px !important;
+// }
+// .staff-template-none-scss table th:last-child {
+//   border-top-right-radius: 10px !important;
+// }

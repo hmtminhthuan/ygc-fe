@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { Link, Outlet } from "react-router-dom";
 import moment from "moment/moment";
 import { Rating, Stack } from "@mui/material";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseManagement() {
   localStorage.setItem("MENU_ACTIVE", "admin-course");
@@ -28,7 +29,7 @@ export default function CourseManagement() {
   const [courseListClass, setCourseListClass] = useState([]);
   const [courseListClassFinished, setCourseListClassFinished] = useState([]);
   const [courseListFeedbacks, setCourseListFeedbacks] = useState([]);
-
+  const [viewData, setViewData] = useState(false);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -151,7 +152,20 @@ export default function CourseManagement() {
 
   useEffect(() => {
     renderCourseForAdmin();
-  });
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 1100,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        setViewData(true);
+      },
+    });
+  }, []);
   const resetSort = () => {
     if (
       sortedName.trim().toLowerCase().includes("unsort") &&
@@ -397,7 +411,7 @@ export default function CourseManagement() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className="main--content pt-3 px-4">
+        <div className={`main--content px-4 pt-3 ${!viewData ? "d-none" : ""}`}>
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}
@@ -890,13 +904,13 @@ export default function CourseManagement() {
                                       result.isDismissed === true
                                     ) {
                                     } else if (result.isConfirmed === true) {
-                                      Swal.fire({
-                                        position: "center",
-                                        icon: "success",
-                                        title: "Activate course successfully!",
-                                        showConfirmButton: true,
-                                        timer: 1000,
-                                      });
+                                      alert.alertSuccessWithTime(
+                                        "Activate Successfully",
+                                        "",
+                                        2000,
+                                        "25",
+                                        () => {}
+                                      );
                                       handleReactivateByAdmin(`${courseID}`);
                                     }
                                   });
@@ -923,14 +937,13 @@ export default function CourseManagement() {
                                       );
                                     }).length > 0
                                   ) {
-                                    Swal.fire({
-                                      position: "center",
-                                      icon: "warning",
-                                      title:
-                                        "Delete failed!</br> This course has some classes at the present.",
-                                      showConfirmButton: true,
-                                      timer: 3500,
-                                    });
+                                    alert.alertFailedWithTime(
+                                      "Failed to delete",
+                                      "This course has some classes at the present",
+                                      2000,
+                                      "33",
+                                      () => {}
+                                    );
                                   } else {
                                     Swal.fire({
                                       title: `Are you sure to delete this course?`,
@@ -949,13 +962,13 @@ export default function CourseManagement() {
                                         result.isDismissed === true
                                       ) {
                                       } else if (result.isConfirmed === true) {
-                                        Swal.fire({
-                                          position: "center",
-                                          icon: "success",
-                                          title: "Delete course successfully!",
-                                          showConfirmButton: true,
-                                          timer: 1000,
-                                        });
+                                        alert.alertSuccessWithTime(
+                                          "Delete Successfully",
+                                          "",
+                                          2000,
+                                          "25",
+                                          () => {}
+                                        );
                                         handleDeleteCourseByAdmin(
                                           `${courseID}`
                                         );

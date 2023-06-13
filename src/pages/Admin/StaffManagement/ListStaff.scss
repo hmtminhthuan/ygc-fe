@@ -117,7 +117,7 @@ tbody td {
 
 .setting {
   font-size: 18px;
-  z-index: 1000 !important;
+  // z-index: 1000 !important;
   .ri-edit-2-fill {
     color: rgb(0, 9, 111);
   }
@@ -131,7 +131,7 @@ tbody td {
     justify-content: center;
     align-items: center;
     color: red;
-    z-index: 5000 !important;
+    // z-index: 5000 !important;
   }
 }
 #admin-list-staff-area {

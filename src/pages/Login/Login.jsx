@@ -213,7 +213,7 @@ export default function Login() {
             Swal.fire({
               title: "Loading...",
               html: "Please wait a few seconds",
-              timer: 1600,
+              timer: 1200,
               timerProgressBar: true,
               didOpen: () => {
                 Swal.showLoading();

@@ -20,6 +20,7 @@ export default function FeedbackManagement() {
   const [sortedTotalFb, setSortedTotalFb] = useState("Unsort");
   const [sortedRating, setSortedRating] = useState("Unsort");
   const [priority, setPriority] = useState("");
+  const [viewData, setViewData] = useState(false);
 
   const symbolSorting = (item) => {
     switch (item) {
@@ -129,6 +130,19 @@ export default function FeedbackManagement() {
 
   useEffect(() => {
     renderCourseForAdmin();
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        setViewData(true);
+      },
+    });
   }, []);
 
   const resetSort = () => {
@@ -329,7 +343,7 @@ export default function FeedbackManagement() {
       <HeaderStaff />
       <section className="main bg-light" id="staff-feedback-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-4">
+        <div className={`main--content px-4 pt-3 ${!viewData ? "d-none" : ""}`}>
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}

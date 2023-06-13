@@ -24,6 +24,7 @@ export default function CourseView() {
   const [courseListClass, setCourseListClass] = useState([]);
   const [courseListClassFinished, setCourseListClassFinished] = useState([]);
   const [courseListFeedbacks, setCourseListFeedbacks] = useState([]);
+  const [viewData, setViewData] = useState(false);
 
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
@@ -147,6 +148,19 @@ export default function CourseView() {
 
   useEffect(() => {
     renderCourseForAdmin();
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        setViewData(true);
+      },
+    });
   }, []);
 
   const resetSort = () => {
@@ -354,10 +368,7 @@ export default function CourseView() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div
-          className="main--content px-4 pt-3
-        "
-        >
+        <div className={`main--content px-4 pt-3 ${!viewData ? "d-none" : ""}`}>
           {/* staff-course-view  */}
           <div
             className="flex justify-content-between align-items-end"

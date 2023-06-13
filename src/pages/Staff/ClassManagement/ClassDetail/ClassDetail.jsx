@@ -151,8 +151,7 @@ export default function ClassDetail() {
                   )}
                 </div>
                 <div className="flex">
-                  {viewAllButton &&
-                  [...courseClasses, ...courseFinishedClasses].length > 0 ? (
+                  {viewAllButton && [...courseFinishedClasses].length > 0 ? (
                     <div className="text-end">
                       <button
                         className="border-0 mt-2 mx-1

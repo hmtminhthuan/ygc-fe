@@ -9,6 +9,7 @@ import "./CreateBlog.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import moment from "moment/moment";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CreateBlog() {
   const [previewImg, setPreviewImg] = useState("");
@@ -34,13 +35,15 @@ export default function CreateBlog() {
           // Reset the form after successful creation
           resetForm();
           setSubmitting(false);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Create new blog successfully!",
-            showConfirmButton: true,
-            timer: 3500,
-          });
+          alert.alertSuccessWithTime(
+            "Create Blog Successfully",
+            "",
+            2000,
+            "30",
+            () => {
+              window.location.href = "/staff/blogManagement";
+            }
+          );
         })
         .catch((err) => {
           console.log(err);

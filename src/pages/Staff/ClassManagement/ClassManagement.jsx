@@ -18,6 +18,7 @@ export default function ClassManagement() {
   const [sortedName, setSortedName] = useState("Unsort");
   const [sortedClasses, setSortedClasses] = useState("Unsort");
   const [priority, setPriority] = useState("");
+  const [viewData, setViewData] = useState(false);
 
   const symbolSorting = (item) => {
     switch (item) {
@@ -96,6 +97,19 @@ export default function ClassManagement() {
 
   useEffect(() => {
     renderCourseForAdmin();
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+        setViewData(true);
+      },
+    });
   }, []);
 
   const resetSort = () => {
@@ -199,7 +213,7 @@ export default function ClassManagement() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-4">
+        <div className={`main--content px-4 pt-3 ${!viewData ? "d-none" : ""}`}>
           <div
             className="flex justify-content-between align-items-end"
             style={{ width: "97%", margin: "0 auto" }}

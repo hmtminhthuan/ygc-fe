@@ -109,9 +109,10 @@ export default function ListTrainee() {
         text: `Do you want to delete ${traineeToDelete.firstName} ${traineeToDelete.lastName}?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
+        confirmButtonText: "Yes, delete it",
+        cancelButtonText: "No, cancel",
         reverseButtons: true,
+        focusConfirm: false,
       })
       .then((result) => {
         if (result.isConfirmed) {

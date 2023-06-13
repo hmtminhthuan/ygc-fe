@@ -56,7 +56,7 @@ export default function StaffClassCreate() {
     return moment(new Date(`${date}`));
   };
   const styleRealDateWithDay = (date) => {
-    return moment(new Date(`${date}`)).format("dddd, DD-MM-YYYY");
+    return moment(new Date(`${date}`)).format("DD-MM-YYYY, dddd");
   };
   const currentDate = moment(new Date());
   const [form] = Form.useForm();
@@ -314,6 +314,7 @@ export default function StaffClassCreate() {
   const handleChangeEndDate = (value) => {
     setRealCourseEndDate(styleRealDateWithDay(value));
     let endDate = styleInputDate(value);
+    setCourseEndDate(value);
     formik.setFieldValue("endDate", endDate);
   };
   const handleChangeRoom = (value) => {
@@ -418,7 +419,7 @@ export default function StaffClassCreate() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-5">
+        <div className="main--content pt-3 px-5 staff-template-none-scss">
           <div className="row justify-content-center">
             <div className="col-12">
               <Link
@@ -516,9 +517,19 @@ export default function StaffClassCreate() {
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
+                          if (getFieldValue("endDate")) {
+                            formik.setFieldValue(
+                              "endDate",
+                              getFieldValue("endDate")
+                            );
+                            form.setFieldValue(
+                              "endDate",
+                              getFieldValue("endDate")
+                            );
+                          }
                           if (!(currentDate < styleRealDate(value)) && value) {
                             return Promise.reject(
-                              "End Date cannot be before or equal to Current Date"
+                              "Start Date cannot be before or equal to Current Date"
                             );
                           }
                           if (
@@ -546,7 +557,7 @@ export default function StaffClassCreate() {
                     <DatePicker
                       name="startDate"
                       className="w-100"
-                      format={"dddd, DD-MM-YYYY"}
+                      format={"DD-MM-YYYY, dddd"}
                       value={formik.values.startDate}
                       onChange={handleChangeStartDate}
                       placeholder="Enter Start Date (DD-MM-YYYY)"
@@ -579,6 +590,16 @@ export default function StaffClassCreate() {
                       },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
+                          if (getFieldValue("startDate")) {
+                            formik.setFieldValue(
+                              "startDate",
+                              getFieldValue("startDate")
+                            );
+                            form.setFieldValue(
+                              "startDate",
+                              getFieldValue("startDate")
+                            );
+                          }
                           if (!(currentDate < styleRealDate(value)) && value) {
                             return Promise.reject(
                               "End Date cannot be before or equal to Current Date"
@@ -609,7 +630,7 @@ export default function StaffClassCreate() {
                     <DatePicker
                       name="endDate"
                       className="w-100"
-                      format={"DD-MM-YYYY"}
+                      format={"DD-MM-YYYY, dddd"}
                       value={formik.values.endDate}
                       onChange={handleChangeEndDate}
                       placeholder="Enter End Date (DD-MM-YYYY)"
@@ -1438,14 +1459,35 @@ export default function StaffClassCreate() {
                 </table>
               )}
 
-              <button
-                className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+              <div className="row">
+                <div className="col-6">
+                  <button
+                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
-                          shadow-lg mt-3"
-                type="submit"
-              >
-                Create
-              </button>
+                          shadow-lg mt-3 text-dark"
+                    type="submit"
+                    style={{ backgroundColor: "#d08fba", fontWeight: "bolder" }}
+                  >
+                    Create
+                  </button>
+                </div>
+                <div className="col-6">
+                  <button
+                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
+                          shadow-lg mt-3 bg-black text-light"
+                    type="reset"
+                    onClick={() => {
+                      setCourseEndDate("");
+                      setCourseStartDate("");
+                      setCourseRoom("");
+                      setSelectedTrainer({});
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
             </Form>
           </div>
         </div>

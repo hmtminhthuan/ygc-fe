@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 function BlogManagement() {
   localStorage.setItem("MENU_ACTIVE", "staff-blog");
@@ -97,9 +98,10 @@ function BlogManagement() {
         text: "Do you want to delete?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
+        confirmButtonText: "Yes, delete it",
+        cancelButtonText: "No, cancel",
         reverseButtons: true,
+        focusConfirm: false,
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -109,25 +111,30 @@ function BlogManagement() {
               setBlogList((prevList) =>
                 prevList.filter((blog) => blog.blogID !== blogId)
               );
-              swalWithBootstrapButtons.fire(
-                "Deleted!",
-                "Blog deleted successfully.",
-                "success"
+              alert.alertSuccessWithTime(
+                "Delete Successfully",
+                "",
+                2000,
+                "25",
+                () => {}
               );
             })
             .catch((error) => {
-              console.log(error);
-              swalWithBootstrapButtons.fire(
+              alert.alertFailedWithTime(
                 "Failed to delete",
-                "Please try again.",
-                "error"
+                "",
+                2000,
+                "25",
+                () => {}
               );
             });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            "Cancelled",
-            "Failed to delete!",
-            "error"
+          alert.alertFailedWithTime(
+            "Failed to delete",
+            "",
+            2000,
+            "25",
+            () => {}
           );
         }
       });

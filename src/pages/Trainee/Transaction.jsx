@@ -188,10 +188,19 @@ export default function Transaction() {
                         {styleDateAndTime(bookingDate)}
                       </td>
                       <td>
-                        {status == 0 ? (
+                        {status == 0 && payingTime >= 0 ? (
                           <>
-                            Time Left to Pay:
-                            <p className="p-0 m-0" id={`timeleft-id-${id}`}></p>
+                            <span
+                              style={{ fontWeight: "bolder" }}
+                              className="text-success "
+                            >
+                              Time Left To Pay
+                            </span>
+                            <p
+                              style={{ fontWeight: "bolder", fontSize: "18px" }}
+                              className="text-success p-0 m-0"
+                              id={`timeleft-id-${id}`}
+                            ></p>
                             <button
                               className="p-0 m-0 bg-success text-light border-0 px-2 py-1 mt-1"
                               style={{ borderRadius: "15px" }}
