@@ -26,6 +26,9 @@ export default function CourseClasses({
   const [availablePayment, setAvailablePayment] = useState(false);
   const [payWay, setPayWay] = useState(false);
   const [listOfBooking, setListOfBooking] = useState({});
+  const [currentClass, setCurrentClass] = useState(false);
+  const [payingTime, setPayingTime] = useState(0);
+  const [refundTime, setRefundTime] = useState(0);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -197,80 +200,85 @@ export default function CourseClasses({
           console.log(err);
         });
     }
-    // Swal.fire({
-    //   title: "<strong>Thank you for your registration</strong>",
-    //   // icon: 'info',
-    //   //   html: `
-    //   //   <a
-    //   //   class="register_class_btn_after"
-    //   //   style="background-color: #d291bc;border: none;text-decoration:none;
-    //   //   border-radius:10px;color:#fff;"
-    //   //   href="${link}"
-    //   //   target="_blank"
-    //   // >
-    //   //   <p style="margin:0;padding:10px 0px;background-color: #d291bc;">Click here to continue</p>
-    //   // </a>
-    //   //   `,
-    //   showCloseButton: false,
-    //   showCancelButton: false,
-    //   showConfirmButton: true,
-    //   confirmButtonColor: "#d291bc",
-    //   confirmButtonText: "Click here to continue",
-    //   focusConfirm: false,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     // const btn = Swal.getHtmlContainer().querySelector(
-    //     //   "a.register_class_btn_after"
-    //     // );
-    //     // btn.addEventListener("click", () => {
-    //     //   // handleAddBooking();
-    //     // });
-    //   },
-    // }).then((result) => {
-    //   if (result.isConfirmed === true) {
-    //     window.location.href = "/transaction";
-    //   }
-    // });
   };
   const handleRegisterClass = (link, classId) => {
-    Swal.fire({
-      title: `<strong style="color:#d291bc">Policy For Registration</strong>`,
-      // icon: 'info',
-      html: `
+    if (
+      listOfBooking.filter(
+        (item) =>
+          item.account.accountID == userLogin.accountID && item.status == 0
+      ).length > 0
+    ) {
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        html: `
+          <p style="text-align:justify; margin:0;">
+          You have booked a class without being paid yet. Therefore, you could not book for another class now.</br></br>
+          In case that you want to register for another class and cancel the current class you have booked,
+          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
+          Thank you very much for choosing our service.
+          </p>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I understand",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      });
+    } else if (currentClass) {
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        html: `
+          <p style="text-align:center; margin:0;">
+          You have a class being not finished at the present.</br></br>
+          In case that you want to register for another class,
+          please contact us via our hot line:</br> <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
+          Thank you very much for choosing our service.
+          </p>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I understand",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      });
+    } else {
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Policy For Registration</strong>`,
+        html: `
         <p style="text-align:justify; margin:0;"><b>Payment Time:</b>
-        After registration, payment must be made within 12 hours. Failure to complete the payment within the specified timeframe will result in the cancellation of your booking. We will not be responsible for any related issues.
+        After registration, payment must be made within <b>${payingTime} hours</b>. 
+        Failure to complete the payment within the specified timeframe will result 
+        in the cancellation of your booking. We will not be responsible for any related issues.
         </br></br>
        <b>Refund Policy:</b>
-        Upon successful payment, you have 12 hours to cancel your booking and receive a 100% refund. Refund requests made after this timeframe will not be considered valid, and we will not be responsible for any associated issues.
-        To refund, please contact us via our hot line: <b><a href="">0989 545 545</a> or <a href="">0989 565 565</a></b></br></br>
-        <b>Class Cancellation:</b>
-        In the event that we cancel the course you have registered for, our staff will notify you x days prior to the scheduled start date. In this situation, you have the option to receive a 100% refund or transfer to another class within the registered course.
+        Upon successful payment, you have <b>${refundTime} hours</b> to cancel your booking and receive a 100% refund. 
+        Refund requests made after this timeframe will not be considered valid, and we will not be responsible for any associated issues.
+        To refund, please contact us via our hot line: <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b>
         </p>
         `,
-      showCloseButton: true,
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonColor: "#d291bc",
-      confirmButtonText: "I have read and I agree with the policy",
-      focusConfirm: false,
-      allowOutsideClick: false,
-      didOpen: () => {
-        // const btn = Swal.getHtmlContainer().querySelector(
-        //   "a.register_class_btn"
-        // );
-        // btn.addEventListener("click", () => {
-        // handleAddBooking();
-        // });
-      },
-    }).then((result) => {
-      if (result.isConfirmed === true) {
-        // handleAddBooking(classId);
-        // window.open(`${link}`, "_blank");
-        setPayWay(true);
-        localStorage.setItem("CLASS", classId);
-      }
-    });
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I have read and I agree with the policy",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed === true) {
+          setPayWay(true);
+          localStorage.setItem("CLASS", classId);
+        }
+      });
+    }
   };
+  // </br></br>
+  //       <b>Class Cancellation:</b>
+  //       In the event that we cancel the course you have registered for, our staff will notify you x days prior to the scheduled start date.
+  //       In this situation, you have the option to receive a 100% refund or transfer to another class within the registered course.
   useEffect(() => {
     api
       .get(`CheckOutVNPAY/GetAllBooking`)
@@ -278,7 +286,23 @@ export default function CourseClasses({
         setListOfBooking(res.data);
       })
       .catch((err) => {});
+    api
+      .get(`/api/AdminRepositoryAPI/GetSettingList`)
+      .then((res) => {
+        res.data
+          .filter((item) => item.id == 1)
+          .forEach((item) => {
+            setPayingTime(item.preactiveValue);
+          });
+        res.data
+          .filter((item) => item.id == 2)
+          .forEach((item) => {
+            setRefundTime(item.preactiveValue);
+          });
+      })
+      .catch((err) => {});
   }, []);
+  console.log(payingTime, refundTime);
   useEffect(() => {
     setClasses(courseClasses);
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
@@ -317,6 +341,14 @@ export default function CourseClasses({
               setClasses(arr);
             });
         });
+        api
+          .get(`/Trainee/getCurrentListClassForTrainee?id=${USER.accountID}`)
+          .then((res) => {
+            if (res.data != null && res.data != undefined) {
+              setCurrentClass(true);
+            }
+          })
+          .catch((err) => {});
       }
     }
     if (courseClasses.length > 0) {

@@ -3,17 +3,29 @@ import { api } from "../../constants/api";
 import moment from "moment/moment";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import "./Transaction.scss";
+import { timeLeft } from "./TimeLeft";
 export default function Transaction() {
   localStorage.setItem("MENU_ACTIVE", "home-booking");
-  const styleDateAndTime = (date) => {
-    return moment(
-      new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
-      )
-    ).format("DD-MM-YYYY, HH:mm");
-  };
+  const [payingTime, setPayingTime] = useState(-1);
+  const [refundTime, setRefundTime] = useState(-1);
+  const [current, setCurrent] = useState(new Date());
   const [listOfBooking, setListOfBooking] = useState([]);
   useEffect(() => {
+    api
+      .get(`/api/AdminRepositoryAPI/GetSettingList`)
+      .then((res) => {
+        res.data
+          .filter((item) => item.id == 1)
+          .forEach((item) => {
+            setPayingTime(item.preactiveValue);
+          });
+        res.data
+          .filter((item) => item.id == 2)
+          .forEach((item) => {
+            setRefundTime(item.preactiveValue);
+          });
+      })
+      .catch((err) => {});
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
@@ -38,7 +50,39 @@ export default function Transaction() {
       })
       .catch((err) => {});
   }, []);
-  console.log(listOfBooking[0]);
+  // const styleTimeLeft = (date) => {
+  //   let seconds =
+  //     payingTime * 60 * 60 -
+  //     Math.abs(
+  //       Math.round(
+  //         (current.getTime() -
+  //           (new Date(date).getTime() + 14 * 1000 * 60 * 60)) /
+  //           1000
+  //       )
+  //     );
+  //   let minutes = Math.floor(seconds / 60);
+  //   let hour = Math.floor(seconds / 60 / 60);
+  //   let minute = minutes - 60 * hour;
+  //   let second = seconds - 60 * minute - hour * 60 * 60;
+  //   return `${hour <= 9 ? "0" : ""}${hour}:${minute <= 9 ? "0" : ""}${minute}:${
+  //     second <= 9 ? "0" : ""
+  //   }${second}`;
+  // };
+  useEffect(() => {
+    if (payingTime >= 0) {
+      listOfBooking.forEach((item) => {
+        timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
+      });
+    }
+  }, [listOfBooking, payingTime]);
+  const styleDateAndTime = (date) => {
+    return moment(
+      new Date(`${date}`).setTime(
+        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
+      )
+    ).format("DD-MM-YYYY, HH:mm");
+  };
+  // console.log(listOfBooking[0]);
   return (
     <>
       <div className=" m-0 p-0">
@@ -58,8 +102,9 @@ export default function Transaction() {
                 <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                 <th style={{ textAlign: "center" }}>Status</th>
                 <th style={{ textAlign: "center" }}>Booking Date</th>
-                <th style={{ textAlign: "center" }}>Payment Date</th>
-                <th style={{ textAlign: "center" }}>Refund Date</th>
+                <th style={{ textAlign: "center" }}>Note</th>
+                {/* <th style={{ textAlign: "center" }}>Payment Date</th>
+                <th style={{ textAlign: "center" }}>Refund Date</th> */}
                 {/* <th style={{ textAlign: "center" }}></th> */}
               </tr>
             </thead>
@@ -68,6 +113,7 @@ export default function Transaction() {
               {listOfBooking.map(
                 (
                   {
+                    id,
                     bookingDate,
                     amount,
                     status,
@@ -80,6 +126,7 @@ export default function Transaction() {
                 ) => {
                   let { firstName, lastName, phone } = account;
                   let { courseName, courseID } = course;
+                  let timeLeft = "";
                   return (
                     <tr key={index}>
                       <td style={{ textAlign: "left" }}>{index + 1}</td>
@@ -140,14 +187,57 @@ export default function Transaction() {
                       <td style={{ textAlign: "center" }}>
                         {styleDateAndTime(bookingDate)}
                       </td>
-                      <td style={{ textAlign: "center" }}>
+                      <td>
+                        {status == 0 ? (
+                          <>
+                            Time Left to Pay:
+                            <p className="p-0 m-0" id={`timeleft-id-${id}`}></p>
+                            <button
+                              className="p-0 m-0 bg-success text-light border-0 px-2 py-1 mt-1"
+                              style={{ borderRadius: "15px" }}
+                              onClick={() => {
+                                handlePayAgain();
+                              }}
+                            >
+                              Pay Now
+                            </button>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                        {(status == 1 || status == 3) &&
+                        payDate != null &&
+                        payDate != undefined &&
+                        payDate != "" ? (
+                          <>
+                            Payment Time:
+                            <br />
+                            {styleDateAndTime(payDate)}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        {status == 4 &&
+                        refundDate != null &&
+                        refundDate != undefined &&
+                        refundDate != "" ? (
+                          <>
+                            Refund Time:
+                            <br />
+                            {moment(new Date(`${refundDate}`)).format(
+                              `DD-MM-YYYY, HH:mm`
+                            )}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                      {/* <td style={{ textAlign: "center" }}>
                         {payDate != null &&
                         payDate != undefined &&
                         payDate != "" ? (
                           <>
-                            {moment(new Date(`${payDate}`)).format(
-                              `DD-MM-YYYY, HH:mm`
-                            )}
+                            {styleDateAndTime(payDate)}
                           </>
                         ) : (
                           ""
@@ -165,7 +255,7 @@ export default function Transaction() {
                         ) : (
                           ""
                         )}
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 }

@@ -6,6 +6,12 @@ import moment from "moment/moment";
 
 export default function StaffBooking() {
   localStorage.setItem("MENU_ACTIVE", "staff-booking");
+  const formatPrice = (price) => {
+    return Intl.NumberFormat("vi-VN", {
+      // style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
   const [listOfBooking, setListOfBooking] = useState([]);
   const [recently, setRecently] = useState([]);
   const renderBooking = () => {
@@ -151,7 +157,9 @@ export default function StaffBooking() {
                       <td style={{ textAlign: "left" }}>
                         {restParams.class.className}
                       </td>
-                      <td style={{ textAlign: "right" }}>{amount}</td>
+                      <td style={{ textAlign: "right" }}>
+                        {formatPrice(amount)}
+                      </td>
                       <td style={{ textAlign: "center" }}>
                         {
                           // moment(new Date(`${bookingDate}`)).format(
