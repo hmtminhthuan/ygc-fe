@@ -34,11 +34,7 @@ export default function CreateTrainee() {
       api
         .post("/Account/CreateAccount", values)
         .then((res) => {
-          // Account trainer created successfully
-          const createdTrainee = res.data;
-          // Reset the form after successful creation
-          resetForm();
-          // setSubmitting(false);
+          form.resetFields();
           alert.alertSuccessWithTime(
             "Create Trainee Successfully",
             "",
@@ -48,9 +44,13 @@ export default function CreateTrainee() {
           );
         })
         .catch((err) => {
-          alert.alertFailedWithTime("Failed To Create", "", 2000, "25", () => {
-            window.location.href = "/staff/createTrainee";
-          });
+          alert.alertFailedWithTime(
+            "Failed To Create",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
         });
     },
   });
@@ -453,8 +453,8 @@ export default function CreateTrainee() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <button
-                            type="reset"
+                          <Link
+                            to={"/staff/listTrainee"}
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
                             style={{
@@ -462,8 +462,8 @@ export default function CreateTrainee() {
                               height: "100%",
                             }}
                           >
-                            Reset
-                          </button>
+                            Cancel
+                          </Link>
                         </div>
                       </div>
                     </Form>

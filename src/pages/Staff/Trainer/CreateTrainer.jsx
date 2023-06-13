@@ -33,24 +33,16 @@ export default function CreateTrainer() {
     onSubmit: (values, { setSubmitting, resetForm }) => {
       console.log(values);
       formik.setFieldValue("firstname", "");
-
       api
         .post("/Account/CreateAccount", values)
         .then((res) => {
-          // Account trainer created successfully
-          const createdTrainer = res.data;
-          // Reset the form after successful creation
-          resetForm();
-          // setSubmitting(false);
-
+          form.resetFields();
           alert.alertSuccessWithTime(
             "Create Trainer Successfully",
             "",
             2000,
             "25",
-            () => {
-              window.location.href = "/staff/createTrainer";
-            }
+            () => {}
           );
         })
         .catch((err) => {
@@ -463,8 +455,8 @@ export default function CreateTrainer() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <button
-                            type="reset"
+                          <Link
+                            to={"/staff/listTrainer"}
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
                             style={{
@@ -472,8 +464,8 @@ export default function CreateTrainer() {
                               height: "100%",
                             }}
                           >
-                            Reset
-                          </button>
+                            Cancel
+                          </Link>
                         </div>
                       </div>
                     </Form>
