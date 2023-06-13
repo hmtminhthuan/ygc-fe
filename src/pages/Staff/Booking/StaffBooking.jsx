@@ -48,9 +48,7 @@ export default function StaffBooking() {
   };
   const handleRefund = (accountID, courseID, classID) => {
     console.log({
-      status: 4,
-      accountId: parseInt(accountID),
-      classId: parseInt(classID),
+      accId: parseInt(accountID),
       courseId: parseInt(courseID),
     });
     // api
@@ -96,7 +94,7 @@ export default function StaffBooking() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-4">
+        <div className="main--content pt-0 px-4 staff-template-scss">
           <table>
             <thead>
               <tr>
@@ -246,7 +244,7 @@ export default function StaffBooking() {
                         )}
                       </td>
                       <td style={{ textAlign: "center" }}>
-                        {status == 0 ? (
+                        {/* {status == 0 ? (
                           <button
                             className="bg-success text-light border-0 py-1 px-2"
                             style={{ borderRadius: "10px" }}
@@ -263,7 +261,7 @@ export default function StaffBooking() {
                           </button>
                         ) : (
                           ""
-                        )}
+                        )} */}
                         {status == 1 ? (
                           <button
                             className="bg-primary text-light border-0 py-1 px-2"

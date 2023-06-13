@@ -535,7 +535,7 @@ export default function CourseClasses({
                       localStorage.removeItem("CLASS");
                     }}
                   >
-                    <td className="row flex">
+                    {/* <td className="row flex">
                       <div className="col-4 text-end">
                         <img
                           src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
@@ -547,7 +547,7 @@ export default function CourseClasses({
                       <div className="col-8 text-start">
                         <h4 className="m-0 p-0">Payment Using ATM</h4>
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
 
                   <tr
