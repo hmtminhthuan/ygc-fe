@@ -8,6 +8,7 @@ import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { Link } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CreateStaff() {
   const [form] = Form.useForm();
@@ -43,7 +44,9 @@ export default function CreateStaff() {
             "",
             2000,
             "25",
-            () => {}
+            () => {
+              window.location.href = "/admin/createStaff";
+            }
           );
         })
         .catch((err) => {

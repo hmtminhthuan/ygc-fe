@@ -48,7 +48,9 @@ export default function CreateTrainer() {
             "",
             2000,
             "25",
-            () => {}
+            () => {
+              window.location.href = "/staff/createTrainer";
+            }
           );
         })
         .catch((err) => {

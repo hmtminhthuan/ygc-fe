@@ -7,6 +7,7 @@ import "remixicon/fonts/remixicon.css";
 import "./ListTrainee.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
+import { alert } from "../../../component/AlertComponent/Alert";
 export default function ListTrainee() {
   localStorage.setItem("MENU_ACTIVE", "staff-trainee");
   const [traineeList, setTraineeList] = useState([]);

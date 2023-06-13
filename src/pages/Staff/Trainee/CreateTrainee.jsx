@@ -8,6 +8,7 @@ import "./CreateTrainee.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import TextArea from "antd/es/input/TextArea";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CreateTrainee() {
   const [form] = Form.useForm();
@@ -47,13 +48,9 @@ export default function CreateTrainee() {
           );
         })
         .catch((err) => {
-          alert.alertFailedWithTime(
-            "Failed To Create",
-            "",
-            2000,
-            "25",
-            () => {}
-          );
+          alert.alertFailedWithTime("Failed To Create", "", 2000, "25", () => {
+            window.location.href = "/staff/createTrainee";
+          });
         });
     },
   });
