@@ -55,13 +55,15 @@ export default function CourseClasses({
       })
       .then((res) => {
         link = res.data;
-        window.open(link, "_blank");
+        handleAddBooking(classId);
+        // window.open(link, "_blank");
       })
       .catch((err) => {
-        window.open(link, "_blank");
+        // window.open(link, "_blank");
       })
       .finally(() => {
-        handleAddBooking(classId);
+        // console.log(link);
+        window.location.href = link;
       });
   };
   const handlePayByAtm = (classId) => {
@@ -89,7 +91,8 @@ export default function CourseClasses({
         }</br></br>
 
 
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a></b></br>
+        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
+        or <a href="">0989 565 565</a></b></br>
         Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
         Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
         </p>
@@ -101,6 +104,7 @@ export default function CourseClasses({
       confirmButtonText: "I understand",
       focusConfirm: false,
       allowOutsideClick: false,
+      // showCloseButton: false,
       didOpen: () => {},
     }).then((result) => {
       if (result.isConfirmed === true) {
@@ -142,7 +146,7 @@ export default function CourseClasses({
         <p style="text-align:justify; margin:0;">
         Thank you for choosing our service. You should come to our place to complete payment.</br></br>
         Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b></br></br>
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a></b></br>
+        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a> or <a href="">0989 565 565</a></b></br>
         Or via our Email: <b>yogacenter.contact@gmail.com</b>
         </p>
         `,
@@ -153,6 +157,7 @@ export default function CourseClasses({
       confirmButtonText: "I understand",
       focusConfirm: false,
       allowOutsideClick: false,
+      // showCloseButton: false,
       didOpen: () => {
         // const btn = Swal.getHtmlContainer().querySelector(
         //   "a.register_class_btn"
@@ -192,40 +197,40 @@ export default function CourseClasses({
           console.log(err);
         });
     }
-    Swal.fire({
-      title: "<strong>Thank you for your registration</strong>",
-      // icon: 'info',
-      //   html: `
-      //   <a
-      //   class="register_class_btn_after"
-      //   style="background-color: #d291bc;border: none;text-decoration:none;
-      //   border-radius:10px;color:#fff;"
-      //   href="${link}"
-      //   target="_blank"
-      // >
-      //   <p style="margin:0;padding:10px 0px;background-color: #d291bc;">Click here to continue</p>
-      // </a>
-      //   `,
-      showCloseButton: false,
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonColor: "#d291bc",
-      confirmButtonText: "Click here to continue",
-      focusConfirm: false,
-      allowOutsideClick: false,
-      didOpen: () => {
-        // const btn = Swal.getHtmlContainer().querySelector(
-        //   "a.register_class_btn_after"
-        // );
-        // btn.addEventListener("click", () => {
-        //   // handleAddBooking();
-        // });
-      },
-    }).then((result) => {
-      if (result.isConfirmed === true) {
-        window.location.href = "/transaction";
-      }
-    });
+    // Swal.fire({
+    //   title: "<strong>Thank you for your registration</strong>",
+    //   // icon: 'info',
+    //   //   html: `
+    //   //   <a
+    //   //   class="register_class_btn_after"
+    //   //   style="background-color: #d291bc;border: none;text-decoration:none;
+    //   //   border-radius:10px;color:#fff;"
+    //   //   href="${link}"
+    //   //   target="_blank"
+    //   // >
+    //   //   <p style="margin:0;padding:10px 0px;background-color: #d291bc;">Click here to continue</p>
+    //   // </a>
+    //   //   `,
+    //   showCloseButton: false,
+    //   showCancelButton: false,
+    //   showConfirmButton: true,
+    //   confirmButtonColor: "#d291bc",
+    //   confirmButtonText: "Click here to continue",
+    //   focusConfirm: false,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     // const btn = Swal.getHtmlContainer().querySelector(
+    //     //   "a.register_class_btn_after"
+    //     // );
+    //     // btn.addEventListener("click", () => {
+    //     //   // handleAddBooking();
+    //     // });
+    //   },
+    // }).then((result) => {
+    //   if (result.isConfirmed === true) {
+    //     window.location.href = "/transaction";
+    //   }
+    // });
   };
   const handleRegisterClass = (link, classId) => {
     Swal.fire({
@@ -237,7 +242,7 @@ export default function CourseClasses({
         </br></br>
        <b>Refund Policy:</b>
         Upon successful payment, you have 12 hours to cancel your booking and receive a 100% refund. Refund requests made after this timeframe will not be considered valid, and we will not be responsible for any associated issues.
-        </br></br>
+        To refund, please contact us via our hot line: <b><a href="">0989 545 545</a> or <a href="">0989 565 565</a></b></br></br>
         <b>Class Cancellation:</b>
         In the event that we cancel the course you have registered for, our staff will notify you x days prior to the scheduled start date. In this situation, you have the option to receive a 100% refund or transfer to another class within the registered course.
         </p>

@@ -12,13 +12,14 @@ export default function StaffBooking() {
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
+        console.log(res);
         setListOfBooking(
           [...res.data]
             .sort((a, b) => {
-              return a.status - b.status;
+              return b.id - a.id;
             })
             .sort((a, b) => {
-              return b.id - a.id;
+              return a.status - b.status;
             })
         );
       })
@@ -52,11 +53,25 @@ export default function StaffBooking() {
       classId: parseInt(classID),
       courseId: parseInt(courseID),
     });
+    // api
+    //   .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
+    //     status: 4,
+    //     accountId: parseInt(accountID),
+    //     classId: parseInt(classID),
+    //     courseId: parseInt(courseID),
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     renderBooking();
+    //   });
     api
-      .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
-        status: 4,
-        accountId: parseInt(accountID),
-        classId: parseInt(classID),
+      .post(`/CheckOutVNPay/Refund`, {
+        accId: parseInt(accountID),
         courseId: parseInt(courseID),
       })
       .then((res) => {
@@ -72,9 +87,9 @@ export default function StaffBooking() {
   const styleDateAndTime = (date) => {
     return moment(
       new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() - 10 * 60 * 60 * 1000
+        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
       )
-    ).format("DD-MM-YYYY, HH:mm");
+    ).format(`DD-MM-YYYY, HH:mm`);
   };
   return (
     <>
@@ -90,8 +105,10 @@ export default function StaffBooking() {
                 <th style={{ textAlign: "left" }}>Phone</th>
                 <th style={{ textAlign: "left" }}>Course</th>
                 <th style={{ textAlign: "left" }}>Class</th>
-                <th style={{ textAlign: "left" }}>Booking Date</th>
                 <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
+                <th style={{ textAlign: "center" }}>Booking Date</th>
+                <th style={{ textAlign: "center" }}>Payment Date</th>
+                <th style={{ textAlign: "center" }}>Refund Date</th>
                 <th style={{ textAlign: "center" }}>Status</th>
                 <th style={{ textAlign: "center" }}></th>
               </tr>
@@ -136,10 +153,42 @@ export default function StaffBooking() {
                       <td style={{ textAlign: "left" }}>
                         {restParams.class.className}
                       </td>
-                      <td style={{ textAlign: "left" }}>
+                      <td style={{ textAlign: "right" }}>{amount}</td>
+                      <td style={{ textAlign: "center" }}>
                         {styleDateAndTime(bookingDate)}
                       </td>
-                      <td style={{ textAlign: "right" }}>{amount}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {payDate != null &&
+                        payDate != undefined &&
+                        payDate != "" ? (
+                          <>
+                            {
+                              moment(new Date(`${payDate}`)).format(
+                                `DD-MM-YYYY, HH:mm`
+                              )
+                              // styleDateAndTime(payDate)
+                            }
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {refundDate != null &&
+                        refundDate != undefined &&
+                        refundDate != "" ? (
+                          <>
+                            {
+                              moment(new Date(`${refundDate}`)).format(
+                                `DD-MM-YYYY, HH:mm`
+                              )
+                              // styleDateAndTime(refundDate)
+                            }
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </td>
                       <td style={{ textAlign: "center" }}>
                         {status == 0 ? (
                           <>
@@ -225,6 +274,16 @@ export default function StaffBooking() {
                           >
                             Refund
                           </button>
+                        ) : (
+                          ""
+                        )}
+                        {status == 3 ? (
+                          <p
+                            className="bg-transparent text-danger border-0 p-0 m-0"
+                            style={{ borderRadius: "10px" }}
+                          >
+                            Failed Refund
+                          </p>
                         ) : (
                           ""
                         )}

@@ -345,7 +345,7 @@ export default function Register() {
                         // },
                         {
                           message: "Phone must be 10-11 numbers",
-                          pattern: /^([0][1-9]{9,10})$/,
+                          pattern: /^([0-9]{10,11})$/,
                         },
                       ]}
                       hasFeedback

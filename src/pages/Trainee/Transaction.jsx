@@ -5,6 +5,13 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import "./Transaction.scss";
 export default function Transaction() {
   localStorage.setItem("MENU_ACTIVE", "home-booking");
+  const styleDateAndTime = (date) => {
+    return moment(
+      new Date(`${date}`).setTime(
+        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
+      )
+    ).format("DD-MM-YYYY, HH:mm");
+  };
   const [listOfBooking, setListOfBooking] = useState([]);
   useEffect(() => {
     api
@@ -48,25 +55,35 @@ export default function Transaction() {
               <tr>
                 <th style={{ textAlign: "left" }}>No.</th>
                 <th style={{ textAlign: "left" }}>Course</th>
-                <th style={{ textAlign: "left" }}>Booking Date</th>
                 <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                 <th style={{ textAlign: "center" }}>Status</th>
+                <th style={{ textAlign: "center" }}>Booking Date</th>
+                <th style={{ textAlign: "center" }}>Payment Date</th>
+                <th style={{ textAlign: "center" }}>Refund Date</th>
                 {/* <th style={{ textAlign: "center" }}></th> */}
               </tr>
             </thead>
 
             <tbody style={{ height: "auto" }}>
               {listOfBooking.map(
-                ({ bookingDate, amount, status, course, account }, index) => {
+                (
+                  {
+                    bookingDate,
+                    amount,
+                    status,
+                    course,
+                    account,
+                    payDate,
+                    refundDate,
+                  },
+                  index
+                ) => {
                   let { firstName, lastName, phone } = account;
                   let { courseName, courseID } = course;
                   return (
                     <tr key={index}>
                       <td style={{ textAlign: "left" }}>{index + 1}</td>
                       <td style={{ textAlign: "left" }}>{course.courseName}</td>
-                      <td style={{ textAlign: "left" }}>
-                        {moment(new Date(bookingDate)).format("DD - MM - YYYY")}
-                      </td>
                       <td style={{ textAlign: "right" }}>{amount}</td>
                       <td style={{ textAlign: "center" }}>
                         {status == 0 ? (
@@ -120,6 +137,35 @@ export default function Transaction() {
                         )}
                       </td>
                       {/* <td style={{ textAlign: "center" }}>Action</td> */}
+                      <td style={{ textAlign: "center" }}>
+                        {styleDateAndTime(bookingDate)}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {payDate != null &&
+                        payDate != undefined &&
+                        payDate != "" ? (
+                          <>
+                            {moment(new Date(`${payDate}`)).format(
+                              `DD-MM-YYYY, HH:mm`
+                            )}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {refundDate != null &&
+                        refundDate != undefined &&
+                        refundDate != "" ? (
+                          <>
+                            {moment(new Date(`${refundDate}`)).format(
+                              `DD-MM-YYYY, HH:mm`
+                            )}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </td>
                     </tr>
                   );
                 }
