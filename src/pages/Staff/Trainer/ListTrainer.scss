@@ -87,8 +87,21 @@
     }
   }
 }
+.staff-template-scss .main--content {
+  overflow-y: scroll !important;
+}
+@media screen and (max-height: calc(100vh - 50px)) {
+  .staff-template-scss .main--content {
+    overflow-y: hidden !important;
+  }
+}
 .staff-template-scss table {
   overflow-y: scroll !important;
+}
+@media screen and (max-height: calc(100vh - 50px)) {
+  .staff-template-scss table {
+    overflow-y: hidden !important;
+  }
 }
 .staff-template-scss th,
 .staff-template-scss th button {
@@ -111,15 +124,7 @@
 .staff-template-none-scss th,
 .staff-template-none-scss th button {
   position: static !important;
-  // z-index: 0 !important;
 }
-
-// .staff-template-none-scss table th:first-child {
-//   border-top-left-radius: 10px !important;
-// }
-// .staff-template-none-scss table th:last-child {
-//   border-top-right-radius: 10px !important;
-// }
 .staff-list-area {
   min-height: calc(100vh - 50px) !important;
   height: auto !important;
