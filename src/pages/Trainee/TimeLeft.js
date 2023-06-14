@@ -4,11 +4,7 @@ export const timeLeft = {
       let seconds =
         payingTime * 60 * 60 -
         Math.abs(
-          Math.round(
-            (new Date().getTime() -
-              (new Date(date).getTime() + 14 * 1000 * 60 * 60)) /
-              1000
-          )
+          Math.round((new Date().getTime() - new Date(date).getTime()) / 1000)
         );
       let minutes = Math.floor(seconds / 60);
       let hour = Math.floor(seconds / 60 / 60);

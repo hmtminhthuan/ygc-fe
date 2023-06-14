@@ -28,7 +28,7 @@ export default function ScheduleTrainee() {
       .catch((err) => {});
 
     api
-      .get("/Trainee/getListClassForTrainee", {
+      .get("/Trainee/getCurrentListClassForTrainee", {
         params: { id: id },
       })
       .then((res) => {

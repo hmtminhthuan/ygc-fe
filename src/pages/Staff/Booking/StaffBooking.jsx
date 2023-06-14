@@ -4,6 +4,8 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import { api } from "../../../constants/api";
 import moment from "moment/moment";
 import { timeLeft } from "../../Trainee/TimeLeft";
+import Swal from "sweetalert2";
+import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function StaffBooking() {
   localStorage.setItem("MENU_ACTIVE", "staff-booking");
@@ -75,6 +77,9 @@ export default function StaffBooking() {
       .catch((err) => {});
   }, []);
   useEffect(() => {
+    renderBooking();
+  }, [navigation]);
+  useEffect(() => {
     if (payingTime >= 0) {
       listOfBooking
         .filter((item) => item.status == 0)
@@ -82,7 +87,7 @@ export default function StaffBooking() {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
         });
     }
-  }, [payingTime]);
+  }, [listOfBooking, payingTime]);
   // const handleAcceptFromPending = (accountID, courseID, classID) => {
   //   api
   //     .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
@@ -129,9 +134,17 @@ export default function StaffBooking() {
       })
       .then((res) => {
         console.log(res);
+        alert.alertSuccessWithTime(
+          "Refund Successfully",
+          "",
+          2000,
+          "25",
+          () => {}
+        );
       })
       .catch((err) => {
         console.log(err);
+        alert.alertFailedWithTime("Failed To Refund", "", 2000, "25", () => {});
       })
       .finally(() => {
         renderBooking();
@@ -139,15 +152,14 @@ export default function StaffBooking() {
   };
   const styleDateAndTime = (date) => {
     return moment(
-      new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
-      )
+      new Date(`${date}`)
+      // .setTime(new Date(`${date}`).getTime())
     ).format(`DD-MM-YYYY, HH:mm`);
   };
   const styleDateAndTimeExpired = (date) => {
     return moment(
       new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() + (14 + payingTime) * 60 * 60 * 1000
+        new Date(`${date}`).getTime() + payingTime * 60 * 60 * 1000
       )
     ).format(`DD-MM-YYYY, HH:mm`);
   };
@@ -400,16 +412,14 @@ export default function StaffBooking() {
                               payDate != "" ? (
                                 <div className="p-0 m-0 flex-column">
                                   <p className="p-0 m-0">
-                                    {" "}
-                                    {moment(new Date(`${payDate}`)).format(
-                                      `DD-MM-YYYY`
-                                    )}
+                                    {styleDateAndTime(payDate)
+                                      .split(",")[0]
+                                      .trim()}
                                   </p>
                                   <p className="p-0 m-0">
-                                    {" "}
-                                    {moment(new Date(`${payDate}`)).format(
-                                      `HH:mm`
-                                    )}
+                                    {styleDateAndTime(payDate)
+                                      .split(",")[1]
+                                      .trim()}
                                   </p>
                                 </div>
                               ) : (
@@ -427,16 +437,14 @@ export default function StaffBooking() {
                               refundDate != "" ? (
                                 <div className="p-0 m-0 flex-column">
                                   <p className="p-0 m-0">
-                                    {" "}
-                                    {moment(new Date(`${refundDate}`)).format(
-                                      `DD-MM-YYYY`
-                                    )}
+                                    {styleDateAndTime(refundDate)
+                                      .split(",")[0]
+                                      .trim()}
                                   </p>
                                   <p className="p-0 m-0">
-                                    {" "}
-                                    {moment(new Date(`${refundDate}`)).format(
-                                      `HH:mm`
-                                    )}
+                                    {styleDateAndTime(refundDate)
+                                      .split(",")[1]
+                                      .trim()}
                                   </p>
                                 </div>
                               ) : (
@@ -524,12 +532,32 @@ export default function StaffBooking() {
                                   className="bg-primary text-light border-0 py-1 px-2"
                                   style={{ borderRadius: "10px" }}
                                   onClick={() => {
-                                    handleRefund(
-                                      accountID,
-                                      courseID,
-                                      restParams.class.classID
-                                    );
-                                    setRecently([...recently, id]);
+                                    Swal.fire({
+                                      title: `Are you sure to refund?`,
+                                      icon: "info",
+                                      showCancelButton: true,
+                                      showConfirmButton: true,
+                                      confirmButtonText: "Yes",
+                                      cancelButtonText: "No",
+                                      allowOutsideClick: false,
+                                      focusCancel: true,
+                                      focusConfirm: false,
+                                      confirmButtonColor: "red",
+                                      cancelButtonColor: "green",
+                                    }).then((result) => {
+                                      if (
+                                        result.isDenied === true ||
+                                        result.isDismissed === true
+                                      ) {
+                                      } else if (result.isConfirmed === true) {
+                                        handleRefund(
+                                          accountID,
+                                          courseID,
+                                          restParams.class.classID
+                                        );
+                                        setRecently([...recently, id]);
+                                      }
+                                    });
                                   }}
                                 >
                                   Refund

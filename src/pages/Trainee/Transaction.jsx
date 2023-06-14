@@ -10,6 +10,12 @@ export default function Transaction() {
   const [refundTime, setRefundTime] = useState(-1);
   const [current, setCurrent] = useState(new Date());
   const [listOfBooking, setListOfBooking] = useState([]);
+  const formatPrice = (price) => {
+    return Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
   useEffect(() => {
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
@@ -98,9 +104,8 @@ export default function Transaction() {
 
   const styleDateAndTime = (date) => {
     return moment(
-      new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() + 14 * 60 * 60 * 1000
-      )
+      new Date(`${date}`)
+      // .setTime(new Date(`${date}`).getTime())
     ).format("DD-MM-YYYY, HH:mm");
   };
   // console.log(listOfBooking[0]);
@@ -152,15 +157,20 @@ export default function Transaction() {
                     <tr key={index}>
                       <td style={{ textAlign: "left" }}>{index + 1}</td>
                       <td style={{ textAlign: "left" }}>{course.courseName}</td>
-                      <td style={{ textAlign: "right" }}>{amount}</td>
+                      <td style={{ textAlign: "right" }}>
+                        {formatPrice(amount)}
+                      </td>
                       <td style={{ textAlign: "center" }}>
                         {status == 0 ? (
                           <>
                             <span
-                              style={{ borderRadius: "10px" }}
+                              style={{
+                                borderRadius: "10px",
+                                fontWeight: "bolder",
+                              }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
                             >
-                              Pending
+                              Not Paid
                             </span>
                           </>
                         ) : (
@@ -169,7 +179,10 @@ export default function Transaction() {
                         {status == 1 || status == 3 ? (
                           <>
                             <span
-                              style={{ borderRadius: "10px" }}
+                              style={{
+                                borderRadius: "10px",
+                                fontWeight: "bolder",
+                              }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
                             >
                               Paid
@@ -182,7 +195,10 @@ export default function Transaction() {
                           <>
                             {" "}
                             <span
-                              style={{ borderRadius: "10px" }}
+                              style={{
+                                borderRadius: "10px",
+                                fontWeight: "bolder",
+                              }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
                             >
                               Cancel
@@ -194,7 +210,10 @@ export default function Transaction() {
                         {status == 4 ? (
                           <>
                             <span
-                              style={{ borderRadius: "10px" }}
+                              style={{
+                                borderRadius: "10px",
+                                fontWeight: "bolder",
+                              }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
                             >
                               Refund
@@ -223,8 +242,12 @@ export default function Transaction() {
                               id={`timeleft-id-${id}`}
                             ></p>
                             <button
-                              className="p-0 m-0 bg-success text-light border-0 px-2 py-1 mt-1"
-                              style={{ borderRadius: "15px" }}
+                              className="p-0 m-0 bg-success text-light border-0 px-3 py-1 "
+                              style={{
+                                borderRadius: "15px",
+                                fontSize: "16px",
+                                fontWeight: "450",
+                              }}
                               onClick={() => {
                                 handlePayAgain();
                               }}
@@ -254,9 +277,7 @@ export default function Transaction() {
                           <>
                             Refund Time:
                             <br />
-                            {moment(new Date(`${refundDate}`)).format(
-                              `DD-MM-YYYY, HH:mm`
-                            )}
+                            {styleDateAndTime(refundDate)}
                           </>
                         ) : (
                           ""
