@@ -84,7 +84,11 @@ export default function StaffBooking() {
       listOfBooking
         .filter((item) => item.status == 0)
         .forEach((item) => {
-          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
+          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
+            setTimeout(() => {
+              renderBooking();
+            }, 3500);
+          });
         });
     }
   }, [listOfBooking, payingTime]);
@@ -93,7 +97,16 @@ export default function StaffBooking() {
       listOfBooking
         .filter((item) => item.status == 1)
         .forEach((item) => {
-          timeLeft.checkRefundAvailable(item.payDate, item.id, refundTime);
+          timeLeft.checkRefundAvailable(
+            item.payDate,
+            item.id,
+            refundTime,
+            () => {
+              setTimeout(() => {
+                renderBooking();
+              }, 3500);
+            }
+          );
         });
     }
   }, [listOfBooking, refundTime]);

@@ -96,7 +96,34 @@ export default function Transaction() {
           //     ) >
           //   0
           // ) {
-          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
+          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
+            setTimeout(() => {
+              api
+                .get(`/CheckOutVNPAY/GetAllBooking`)
+                .then((res) => {
+                  setListOfBooking(
+                    [...res.data]
+                      .filter((item) => {
+                        return (
+                          item.account.accountID ==
+                          JSON.parse(localStorage.getItem("USER_LOGIN"))
+                            .accountID
+                        );
+                      })
+                      .sort((a, b) => {
+                        if (
+                          moment(new Date(a.bookingDate)) <
+                          moment(new Date(b.bookingDate))
+                        ) {
+                          return 1;
+                        }
+                        return -1;
+                      })
+                  );
+                })
+                .catch((err) => {});
+            }, 3500);
+          });
           // }
         });
     }

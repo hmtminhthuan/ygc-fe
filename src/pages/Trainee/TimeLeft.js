@@ -1,6 +1,6 @@
 export const timeLeft = {
-  getTimeLeft: function (date, bookingID, payingTime) {
-    setInterval(() => {
+  getTimeLeft: function (date, bookingID, payingTime, render) {
+    let interval = setInterval(() => {
       let seconds =
         payingTime * 60 * 60 -
         Math.abs(
@@ -11,8 +11,9 @@ export const timeLeft = {
       let minute = Math.floor(minutes - 60 * hour);
       let second = Math.floor(seconds - 60 * minute - hour * 60 * 60);
       if (seconds < 0) {
-        clearInterval();
         document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
+        render();
+        clearInterval(interval);
       } else {
         document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = `${
           hour <= 9 ? "0" : ""
@@ -22,8 +23,8 @@ export const timeLeft = {
       }
     }, 1000);
   },
-  checkRefundAvailable: function (payDate, bookingID, refundTime) {
-    setInterval(() => {
+  checkRefundAvailable: function (payDate, bookingID, refundTime, render) {
+    let interval = setInterval(() => {
       if (
         new Date(payDate).setTime(
           new Date(payDate).getTime() + refundTime * 60 * 60 * 1000
@@ -31,9 +32,10 @@ export const timeLeft = {
           new Date().getTime() <
         0
       ) {
-        clearInterval();
         document.querySelector(`div#refund-available-${bookingID}`).innerHTML =
           "";
+        render();
+        clearInterval(interval);
       } else {
         let seconds = Math.abs(
           Math.round(
