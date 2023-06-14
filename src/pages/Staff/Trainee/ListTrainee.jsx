@@ -153,7 +153,6 @@ export default function ListTrainee() {
         <MenuStaff />
         <div className="main--content bg-white">
           <section className="staff-list-area pt-3 pb-3">
-            {/* <MenuStaff /> */}
             <div className="row flex-column trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
                 <h1

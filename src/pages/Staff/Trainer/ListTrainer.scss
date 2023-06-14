@@ -120,3 +120,7 @@
 // .staff-template-none-scss table th:last-child {
 //   border-top-right-radius: 10px !important;
 // }
+.staff-list-area {
+  min-height: calc(100vh - 50px) !important;
+  height: auto !important;
+}

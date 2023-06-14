@@ -8,7 +8,7 @@ export default function HeaderStaff({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
   return (
-    <section className="headerdb">
+    <section className="headerdb p-0">
       <div className="logo mt-2">
         <h2 style={{ cursor: "pointer" }}>
           <i className="ri-menu-line icon icon-0 menu mx-2" />

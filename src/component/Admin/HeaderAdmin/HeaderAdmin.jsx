@@ -8,7 +8,7 @@ export default function HeaderAdmin({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
   return (
-    <section className="headerdb bg-black border-0">
+    <section className="headerdb bg-black border-0 p-0">
       <div className="logo mt-2">
         <h2>
           <i
