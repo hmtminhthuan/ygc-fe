@@ -88,6 +88,15 @@ export default function StaffBooking() {
         });
     }
   }, [listOfBooking, payingTime]);
+  useEffect(() => {
+    if (refundTime >= 0) {
+      listOfBooking
+        .filter((item) => item.status == 1)
+        .forEach((item) => {
+          timeLeft.checkRefundAvailable(item.payDate, item.id, refundTime);
+        });
+    }
+  }, [listOfBooking, refundTime]);
   // const handleAcceptFromPending = (accountID, courseID, classID) => {
   //   api
   //     .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
@@ -156,12 +165,28 @@ export default function StaffBooking() {
       // .setTime(new Date(`${date}`).getTime())
     ).format(`DD-MM-YYYY, HH:mm`);
   };
-  const styleDateAndTimeExpired = (date) => {
+  const styleDateAndTimeExpired = (bookingDate) => {
     return moment(
-      new Date(`${date}`).setTime(
-        new Date(`${date}`).getTime() + payingTime * 60 * 60 * 1000
+      new Date(`${bookingDate}`).setTime(
+        new Date(`${bookingDate}`).getTime() + payingTime * 60 * 60 * 1000
       )
     ).format(`DD-MM-YYYY, HH:mm`);
+  };
+  const styleDateAndTimeExpiredRefund = (paymentDate) => {
+    return moment(
+      new Date(`${paymentDate}`).setTime(
+        new Date(`${paymentDate}`).getTime() + refundTime * 60 * 60 * 1000
+      )
+    ).format(`DD-MM-YYYY, HH:mm`);
+  };
+  const checkRefundAvailable = (paymentDate) => {
+    return (
+      new Date(payDate).setTime(
+        new Date(payDate).getTime() + refundTime * 60 * 60 * 1000
+      ) -
+        new Date().getTime() <
+      0
+    );
   };
   return (
     <>
@@ -287,8 +312,8 @@ export default function StaffBooking() {
                   .sort((a, b) => {
                     if (navigation == 0) {
                       return (
-                        new Date(a.bookingDate).getTime() -
-                        new Date(b.bookingDate).getTime()
+                        new Date(b.bookingDate).getTime() -
+                        new Date(a.bookingDate).getTime()
                       );
                     }
                     if (navigation == 1) {
@@ -395,7 +420,7 @@ export default function StaffBooking() {
                               )}
                               <td>
                                 <p
-                                  style={{ fontWeight: "bolder" }}
+                                  style={{ fontWeight: "600" }}
                                   className={`p-0 m-0`}
                                   id={`timeleft-id-${id}`}
                                 ></p>
@@ -527,41 +552,62 @@ export default function StaffBooking() {
                       ) : (
                         ""
                       )} */}
-                              {status == 1 ? (
-                                <button
-                                  className="bg-primary text-light border-0 py-1 px-2"
-                                  style={{ borderRadius: "10px" }}
-                                  onClick={() => {
-                                    Swal.fire({
-                                      title: `Are you sure to refund?`,
-                                      icon: "info",
-                                      showCancelButton: true,
-                                      showConfirmButton: true,
-                                      confirmButtonText: "Yes",
-                                      cancelButtonText: "No",
-                                      allowOutsideClick: false,
-                                      focusCancel: true,
-                                      focusConfirm: false,
-                                      confirmButtonColor: "red",
-                                      cancelButtonColor: "green",
-                                    }).then((result) => {
-                                      if (
-                                        result.isDenied === true ||
-                                        result.isDismissed === true
-                                      ) {
-                                      } else if (result.isConfirmed === true) {
-                                        handleRefund(
-                                          accountID,
-                                          courseID,
-                                          restParams.class.classID
-                                        );
-                                        setRecently([...recently, id]);
-                                      }
-                                    });
-                                  }}
+                              {status == 1 && checkRefundAvailable ? (
+                                <div
+                                  className={`p-0 m-0 refund-available-${id}`}
+                                  id={`refund-available-${id}`}
                                 >
-                                  Refund
-                                </button>
+                                  <div className="m-0 p-0 flex-column text-center">
+                                    <p className="m-0 p-0 text-center">
+                                      {styleDateAndTimeExpiredRefund(payDate)}
+                                    </p>
+                                    <p
+                                      className="m-0 p-0 text-center"
+                                      id={`refund-timeleft-${id}`}
+                                    ></p>
+                                  </div>
+                                  <button
+                                    className="bg-primary text-light border-0 py-1 px-2 mt-0"
+                                    style={{ borderRadius: "10px" }}
+                                    onClick={() => {
+                                      Swal.fire({
+                                        title: `Are you sure to refund?`,
+                                        icon: "info",
+                                        showCancelButton: true,
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Yes",
+                                        cancelButtonText: "No",
+                                        allowOutsideClick: false,
+                                        focusCancel: true,
+                                        focusConfirm: false,
+                                        confirmButtonColor: "red",
+                                        cancelButtonColor: "green",
+                                      }).then((result) => {
+                                        if (
+                                          result.isDenied === true ||
+                                          result.isDismissed === true
+                                        ) {
+                                        } else if (
+                                          result.isConfirmed === true
+                                        ) {
+                                          handleRefund(
+                                            accountID,
+                                            courseID,
+                                            restParams.class.classID
+                                          );
+                                          setRecently([...recently, id]);
+                                        }
+                                      });
+                                    }}
+                                  >
+                                    Refund
+                                  </button>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {status == 1 && !checkRefundAvailable ? (
+                                <p className="m-0 p-0 text-success">Expired</p>
                               ) : (
                                 ""
                               )}
@@ -598,6 +644,26 @@ export default function StaffBooking() {
                         style={{ fontWeight: "bolder" }}
                         className={`p-0 m-0 ${navigation != 0 ? "d-none" : ""}`}
                         id={`timeleft-id-${id}`}
+                      ></p>
+                    </div>
+                  );
+                })}
+              {listOfBooking
+                .filter((item) => item.status == 1)
+                .map(({ id, status, ...restParams }, index) => {
+                  if (navigation == 1) {
+                    return <p key={`${id}${status}`}></p>;
+                  }
+                  return (
+                    <div className="d-none" key={`${id}${status}`}>
+                      <div
+                        style={{ fontWeight: "bolder" }}
+                        className={`p-0 m-0 ${navigation != 0 ? "d-none" : ""}`}
+                        id={`refund-available-${id}`}
+                      ></div>
+                      <p
+                        className="m-0 p-0 text-center"
+                        id={`refund-timeleft-${id}`}
                       ></p>
                     </div>
                   );
