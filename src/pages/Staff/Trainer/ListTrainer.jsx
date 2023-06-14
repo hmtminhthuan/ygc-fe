@@ -353,6 +353,7 @@ export default function ListTrainer() {
                   </thead>
                   <tbody>
                     {sortedTrainers
+                      .filter((item) => !item.deleted)
                       .filter((item) =>
                         item.email
                           .trim()

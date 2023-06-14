@@ -349,6 +349,7 @@ export default function ListStaff() {
                 </thead>
                 <tbody>
                   {sortedStaffs
+                    .filter((item) => !item.deleted)
                     .filter((item) =>
                       item.email
                         .trim()
