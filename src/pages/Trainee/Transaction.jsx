@@ -17,15 +17,37 @@ export default function Transaction() {
         res.data
           .filter((item) => item.id == 1)
           .forEach((item) => {
-            setPayingTime(item.preactiveValue);
+            if (
+              item.preactiveValue != null ||
+              item.preactiveValue != undefined
+            ) {
+              setPayingTime(item.preactiveValue);
+            } else if (
+              item.activeValue != null ||
+              item.activeValue != undefined
+            ) {
+              setPayingTime(item.activeValue);
+            }
+            // setPayingTime(9.165);
           });
         res.data
           .filter((item) => item.id == 2)
           .forEach((item) => {
-            setRefundTime(item.preactiveValue);
+            if (
+              item.preactiveValue != null ||
+              item.preactiveValue != undefined
+            ) {
+              setRefundTime(item.preactiveValue);
+            } else if (
+              item.activeValue != null ||
+              item.activeValue != undefined
+            ) {
+              setRefundTime(item.activeValue);
+            }
           });
       })
       .catch((err) => {});
+
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
@@ -50,31 +72,30 @@ export default function Transaction() {
       })
       .catch((err) => {});
   }, []);
-  // const styleTimeLeft = (date) => {
-  //   let seconds =
-  //     payingTime * 60 * 60 -
-  //     Math.abs(
-  //       Math.round(
-  //         (current.getTime() -
-  //           (new Date(date).getTime() + 14 * 1000 * 60 * 60)) /
-  //           1000
-  //       )
-  //     );
-  //   let minutes = Math.floor(seconds / 60);
-  //   let hour = Math.floor(seconds / 60 / 60);
-  //   let minute = minutes - 60 * hour;
-  //   let second = seconds - 60 * minute - hour * 60 * 60;
-  //   return `${hour <= 9 ? "0" : ""}${hour}:${minute <= 9 ? "0" : ""}${minute}:${
-  //     second <= 9 ? "0" : ""
-  //   }${second}`;
-  // };
+
   useEffect(() => {
     if (payingTime >= 0) {
-      listOfBooking.forEach((item) => {
-        timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
-      });
+      listOfBooking
+        .filter((item) => item.status == 0)
+        .forEach((item) => {
+          // if (
+          //   payingTime * 60 * 60 -
+          //     Math.abs(
+          //       Math.round(
+          //         (new Date().getTime() -
+          //           (new Date(item.bookingDate).getTime() +
+          //             14 * 1000 * 60 * 60)) /
+          //           1000
+          //       )
+          //     ) >
+          //   0
+          // ) {
+          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime);
+          // }
+        });
     }
   }, [listOfBooking, payingTime]);
+
   const styleDateAndTime = (date) => {
     return moment(
       new Date(`${date}`).setTime(
@@ -101,7 +122,7 @@ export default function Transaction() {
                 <th style={{ textAlign: "left" }}>Course</th>
                 <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                 <th style={{ textAlign: "center" }}>Status</th>
-                <th style={{ textAlign: "center" }}>Booking Date</th>
+                <th style={{ textAlign: "center" }}>Booking Time</th>
                 <th style={{ textAlign: "center" }}>Note</th>
                 {/* <th style={{ textAlign: "center" }}>Payment Date</th>
                 <th style={{ textAlign: "center" }}>Refund Date</th> */}

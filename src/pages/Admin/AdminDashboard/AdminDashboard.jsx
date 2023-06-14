@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const [countList, setCountList] = useState([]);
   useEffect(() => {
     api
-      .get("/api/AdminRepositoryAPI/GetNumberOfAdmin")
+      .get("/api/AdminRepositoryAPI/GetOverallStatistics")
       .then((res) => {
         const total = res.data;
         setCountList(total);
@@ -23,13 +23,16 @@ export default function AdminDashboard() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className="main--content staff-course-view pt-3 px-4">
+        <div className="main--content staff-course-view pt-3 px-5">
           <div className="overview">
             <div className="title">
               <h2 className="section--title">Overview</h2>
             </div>
-            <div className="row cards ">
-              <div className="col-sm-3 card card-1 text-center">
+            <div className="row cards flex justify-content-between">
+              <div
+                className="col-sm-3 card card-1 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data ">
                   <div className="card--content">
                     <h5 className="card--title">Total Staffs</h5>
@@ -38,7 +41,10 @@ export default function AdminDashboard() {
                   <i className="ri-user-star-line card--icon--lg " />
                 </div>
               </div>
-              <div className="col-sm-3 card card-2 text-center">
+              <div
+                className="col-sm-3 card card-2 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data ">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainers</h5>
@@ -47,7 +53,10 @@ export default function AdminDashboard() {
                   <i className="ri-user-2-line card--icon--lg " />
                 </div>
               </div>
-              <div className="col-sm-3 card card-3 text-center">
+              <div
+                className="col-sm-3 card card-3 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data  ">
                   <div className="card--content">
                     <h5 className="card--title">Total Trainees</h5>
@@ -56,7 +65,10 @@ export default function AdminDashboard() {
                   <i className="ri-team-line card--icon--lg " />
                 </div>
               </div>
-              <div className="col-sm-3 card card-4 text-center">
+              <div
+                className="col-sm-3 card card-4 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data ">
                   <div className="card--content">
                     <h5 className="card--title">Courses</h5>
@@ -65,7 +77,10 @@ export default function AdminDashboard() {
                   <i className="mr-4  ri-book-mark-line card--icon--lg" />
                 </div>
               </div>
-              <div className="col-sm-3 card card-5 text-center">
+              <div
+                className="col-sm-3 card card-5 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data">
                   <div className="card--content">
                     <h5 className="card--title">Classes</h5>
@@ -75,7 +90,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="col-sm-3 card card-6 text-center">
+              {/* <div className="col-sm-3 card card-6 text-center"
+              style={{ width: "30%" }}>
                 <div className="card--data ">
                   <div className="card--content">
                     <h5 className="card--title">Feedbacks</h5>
@@ -83,9 +99,12 @@ export default function AdminDashboard() {
                   </div>
                   <i className="mr-4 ri-wechat-line card--icon--lg" />
                 </div>
-              </div>
+              </div> */}
 
-              <div className="col-sm-3 card card-7 text-center">
+              <div
+                className="col-sm-3 card card-7 text-center"
+                style={{ width: "28%" }}
+              >
                 <div className="card--data ">
                   <div className="card--content">
                     <h5 className="card--title">Blogs</h5>

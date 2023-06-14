@@ -91,7 +91,7 @@ export default function Dashboard() {
               <div className="row cards flex justify-content-lg-between">
                 <div
                   className="col-sm-3 mb-2 card card-1 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data">
                     <div className="card--content">
@@ -103,7 +103,7 @@ export default function Dashboard() {
                 </div>
                 <div
                   className="col-sm-3 mb-2 card card-2 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data  ">
                     <div className="card--content">
@@ -115,7 +115,7 @@ export default function Dashboard() {
                 </div>
                 <div
                   className="col-sm-3 mb-2 card card-3 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data ">
                     <div className="card--content">
@@ -127,7 +127,7 @@ export default function Dashboard() {
                 </div>
                 <div
                   className="col-sm-3 mb-2 card card-4 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data">
                     <div className="card--content">
@@ -140,7 +140,7 @@ export default function Dashboard() {
 
                 <div
                   className="col-sm-3 mb-2 card card-6 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data ">
                     <div className="card--content">
@@ -153,7 +153,7 @@ export default function Dashboard() {
 
                 <div
                   className="col-sm-3 mb-2 card card-5 text-center"
-                  style={{ width: "30%" }}
+                  style={{ width: "28%" }}
                 >
                   <div className="card--data ">
                     <div className="card--content">

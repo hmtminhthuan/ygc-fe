@@ -151,7 +151,7 @@ export default function CourseView() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 800,
+      timer: 1100,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
