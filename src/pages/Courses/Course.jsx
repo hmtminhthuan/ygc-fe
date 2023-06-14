@@ -16,8 +16,29 @@ export default function Course() {
   const [levelSort, setLevelSort] = useState("All");
   const [price, setPrice] = useState("All");
   const [discount, setDiscount] = useState("All");
-
+  const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
+  const userLogin = localStorage.getItem("USER_LOGIN");
+  if (
+    redirectLink != null &&
+    redirectLink != undefined &&
+    (userLogin == null || userLogin == undefined)
+  ) {
+    localStorage.removeItem("REDIRECT_LINK_BOOK_CLASS");
+    localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+  }
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 900,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Course/GetAllCourseForAdmin")
       .then(async (res) => {

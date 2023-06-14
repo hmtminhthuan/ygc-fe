@@ -16,14 +16,16 @@ import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseDetail() {
   localStorage.setItem("MENU_ACTIVE", "home-course");
-  if (localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true") {
-    alert.alertInfoNotiForTrainee(
-      "Please choose the class you want to register",
-      "",
-      () => {}
-    );
-    localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
-  }
+  // if (localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true") {
+  //   setTimeout(() => {
+  //     alert.alertInfoNotiForTrainee(
+  //       "Please choose the class you want to register",
+  //       "",
+  //       () => {}
+  //     );
+  //   }, 1200);
+  //   localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+  // }
 
   const param = useParams();
   const [courseDetail, setCourseDetail] = useState([]);
@@ -32,6 +34,7 @@ export default function CourseDetail() {
   const [availablePayment, setAvailablePayment] = useState(false);
   const [linkPayment, setLinkPayment] = useState("");
   const [userLogin, setUserLogin] = useState({});
+  const [viewData, setViewData] = useState(false);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -47,15 +50,44 @@ export default function CourseDetail() {
         setCourseDetail(res.data);
       })
       .catch((err) => {});
-
+    let arr = [];
     api
       .get("/Class/GetClassByCourseID", {
         params: { courseid: param.id },
       })
       .then((res) => {
         setCourseClasses(res.data);
+        arr = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        if (
+          localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
+          arr.length > 0
+        ) {
+          setTimeout(() => {
+            alert.alertInfoNotiForTrainee(
+              "Please choose the class you want to register",
+              "",
+              () => {}
+            );
+          }, 1200);
+          localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+        }
+        if (
+          localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
+          arr.length == 0
+        ) {
+          setTimeout(() => {
+            alert.alertInfoNotiForTrainee(
+              "We Are Sorry",
+              "This course does not have any classess at the present</br>Please contact with us for more support",
+              () => {}
+            );
+          }, 1200);
+          localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+        }
+      });
 
     api
       .get("/Feedback/GetCourseFeedbackbyId", {
@@ -66,6 +98,19 @@ export default function CourseDetail() {
       })
       .catch((err) => {});
 
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 1200,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        setViewData(true);
+        clearInterval(timerInterval);
+      },
+    });
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     let USER = {};
     if (USER_LOGIN != null) {
@@ -110,7 +155,10 @@ export default function CourseDetail() {
         <HeaderHome />
       </div>
       <main className="pt-5">
-        <div className="box course-detail-area mt-5 my-5">
+        <div
+          className={`box course-detail-area mt-5 my-5
+         ${viewData ? "" : "d-none"}`}
+        >
           <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
             <div className="row justify-content-center">
               <div className="col-10 mt-3">

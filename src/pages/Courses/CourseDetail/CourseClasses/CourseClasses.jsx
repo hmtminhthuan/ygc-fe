@@ -11,6 +11,7 @@ import moment from "moment/moment";
 import { api } from "../../../../constants/api";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { param } from "jquery";
 
 export default function CourseClasses({
   courseId,
@@ -364,7 +365,7 @@ export default function CourseClasses({
     }
   }, [courseClasses.length]);
   return (
-    <section style={{ position: "relative" }}>
+    <section className="p-0" style={{ position: "relative" }}>
       {!payWay ? (
         <div className={`row flex justify-content-center`}>
           <div className="course-detail-classes col-10">
@@ -460,22 +461,35 @@ export default function CourseClasses({
                                       userLogin.role == undefined
                                     ) {
                                       Swal.fire({
-                                        title: `You need to Log in first`,
-                                        html: `Do you want to Log in now?`,
+                                        title: `You need to log in first`,
+                                        html: `Do you want to log in or register now?`,
                                         icon: "info",
-                                        showCancelButton: true,
+                                        confirmButtonText: "Log in now",
+                                        denyButtonText: "Register now",
+                                        showCancelButton: false,
+                                        showDenyButton: true,
                                         showConfirmButton: true,
-                                        confirmButtonText: "Yes",
-                                        cancelButtonText: "No",
                                         allowOutsideClick: false,
+                                        showCloseButton: true,
+                                        focusCancel: false,
+                                        focusConfirm: false,
+                                        focusDeny: false,
+                                        confirmButtonColor: "#42c4ee",
+                                        denyButtonColor: "#d08fba",
                                       }).then((result) => {
-                                        if (
-                                          result.isDenied === true ||
-                                          result.isDismissed === true
-                                        ) {
+                                        if (result.isDenied === true) {
+                                          localStorage.setItem(
+                                            "REDIRECT_LINK_BOOK_CLASS",
+                                            `/courseDetail/${courseId}`
+                                          );
+                                          window.location.href = "/register";
                                         } else if (
                                           result.isConfirmed === true
                                         ) {
+                                          localStorage.setItem(
+                                            "REDIRECT_LINK_BOOK_CLASS",
+                                            `/courseDetail/${courseId}`
+                                          );
                                           window.location.href = "/login";
                                         }
                                       });
