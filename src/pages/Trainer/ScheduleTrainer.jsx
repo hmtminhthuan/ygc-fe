@@ -7,6 +7,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 export default function ScheduleTrainer() {
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
+  const [classList, setClassList] = useState([]);
   const listOfDay = [
     "Monday",
     "Tuesday",
@@ -34,6 +35,18 @@ export default function ScheduleTrainer() {
         setSchedule(res.data);
       })
       .catch((err) => {});
+    api
+      .get("/Trainer/GetClassList", {
+        params: { trainerId: id },
+      })
+      .then((res) => {
+        const currentDate = new Date();
+        const filteredClasses = res.data.filter(
+          (classItem) => new Date(classItem.endDate) >= currentDate
+        );
+        setClassList(filteredClasses);
+      })
+      .catch((err) => {});
   }, [id]);
   return (
     <>
@@ -41,9 +54,6 @@ export default function ScheduleTrainer() {
         <HeaderHome />
       </div>
       <div className="main--content bg-white">
-        {/* <div className="timetable-img text-center">
-        <img src="img/content/timetable.png" alt />
-      </div> */}
         <section className="trainer-area pt-3 pb-3">
           <div className="row flex trainer mt-2 mx-5 mb-5">
             <div className="headerlist mt-5">
@@ -140,6 +150,8 @@ export default function ScheduleTrainer() {
                 </tbody>
               </table>
             </div>
+
+            <p>Current Class: {classList.length}</p>
           </div>
         </section>
       </div>

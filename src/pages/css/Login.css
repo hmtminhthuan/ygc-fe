@@ -294,6 +294,13 @@ label {
   color: #d291bc !important;
 }
 
+.header-top .nav-item-after-login {
+  color: #d291bc !important;
+  font-weight: bold !important;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
 .text-forget-password:hover {
   -webkit-transform: scale(1.03);
           transform: scale(1.03);

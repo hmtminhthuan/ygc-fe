@@ -2,19 +2,16 @@
   background-color: #fff;
 }
 
-#staff-feedback-management-area .main--content thead .selection-button {
-  background-color: #3b42a2 !important;
+#staff-feedback-management-area .symbol-sorting {
+  color: #ffffff70 !important;
+}
+
+#staff-feedback-management-area .selection-button {
+  background-color: #333333 !important;
   border: none;
+  outline: none;
   color: #fff;
   cursor: pointer;
-}
-
-#staff-feedback-management-area .main--content thead .symbol-sorting {
-  color: #ffffff70;
-}
-
-#staff-feedback-management-area .main--content thead tr th {
-  background-color: #3b42a2 !important;
 }
 
 #staff-feedback-management-area .main--content .admin-course-list {
@@ -66,7 +63,7 @@
 }
 
 .new-row-feedback-handle {
-  background-color: #3b42a2 !important;
+  background-color: #333333 !important;
   color: #fff !important;
 }
 
@@ -74,13 +71,5 @@
   background-color: #3b42a2 !important;
   color: #fff !important;
   z-index: 10;
-}
-
-.row-bg-pending-warning-0 {
-  background-color: #3b42a263;
-}
-
-.row-bg-pending-warning-1 {
-  background-color: #3b42a27f;
 }
 /*# sourceMappingURL=FeedbackManagement.css.map */

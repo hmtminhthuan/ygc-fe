@@ -431,7 +431,9 @@ export default function ListTrainee() {
                             <td>{`${trainee.phoneNumber}`}</td>
                             <td>{`${trainee.email}`}</td>
                             <td>{`${trainee.address}`}</td>
-                            <td>{`${trainee.courseName}`}</td>
+                            <td>{`${
+                              trainee.courseName ? trainee.courseName : "-"
+                            }`}</td>
                             <td>{`${trainee.className}`}</td>
                             {/* <td>{`${trainee.level}`}</td> */}
 

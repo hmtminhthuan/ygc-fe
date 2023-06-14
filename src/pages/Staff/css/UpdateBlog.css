@@ -1,0 +1,71 @@
+.updateblog .containerud {
+  max-width: 1140px !important;
+  padding: 0 15px !important;
+  margin: 0 189.6px !important;
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  line-height: 24px;
+  height: 100vh;
+}
+
+.updateblog form {
+  margin: 0 auto !important;
+}
+
+.updateblog button {
+  background-color: #d291bc;
+  color: #333;
+  font-weight: 800;
+}
+
+.updateblog button:hover {
+  background-color: #8eff8e !important;
+  color: #333 !important;
+}
+
+.updateblog .shadow {
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 20px !important;
+}
+
+.updateblog h1 {
+  font-size: 40px !important;
+  font-weight: 600 !important;
+  line-height: 48px;
+  margin: 20px auto !important;
+  color: rgba(218, 37, 179, 0.835);
+}
+
+.updateblog .profile-tab-nav {
+  min-width: 250px;
+  border-right: 1px solid #dee2e6 !important;
+}
+
+.updateblog .img-circle img {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  border: 5px solid #fff;
+}
+
+.updateblog .tab-content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border-radius: 17px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.updateblog .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.updateblog .form-control {
+  padding: 6px 12px !important;
+}
+/*# sourceMappingURL=UpdateBlog.css.map */

@@ -6,7 +6,7 @@
 }
 
 .bg-header-scrolled .header-container {
-  width: 72% !important;
+  width: 80% !important;
 }
 
 @media only screen and (max-width: 940px) {
@@ -24,6 +24,13 @@
   color: white !important;
 }
 
+.bg-header-scrolled .nav-item-after-login {
+  color: #d291bc !important;
+  font-weight: bold !important;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
 .hello-user {
   font-size: 20px;
   font-weight: 500;
@@ -38,13 +45,19 @@
   right: 0;
   margin: 0 auto !important;
   padding: 0;
-  width: 72%;
+  width: 100%;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
 .header .header-container {
   height: auto !important;
+}
+
+@media only screen and (min-width: 1050px) {
+  .header {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -119,5 +132,15 @@
 .nav-item-after-login {
   color: #d291bc !important;
   font-weight: bold !important;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  text-decoration: underline !important;
+}
+
+.nav-item-after-login-not-underline {
+  color: #d291bc !important;
+  font-weight: bold !important;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
 }
 /*# sourceMappingURL=HeaderHome.css.map */

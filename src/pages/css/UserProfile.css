@@ -227,4 +227,17 @@
   width: 80% !important;
   margin: 0 auto !important;
 }
+
+.update-profile-area {
+  height: 100%;
+}
+
+@media only screen and (min-width: 1000px) {
+  .update-profile-password-area {
+    height: 100vh;
+  }
+  .update-profile-password-area .update-profile-container form {
+    padding: 0 50px !important;
+  }
+}
 /*# sourceMappingURL=UserProfile.css.map */

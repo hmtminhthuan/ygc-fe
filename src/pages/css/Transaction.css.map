@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,MAAM,EAAE,kBAAkB;CAI3B;;AALD,AAEE,aAFW,AAEV,MAAM,CAAC;EACN,gBAAgB,EAAE,oBAAoB;CACvC",
+    "sources": [
+        "../Trainee/Transaction.scss"
+    ],
+    "names": [],
+    "file": "Transaction.css"
+}

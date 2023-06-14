@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.main--content {
+  padding: 0 !important;
+}
+
+.main--content .staff-list-area {
+  margin: 0;
+  background: #fff !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+}
+
+.main--content .staff-list-area .trainee {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 !important;
+}
+
+.main--content .staff-list-area .trainee table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.main--content .staff-list-area .trainee thead th {
+  background-color: #333333 !important;
+  top: 0;
+  color: #fff !important;
+  text-align: center;
+  font-size: 14px;
+}
+
+.main--content .staff-list-area .trainee th,
+.main--content .staff-list-area .trainee td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #333 !important;
+}
+
+.main--content .staff-list-area .trainee tbody {
+  overflow: auto;
+  height: 300px;
+  text-align: center;
+}
+
+.main--content .staff-list-area .trainee tbody td {
+  position: relative;
+}
+
+.main--content .staff-list-area .setting {
+  font-size: 18px;
+}
+
+.main--content .staff-list-area .setting .ri-delete-bin-line {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: red;
+}
+/*# sourceMappingURL=ListTrainee.css.map */

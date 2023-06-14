@@ -69,22 +69,8 @@ tbody {
   text-align: center;
 }
 
-tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
 tbody td {
   position: relative;
-}
-
-tbody td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .btn-home {
@@ -106,7 +92,6 @@ tbody td:hover:before {
 
 .setting {
   font-size: 18px;
-  z-index: 1000 !important;
 }
 
 .setting .ri-edit-2-fill {
@@ -129,13 +114,12 @@ tbody td:hover:before {
       -ms-flex-align: center;
           align-items: center;
   color: red;
-  z-index: 5000 !important;
 }
 
 #admin-list-staff-area table thead tr th {
   font-size: 16px !important;
-  background-color: #d291bc;
-  color: #333 !important;
+  background-color: #333333;
+  color: #fff !important;
 }
 
 #admin-list-staff-area table tbody tr:hover {

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAIQ,4BAJoB,CAC1B,KAAK,CACH,KAAK,CACH,EAAE,CACA,EAAE,CAAC;EACD,gBAAgB,EAAE,kBAAkB;CACrC;;AANT,AAOQ,4BAPoB,CAC1B,KAAK,CACH,KAAK,CACH,EAAE,CAIA,iBAAiB,CAAC;EAChB,gBAAgB,EAAE,kBAAkB;CACrC;;AATT,AAaE,4BAb0B,CAa1B,0BAA0B,CAAC;EACzB,gBAAgB,EAAE,kBAAkB;CACrC;;AAfH,AAgBE,4BAhB0B,CAgB1B,6BAA6B,CAAC;EAC5B,KAAK,EAAE,OAAO;EACd,gBAAgB,EAAE,SAAS;CAC5B",
+    "sources": [
+        "../ClassManagement/ClassManagement.scss"
+    ],
+    "names": [],
+    "file": "ClassManagement.css"
+}

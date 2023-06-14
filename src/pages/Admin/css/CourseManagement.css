@@ -3,18 +3,28 @@
 }
 
 #admin-course-management-area .staff-course-view table thead .selection-button {
-  background-color: #4d9f76;
+  background-color: #efd243;
   border: none;
-  color: #ffffff90;
+  color: #000;
   cursor: pointer;
 }
 
 #admin-course-management-area .staff-course-view table thead .symbol-sorting {
-  color: #ffffff70;
+  color: #00000070;
 }
 
 #admin-course-management-area .staff-course-view table thead tr th {
-  background-color: #4d9f76;
+  background-color: #efd243;
+  color: #000 !important;
+}
+
+#admin-course-management-area .staff-course-view table .staff-course-view-all-class {
+  background-color: #efd243 !important;
+}
+
+#admin-course-management-area .staff-course-view .view-staff-course-more {
+  background-color: #efd243bd;
+  color: #000;
 }
 
 #admin-course-management-area .main--content thead .selection-button {

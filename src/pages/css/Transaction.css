@@ -1,0 +1,8 @@
+.payment-item {
+  cursor: pointer !important;
+}
+
+.payment-item:hover {
+  background-color: #33333330 !important;
+}
+/*# sourceMappingURL=Transaction.css.map */
