@@ -164,6 +164,7 @@ export default function Transaction() {
   const handlePayAgain = () => {};
   useEffect(() => {
     setInterval(() => {
+      console.log("render ne");
       renderBooking();
     }, 10000);
   }, []);

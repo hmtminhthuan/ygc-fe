@@ -213,6 +213,7 @@ export default function StaffBooking() {
   }, [navigation]);
   useEffect(() => {
     setInterval(() => {
+      console.log("render ne");
       renderBooking();
     }, 10000);
   }, []);
@@ -225,7 +226,7 @@ export default function StaffBooking() {
           <section className="staff-list-area p-0 mt-2 px-4">
             <div className="px-3 staff-booking-navigation">
               <button
-                className={`px-2 pt-1 admin-course-list
+                className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal
                 ${
                   navigation == 0
                     ? "staff-booking-navigation-item bg-warning text-black"
@@ -244,13 +245,13 @@ export default function StaffBooking() {
                 Unpaid
               </button>
               <button
-                className={`px-2 pt-1 admin-course-list 
+                className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal 
                 ${
                   navigation == 1
                     ? "staff-booking-navigation-item bg-success text-light"
                     : ""
                 }`}
-                // className={`px-2 pt-1 admin-course-list ${
+                // className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal ${
                 //   isDeleted ? "admin-course-list-active" : ""
                 // }`}
                 style={{
@@ -266,7 +267,7 @@ export default function StaffBooking() {
                 Paid
               </button>
               <button
-                className={`px-2 pt-1 admin-course-list 
+                className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal 
                 ${
                   navigation == 4
                     ? "staff-booking-navigation-item bg-primary text-light"
@@ -285,7 +286,7 @@ export default function StaffBooking() {
                 Refund
               </button>
               <button
-                className={`px-2 pt-1 admin-course-list
+                className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal
                 ${
                   navigation == 2
                     ? "staff-booking-navigation-item bg-danger text-light"

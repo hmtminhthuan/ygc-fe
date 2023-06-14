@@ -90,18 +90,8 @@
 .staff-template-scss .main--content {
   overflow-y: scroll !important;
 }
-@media screen and (max-height: calc(100vh - 50px)) {
-  .staff-template-scss .main--content {
-    overflow-y: hidden !important;
-  }
-}
 .staff-template-scss table {
   overflow-y: scroll !important;
-}
-@media screen and (max-height: calc(100vh - 50px)) {
-  .staff-template-scss table {
-    overflow-y: hidden !important;
-  }
 }
 .staff-template-scss th,
 .staff-template-scss th button {
@@ -128,4 +118,8 @@
 .staff-list-area {
   min-height: calc(100vh - 50px) !important;
   height: auto !important;
+
+  @media screen and (max-width: 1050px) {
+    overflow-x: scroll !important;
+  }
 }
