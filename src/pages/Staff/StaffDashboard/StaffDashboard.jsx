@@ -28,7 +28,9 @@ export default function Dashboard() {
     api
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
-        const filteredTrainers = res.data.slice(0, 7);
+        const filteredTrainers = res.data
+          .sort((a, b) => b.accountID - a.accountID)
+          .slice(0, 7);
         setTrainerList(filteredTrainers);
       })
       .catch((err) => {
@@ -42,7 +44,9 @@ export default function Dashboard() {
     api
       .get("/Account/AccountListByRole?id=4")
       .then((res) => {
-        const filteredTrainees = res.data;
+        const filteredTrainees = res.data.sort(
+          (a, b) => b.accountID - a.accountID
+        );
         setTraineeList(filteredTrainees);
       })
       .catch((err) => {
@@ -54,7 +58,7 @@ export default function Dashboard() {
   const [countList, setCountList] = useState([]);
   useEffect(() => {
     api
-      .get("/api/AdminRepositoryAPI/GetNumberOfAdmin")
+      .get("/api/AdminRepositoryAPI/GetOverallStatistics")
       .then((res) => {
         const total = res.data;
         setCountList(total);
@@ -84,8 +88,11 @@ export default function Dashboard() {
               <div className="title">
                 <h2 className="section--title">Overview</h2>
               </div>
-              <div className="row cards ">
-                <div className="col-sm-3 card card-1 text-center">
+              <div className="row cards flex justify-content-lg-between">
+                <div
+                  className="col-sm-3 mb-2 card card-1 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainers</h5>
@@ -94,7 +101,10 @@ export default function Dashboard() {
                     <i className="ri-user-2-line card--icon--lg " />
                   </div>
                 </div>
-                <div className="col-sm-3 card card-2 text-center">
+                <div
+                  className="col-sm-3 mb-2 card card-2 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data  ">
                     <div className="card--content">
                       <h5 className="card--title">Total Trainees</h5>
@@ -103,7 +113,10 @@ export default function Dashboard() {
                     <i className="ri-team-line card--icon--lg " />
                   </div>
                 </div>
-                <div className="col-sm-3 card card-3 text-center">
+                <div
+                  className="col-sm-3 mb-2 card card-3 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Courses</h5>
@@ -112,7 +125,10 @@ export default function Dashboard() {
                     <i className="mr-4 ri-book-mark-line card--icon--lg" />
                   </div>
                 </div>
-                <div className="col-sm-3 card card-4 text-center">
+                <div
+                  className="col-sm-3 mb-2 card card-4 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data">
                     <div className="card--content">
                       <h5 className="card--title">Classes</h5>
@@ -122,7 +138,10 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-sm-3 card card-6 text-center">
+                <div
+                  className="col-sm-3 mb-2 card card-6 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Feedbacks</h5>
@@ -132,7 +151,10 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-sm-3 card card-5 text-center">
+                <div
+                  className="col-sm-3 mb-2 card card-5 text-center"
+                  style={{ width: "30%" }}
+                >
                   <div className="card--data ">
                     <div className="card--content">
                       <h5 className="card--title">Blogs</h5>
@@ -153,7 +175,7 @@ export default function Dashboard() {
                   </button>
                 </div> */}
               </div>
-              <div className="trainers--container flex">
+              <div className="trainers--container flex w-100">
                 <div className="trainers--cards" style={{ display: "flex" }}>
                   {trainerList.map((trainer, index) => (
                     <a
@@ -236,17 +258,27 @@ export default function Dashboard() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Gender</th>
-                      <th>Address</th>
+                      <th style={{ textAlign: "left" }}>Name</th>
+                      <th style={{ textAlign: "left" }}>Phone</th>
+                      <th style={{ textAlign: "left" }}>Gender</th>
+                      <th style={{ textAlign: "left" }}>Address</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {traineeList.slice(-10).map((trainee) => (
+                    {traineeList.slice(0, 9).map((trainee) => (
                       <tr key={trainee.accountID}>
-                        <td>{`${trainee.firstName} ${trainee.lastName}`}</td>
-                        <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
-                        <td>{`${trainee.address}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${trainee.firstName} ${trainee.lastName}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${trainee.phoneNumber}`}</td>
+                        <td style={{ textAlign: "left" }}>{`${
+                          trainee.gender ? "Male" : "Female"
+                        }`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${trainee.address}`}</td>
                       </tr>
                     ))}
                   </tbody>
