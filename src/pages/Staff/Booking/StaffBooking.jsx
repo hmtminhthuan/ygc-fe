@@ -6,7 +6,7 @@ import moment from "moment/moment";
 import { timeLeft } from "../../Trainee/TimeLeft";
 import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
-
+import "./StaffBooking.scss";
 export default function StaffBooking() {
   localStorage.setItem("MENU_ACTIVE", "staff-booking");
   const [listOfBooking, setListOfBooking] = useState([]);
@@ -195,10 +195,14 @@ export default function StaffBooking() {
         <MenuStaff />
         <div className="main--content bg-white">
           <section className="staff-list-area p-0 mt-2 px-4">
-            <div className="px-2">
+            <div className="px-3 staff-booking-navigation">
               <button
                 className={`px-2 pt-1 admin-course-list
-                ${navigation == 0 ? "bg-warning text-black" : ""}`}
+                ${
+                  navigation == 0
+                    ? "staff-booking-navigation-item bg-warning text-black"
+                    : ""
+                }`}
                 style={{
                   border: "none",
                   borderTopLeftRadius: "10px",
@@ -213,7 +217,11 @@ export default function StaffBooking() {
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list 
-                ${navigation == 1 ? "bg-success text-light" : ""}`}
+                ${
+                  navigation == 1
+                    ? "staff-booking-navigation-item bg-success text-light"
+                    : ""
+                }`}
                 // className={`px-2 pt-1 admin-course-list ${
                 //   isDeleted ? "admin-course-list-active" : ""
                 // }`}
@@ -231,7 +239,11 @@ export default function StaffBooking() {
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list 
-                ${navigation == 4 ? "bg-primary text-light" : ""}`}
+                ${
+                  navigation == 4
+                    ? "staff-booking-navigation-item bg-primary text-light"
+                    : ""
+                }`}
                 style={{
                   border: "none",
                   borderTopLeftRadius: "10px",
@@ -246,7 +258,11 @@ export default function StaffBooking() {
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list
-                ${navigation == 2 ? "bg-danger text-light" : ""}`}
+                ${
+                  navigation == 2
+                    ? "staff-booking-navigation-item bg-danger text-light"
+                    : ""
+                }`}
                 style={{
                   border: "none",
                   borderTopLeftRadius: "10px",
