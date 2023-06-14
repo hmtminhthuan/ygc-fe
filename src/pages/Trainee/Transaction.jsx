@@ -171,7 +171,7 @@ export default function Transaction() {
                               }}
                               className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
                             >
-                              Not Paid
+                              Unpaid
                             </span>
                           </>
                         ) : (

@@ -209,7 +209,7 @@ export default function StaffBooking() {
                   setNavigation(0);
                 }}
               >
-                Pending
+                Unpaid
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list 
@@ -487,7 +487,7 @@ export default function StaffBooking() {
                                   style={{ borderRadius: "10px" }}
                                   className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
                                 >
-                                  Pending
+                                  Unpaid
                                 </span>
                               </>
                             ) : (
