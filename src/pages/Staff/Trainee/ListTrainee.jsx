@@ -452,9 +452,7 @@ export default function ListTrainee() {
                         return (
                           <tr key={trainee.accountID}>
                             {/* <td>{`${trainee.accountID}`}</td> */}
-                            <td>
-                              {`${trainee.firstName}`} {index + 1}
-                            </td>
+                            <td>{`${trainee.firstName}`}</td>
                             <td>{`${trainee.lastName}`}</td>
                             <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
                             <td>{`${trainee.phoneNumber}`}</td>
