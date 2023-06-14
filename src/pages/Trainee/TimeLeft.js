@@ -11,15 +11,19 @@ export const timeLeft = {
       let minute = Math.floor(minutes - 60 * hour);
       let second = Math.floor(seconds - 60 * minute - hour * 60 * 60);
       if (seconds < 0) {
-        document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
-        render();
+        if (document.querySelector(`p#timeleft-id-${bookingID}`) != null) {
+          document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
+        }
+        // render();
         clearInterval(interval);
       } else {
-        document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = `${
-          hour <= 9 ? "0" : ""
-        }${hour}:${minute <= 9 ? "0" : ""}${minute}:${
-          second <= 9 ? "0" : ""
-        }${second}`;
+        if (document.querySelector(`p#timeleft-id-${bookingID}`) != null) {
+          document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = `${
+            hour <= 9 ? "0" : ""
+          }${hour}:${minute <= 9 ? "0" : ""}${minute}:${
+            second <= 9 ? "0" : ""
+          }${second}`;
+        }
       }
     }, 1000);
   },
@@ -32,8 +36,11 @@ export const timeLeft = {
           new Date().getTime() <
         0
       ) {
-        document.querySelector(`div#refund-available-${bookingID}`).innerHTML =
-          "";
+        if (document.querySelector(`p#refund-timeleft-${bookingID}`) != null) {
+          document.querySelector(
+            `p#refund-timeleft-${bookingID}`
+          ).innerHTML = ``;
+        }
         render();
         clearInterval(interval);
       } else {
@@ -50,11 +57,13 @@ export const timeLeft = {
         let hour = Math.floor(seconds / 60 / 60);
         let minute = Math.floor(minutes - 60 * hour);
         let second = Math.floor(seconds - 60 * minute - hour * 60 * 60);
-        document.querySelector(`p#refund-timeleft-${bookingID}`).innerHTML = `${
-          hour <= 9 ? "0" : ""
-        }${hour}:${minute <= 9 ? "0" : ""}${minute}:${
-          second <= 9 ? "0" : ""
-        }${second}`;
+        if (document.querySelector(`p#refund-timeleft-${bookingID}`) != null) {
+          document.querySelector(
+            `p#refund-timeleft-${bookingID}`
+          ).innerHTML = `${hour <= 9 ? "0" : ""}${hour}:${
+            minute <= 9 ? "0" : ""
+          }${minute}:${second <= 9 ? "0" : ""}${second}`;
+        }
       }
     }, 1000);
   },

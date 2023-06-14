@@ -16,6 +16,31 @@ export default function Transaction() {
       currency: "VND",
     }).format(price);
   };
+  const renderBooking = () => {
+    api
+      .get(`/CheckOutVNPAY/GetAllBooking`)
+      .then((res) => {
+        setListOfBooking(
+          [...res.data]
+            .filter((item) => {
+              return (
+                item.account.accountID ==
+                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+              );
+            })
+            .sort((a, b) => {
+              if (
+                moment(new Date(a.bookingDate)) <
+                moment(new Date(b.bookingDate))
+              ) {
+                return 1;
+              }
+              return -1;
+            })
+        );
+      })
+      .catch((err) => {});
+  };
   useEffect(() => {
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
@@ -137,6 +162,11 @@ export default function Transaction() {
   };
   // console.log(listOfBooking[0]);
   const handlePayAgain = () => {};
+  useEffect(() => {
+    setInterval(() => {
+      renderBooking();
+    }, 10000);
+  }, []);
   return (
     <>
       <div className=" m-0 p-0">

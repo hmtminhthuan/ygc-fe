@@ -14,6 +14,7 @@ export default function StaffBooking() {
   const [navigation, setNavigation] = useState(0);
   const [payingTime, setPayingTime] = useState(-1);
   const [refundTime, setRefundTime] = useState(-1);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -24,7 +25,7 @@ export default function StaffBooking() {
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setListOfBooking(
           [...res.data]
             .sort((a, b) => {
@@ -86,12 +87,13 @@ export default function StaffBooking() {
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
             setTimeout(() => {
+              setCurrentDate(new Date());
               renderBooking();
             }, 3500);
           });
         });
     }
-  }, [listOfBooking, payingTime]);
+  }, [listOfBooking.length, payingTime]);
   useEffect(() => {
     if (refundTime >= 0) {
       listOfBooking
@@ -103,13 +105,14 @@ export default function StaffBooking() {
             refundTime,
             () => {
               setTimeout(() => {
+                setCurrentDate(new Date());
                 renderBooking();
               }, 3500);
             }
           );
         });
     }
-  }, [listOfBooking, refundTime]);
+  }, [listOfBooking.length, refundTime]);
   // const handleAcceptFromPending = (accountID, courseID, classID) => {
   //   api
   //     .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
@@ -192,15 +195,27 @@ export default function StaffBooking() {
       )
     ).format(`DD-MM-YYYY, HH:mm`);
   };
-  const checkRefundAvailable = (paymentDate) => {
+  const isRefundAvailableView = (payDate) => {
     return (
       new Date(payDate).setTime(
         new Date(payDate).getTime() + refundTime * 60 * 60 * 1000
       ) -
-        new Date().getTime() <
+        currentDate.getTime() >
       0
     );
   };
+
+  useEffect(() => {
+    if (navigation == 1) {
+      setCurrentDate(new Date());
+    }
+    renderBooking();
+  }, [navigation]);
+  useEffect(() => {
+    setInterval(() => {
+      renderBooking();
+    }, 10000);
+  }, []);
   return (
     <>
       <HeaderStaff />
@@ -386,6 +401,10 @@ export default function StaffBooking() {
                       },
                       index
                     ) => {
+                      // let isRefundAvailable = false;
+                      // if (navigation == 1) {
+                      //   isRefundAvailable = isRefundAvailableView(payDate);
+                      // }
                       let { accountID, firstName, lastName, phone } = account;
                       let { courseName, courseID } = course;
                       return (
@@ -581,9 +600,9 @@ export default function StaffBooking() {
                       ) : (
                         ""
                       )} */}
-                              {status == 1 && checkRefundAvailable ? (
+                              {status == 1 && isRefundAvailableView(payDate) ? (
                                 <div
-                                  className={`p-0 m-0 refund-available-${id}`}
+                                  className={`p-0 m-0`}
                                   id={`refund-available-${id}`}
                                 >
                                   <div className="m-0 p-0 flex-column text-center">
@@ -635,7 +654,8 @@ export default function StaffBooking() {
                               ) : (
                                 ""
                               )}
-                              {status == 1 && !checkRefundAvailable ? (
+                              {status == 1 &&
+                              !isRefundAvailableView(payDate) ? (
                                 <p className="m-0 p-0 text-success">Expired</p>
                               ) : (
                                 ""
@@ -661,42 +681,59 @@ export default function StaffBooking() {
               </tbody>
             </table>
             <div className="">
-              {listOfBooking
-                .filter((item) => item.status == 0)
-                .map(({ id, status, ...restParams }, index) => {
-                  if (navigation == 0) {
-                    return <p key={`${id}${status}`}></p>;
-                  }
-                  return (
-                    <div className="d-none" key={`${id}${status}`}>
-                      <p
-                        style={{ fontWeight: "bolder" }}
-                        className={`p-0 m-0 ${navigation != 0 ? "d-none" : ""}`}
-                        id={`timeleft-id-${id}`}
-                      ></p>
-                    </div>
-                  );
-                })}
-              {listOfBooking
-                .filter((item) => item.status == 1)
-                .map(({ id, status, ...restParams }, index) => {
-                  if (navigation == 1) {
-                    return <p key={`${id}${status}`}></p>;
-                  }
-                  return (
-                    <div className="d-none" key={`${id}${status}`}>
-                      <div
-                        style={{ fontWeight: "bolder" }}
-                        className={`p-0 m-0 ${navigation != 0 ? "d-none" : ""}`}
-                        id={`refund-available-${id}`}
-                      ></div>
-                      <p
-                        className="m-0 p-0 text-center"
-                        id={`refund-timeleft-${id}`}
-                      ></p>
-                    </div>
-                  );
-                })}
+              {navigation != 0 ? (
+                <>
+                  {listOfBooking
+                    .filter((item) => item.status == 0)
+                    .map(({ id, status, ...restParams }, index) => {
+                      if (navigation == 0) {
+                        return <p key={`${id}${status}`}></p>;
+                      }
+                      return (
+                        <div className="d-none" key={`${id}${status}`}>
+                          <p
+                            style={{ fontWeight: "bolder" }}
+                            className={`p-0 m-0 ${
+                              navigation != 0 ? "d-none" : ""
+                            }`}
+                            id={`timeleft-id-${id}`}
+                          ></p>
+                        </div>
+                      );
+                    })}
+                </>
+              ) : (
+                <></>
+              )}
+              {navigation != 1 ? (
+                <>
+                  {" "}
+                  {listOfBooking
+                    .filter((item) => item.status == 1)
+                    .map(({ id, status, ...restParams }, index) => {
+                      if (navigation == 1) {
+                        return <p key={`${id}${status}`}></p>;
+                      }
+                      return (
+                        <div className="d-none" key={`${id}${status}`}>
+                          <div
+                            style={{ fontWeight: "bolder" }}
+                            className={`p-0 m-0 ${
+                              navigation != 0 ? "d-none" : ""
+                            }`}
+                            id={`refund-available-${id}`}
+                          ></div>
+                          <p
+                            className="m-0 p-0 text-center"
+                            id={`refund-timeleft-${id}`}
+                          ></p>
+                        </div>
+                      );
+                    })}
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </section>
         </div>
