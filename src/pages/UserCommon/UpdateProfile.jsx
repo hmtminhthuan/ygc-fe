@@ -153,6 +153,7 @@ export default function UpdateProfile() {
           style={{
             backgroundColor: "#f2ced8",
             width: "100vw",
+            minHeight: "100vh",
           }}
         >
           <div
@@ -178,9 +179,9 @@ export default function UpdateProfile() {
                 width: "100%",
               }}
             >
-              <div className="p-0 m-0 mt-lg-0 mt-5">
+              <div className="p-0 m-0 mt-lg-0 mt-5 pt-lg-3">
                 <h1
-                  className="mb-3 pt-5 mt-lg-4 mt-md-5 text-center text-dark"
+                  className="mb-3 pt-lg-5 pt-4 mt-lg-4 mt-md-5 text-center text-dark"
                   style={{ color: "333", fontWeight: "bold" }}
                 >
                   Update Account
@@ -191,7 +192,7 @@ export default function UpdateProfile() {
                 style={{ borderRadius: "15px" }}
               >
                 <div className="profile-tab-nav col-lg-3 col-md-12 border-md-0">
-                  <div className="p-4 mt-4 w-100">
+                  <div className="p-4 mt-0 w-100 ">
                     <div className="">
                       <Link
                         to={`/profile`}
@@ -262,7 +263,7 @@ export default function UpdateProfile() {
                 </div>
 
                 {!changePasswordMoniter ? (
-                  <div className="tab-content p-4 p-md-5 col-lg-9 col-md-12">
+                  <div className="tab-content p-4 p-0 col-lg-9 col-md-12">
                     <div
                       className="tab-pane fade show active w-100
             d-md-flex d-sm-flex justify-content-center"
