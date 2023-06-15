@@ -19,8 +19,11 @@ export default function MenuStaff() {
   }, []);
   return (
     <div
-      className="sidebar pt-0 mt-0 pt-3 border-none"
-      style={{ border: "none" }}
+      className="sidebar pt-0 mt-0 pt-3 border-none menu-scroll"
+      style={{
+        border: "none",
+        // overflowY: "scroll",
+      }}
     >
       <ul className="sidebar--items">
         <li>

@@ -255,7 +255,7 @@ export default function Dashboard() {
                 </button> */}
               </div>
               <div className="table">
-                <table>
+                <table className="table-none-border-radius-head">
                   <thead>
                     <tr>
                       <th style={{ textAlign: "left" }}>Name</th>
