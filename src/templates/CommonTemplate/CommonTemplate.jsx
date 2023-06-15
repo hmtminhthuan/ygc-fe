@@ -21,7 +21,7 @@ export default function CommonTemplate() {
       toast: true,
       timer: 2000,
     });
-    return <Navigatee to="/" />;
+    return <Navigate to="/" />;
   }
   return (
     <>
