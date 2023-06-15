@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { Form, Input, Button } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import female from "../../assets/images/avt-female.jpg";
@@ -31,6 +31,7 @@ export default function UpdateProfile() {
   const [changePasswordMoniter, setChangePasswordMoniter] = useState(false);
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  const [form] = Form.useForm();
 
   if (!(USER_LOGIN != null && !accept)) {
     if (!accept) {
@@ -271,7 +272,7 @@ export default function UpdateProfile() {
                       <div className="flex justify-content-center">
                         <Form
                           {...formItemLayout}
-                          form={formik.form}
+                          form={form}
                           onFinish={formik.handleSubmit}
                           size="large"
                           autoComplete="off"
@@ -524,20 +525,26 @@ export default function UpdateProfile() {
                               </Button>
                             </div>
                             <div className="col-6 flex align-items-center">
-                              <Link
-                                to={`/profile`}
+                              <button
+                                type="reset"
                                 className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
-                    text-decoration-none text-light"
+                            text-decoration-none text-light"
                                 style={{ borderRadius: "10px" }}
+                                onClick={() => {
+                                  form.resetFields();
+                                }}
                               >
-                                Cancel
-                              </Link>
+                                Reset
+                              </button>
                             </div>
                             <div
                               className="col-12 mt-4"
                               style={{ fontWeight: "bolder" }}
                             >
-                              <h4>
+                              <div
+                                className="m-0 p-0"
+                                style={{ fontSize: "17px" }}
+                              >
                                 Change Current Password?
                                 <Link
                                   className="mx-2 text-decoration-none"
@@ -548,7 +555,7 @@ export default function UpdateProfile() {
                                 >
                                   Click here
                                 </Link>
-                              </h4>
+                              </div>
                             </div>
                           </div>
                         </Form>
@@ -566,21 +573,21 @@ export default function UpdateProfile() {
                           />
                         </div>
                         <div
-                          className="col-12 mt-4 text-center"
+                          className="col-12 mt-1 text-center"
                           style={{ fontWeight: "bolder" }}
                         >
-                          <h4>
+                          <div style={{ fontSize: "17px" }}>
                             <Link
-                              className="mx-2 text-decoration-none"
+                              className="text-decoration-none"
                               style={{ color: "rgba(210, 145, 188, 1)" }}
                               onClick={() => {
                                 setChangePasswordMoniter(false);
                               }}
                             >
-                              Click here
+                              Click here {"  "}
                             </Link>
-                            to update other information
-                          </h4>
+                            {"  "} to update other information
+                          </div>
                         </div>
                       </div>
                     </div>

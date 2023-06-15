@@ -334,18 +334,18 @@ export default function ChangePassword({ userEmail, userId }) {
         </div>
       </Form>
       <div
-        className="form-group flex m-0 flex justify-content-center my-3 mt-4"
+        className="form-group flex m-0 flex justify-content-center my-0 mt-3"
         style={{ fontWeight: "bolder", fontSize: "17px" }}
       >
         Forget Current Password?
         <button
-          className="mx-2 text-decoration-none text-danger border-0 bg-transparent"
+          className="mx-1 text-decoration-none text-danger border-0 bg-transparent"
           style={{ fontWeight: "bolder" }}
           onClick={() => {
             handleForgetPassword();
           }}
         >
-          Click here
+          {`${` `}Click here`}
         </button>
       </div>
     </>

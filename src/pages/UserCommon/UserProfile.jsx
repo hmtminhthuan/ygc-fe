@@ -19,36 +19,35 @@ function UserProfile() {
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
 
-  if (!(USER_LOGIN != null && !accept)) {
-    if (!accept) {
-      window.location.href = "/";
-    }
-  } else {
-    USER = JSON.parse(USER_LOGIN);
-    if (
-      USER.accountID != null &&
-      USER.accountID != undefined &&
-      USER.accountID.toString().trim() == paramID.toString().trim()
-    ) {
-      let timerInterval;
-      Swal.fire({
-        title: "Loading...",
-        timer: 900,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {
-          setAccept(true);
-          clearInterval(timerInterval);
-        },
-      });
-    } else {
-      window.location.href = "/";
-    }
-  }
-
   useEffect(() => {
+    if (!(USER_LOGIN != null && !accept)) {
+      if (!accept) {
+        window.location.href = "/";
+      }
+    } else {
+      USER = JSON.parse(USER_LOGIN);
+      if (
+        USER.accountID != null &&
+        USER.accountID != undefined &&
+        USER.accountID.toString().trim() == paramID.toString().trim()
+      ) {
+        let timerInterval;
+        Swal.fire({
+          title: "Loading...",
+          timer: 900,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          willClose: () => {
+            setAccept(true);
+            clearInterval(timerInterval);
+          },
+        });
+      } else {
+        window.location.href = "/";
+      }
+    }
     api
       .get("/Account/GetUserProfile", {
         params: { id: paramID },
@@ -171,20 +170,28 @@ function UserProfile() {
                           >
                             UserID: {id}
                           </p>
-                          <div className="icon mt-3 text-center justify-content-center">
-                            {/* <div className=" col-md-6 p-0">
-                              <Link to={"/"} className="home">
-                                <i className="ri-home-4-line mt-5 "></i>
-                                <span className="px-2">Home</span>
-                              </Link>
-                            </div> */}
-                            <div className="p-0">
+                          <div className="iconp-0 m-0 mt-3 text-center flex justify-content-center">
+                            <div
+                              className="p-0 m-0 px-2 py-1 bg-black text-light border-0"
+                              style={{
+                                width: "fit-content",
+                                borderRadius: "20px",
+                              }}
+                            >
                               <Link
                                 to={`/updateProfile`}
-                                className="updateInfo"
+                                className="updateInfo text-light"
                               >
-                                <i className="ri-edit-2-line mt-2 "></i>
-                                {/* <span className="px-2">Update</span> */}
+                                <span
+                                  className="m-0 p-0"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  Update
+                                </span>{" "}
+                                <i
+                                  className="ri-edit-2-line mx-0 px-0 mt-2 text-light"
+                                  style={{ fontSize: "14px" }}
+                                ></i>
                               </Link>
                             </div>
                           </div>
