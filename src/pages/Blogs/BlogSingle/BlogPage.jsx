@@ -51,19 +51,13 @@ function BlogPage() {
 
   return (
     <div>
-      <HeaderHome />
-      <main>
-        <div
-          className="box"
-          style={{
-            height: "90vh",
-            overflowY: "scroll",
-            borderTopRightRadius: "10px",
-            borderBottomRightRadius: "10px",
-          }}
-        >
-          <div className="inner-box mt-5" style={{ top: "100%" }}>
-            <div className="close">
+      <div className="header-top m-4 mx-0 mt-0">
+        <HeaderHome />
+      </div>
+      <main className="pt-5">
+        <div className={`box course-detail-area mt-5 my-5 px-5 pt-4`}>
+          <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
+            <div className="close px-0 mx-0">
               <Link to={"/blog"}>
                 <a href="">Close</a>
                 <i className="fa-solid fa-circle-xmark"></i>
@@ -90,7 +84,7 @@ function BlogPage() {
               <h1 style={{ fontWeight: "800" }}>{header}</h1>
             </div>
 
-            <div className="user mb-4 mx-5">
+            <div className="user mb-3">
               <a className="avatar " href="">
                 <img src={user} alt="" />
               </a>
@@ -111,8 +105,8 @@ function BlogPage() {
                 ))}
               </p>
 
-              <p>
-                <img src={img} alt="" />
+              <p className="">
+                <img src={img} alt="" style={{ borderRadius: "25px" }} />
               </p>
 
               <div className="tag-widget post-tag-container mb-5 mt-5">
@@ -135,7 +129,9 @@ function BlogPage() {
           </div>
         </div>
       </main>
-      <FooterHome />
+      <div>
+        <FooterHome />
+      </div>
     </div>
   );
 }
