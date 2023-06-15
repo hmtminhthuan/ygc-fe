@@ -42,13 +42,22 @@ function Blog() {
           <div className="row">
             {blogList.map((blog) => {
               const formattedDate = formatDate(blog.date);
+              const dateObj = new Date(blog.date);
+              const day = dateObj.getDate();
+              const month = dateObj.toLocaleString("default", {
+                month: "long",
+              });
+              const year = dateObj.getFullYear();
               return (
                 <BlogDetail
                   // key={index}
                   blogID={blog.blogID}
                   header={blog.header}
                   content={blog.content}
-                  date={formattedDate}
+                  // date={formattedDate}
+                  day={day}
+                  month={month}
+                  year={year}
                   firstName={blog.firstName}
                   lastName={blog.lastName}
                   img={blog.img}

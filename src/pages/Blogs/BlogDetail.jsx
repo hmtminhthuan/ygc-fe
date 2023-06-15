@@ -11,6 +11,9 @@ export default function BlogDetail({
   firstName,
   lastName,
   img,
+  day,
+  month,
+  year,
   ...restParam
 }) {
   return (
@@ -23,7 +26,7 @@ export default function BlogDetail({
           <Card.Title>
             <div className="d-flex align-items-center pt-2 mb-3 ">
               <div className="one" style={{ width: "80px" }}>
-                <span className="day">31</span>
+                <span className="day">{day}</span>
               </div>
 
               <div
@@ -33,10 +36,10 @@ export default function BlogDetail({
                 }}
               >
                 <span className="yr" style={{ display: "block" }}>
-                  2023
+                  {year}
                 </span>
                 <span className="mos" style={{ display: "block" }}>
-                  January
+                  {month}
                 </span>
               </div>
             </div>
