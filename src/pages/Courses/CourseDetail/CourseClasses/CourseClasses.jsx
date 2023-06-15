@@ -48,100 +48,77 @@ export default function CourseClasses({
       border: 0,
     },
   }));
-  const handlePayByVnpay = (classId) => {
-    let link = "";
-    api
-      .post(`/CheckOutVNPAY`, {
-        amount: price * (1 - discount / 100),
-        accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
-        courseId: parseInt(courseId),
-        classId: classId,
-      })
-      .then((res) => {
-        link = res.data;
-        handleAddBooking(classId);
-        // window.open(link, "_blank");
-      })
-      .catch((err) => {
-        // window.open(link, "_blank");
-      })
-      .finally(() => {
-        // console.log(link);
-        window.location.href = link;
-      });
-  };
-  const handlePayByAtm = (classId) => {
-    Swal.fire({
-      title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
-      // icon: 'info',
-      html: `
-        <p style="text-align:justify; margin:0;">
-        Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
 
-        Our ATM Accounts</br>
-        1. Bank: Vietcombank</br>
-        ATM Number: 1001 1059 2003 2002</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+  // const handlePayByAtm = (classId) => {
+  //   Swal.fire({
+  //     title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
+  //     // icon: 'info',
+  //     html: `
+  //       <p style="text-align:justify; margin:0;">
+  //       Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
 
+  //       Our ATM Accounts</br>
+  //       1. Bank: Vietcombank</br>
+  //       ATM Number: 1001 1059 2003 2002</br>
+  //       Name: Vũ Ngọc Ánh Tuyết</br>
+  //       Content: ${
+  //         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+  //       }</br></br>
 
-        2. Bank: VIB</br>
-        ATM Number: 101 109 203</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+  //       2. Bank: VIB</br>
+  //       ATM Number: 101 109 203</br>
+  //       Name: Vũ Ngọc Ánh Tuyết</br>
+  //       Content: ${
+  //         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+  //       }</br></br>
 
-
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
-        or <a href="">0989 565 565</a></b></br>
-        Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
-        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
-        </p>
-        `,
-      showCloseButton: true,
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonColor: "#d291bc",
-      confirmButtonText: "I understand",
-      focusConfirm: false,
-      allowOutsideClick: false,
-      // showCloseButton: false,
-      didOpen: () => {},
-    }).then((result) => {
-      if (result.isConfirmed === true) {
-        if (
-          listOfBooking.filter(
-            (item) =>
-              item.account.accountID ==
-                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID &&
-              item.course.courseID == parseInt(courseId) &&
-              item.status == 0
-          ).length <= 0
-        ) {
-          api
-            .post(`/CheckOutVNPAY/AddBooking`, {
-              accountId: parseInt(
-                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-              ),
-              classId: classId,
-              courseId: parseInt(courseId),
-            })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(function () {
-              window.location.href = "/transaction";
-            });
-        }
-      }
-    });
-  };
+  //       In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
+  //       or <a href="">0989 565 565</a></b></br>
+  //       Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
+  //       Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
+  //       </p>
+  //       `,
+  //     showCloseButton: true,
+  //     showCancelButton: false,
+  //     showConfirmButton: true,
+  //     confirmButtonColor: "#d291bc",
+  //     confirmButtonText: "I understand",
+  //     focusConfirm: false,
+  //     allowOutsideClick: false,
+  //     // showCloseButton: false,
+  //     didOpen: () => {},
+  //   }).then((result) => {
+  //     if (result.isConfirmed === true) {
+  //       if (
+  //         listOfBooking.filter(
+  //           (item) =>
+  //             item.account.accountID ==
+  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID &&
+  //             item.course.courseID == parseInt(courseId) &&
+  //             item.status == 0
+  //         ).length <= 0
+  //       ) {
+  //         api
+  //           .post(`/CheckOutVNPAY/AddBooking`, {
+  //             accountId: parseInt(
+  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+  //             ),
+  //             classId: classId,
+  //             courseId: parseInt(courseId),
+  //           })
+  //           .then((res) => {
+  //             console.log(res);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           })
+  //           .finally(function () {
+  //             window.location.href = "/transaction";
+  //           });
+  //       }
+  //     }
+  //   });
+  // };
   const handlePayByCash = (classId) => {
     Swal.fire({
       title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
@@ -161,48 +138,162 @@ export default function CourseClasses({
       confirmButtonText: "I understand",
       focusConfirm: false,
       allowOutsideClick: false,
-      // showCloseButton: false,
-      didOpen: () => {
-        // const btn = Swal.getHtmlContainer().querySelector(
-        //   "a.register_class_btn"
-        // );
-        // btn.addEventListener("click", () => {
-        // handleAddBooking();
-        // });
-      },
+      didOpen: () => {},
     }).then((result) => {
       if (result.isConfirmed === true) {
         setPayWay(false);
       }
     });
   };
-  const handleAddBooking = (classId) => {
+  const handleAddBooking = (classId, booking) => {
+    //  else {
+    api
+      .post(`/CheckOutVNPAY/AddBooking`, {
+        accountId: parseInt(
+          JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+        ),
+        classId: classId,
+        courseId: parseInt(courseId),
+      })
+      .then((res) => {
+        console.log(res);
+        if (booking) {
+          localStorage.setItem("BOOKING_ITEM", res.data.id);
+          window.location.href = "/transaction";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // }
+  };
+  const handlePayByVnpay = (classId) => {
+    Swal.fire({
+      title: `<strong style="color:#d291bc">Policy</strong>`,
+      html: `
+      <p style="text-align:justify; margin:0;"><b>Payment Policy:</b></br>
+      Payment by VNPay should be completed within <b>15 minutes</b> and you will be added to class immediately.
+      </br></br>
+     <b>Refund Policy:</b></br>
+      Upon successful payment, in the next <b>${refundTime}  ${
+        refundTime > 1 ? " hours" : " hour"
+      }</b>,
+      if you want to refund, please contact us via our hot line: 
+      <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
+      After <b>${refundTime}  ${
+        refundTime > 1 ? " hours" : " hour"
+      }</b>, we do not support you to refund the booking.
+      </p>
+      `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: "#d291bc",
+      confirmButtonText: "I have read and I agree with the policy",
+      focusConfirm: false,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        let link = "";
+        api
+          .post(`/CheckOutVNPAY`, {
+            amount: price * (1 - discount / 100),
+            accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
+            courseId: parseInt(courseId),
+            classId: classId,
+          })
+          .then((res) => {
+            link = res.data;
+            handleAddBooking(classId, false);
+            localStorage.setItem("TRANSACTION_NOTIFICATION", "PAY");
+            // window.open(link, "_blank");
+          })
+          .catch((err) => {
+            // window.open(link, "_blank");
+          })
+          .finally(() => {
+            // console.log(link);
+            window.location.href = link;
+          });
+      }
+    });
+  };
+  const handleRegisterClass = (link, classId) => {
     if (
       listOfBooking.filter(
         (item) =>
-          item.account.accountID ==
-            JSON.parse(localStorage.getItem("USER_LOGIN")).accountID &&
-          item.course.courseID == parseInt(courseId) &&
-          item.status == 0
-      ).length <= 0
+          item.account.accountID == userLogin.accountID && item.status == 0
+      ).length > 0
     ) {
-      api
-        .post(`/CheckOutVNPAY/AddBooking`, {
-          accountId: parseInt(
-            JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-          ),
-          classId: classId,
-          courseId: parseInt(courseId),
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        html: `
+          <p style="text-align:justify; margin:0;">
+          You have booked a class without being paid yet. Therefore, you could not register for another class now.</br></br>
+          In case that you want to register for another class and cancel the current class you have booked,
+          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
+          Thank you very much for choosing our service.
+          </p>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I understand",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      });
+    } else if (currentClass) {
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        html: `
+          <p style="text-align:center; margin:0;">
+          You have a class being not finished at the present.</br></br>
+          In case that you want to register for another class,
+          please contact us via our hot line:</br> <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
+          Thank you very much for choosing our service.
+          </p>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I understand",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      });
+    } else {
+      // Swal.fire({
+      //   title: `<strong style="color:#d291bc">Policy For Payment By VNPay</strong>`,
+      //   html: `
+      //   <p style="text-align:justify; margin:0;"><b>Payment Policy:</b></br>
+      //   Payment should be completed within <b>15 minutes</b> and you will be added to class immediately.
+      //   </br></br>
+      //  <b>Refund Policy:</b></br>
+      //   Upon successful payment, in the next <b>${refundTime} hours</b>,
+      //   if you want to refund, please contact us via our hot line:
+      //   <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
+      //   After <b>${refundTime} hours</b>, we do not support you to refund the booking.
+      //   </p>
+      //   `,
+      //   showCloseButton: true,
+      //   showCancelButton: false,
+      //   showConfirmButton: true,
+      //   confirmButtonColor: "#d291bc",
+      //   confirmButtonText: "I have read and I agree with the policy",
+      //   focusConfirm: false,
+      //   allowOutsideClick: false,
+      // }).then((result) => {
+      //   if (result.isConfirmed === true) {
+      //     setPayWay(true);
+      //     localStorage.setItem("CLASS", classId);
+      //   }
+      // });
+      setPayWay(true);
+      localStorage.setItem("CLASS", classId);
     }
   };
-  const handleRegisterClass = (link, classId) => {
+  const handleBookingClass = (link, classId) => {
     if (
       listOfBooking.filter(
         (item) =>
@@ -248,17 +339,26 @@ export default function CourseClasses({
       });
     } else {
       Swal.fire({
-        title: `<strong style="color:#d291bc">Policy For Registration</strong>`,
+        title: `<strong style="color:#d291bc">Policy</strong>`,
         html: `
-        <p style="text-align:justify; margin:0;"><b>Payment Time:</b>
-        After registration, payment must be made within <b>${payingTime} hours</b>. 
-        Failure to complete the payment within the specified timeframe will result 
-        in the cancellation of your booking. We will not be responsible for any related issues.
+        <p style="text-align:justify; margin:0;"><b>Booking Policy:</b></br>
+        Upon successful booking, in the next <b>${payingTime} ${
+          payingTime > 1 ? " hours" : " hour"
+        }</b>, you need to complete payment.
+        After successful payment, you will be added to class immediately.</br>
+        If the booking is still not paid after <b>${payingTime}  ${
+          payingTime > 1 ? " hours" : " hour"
+        }</b>, the booking will be cancelled.
         </br></br>
-       <b>Refund Policy:</b>
-        Upon successful payment, you have <b>${refundTime} hours</b> to cancel your booking and receive a 100% refund. 
-        Refund requests made after this timeframe will not be considered valid, and we will not be responsible for any associated issues.
-        To refund, please contact us via our hot line: <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b>
+       <b>Refund Policy:</b></br>
+        Upon successful payment, in the next <b>${refundTime}  ${
+          refundTime > 1 ? " hours" : " hour"
+        }</b>,
+        if you want to refund, please contact us via our hot line: 
+        <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
+        After <b>${refundTime}  ${
+          refundTime > 1 ? " hours" : " hour"
+        }</b>, we do not support you to refund the booking.
         </p>
         `,
         showCloseButton: true,
@@ -270,8 +370,8 @@ export default function CourseClasses({
         allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed === true) {
-          setPayWay(true);
-          localStorage.setItem("CLASS", classId);
+          localStorage.setItem("TRANSACTION_NOTIFICATION", "booking");
+          handleAddBooking(classId, true);
         }
       });
     }
@@ -381,12 +481,21 @@ export default function CourseClasses({
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                   <TableHead>
                     <TableRow>
-                      <StyledTableCell>No.</StyledTableCell>
-                      <StyledTableCell align="left">Start Date</StyledTableCell>
-                      <StyledTableCell align="left">End Date</StyledTableCell>
-                      <StyledTableCell align="left">Trainer</StyledTableCell>
-                      <StyledTableCell align="left">Schedule</StyledTableCell>
                       <StyledTableCell align="center">Register</StyledTableCell>
+                      <StyledTableCell align="left">Schedule</StyledTableCell>
+                      <StyledTableCell
+                        className="mobile-schedule-guest-none"
+                        align="left"
+                      >
+                        Start Date
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="mobile-schedule-guest-none"
+                        align="left"
+                      >
+                        End Date
+                      </StyledTableCell>
+                      <StyledTableCell align="left">Trainer</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody style={{ height: "auto" }}>
@@ -406,44 +515,40 @@ export default function CourseClasses({
                       ) => {
                         return (
                           <StyledTableRow key={index}>
-                            <StyledTableCell align="left">
-                              {index + 1}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              {moment(new Date(`${startDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              {moment(new Date(`${endDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              {firstname} {lastname}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              {schedule.map(({ date, time }, index) => (
-                                <p className="p-0 m-0 py-1" key={index}>
-                                  {date}, {time}
-                                </p>
-                              ))}
-                            </StyledTableCell>
                             <StyledTableCell align="center">
                               {availablePayment ? (
-                                <Button
-                                  style={{
-                                    backgroundColor: "#d291bc",
-                                    border: "none",
-                                  }}
-                                  // href={linkPayment}
-                                  // target="_blank"
-                                  onClick={() => {
-                                    handleRegisterClass(linkPayment, classId);
-                                  }}
-                                >
-                                  Register Now
-                                </Button>
+                                <div className="p-0 m-0 flex-column">
+                                  <Button
+                                    className="my-1"
+                                    style={{
+                                      backgroundColor: "#d291bc",
+                                      border: "none",
+                                    }}
+                                    // href={linkPayment}
+                                    // target="_blank"
+                                    onClick={() => {
+                                      handleRegisterClass(linkPayment, classId);
+                                    }}
+                                  >
+                                    Pay Now
+                                  </Button>
+                                  <br></br>
+                                  <Button
+                                    className="my-1"
+                                    style={{
+                                      backgroundColor: "#000",
+                                      color: "#fff",
+                                      border: "none",
+                                    }}
+                                    // href={linkPayment}
+                                    // target="_blank"
+                                    onClick={() => {
+                                      handleBookingClass(linkPayment, classId);
+                                    }}
+                                  >
+                                    Booking
+                                  </Button>
+                                </div>
                               ) : (
                                 <button
                                   className="course-register-now m-0 mx-1 mt-1 border-0
@@ -505,9 +610,49 @@ export default function CourseClasses({
                                     }
                                   }}
                                 >
-                                  Register Now
+                                  Register
                                 </button>
                               )}
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                              {schedule.map(({ date, time }, index) => (
+                                <p className="p-0 m-0 py-1" key={index}>
+                                  {date}, {time}
+                                </p>
+                              ))}
+                              <div
+                                className="mobile-schedule-guest"
+                                style={{ color: "#d291bc", fontWeight: "500" }}
+                              >
+                                Start Date:{" "}
+                                {moment(new Date(`${startDate}`)).format(
+                                  "DD-MM-YYYY"
+                                )}
+                                <br></br>
+                                End Date:{" "}
+                                {moment(new Date(`${endDate}`)).format(
+                                  "DD-MM-YYYY"
+                                )}
+                              </div>
+                            </StyledTableCell>
+                            <StyledTableCell
+                              className="mobile-schedule-guest-none"
+                              align="left"
+                            >
+                              {moment(new Date(`${startDate}`)).format(
+                                "DD-MM-YYYY"
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              className="mobile-schedule-guest-none"
+                              align="left"
+                            >
+                              {moment(new Date(`${endDate}`)).format(
+                                "DD-MM-YYYY"
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                              {firstname} {lastname}
                             </StyledTableCell>
                           </StyledTableRow>
                         );
@@ -567,7 +712,7 @@ export default function CourseClasses({
                         />
                       </div>
                       <div className="col-8 text-start">
-                        <h4 className="m-0 p-0">Payment Using VNPay</h4>
+                        <h4 className="m-0 p-0">Payment By VNPay</h4>
                       </div>
                     </td>
                   </tr>

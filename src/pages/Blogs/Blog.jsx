@@ -43,6 +43,18 @@ function Blog() {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    setInterval(() => {
+      api
+        .get("/Blog/GetBlogList")
+        .then((res) => {
+          setBlogList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, 10000);
+  }, []);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);

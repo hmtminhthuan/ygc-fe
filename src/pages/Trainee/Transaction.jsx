@@ -41,7 +41,7 @@ export default function Transaction() {
       })
       .catch((err) => {});
   };
-  useEffect(() => {
+  const renderSetting = () => {
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -78,81 +78,35 @@ export default function Transaction() {
           });
       })
       .catch((err) => {});
-
-    api
-      .get(`/CheckOutVNPAY/GetAllBooking`)
-      .then((res) => {
-        setListOfBooking(
-          [...res.data]
-            .filter((item) => {
-              return (
-                item.account.accountID ==
-                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-              );
-            })
-            .sort((a, b) => {
-              if (
-                moment(new Date(a.bookingDate)) <
-                moment(new Date(b.bookingDate))
-              ) {
-                return 1;
-              }
-              return -1;
-            })
-        );
-      })
-      .catch((err) => {});
+  };
+  useEffect(() => {
+    renderBooking();
+    renderSetting();
   }, []);
 
-  useEffect(() => {
-    if (payingTime >= 0) {
-      listOfBooking
-        .filter((item) => item.status == 0)
-        .forEach((item) => {
-          // if (
-          //   payingTime * 60 * 60 -
-          //     Math.abs(
-          //       Math.round(
-          //         (new Date().getTime() -
-          //           (new Date(item.bookingDate).getTime() +
-          //             14 * 1000 * 60 * 60)) /
-          //           1000
-          //       )
-          //     ) >
-          //   0
-          // ) {
-          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
-            setTimeout(() => {
-              api
-                .get(`/CheckOutVNPAY/GetAllBooking`)
-                .then((res) => {
-                  setListOfBooking(
-                    [...res.data]
-                      .filter((item) => {
-                        return (
-                          item.account.accountID ==
-                          JSON.parse(localStorage.getItem("USER_LOGIN"))
-                            .accountID
-                        );
-                      })
-                      .sort((a, b) => {
-                        if (
-                          moment(new Date(a.bookingDate)) <
-                          moment(new Date(b.bookingDate))
-                        ) {
-                          return 1;
-                        }
-                        return -1;
-                      })
-                  );
-                })
-                .catch((err) => {});
-            }, 3500);
-          });
-          // }
-        });
-    }
-  }, [listOfBooking, payingTime]);
+  // useEffect(() => {
+  //   if (payingTime >= 0) {
+  //     listOfBooking
+  //       .filter((item) => item.status == 0)
+  //       .forEach((item) => {
+  //         // if (
+  //         //   payingTime * 60 * 60 -
+  //         //     Math.abs(
+  //         //       Math.round(
+  //         //         (new Date().getTime() -
+  //         //           (new Date(item.bookingDate).getTime() +
+  //         //             14 * 1000 * 60 * 60)) /
+  //         //           1000
+  //         //       )
+  //         //     ) >
+  //         //   0
+  //         // ) {
+  //         timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {\
+  //         });
+  //         // }
+  //       });
+  //   }
+  // }, [listOfBooking, payingTime]);
 
   const styleDateAndTime = (date) => {
     return moment(
@@ -161,12 +115,31 @@ export default function Transaction() {
     ).format("DD-MM-YYYY, HH:mm");
   };
   // console.log(listOfBooking[0]);
+  useEffect(() => {
+    if (payingTime >= 0) {
+      listOfBooking
+        .filter((item) => item.status == 0)
+        .forEach((item) => {
+          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
+            setTimeout(() => {
+              setCurrentDate(new Date());
+              // renderBooking();
+            }, 3500);
+          });
+        });
+    }
+  }, [listOfBooking.length, payingTime]);
   const handlePayAgain = () => {};
   useEffect(() => {
     setInterval(() => {
       console.log("render ne");
       renderBooking();
-    }, 10000);
+    }, 5000);
+  }, []);
+  useEffect(() => {
+    setInterval(() => {
+      renderSetting();
+    }, 5000);
   }, []);
   return (
     <>

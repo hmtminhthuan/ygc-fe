@@ -35,6 +35,7 @@ export default function CourseDetail() {
   const [linkPayment, setLinkPayment] = useState("");
   const [userLogin, setUserLogin] = useState({});
   const [viewData, setViewData] = useState(false);
+  const [viewClassFirst, setViewClassFirst] = useState(false);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -65,6 +66,7 @@ export default function CourseDetail() {
           localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
           arr.length > 0
         ) {
+          setViewClassFirst(true);
           setTimeout(() => {
             alert.alertInfoNotiForTrainee(
               "Please choose the class you want to register",
@@ -172,7 +174,25 @@ export default function CourseDetail() {
                 </Link>
               </div>{" "}
             </div>
-            <h2 className="course-detail-title course-detail-name m-4 mt-0">
+            {viewClassFirst ? (
+              <>
+                <h2 className="course-detail-title course-detail-name m-4 mt-0 pt-3">
+                  Available Classes
+                </h2>
+                <CourseClasses
+                  courseClasses={courseClasses}
+                  courseId={param.id}
+                  discount={discount}
+                  price={price}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+            <h2
+              className={`course-detail-title m-4 mt-0
+             ${!viewClassFirst ? " course-detail-name " : "pt-3"}`}
+            >
               {courseName}
             </h2>
             <div className="row d-lg-flex align-items-stretch justify-content-center">
@@ -279,15 +299,22 @@ export default function CourseDetail() {
                 </div> */}
               </div>
             </div>
-            <h2 className="sub-title course-detail-title mt-4">
-              Available Classes
-            </h2>
-            <CourseClasses
-              courseClasses={courseClasses}
-              courseId={param.id}
-              discount={discount}
-              price={price}
-            />
+
+            {!viewClassFirst ? (
+              <>
+                <h2 className="sub-title course-detail-title mt-4">
+                  Available Classes
+                </h2>
+                <CourseClasses
+                  courseClasses={courseClasses}
+                  courseId={param.id}
+                  discount={discount}
+                  price={price}
+                />
+              </>
+            ) : (
+              <></>
+            )}
             <h2 className="sub-title course-detail-title mt-4">
               Rating &amp; Feedbacks
             </h2>

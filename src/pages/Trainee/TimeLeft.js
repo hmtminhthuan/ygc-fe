@@ -11,10 +11,10 @@ export const timeLeft = {
       let minute = Math.floor(minutes - 60 * hour);
       let second = Math.floor(seconds - 60 * minute - hour * 60 * 60);
       if (seconds < 0) {
-        if (document.querySelector(`p#timeleft-id-${bookingID}`) != null) {
-          document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "";
-        }
-        // render();
+        // if (document.querySelector(`p#timeleft-id-${bookingID}`) != null) {
+        //   document.querySelector(`p#timeleft-id-${bookingID}`).innerHTML = "00:00:00";
+        // }
+        render();
         clearInterval(interval);
       } else {
         if (document.querySelector(`p#timeleft-id-${bookingID}`) != null) {
@@ -44,14 +44,12 @@ export const timeLeft = {
         render();
         clearInterval(interval);
       } else {
-        let seconds = Math.abs(
-          Math.round(
-            (new Date(payDate).setTime(
-              new Date(payDate).getTime() + refundTime * 60 * 60 * 1000
-            ) -
-              new Date().getTime()) /
-              1000
-          )
+        let seconds = Math.round(
+          (new Date(payDate).setTime(
+            new Date(payDate).getTime() + refundTime * 60 * 60 * 1000
+          ) -
+            new Date().getTime()) /
+            1000
         );
         let minutes = Math.floor(seconds / 60);
         let hour = Math.floor(seconds / 60 / 60);

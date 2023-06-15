@@ -49,6 +49,18 @@ export default function Course() {
   }, []);
 
   useEffect(() => {
+    setInterval(() => {
+      api
+        .get("/Course/GetAllCourseForAdmin")
+        .then(async (res) => {
+          setCourseList(res.data);
+          setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
+        })
+        .catch((err) => {});
+    }, 10000);
+  }, []);
+
+  useEffect(() => {
     let renderList = [...courseList];
     switch (levelSort) {
       case "All":

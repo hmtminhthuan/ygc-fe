@@ -38,8 +38,7 @@ export default function StaffBooking() {
       })
       .catch((err) => {});
   };
-  useEffect(() => {
-    renderBooking();
+  const renderSetting = () => {
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -57,7 +56,6 @@ export default function StaffBooking() {
             ) {
               setPayingTime(item.activeValue);
             }
-            // setPayingTime(9.165);
           });
         res.data
           .filter((item) => item.id == 2)
@@ -76,24 +74,28 @@ export default function StaffBooking() {
           });
       })
       .catch((err) => {});
+  };
+  useEffect(() => {
+    renderBooking();
+    renderSetting();
   }, []);
   useEffect(() => {
     renderBooking();
   }, [navigation]);
-  useEffect(() => {
-    if (payingTime >= 0) {
-      listOfBooking
-        .filter((item) => item.status == 0)
-        .forEach((item) => {
-          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
-            setTimeout(() => {
-              setCurrentDate(new Date());
-              renderBooking();
-            }, 3500);
-          });
-        });
-    }
-  }, [listOfBooking.length, payingTime]);
+  // useEffect(() => {
+  //   if (payingTime >= 0) {
+  //     listOfBooking
+  //       .filter((item) => item.status == 0)
+  //       .forEach((item) => {
+  //         timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
+  //           setTimeout(() => {
+  //             setCurrentDate(new Date());
+  //             // renderBooking();
+  //           }, 3500);
+  //         });
+  //       });
+  //   }
+  // }, [listOfBooking.length, payingTime]);
   useEffect(() => {
     if (refundTime >= 0) {
       listOfBooking
@@ -106,7 +108,7 @@ export default function StaffBooking() {
             () => {
               setTimeout(() => {
                 setCurrentDate(new Date());
-                renderBooking();
+                // renderBooking();
               }, 3500);
             }
           );
@@ -213,10 +215,16 @@ export default function StaffBooking() {
   }, [navigation]);
   useEffect(() => {
     setInterval(() => {
-      console.log("render ne");
       renderBooking();
-    }, 10000);
+      setCurrentDate(new Date());
+    }, 5000);
   }, []);
+  useEffect(() => {
+    setInterval(() => {
+      renderSetting();
+    }, 5000);
+  }, []);
+  console.log(listOfBooking);
   return (
     <>
       <HeaderStaff />

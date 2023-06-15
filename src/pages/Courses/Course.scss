@@ -5,3 +5,13 @@
     width: 85%;
   }
 }
+.mobile-schedule-guest {
+  @media screen and (min-width: 550px) {
+    display: none !important;
+  }
+}
+.mobile-schedule-guest-none {
+  @media screen and (max-width: 550px) {
+    display: none !important;
+  }
+}
