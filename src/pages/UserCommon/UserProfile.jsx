@@ -30,7 +30,19 @@ function UserProfile() {
       USER.accountID != undefined &&
       USER.accountID.toString().trim() == paramID.toString().trim()
     ) {
-      setAccept(true);
+      let timerInterval;
+      Swal.fire({
+        title: "Loading...",
+        timer: 900,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          setAccept(true);
+          clearInterval(timerInterval);
+        },
+      });
     } else {
       window.location.href = "/";
     }
@@ -76,27 +88,27 @@ function UserProfile() {
   }
   return (
     <>
-      {accept ? (
-        <>
-          <div
-            className="w-100"
-            style={{
-              height: "53px",
-              position: "fixed",
-              zIndex: "100",
-              backgroundColor: "rgb(248,249,250,0.9)",
-            }}
-          >
-            <HeaderHome />
+      <>
+        <div
+          className="w-100"
+          style={{
+            height: "53px",
+            position: "fixed",
+            zIndex: "100",
+            backgroundColor: "rgb(248,249,250,0.9)",
+          }}
+        >
+          <HeaderHome />
+        </div>
+        <div
+          className="page-content page-container scroll-user-profile"
+          id="page-content"
+          style={{ height: "100vh" }}
+        >
+          <div className="video-background">
+            <video src={video} autoPlay muted loop></video>
           </div>
-          <div
-            className="page-content page-container scroll-user-profile"
-            id="page-content"
-            style={{ height: "100vh" }}
-          >
-            <div className="video-background">
-              <video src={video} autoPlay muted loop></video>
-            </div>
+          {accept ? (
             <div className="padding mx-5 mt-5">
               <div className="row container d-flex justify-content-center">
                 <div className="col-xl-6 col-md-12 mt-md-4">
@@ -216,11 +228,11 @@ function UserProfile() {
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
+          ) : (
+            <></>
+          )}
+        </div>
+      </>
     </>
   );
 }

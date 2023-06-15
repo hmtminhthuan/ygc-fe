@@ -6,14 +6,40 @@ import HomeContent from "../../component/HomeContent/HomeContent";
 import FAQ from "../../component/FAQ/FAQ";
 export default function Home() {
   localStorage.setItem("MENU_ACTIVE", "home-home");
+  const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
+  const userLogin = localStorage.getItem("USER_LOGIN");
+  if (
+    redirectLink != null &&
+    redirectLink != undefined &&
+    (userLogin == null || userLogin == undefined)
+  ) {
+    localStorage.removeItem("REDIRECT_LINK_BOOK_CLASS");
+    localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+  }
+  if (
+    redirectLink != null &&
+    redirectLink != undefined &&
+    userLogin != null &&
+    userLogin != undefined
+  ) {
+    localStorage.removeItem("REDIRECT_LINK_BOOK_CLASS");
+    window.location.href = `${redirectLink}`;
+  }
   return (
     <div>
-      <HeaderHome />
-      <HomeCarousel />
-
-      <HomeContent />
-
-      <FooterHome />
+      {redirectLink != null &&
+      redirectLink != undefined &&
+      userLogin != null &&
+      userLogin != undefined ? (
+        <></>
+      ) : (
+        <>
+          <HeaderHome />
+          <HomeCarousel />
+          <HomeContent />
+          <FooterHome />
+        </>
+      )}
     </div>
   );
 }

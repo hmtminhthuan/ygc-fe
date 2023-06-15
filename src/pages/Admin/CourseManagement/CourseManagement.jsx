@@ -407,7 +407,7 @@ export default function CourseManagement() {
   };
 
   return (
-    <section style={{ position: "relative" }}>
+    <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />

@@ -11,8 +11,29 @@ import FooterHome from "../../component/FooterHome/FooterHome";
 function Blog() {
   localStorage.setItem("MENU_ACTIVE", "home-blog");
   let [blogList, setBlogList] = useState([]);
-
+  const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
+  const userLogin = localStorage.getItem("USER_LOGIN");
+  if (
+    redirectLink != null &&
+    redirectLink != undefined &&
+    (userLogin == null || userLogin == undefined)
+  ) {
+    localStorage.removeItem("REDIRECT_LINK_BOOK_CLASS");
+    localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
+  }
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Blog/GetBlogList")
       .then((res) => {
@@ -37,7 +58,7 @@ function Blog() {
     <div>
       <HeaderHome />
       <Banner title={"Our Blog"} descripton={"Yoga Blog Series"} />
-      <section className="w-100 bloglist-area px-md-4">
+      <section className="w-100 bloglist-area py-0 px-md-4">
         <div className="blog-contaier flex justify-content-center align-content-center">
           <div className="row">
             {blogList.map((blog) => {

@@ -22,6 +22,7 @@ export default function StaffTemplate() {
     });
     return <Navigate to="/" />;
   }
+
   return (
     <>
       {USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 2) ? (

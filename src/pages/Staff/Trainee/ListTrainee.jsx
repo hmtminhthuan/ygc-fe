@@ -23,13 +23,40 @@ export default function ListTrainee() {
   const [viewMailSearch, setViewMailSearch] = useState(false);
 
   useEffect(() => {
+    let arr = [];
     api
       .get("/Trainee/GetAllInformationTraineeList")
       .then((res) => {
+        arr = res.data;
         setTraineeList(res.data);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        let finalArr = [...arr];
+        api
+          .get(`/Account/AccountListByRole?id=4`)
+          .then((res) => {
+            res.data.forEach((item) => {
+              let valid = true;
+              arr.forEach((person) => {
+                if (item.accountID == person.accountID) {
+                  valid = false;
+                }
+              });
+              if (valid) {
+                item.courseName = "";
+                item.className = "";
+                item.level = "";
+                finalArr = [...finalArr, item];
+              }
+            });
+          })
+          .catch((err) => {})
+          .finally(() => {
+            setTraineeList(finalArr);
+          });
       });
   }, []);
 
@@ -153,7 +180,6 @@ export default function ListTrainee() {
         <MenuStaff />
         <div className="main--content bg-white">
           <section className="staff-list-area pt-3 pb-3">
-            {/* <MenuStaff /> */}
             <div className="row flex-column trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
                 <h1
@@ -359,6 +385,7 @@ export default function ListTrainee() {
                   </thead>
                   <tbody>
                     {sortedTrainees
+                      .filter((item) => !item.deleted)
                       .filter((item) =>
                         item.email
                           .trim()
@@ -421,7 +448,7 @@ export default function ListTrainee() {
                           return true;
                         }
                       })
-                      .map((trainee) => {
+                      .map((trainee, index) => {
                         return (
                           <tr key={trainee.accountID}>
                             {/* <td>{`${trainee.accountID}`}</td> */}

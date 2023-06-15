@@ -7,7 +7,80 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  .close {
+    a {
+      text-decoration: none;
+      margin-right: 10px;
+      color: rgb(208, 143, 186);
+    }
+    text-align: right;
+    margin: 10px 50px;
+  }
 
+  .title {
+    color: rgb(208, 143, 186);
+  }
+  .exit {
+    position: absolute;
+    z-index: 1000 !important;
+    display: flex;
+    justify-content: space-between;
+  }
+  .exit a,
+  i {
+    color: #000;
+  }
+  .user {
+    display: flex;
+
+    align-items: center;
+
+    img {
+      font-size: 6.6px;
+
+      border-radius: 50%;
+      height: 9em;
+      //   object-fit: cover;
+      width: 9em;
+      overflow-clip-margin: content-box;
+      overflow: clip;
+      align-items: center;
+    }
+
+    .info {
+      margin: 0 15px !important;
+      justify-content: center;
+      align-items: center;
+
+      a,
+      .time {
+        margin: 2px 0;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .upload {
+    color: rgb(208, 143, 186);
+    margin-right: 50px;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .tag-cloud a {
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 4px 10px;
+    margin-bottom: 7px;
+    margin-right: 25px;
+    border-radius: 4px;
+    color: #000;
+    border: 1px solid #e6e6e6;
+    font-size: 11px;
+    text-decoration: none;
+    line-height: 1.8;
+    font-weight: 400;
+  }
   .box {
     display: block;
     position: relative;
@@ -31,81 +104,6 @@ main {
       }
       .mt-5 {
         margin-top: 3rem !important;
-      }
-
-      .close {
-        a {
-          text-decoration: none;
-          margin-right: 10px;
-          color: rgb(208, 143, 186);
-        }
-        text-align: right;
-        margin: 10px 50px;
-      }
-
-      .title {
-        color: rgb(208, 143, 186);
-      }
-      .exit {
-        position: absolute;
-        z-index: 1000 !important;
-        display: flex;
-        justify-content: space-between;
-      }
-      .exit a,
-      i {
-        color: #000;
-      }
-      .user {
-        display: flex;
-
-        align-items: center;
-
-        img {
-          font-size: 6.6px;
-
-          border-radius: 50%;
-          height: 9em;
-          //   object-fit: cover;
-          width: 9em;
-          overflow-clip-margin: content-box;
-          overflow: clip;
-          align-items: center;
-        }
-
-        .info {
-          margin: 0 15px !important;
-          justify-content: center;
-          align-items: center;
-
-          a,
-          .time {
-            margin: 2px 0;
-            text-decoration: none;
-          }
-        }
-      }
-
-      .upload {
-        color: rgb(208, 143, 186);
-        margin-right: 50px;
-        text-align: right;
-        font-weight: bold;
-      }
-
-      .tag-cloud a {
-        text-transform: uppercase;
-        display: inline-block;
-        padding: 4px 10px;
-        margin-bottom: 7px;
-        margin-right: 25px;
-        border-radius: 4px;
-        color: #000;
-        border: 1px solid #e6e6e6;
-        font-size: 11px;
-        text-decoration: none;
-        line-height: 1.8;
-        font-weight: 400;
       }
     }
   }

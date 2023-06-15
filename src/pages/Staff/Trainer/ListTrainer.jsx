@@ -145,14 +145,12 @@ export default function ListTrainer() {
       });
   };
   return (
-    <section className="the-container">
-      <div className="the-menu">
-        <HeaderStaff />
-      </div>
-      <section className="main bg-white the-content" id="">
+    <>
+      <HeaderStaff />
+      <section className="main bg-white" id="">
         <MenuStaff />
         <div className="main--content bg-white">
-          <div className="staff-list-area pt-3 pb-5">
+          <section className="staff-list-area pt-3 pb-3">
             <div className="row flex trainer-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
                 <h1
@@ -355,6 +353,7 @@ export default function ListTrainer() {
                   </thead>
                   <tbody>
                     {sortedTrainers
+                      .filter((item) => !item.deleted)
                       .filter((item) =>
                         item.email
                           .trim()
@@ -440,9 +439,9 @@ export default function ListTrainer() {
                 </table>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
-    </section>
+    </>
   );
 }
