@@ -4,6 +4,13 @@
     margin: 0 auto;
     width: 85%;
   }
+  .sort-course-guest {
+    @media screen and (max-width: 1024px) {
+      justify-content: end !important;
+      width: 85%;
+      margin-right: 16%;
+    }
+  }
 }
 .mobile-schedule-guest {
   @media screen and (min-width: 550px) {

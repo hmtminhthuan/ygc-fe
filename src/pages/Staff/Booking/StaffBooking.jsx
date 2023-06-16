@@ -377,14 +377,14 @@ export default function StaffBooking() {
                     }
                     if (navigation == 2) {
                       return (
-                        new Date(b.bookingDate).getTime() -
-                        new Date(a.bookingDate).getTime()
+                        new Date(a.bookingDate).getTime() -
+                        new Date(b.bookingDate).getTime()
                       );
                     }
                     if (navigation == 4) {
                       return (
-                        new Date(b.refundDate).getTime() -
-                        new Date(a.refundDate).getTime()
+                        new Date(a.refundDate).getTime() -
+                        new Date(b.refundDate).getTime()
                       );
                     }
                     return -1;

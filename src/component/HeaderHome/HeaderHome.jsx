@@ -38,7 +38,7 @@ export default function HeaderHome() {
           />
           <Navbar.Collapse
             id="basic-navbar-nav"
-            className="flex justify-content-end header-small navbar-item"
+            className="flex justify-content-end px-3 py-2 pt-0 header-small navbar-item"
           >
             <Nav className="">
               <Nav.Link
@@ -227,7 +227,7 @@ export default function HeaderHome() {
                     window.location.href = "/";
                   }}
                 >
-                  <div className="flex p-0 m-0">Log Out</div>
+                  <div className="flex p-0 m-0">LogOut</div>
                 </Nav.Link>
               ) : (
                 <></>

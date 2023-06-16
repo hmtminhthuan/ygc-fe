@@ -166,7 +166,10 @@ export default function Course() {
           className="row flex justify-content-center pt-4"
           style={{ margin: "0 auto", width: "85%" }}
         >
-          <div className="col-lg-4 col-md-12 flex justify-content-center ">
+          <div
+            className="col-lg-4 col-md-12 flex justify-content-center
+          sort-course-guest"
+          >
             <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort By Price</h4>
             <div className="w-50">
               <Select
@@ -183,7 +186,10 @@ export default function Course() {
               </Select>
             </div>
           </div>
-          <div className="col-lg-4 col-md-12 flex justify-content-center ">
+          <div
+            className="col-lg-4 col-md-12 flex justify-content-center 
+           sort-course-guest"
+          >
             <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort By Discount</h4>
             <div className="w-50">
               <Select
@@ -201,7 +207,10 @@ export default function Course() {
               </Select>
             </div>
           </div>
-          <div className="col-lg-4 col-md-12 flex justify-content-center ">
+          <div
+            className="col-lg-4 col-md-12 flex justify-content-center 
+           sort-course-guest"
+          >
             <h4 className="p-0 m-0 py-2 p-0 text-end px-2">Sort by Level</h4>
             <div className="w-50">
               <Select

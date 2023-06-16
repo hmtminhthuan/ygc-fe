@@ -76,14 +76,29 @@ export default function MenuAdmin() {
             <span className="sidebar--item">Course</span>
           </a>
         </li>
-        {/* <li>
-                    <a href="#">
-                        <span className="icon icon-6">
-                            <i className=" ri-community-line" />
-                        </span>
-                        <span className="sidebar--item">Classes</span>
-                    </a>
-                </li> */}
+        <li>
+          <a
+            className={`${
+              menu_active != null && menu_active == "admin-setting"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              localStorage.setItem("MENU_ACTIVE", "admin-setting");
+            }}
+            href="/admin/setting"
+          >
+            <span className="icon icon-5">
+              <i className="fa-solid fa-gear"></i>
+            </span>
+            <span
+              className="sidebar--item"
+              style={{ transform: "translateX(-2px)" }}
+            >
+              Setting
+            </span>
+          </a>
+        </li>
         {/* <li>
                     <a href="#">
                         <span className="icon icon-6">

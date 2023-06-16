@@ -1089,9 +1089,6 @@ export default function CourseManagement() {
           </table>
         </div>
       </section>
-      <div style={{ position: "fixed", bottom: "0", top: "0" }}>
-        <Outlet />
-      </div>
     </section>
   );
 }

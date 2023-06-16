@@ -3,9 +3,17 @@ import "./FAQ.scss";
 
 export default function FAQ() {
   return (
-    <section className="bg-light">
-      <div className="container">
-        <div className="row justify-content-center">
+    <section
+      className="
+      // bg-light
+       w-100 p-0 m-0"
+      style={{ backgroundColor: "#fbe7f7", width: "100%" }}
+    >
+      <div
+        className="flex justify-content-center p-0 m-0 w-100 py-5"
+        style={{ backgroundColor: "#fbe7f7", width: "100%" }}
+      >
+        <div className="row justify-content-center py-5">
           <div className="col-lg-10">
             <div className="card card-style1 border-0">
               <div className="card-body p-4 p-md-5 p-xl-6">
