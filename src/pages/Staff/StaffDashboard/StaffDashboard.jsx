@@ -11,7 +11,20 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 export default function Dashboard() {
   localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main--content");

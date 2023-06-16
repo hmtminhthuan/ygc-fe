@@ -47,7 +47,7 @@ import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyE
 import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
 import StaffBooking from "../pages/Staff/Booking/StaffBooking";
-import FAQ from "../component/FAQ/FAQ";
+
 export default function Routers() {
   const routing = useRoutes([
     {
@@ -63,7 +63,6 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
-        { path: "/faq", element: <FAQ /> },
       ],
     },
     {

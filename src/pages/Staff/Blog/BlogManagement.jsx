@@ -16,6 +16,18 @@ function BlogManagement() {
   const [dateSort, setDateSort] = useState("All");
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Blog/GetBlogList")
       .then((res) => {
