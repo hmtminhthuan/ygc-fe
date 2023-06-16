@@ -122,14 +122,27 @@ export default function Transaction() {
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
             setTimeout(() => {
-              setCurrentDate(new Date());
-              // renderBooking();
+              // setCurrent(new Date());
+              renderBooking();
             }, 3500);
           });
         });
     }
   }, [listOfBooking.length, payingTime]);
-  const handlePayAgain = () => {};
+  const handlePayAgain = (amount, classID, courseID) => {
+    api
+      .post(`/CheckOutVNPAY`, {
+        amount: amount,
+        accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
+        courseId: courseID,
+        classId: classID,
+      })
+      .then((res) => {
+        console.log(res);
+        window.location.href = res.data;
+      })
+      .catch((err) => {});
+  };
   useEffect(() => {
     setInterval(() => {
       console.log("render ne");
@@ -179,12 +192,12 @@ export default function Transaction() {
                     account,
                     payDate,
                     refundDate,
+                    ...restParams
                   },
                   index
                 ) => {
                   let { firstName, lastName, phone } = account;
                   let { courseName, courseID } = course;
-                  let timeLeft = "";
                   return (
                     <tr key={index}>
                       <td style={{ textAlign: "left" }}>{index + 1}</td>
@@ -281,7 +294,11 @@ export default function Transaction() {
                                 fontWeight: "450",
                               }}
                               onClick={() => {
-                                handlePayAgain();
+                                handlePayAgain(
+                                  amount,
+                                  restParams.class.classID,
+                                  courseID
+                                );
                               }}
                             >
                               Pay Now

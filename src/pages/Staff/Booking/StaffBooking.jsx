@@ -82,20 +82,20 @@ export default function StaffBooking() {
   useEffect(() => {
     renderBooking();
   }, [navigation]);
-  // useEffect(() => {
-  //   if (payingTime >= 0) {
-  //     listOfBooking
-  //       .filter((item) => item.status == 0)
-  //       .forEach((item) => {
-  //         timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
-  //           setTimeout(() => {
-  //             setCurrentDate(new Date());
-  //             // renderBooking();
-  //           }, 3500);
-  //         });
-  //       });
-  //   }
-  // }, [listOfBooking.length, payingTime]);
+  useEffect(() => {
+    if (payingTime >= 0) {
+      listOfBooking
+        .filter((item) => item.status == 0)
+        .forEach((item) => {
+          timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
+            setTimeout(() => {
+              setCurrentDate(new Date());
+              renderBooking();
+            }, 3500);
+          });
+        });
+    }
+  }, [listOfBooking.length, payingTime]);
   useEffect(() => {
     if (refundTime >= 0) {
       listOfBooking
@@ -663,18 +663,18 @@ export default function StaffBooking() {
                               ) : (
                                 ""
                               )}
-                              {status == 1 &&
+                              {/* {status == 1 &&
                               !isRefundAvailableView(payDate) ? (
                                 <p className="m-0 p-0 text-success">Expired</p>
                               ) : (
                                 ""
-                              )}
+                              )} */}
                               {status == 3 ? (
                                 <p
-                                  className="bg-transparent text-danger border-0 p-0 m-0"
+                                  className="bg-transparent text-success border-0 p-0 m-0"
                                   style={{ borderRadius: "10px" }}
                                 >
-                                  Failed Refund
+                                  Expired
                                 </p>
                               ) : (
                                 ""
