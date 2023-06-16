@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import "remixicon/fonts/remixicon.css";
 import HeaderHome from "../../../component/HeaderHome/HeaderHome";
 import user from "../../../assets/images/user.jpg";
-import axios from "axios";
+
 import "./BlogPage.scss";
 import { Link } from "react-router-dom";
 import { api } from "../../../constants/api";
@@ -28,11 +28,19 @@ function BlogPage() {
   }, [param.id]);
 
   if (blogDetail === null) {
-    return null; // Render loading state or handle the case when blogDetail is not available yet
+    return null;
   }
 
-  let { blogID, header, content, firstName, date, img, ...restParams } =
-    blogDetail;
+  let {
+    blogID,
+    header,
+    content,
+    firstName,
+    lastName,
+    date,
+    img,
+    ...restParams
+  } = blogDetail;
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -90,7 +98,9 @@ function BlogPage() {
               </a>
 
               <div className="info">
-                <a href="">{firstName}</a>
+                <p>
+                  {firstName} {lastName}
+                </p>
                 <p className="time"> {formattedDate}</p>
               </div>
             </div>

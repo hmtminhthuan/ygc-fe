@@ -37,6 +37,7 @@ export default function Home() {
           <HeaderHome />
           <HomeCarousel />
           <HomeContent />
+          <FAQ />
           <FooterHome />
         </>
       )}
