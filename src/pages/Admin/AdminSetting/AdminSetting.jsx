@@ -43,22 +43,6 @@ export default function AdminSetting() {
   }, []);
 
   useEffect(() => {
-    // api
-    //   .get(`/api/AdminRepositoryAPI/GetSettingById?id=${id}`)
-    //   .then((res) => {
-    //     const settingDetail = res.data;
-    //     setInitialValues(settingDetail);
-    //     setActiveValue(settingDetail.activeValue);
-    //     setActiveDate(settingDetail.activeDate);
-    //     setPreactiveValue(settingDetail.preactiveValue);
-    //     formik.setValues({
-    //       activeValue: settingDetail.activeValue,
-    //       activeDate: settingDetail.activeDate,
-    //       preactiveValue: settingDetail.preactiveValue,
-    //     });
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {});
     const settingItem = menuSetting.filter((item) => item.id == id)[0];
     if (settingItem != null && settingItem != undefined) {
       {
@@ -83,7 +67,9 @@ export default function AdminSetting() {
         <MenuAdmin />
         <div className={`main--content px-4 pt-3`}>
           <div className="container light-style flex-grow-1 container-p-y">
-            <h4 className="font-weight-bold py-3 mb-4">settings</h4>
+            <h2 className="py-2 pt-0 text-center" style={{ color: "#e049c0" }}>
+              SETTING
+            </h2>
             <div className="card overflow-hidden">
               <div className="row no-gutters row-bordered row-border-light">
                 <div className="col-md-3 pt-0">
@@ -224,24 +210,9 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="preactiveValue"
                                   label=""
-                                  //   rules={[
-                                  //     {
-                                  //       required: true,
-                                  //       message: " cannot be blank",
-                                  //     },
-                                  //     {
-                                  //       whitespace: true,
-                                  //       message: " cannot be empty",
-                                  //     },
-                                  //   ]}
                                   initialValue={initialValues.preactiveValue}
                                   hasFeedback
                                 >
-                                  {/* <InputNumber
-                                    name="preactiveValue"
-                                    value={formik.values.preactiveValue}
-                                    placeholder="Enter"
-                                  /> */}
                                   <p>{preactiveValue}</p>
                                 </Form.Item>
                               </div>
