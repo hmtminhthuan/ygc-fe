@@ -13,18 +13,23 @@ export default function AdminSetting() {
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
 
-  const { id } = useParams();
+  //   const { id } = useParams();
+  const [id, setId] = useState(0);
   const [menuSetting, setMenuSetting] = useState([]);
   const [initialValues, setInitialValues] = useState({});
   const [activeValue, setActiveValue] = useState("");
   const [activeDate, setActiveDate] = useState("");
   const [preactiveValue, setPreactiveValue] = useState("");
-
+  const [form] = Form.useForm();
   const formik = useFormik({
     initialValues: {
+      id: id,
       activeValue: initialValues.activeValue || "",
       activeDate: initialValues.activeDate || "",
       preactiveValue: initialValues.preactiveValue || "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
     },
   });
 
@@ -35,13 +40,30 @@ export default function AdminSetting() {
         setMenuSetting(res.data);
       })
       .catch((err) => {});
+  }, []);
 
-    api
-      .get(`/api/AdminRepositoryAPI/GetSettingById?id=${id}`)
-      .then((res) => {
-        const settingDetail = res.data;
+  useEffect(() => {
+    // api
+    //   .get(`/api/AdminRepositoryAPI/GetSettingById?id=${id}`)
+    //   .then((res) => {
+    //     const settingDetail = res.data;
+    //     setInitialValues(settingDetail);
+    //     setActiveValue(settingDetail.activeValue);
+    //     setActiveDate(settingDetail.activeDate);
+    //     setPreactiveValue(settingDetail.preactiveValue);
+    //     formik.setValues({
+    //       activeValue: settingDetail.activeValue,
+    //       activeDate: settingDetail.activeDate,
+    //       preactiveValue: settingDetail.preactiveValue,
+    //     });
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {});
+    const settingItem = menuSetting.filter((item) => item.id == id)[0];
+    if (settingItem != null && settingItem != undefined) {
+      {
+        const settingDetail = settingItem;
         setInitialValues(settingDetail);
-
         setActiveValue(settingDetail.activeValue);
         setActiveDate(settingDetail.activeDate);
         setPreactiveValue(settingDetail.preactiveValue);
@@ -50,8 +72,8 @@ export default function AdminSetting() {
           activeDate: settingDetail.activeDate,
           preactiveValue: settingDetail.preactiveValue,
         });
-      })
-      .catch((err) => {});
+      }
+    }
   }, [id]);
 
   return (
@@ -71,6 +93,10 @@ export default function AdminSetting() {
                         key={setting.id}
                         className="list-group-item list-group-item-action"
                         data-toggle="list"
+                        onClick={() => {
+                          setId(setting.id);
+                        }}
+                        style={{ cursor: "pointer" }}
                       >
                         {setting.settingName}
                       </a>
@@ -80,8 +106,159 @@ export default function AdminSetting() {
                 <div className="col-md-9">
                   <div className="tab-content">
                     <div
-                      className="tab-pane fade active show"
+                      className={`tab-pane fade active show ${
+                        id == 0 ? "d-none" : ""
+                      }`}
                       id="setting-payingtime"
+                    >
+                      <hr className="border-light m-0" />
+                      <Form
+                        {...formItemLayout}
+                        onFinish={formik.handleSubmit}
+                        form={form}
+                        size="large"
+                        autoComplete="off"
+                      >
+                        <div className="card-body row mx-4">
+                          <div className="form-group col-md-12">
+                            <div className="row flex align-items-start justify-content-between">
+                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <span className="text-danger px-1">
+                                  <i
+                                    className="fa-solid fa-star-of-life"
+                                    style={{
+                                      fontSize: "6px",
+                                      verticalAlign: "middle",
+                                    }}
+                                  ></i>{" "}
+                                </span>
+                                <span>Active Value:</span>
+                              </p>
+
+                              <div className="col-8">
+                                <Form.Item
+                                  name="activeValue"
+                                  label=""
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: " cannot be blank",
+                                    },
+                                    {
+                                      whitespace: true,
+                                      message: " cannot be empty",
+                                    },
+                                  ]}
+                                  initialValue={initialValues.activeValue}
+                                  hasFeedback
+                                >
+                                  <InputNumber
+                                    name="activeValue"
+                                    value={formik.values.activeValue}
+                                    placeholder="Enter"
+                                  />
+                                </Form.Item>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="form-group col-md-12">
+                            <div className="row flex align-items-start justify-content-between">
+                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <span className="text-danger px-1">
+                                  <i
+                                    className="fa-solid fa-star-of-life"
+                                    style={{
+                                      fontSize: "6px",
+                                      verticalAlign: "middle",
+                                    }}
+                                  ></i>{" "}
+                                </span>
+                                <span>Active Date:</span>
+                              </p>
+
+                              <div className="col-8">
+                                <Form.Item
+                                  name="activeDate"
+                                  label=""
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: " cannot be blank",
+                                    },
+                                    {
+                                      whitespace: true,
+                                      message: " cannot be empty",
+                                    },
+                                  ]}
+                                  initialValue={initialValues.activeDate}
+                                  hasFeedback
+                                >
+                                  <Input
+                                    name="activeDate"
+                                    value={formik.values.activeDate}
+                                    onChange={formik.handleChange}
+                                    placeholder="Enter"
+                                  />
+                                </Form.Item>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="form-group col-md-12">
+                            <div className="row flex align-items-start justify-content-between">
+                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <span className="text-danger px-1">
+                                  <i
+                                    className="fa-solid fa-star-of-life"
+                                    style={{
+                                      fontSize: "6px",
+                                      verticalAlign: "middle",
+                                    }}
+                                  ></i>{" "}
+                                </span>
+                                <span>PreActive Value:</span>
+                              </p>
+
+                              <div className="col-8">
+                                <Form.Item
+                                  name="preactiveValue"
+                                  label=""
+                                  //   rules={[
+                                  //     {
+                                  //       required: true,
+                                  //       message: " cannot be blank",
+                                  //     },
+                                  //     {
+                                  //       whitespace: true,
+                                  //       message: " cannot be empty",
+                                  //     },
+                                  //   ]}
+                                  initialValue={initialValues.preactiveValue}
+                                  hasFeedback
+                                >
+                                  {/* <InputNumber
+                                    name="preactiveValue"
+                                    value={formik.values.preactiveValue}
+                                    placeholder="Enter"
+                                  /> */}
+                                  <p>{preactiveValue}</p>
+                                </Form.Item>
+                              </div>
+                              <button type="submit" className="mx-3">
+                                Save changes
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </Form>
+                    </div>
+
+                    {/* <div
+                      className={`tab-pane fade ${
+                        id == 2 ? "active show" : ""
+                      }`}
+                      id="setting-refundtime"
                     >
                       <hr className="border-light m-0" />
                       <Form
@@ -132,7 +309,6 @@ export default function AdminSetting() {
                               </div>
                             </div>
                           </div>
-
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
@@ -220,7 +396,12 @@ export default function AdminSetting() {
                       </Form>
                     </div>
 
-                    <div className="tab-pane fade" id="setting-refundtime">
+                    <div
+                      className={`tab-pane fade ${
+                        id == 3 ? "active show" : ""
+                      }`}
+                      id="setting-minnum"
+                    >
                       <hr className="border-light m-0" />
                       <Form
                         {...formItemLayout}
@@ -270,7 +451,6 @@ export default function AdminSetting() {
                               </div>
                             </div>
                           </div>
-
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
@@ -358,7 +538,12 @@ export default function AdminSetting() {
                       </Form>
                     </div>
 
-                    <div className="tab-pane fade" id="setting-minnum">
+                    <div
+                      className={`tab-pane fade ${
+                        id == 4 ? "active show" : ""
+                      }`}
+                      id="setting-maxnum"
+                    >
                       <hr className="border-light m-0" />
                       <Form
                         {...formItemLayout}
@@ -408,7 +593,6 @@ export default function AdminSetting() {
                               </div>
                             </div>
                           </div>
-
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
@@ -494,150 +678,12 @@ export default function AdminSetting() {
                           </div>
                         </div>
                       </Form>
-                    </div>
-
-                    <div className="tab-pane fade" id="setting-maxnum">
-                      <hr className="border-light m-0" />
-                      <Form
-                        {...formItemLayout}
-                        form={formik.form}
-                        size="large"
-                        autoComplete="off"
-                      >
-                        <div className="card-body row mx-4">
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>Active Value:</span>
-                              </p>
-
-                              <div className="col-8">
-                                <Form.Item
-                                  name="activeValue"
-                                  label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: " cannot be blank",
-                                    },
-                                    {
-                                      whitespace: true,
-                                      message: " cannot be empty",
-                                    },
-                                  ]}
-                                  initialValue={initialValues.activeValue}
-                                  hasFeedback
-                                >
-                                  <InputNumber
-                                    name="activeValue"
-                                    value={formik.values.activeValue}
-                                    placeholder="Enter"
-                                  />
-                                </Form.Item>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>Active Date:</span>
-                              </p>
-
-                              <div className="col-8">
-                                <Form.Item
-                                  name="activeDate"
-                                  label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: " cannot be blank",
-                                    },
-                                    {
-                                      whitespace: true,
-                                      message: " cannot be empty",
-                                    },
-                                  ]}
-                                  initialValue={initialValues.activeDate}
-                                  hasFeedback
-                                >
-                                  <Input
-                                    name="activeDate"
-                                    value={formik.values.activeDate}
-                                    placeholder="Enter"
-                                  />
-                                </Form.Item>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>PreActive Value:</span>
-                              </p>
-
-                              <div className="col-8">
-                                <Form.Item
-                                  name="preactiveValue"
-                                  label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: " cannot be blank",
-                                    },
-                                    {
-                                      whitespace: true,
-                                      message: " cannot be empty",
-                                    },
-                                  ]}
-                                  initialValue={initialValues.preactiveValue}
-                                  hasFeedback
-                                >
-                                  <InputNumber
-                                    name="preactiveValue"
-                                    value={formik.values.preactiveValue}
-                                    placeholder="Enter"
-                                  />
-                                </Form.Item>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Form>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="text-right mt-3">
+            {/* <div className="text-right mt-3">
               <button type="button" className="btn btn-primary">
                 Save changes
               </button>
@@ -645,7 +691,7 @@ export default function AdminSetting() {
               <button type="button" className="btn btn-default">
                 Cancel
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
