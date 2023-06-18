@@ -48,7 +48,6 @@ import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
 import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
-import Setting from "../pages/Admin/AdminSetting/Setting";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -85,7 +84,6 @@ export default function Routers() {
           element: <AdminCourseEdit />,
         },
         { path: "/admin/setting", element: <AdminSetting /> },
-        // { path: "/admin/setting", element: <Setting /> },
       ],
     },
     {
