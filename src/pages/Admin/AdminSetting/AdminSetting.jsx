@@ -38,16 +38,31 @@ export default function AdminSetting() {
       .get("/api/AdminRepositoryAPI/GetSettingList")
       .then((res) => {
         setMenuSetting(res.data);
-        console.log("menu", res.data);
       })
       .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    api
-      .get(`/api/AdminRepositoryAPI/GetSettingById?id=${id}`)
-      .then((res) => {
-        const settingDetail = res.data;
+    // api
+    //   .get(`/api/AdminRepositoryAPI/GetSettingById?id=${id}`)
+    //   .then((res) => {
+    //     const settingDetail = res.data;
+    //     setInitialValues(settingDetail);
+    //     setActiveValue(settingDetail.activeValue);
+    //     setActiveDate(settingDetail.activeDate);
+    //     setPreactiveValue(settingDetail.preactiveValue);
+    //     formik.setValues({
+    //       activeValue: settingDetail.activeValue,
+    //       activeDate: settingDetail.activeDate,
+    //       preactiveValue: settingDetail.preactiveValue,
+    //     });
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {});
+    const settingItem = menuSetting.filter((item) => item.id == id)[0];
+    if (settingItem != null && settingItem != undefined) {
+      {
+        const settingDetail = settingItem;
         setInitialValues(settingDetail);
         setActiveValue(settingDetail.activeValue);
         setActiveDate(settingDetail.activeDate);
@@ -57,11 +72,10 @@ export default function AdminSetting() {
           activeDate: settingDetail.activeDate,
           preactiveValue: settingDetail.preactiveValue,
         });
-        console.log(res.data);
-      })
-      .catch((err) => {});
+      }
+    }
   }, [id]);
-  console.log(activeValue, activeDate, preactiveValue);
+
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
@@ -82,6 +96,7 @@ export default function AdminSetting() {
                         onClick={() => {
                           setId(setting.id);
                         }}
+                        style={{ cursor: "pointer" }}
                       >
                         {setting.settingName}
                       </a>
