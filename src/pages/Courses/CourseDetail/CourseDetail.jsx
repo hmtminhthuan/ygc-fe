@@ -16,16 +16,6 @@ import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseDetail() {
   localStorage.setItem("MENU_ACTIVE", "home-course");
-  // if (localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true") {
-  //   setTimeout(() => {
-  //     alert.alertInfoNotiForTrainee(
-  //       "Please choose the class you want to register",
-  //       "",
-  //       () => {}
-  //     );
-  //   }, 1200);
-  //   localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
-  // }
 
   const param = useParams();
   const [courseDetail, setCourseDetail] = useState([]);
@@ -67,13 +57,28 @@ export default function CourseDetail() {
           arr.length > 0
         ) {
           setViewClassFirst(true);
-          setTimeout(() => {
-            alert.alertInfoNotiForTrainee(
-              "Please choose the class you want to register",
-              "",
-              () => {}
-            );
-          }, 1200);
+          if (
+            localStorage.getItem("NOTIFICATION_CHOOSE_CLASS_NONE") == "true"
+          ) {
+            setTimeout(() => {
+              alert.alertFailedWithTime(
+                "Failed To Pay",
+                "Please try to pay again",
+                3500,
+                "30",
+                () => {}
+              );
+              localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS_NONE");
+            }, 1300);
+          } else {
+            setTimeout(() => {
+              alert.alertInfoNotiForTrainee(
+                "Please choose the class you want to register",
+                "",
+                () => {}
+              );
+            }, 1300);
+          }
           localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
         }
         if (
@@ -103,7 +108,7 @@ export default function CourseDetail() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1200,
+      timer: 1300,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -113,6 +118,7 @@ export default function CourseDetail() {
         clearInterval(timerInterval);
       },
     });
+
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     let USER = {};
     if (USER_LOGIN != null) {

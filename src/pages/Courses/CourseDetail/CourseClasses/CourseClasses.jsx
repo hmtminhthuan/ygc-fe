@@ -147,6 +147,14 @@ export default function CourseClasses({
   };
   const handleAddBooking = (classId, booking, status) => {
     //  else {
+    console.log({
+      accountId: parseInt(
+        JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+      ),
+      classId: classId,
+      courseId: parseInt(courseId),
+      status: status,
+    });
     let arr = "";
     api
       .post(`/CheckOutVNPAY/AddBooking`, {
@@ -175,10 +183,10 @@ export default function CourseClasses({
           }
           localStorage.setItem("trainee_list_booking", arr);
         }
-        if (status == 0) {
+        if (res.data.status == 0) {
           localStorage.setItem(
             "TRANSACTION_NOTIFICATION",
-            `PAY-${res.data.id}`
+            `PAY-${res.data.id}-${courseId}`
           );
         }
       })

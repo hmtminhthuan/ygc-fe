@@ -34,7 +34,8 @@ export default function AdminSetting() {
     },
     onSubmit: (values) => {
       const formattedDate =
-        moment(values.activeDate).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
+        moment(new Date(values.activeDate)).format("YYYY-MM-DDTHH:mm:ss.SSS") +
+        "Z";
       console.log({
         id: values.id,
         activeValue: values.activeValue,
@@ -42,11 +43,13 @@ export default function AdminSetting() {
       });
 
       api
-        .post("/api/AdminRepositoryAPI/UpdateSetting", {
-          id: values.id,
-          activeValue: values.activeValue,
-          activeDate: formattedDate,
-        })
+        .post("/api/AdminRepositoryAPI/UpdateSetting", [
+          {
+            id: values.id,
+            activeValue: values.activeValue,
+            activeDate: formattedDate,
+          },
+        ])
         .then((res) => {
           setUpdateDone((prev) => prev + 1);
 
@@ -108,7 +111,9 @@ export default function AdminSetting() {
       });
     }
   }, [id, updateDone]);
-
+  // useEffect(() => {
+  //   form.resetFields();
+  // }, [id]);
   // const formattedDate = formatDate(activeDate);
   //const formattedDate = formatDate(formik.values.activeDate);
   const handleChangeActiveValue = (value) => {
@@ -266,7 +271,7 @@ export default function AdminSetting() {
                                     }}
                                   ></i>{" "}
                                 </span>
-                                <span>PreActive Value:</span>
+                                <span>Current Value:</span>
                               </p>
 
                               <div className="col-8">

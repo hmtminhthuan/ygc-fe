@@ -25,7 +25,6 @@ export default function StaffBooking() {
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
-        // console.log(res);
         setListOfBooking(
           [...res.data]
             .sort((a, b) => {
@@ -726,15 +725,13 @@ export default function StaffBooking() {
                                   Paid
                                 </span>
                                 {status == 3 ? (
-                                  <>
-                                    <br></br>{" "}
-                                    <span
-                                      style={{ borderRadius: "10px" }}
-                                      className="m-0 p-0 py-1 px-2 border-0 text-danger"
-                                    >
-                                      Failed Refund
-                                    </span>
-                                  </>
+                                  <p
+                                    style={{ borderRadius: "10px" }}
+                                    className="m-0 p-0 py-1 px-2 
+                                      border-0 text-danger text-center"
+                                  >
+                                    Failed Refund
+                                  </p>
                                 ) : (
                                   <></>
                                 )}

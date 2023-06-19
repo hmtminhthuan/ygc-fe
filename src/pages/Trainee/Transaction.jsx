@@ -97,7 +97,7 @@ export default function Transaction() {
           alert.alertSuccessWithTime(
             "Book Course Successfully",
             "",
-            2000,
+            3000,
             "30",
             () => {}
           );
@@ -105,13 +105,16 @@ export default function Transaction() {
           alert.alertFailedWithTime(
             "Failed To Book Course",
             "",
-            2000,
+            3000,
             "30",
             () => {}
           );
         }
       }
-      if (TRANSACTION_NOTIFICATION.includes("PAY")) {
+      if (
+        TRANSACTION_NOTIFICATION != undefined &&
+        TRANSACTION_NOTIFICATION.includes("PAY")
+      ) {
         if (
           listOfBooking.filter(
             (item) =>
@@ -122,12 +125,16 @@ export default function Transaction() {
           alert.alertSuccessWithTime(
             "Pay Successfully",
             "",
-            2000,
+            3000,
             "25",
             () => {}
           );
         } else {
-          alert.alertFailedWithTime("Failed To Pay", "", 2000, "25", () => {});
+          localStorage.setItem("NOTIFICATION_CHOOSE_CLASS_NONE", "true");
+          localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
+          window.location.href = `/courseDetail/${
+            TRANSACTION_NOTIFICATION.split("-")[2]
+          }`;
         }
       }
       localStorage.removeItem("TRANSACTION_NOTIFICATION");
@@ -221,7 +228,7 @@ export default function Transaction() {
         alert.alertFailedWithTime(
           "Request To Refund Failed",
           "",
-          2000,
+          3000,
           "30",
           () => {}
         );
@@ -250,7 +257,7 @@ export default function Transaction() {
             alert.alertSuccessWithTime(
               `Cancel Booking Successfully`,
               "",
-              2000,
+              3000,
               "25",
               () => {}
             );
@@ -260,7 +267,7 @@ export default function Transaction() {
             alert.alertFailedWithTime(
               `Failed To Cancel Booking`,
               "",
-              2000,
+              3000,
               "30",
               () => {}
             );
@@ -285,7 +292,23 @@ export default function Transaction() {
       <div className=" m-0 p-0">
         <HeaderHome />
       </div>
-      <div className="mt-5 pt-3">
+      <div
+        className="mt-5 pt-3"
+        style={{
+          display: `${
+            localStorage.getItem("TRANSACTION_NOTIFICATION") != undefined &&
+            localStorage.getItem("TRANSACTION_NOTIFICATION").includes("PAY") &&
+            listOfBooking.filter(
+              (item) =>
+                item.status == 1 &&
+                item.id.toString() ==
+                  localStorage.getItem("TRANSACTION_NOTIFICATION").split("-")[1]
+            ).length <= 0
+              ? "none"
+              : ""
+          }`,
+        }}
+      >
         <h1 className="m-0 p-0 my-3 text-center">Billing History</h1>
         <div
           className="main--content transaction-trainee m-0 px-5 w-100"
