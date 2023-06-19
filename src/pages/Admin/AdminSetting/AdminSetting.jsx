@@ -159,7 +159,9 @@ export default function AdminSetting() {
                     {menuSetting.map((setting) => (
                       <a
                         key={setting.id}
-                        className="list-group-item list-group-item-action"
+                        className={`list-group-item list-group-item-action ${
+                          id === 0 ? "list-group-item-active" : ""
+                        }`}
                         data-toggle="list"
                         onClick={() => {
                           setId(setting.id);
