@@ -4,8 +4,11 @@ import { api } from "../../../constants/api";
 import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { Formik, useFormik } from "formik";
-import { Form, Input, Button, InputNumber } from "antd";
+import { Form, Input, Button, InputNumber, DatePicker } from "antd";
 import "./AdminSetting.scss";
+import moment from "moment/moment";
+import { alert } from "../../../component/AlertComponent/Alert";
+import Swal from "sweetalert2";
 
 export default function AdminSetting() {
   const formItemLayout = {
@@ -13,25 +16,103 @@ export default function AdminSetting() {
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
 
-  //   const { id } = useParams();
+  const [newSetting, setNewSetting] = useState(null);
+  const [updateDone, setUpdateDone] = useState(1);
+
   const [id, setId] = useState(0);
   const [menuSetting, setMenuSetting] = useState([]);
   const [initialValues, setInitialValues] = useState({});
   const [activeValue, setActiveValue] = useState("");
-  const [activeDate, setActiveDate] = useState("");
+  // const [activeDate, setActiveDate] = useState("");
+  const [activeDate, setActiveDate] = useState(moment());
   const [preactiveValue, setPreactiveValue] = useState("");
   const [form] = Form.useForm();
   const formik = useFormik({
     initialValues: {
-      id: id,
-      activeValue: initialValues.activeValue || "",
-      activeDate: initialValues.activeDate || "",
-      preactiveValue: initialValues.preactiveValue || "",
+      id: "",
+      activeValue: "",
+      activeDate: moment(),
+      preactiveValue: "",
     },
     onSubmit: (values) => {
       console.log(values);
+
+      api
+        .put("/api/AdminRepositoryAPI/UpdateSetting", {
+          id: values.id,
+          activeValue: values.activeValue,
+          activeDate: values.activeDate.toISOString(),
+        })
+        .then((res) => {
+          setUpdateDone((prev) => prev + 1);
+
+          const Toast = Swal.mixin({
+            // toast: true,
+            position: "middle",
+            width: `30rem`,
+            padding: "1rem",
+            background: "#eef6ec",
+            showConfirmButton: false,
+            timer: 1000,
+            // timerProgressBar: true,
+            didOpen: (toast) => {
+              // toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: `Update Successfully`,
+            html: ``,
+          });
+        })
+        .catch((err) => {});
     },
   });
+
+  const formatDate = (dateString) => {
+    const dateObj = new Date(dateString);
+
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+
+    return `${day}-${month}-${year}`;
+  };
+
+  // const formatDate = (dateString) => {
+  //   const formattedDate = moment(dateString).format("DD-MM-YYYY");
+  //   return formattedDate;
+  // };
+
+  // useEffect(() => {
+  //   api
+  //     .get("/api/AdminRepositoryAPI/GetSettingList")
+  //     .then((res) => {
+  //       setMenuSetting(res.data);
+  //     })
+  //     .catch((err) => {});
+  // }, []);
+
+  // useEffect(() => {
+  //   const settingItem = menuSetting.filter((item) => item.id == id)[0];
+  //   if (settingItem != null && settingItem != undefined) {
+  //     {
+  //       const settingDetail = settingItem;
+  //       setInitialValues(settingDetail);
+  //       setActiveValue(settingDetail.activeValue);
+  //       // setActiveDate(settingDetail.activeDate);
+  //       setActiveDate(moment(settingDetail.activeDate));
+  //       setPreactiveValue(settingDetail.preactiveValue);
+  //       formik.setValues({
+  //         activeValue: settingDetail.activeValue,
+  //         activeDate: settingDetail.activeDate,
+  //         preactiveValue: settingDetail.preactiveValue,
+  //       });
+  //     }
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     api
@@ -40,26 +121,26 @@ export default function AdminSetting() {
         setMenuSetting(res.data);
       })
       .catch((err) => {});
-  }, []);
 
-  useEffect(() => {
-    const settingItem = menuSetting.filter((item) => item.id == id)[0];
+    const settingItem = menuSetting.filter((item) => item.id === id)[0];
     if (settingItem != null && settingItem != undefined) {
-      {
-        const settingDetail = settingItem;
-        setInitialValues(settingDetail);
-        setActiveValue(settingDetail.activeValue);
-        setActiveDate(settingDetail.activeDate);
-        setPreactiveValue(settingDetail.preactiveValue);
-        formik.setValues({
-          activeValue: settingDetail.activeValue,
-          activeDate: settingDetail.activeDate,
-          preactiveValue: settingDetail.preactiveValue,
-        });
-      }
+      const settingDetail = settingItem;
+      setInitialValues(settingDetail);
+      setActiveValue(settingDetail.activeValue);
+      setActiveDate(moment(settingDetail.activeDate));
+      setPreactiveValue(settingDetail.preactiveValue);
+      formik.setValues({
+        id: settingDetail.id,
+        activeValue: settingDetail.activeValue,
+        // activeDate: settingDetail.activeDate,
+        activeDate: moment(settingDetail.activeDate),
+        preactiveValue: settingDetail.preactiveValue,
+      });
     }
-  }, [id]);
+  }, [id, updateDone]);
 
+  // const formattedDate = formatDate(activeDate);
+  const formattedDate = formatDate(formik.values.activeDate);
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
@@ -93,7 +174,7 @@ export default function AdminSetting() {
                   <div className="tab-content">
                     <div
                       className={`tab-pane fade active show ${
-                        id == 0 ? "d-none" : ""
+                        id === 0 ? "d-none" : ""
                       }`}
                       id="setting-payingtime"
                     >
@@ -106,6 +187,24 @@ export default function AdminSetting() {
                         autoComplete="off"
                       >
                         <div className="card-body row mx-4">
+                          <div className="form-group col-md-12">
+                            <div className="row flex align-items-start justify-content-between">
+                              {/* Other form elements */}
+
+                              <div className="col-8">
+                                <Form.Item
+                                  name="id"
+                                  label=""
+                                  initialValue={initialValues.id}
+                                  hasFeedback
+                                  style={{ display: "none" }} // Add this style to hide the input field
+                                >
+                                  <p>{id}</p>
+                                </Form.Item>
+                              </div>
+                            </div>
+                          </div>
+
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
@@ -125,22 +224,26 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="activeValue"
                                   label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: " cannot be blank",
-                                    },
-                                    {
-                                      whitespace: true,
-                                      message: " cannot be empty",
-                                    },
-                                  ]}
+                                  // rules={[
+                                  //   {
+                                  //     required: true,
+                                  //     message: " cannot be blank",
+                                  //   },
+                                  //   {
+                                  //     whitespace: true,
+                                  //     message: " cannot be empty",
+                                  //   },
+                                  // ]}
                                   initialValue={initialValues.activeValue}
                                   hasFeedback
                                 >
                                   <InputNumber
                                     name="activeValue"
                                     value={formik.values.activeValue}
+                                    onChange={formik.handleChange}
+                                    onInput={(e) => {
+                                      setActiveValue(e.target.value);
+                                    }}
                                     placeholder="Enter"
                                   />
                                 </Form.Item>
@@ -167,25 +270,29 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="activeDate"
                                   label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: " cannot be blank",
-                                    },
-                                    {
-                                      whitespace: true,
-                                      message: " cannot be empty",
-                                    },
-                                  ]}
-                                  initialValue={initialValues.activeDate}
+                                  // rules={[
+                                  //   {
+                                  //     required: true,
+                                  //     message: " cannot be blank",
+                                  //   },
+                                  //   {
+                                  //     whitespace: true,
+                                  //     message: " cannot be empty",
+                                  //   },
+                                  // ]}
+                                  initialValue={formik.values.activeDate}
                                   hasFeedback
                                 >
-                                  <Input
+                                  <p>{formattedDate}</p>
+                                  {/* <DatePicker
                                     name="activeDate"
                                     value={formik.values.activeDate}
-                                    onChange={formik.handleChange}
+                                    onChange={(value) => {
+                                      setActiveDate(value);
+                                      formik.setFieldValue("activeDate", value);
+                                    }}
                                     placeholder="Enter"
-                                  />
+                                  /> */}
                                 </Form.Item>
                               </div>
                             </div>
