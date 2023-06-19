@@ -1,0 +1,192 @@
+.profile-container {
+  // margin: 0 100px;
+  .profile-header {
+    min-height: 175px;
+    margin: 15px 15px 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #fbfbfb;
+    border-radius: 15px;
+
+    .header-avatar {
+      width: 250px;
+      height: 145px;
+      border-radius: 15px;
+      background-clip: padding-box;
+      border: 5px solid #f5f5f5;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      // margin: 25px auto;
+    }
+
+    .profile-info {
+      min-height: 155px;
+      border-right: 1px solid #eee;
+      padding: 35px 40px;
+      // margin-left: 10px;
+
+      .header-fullname {
+        font: 21px "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+        margin-top: 27px;
+        display: inline-block;
+      }
+
+      .header-information {
+        line-height: 23px;
+        margin-top: 15px;
+        text-align: justify;
+      }
+
+      .btn-follow {
+        position: absolute;
+        top: 45px;
+        right: 40px;
+      }
+    }
+
+    .profile-stats {
+      min-height: 155px;
+      border-right: 1px solid #eee;
+
+      .stats-col {
+        margin: 30px 0;
+        text-align: center;
+
+        &:not(:last-child) {
+          border-right: 1px solid #aaaaaa;
+        }
+      }
+
+      .stats-value {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 30px;
+        font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+      }
+    }
+  }
+
+  .pink {
+    color: #e75b8d !important;
+  }
+
+  .btn-palegreen,
+  .btn-palegreen:focus {
+    background-color: #a0d468 !important;
+    border-color: #a0d468;
+    color: #fff;
+    margin-right: 120px;
+  }
+}
+
+.card-container {
+  // color: #333 !important;
+  background-color: #fff;
+  border-radius: 15px !important;
+  border: none;
+  position: relative;
+  margin-bottom: 30px;
+  box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1),
+    0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1),
+    0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12),
+    0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+  body {
+    background-color: #f6f6f6;
+  }
+
+  .card-header {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    border-bottom-color: #f9f9f9;
+    line-height: 30px;
+    -ms-grid-row-align: center;
+    align-self: center;
+    width: 100%;
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+  }
+
+  .card .card-header,
+  .card .card-body {
+    background-color: transparent;
+    padding: 20px 25px;
+  }
+
+  .card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  }
+
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
+  .table:not(.table-sm) thead th {
+    border-bottom: none;
+    background-color: #e9e9eb;
+    color: #666 !important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .table .table-img img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #bbbbbb;
+    box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
+    text-shadow: 0 0 black;
+  }
+
+  .rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .avatar.avatar-sm {
+    font-size: 12px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .avatar {
+    background: #6777ef;
+    border-radius: 50%;
+    color: #e3eaef;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    line-height: 1.28;
+    height: 45px;
+    width: 45px;
+  }
+
+  .badge {
+    vertical-align: middle;
+    padding: 7px 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 30px;
+    font-size: 12px;
+  }
+
+  .progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #007bff;
+    transition: width 0.6s ease;
+  }
+
+  .progress {
+    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.15);
+  }
+}

@@ -48,6 +48,7 @@ import ChangePasswordLogin from "../pages/UserCommon/ChangePasswordLogin";
 import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/StaffClassCreate";
 import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
+import CourseRevenue from "../pages/Admin/CourseManagement/CourseRevenue";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -64,6 +65,7 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
+        { path: "/revenue/:id", element: <CourseRevenue /> },
       ],
     },
     {

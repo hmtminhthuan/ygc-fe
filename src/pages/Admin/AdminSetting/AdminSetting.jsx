@@ -16,7 +16,6 @@ export default function AdminSetting() {
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
   };
 
-  const [newSetting, setNewSetting] = useState(null);
   const [updateDone, setUpdateDone] = useState(1);
 
   const [id, setId] = useState(0);
@@ -24,7 +23,6 @@ export default function AdminSetting() {
   const [initialValues, setInitialValues] = useState({});
   const [activeValue, setActiveValue] = useState("");
   const [activeDate, setActiveDate] = useState("");
-  //const [activeDate, setActiveDate] = useState(moment());
   const [preactiveValue, setPreactiveValue] = useState("");
   const [form] = Form.useForm();
   const formik = useFormik({
@@ -35,17 +33,19 @@ export default function AdminSetting() {
       preactiveValue: "",
     },
     onSubmit: (values) => {
+      const formattedDate =
+        moment(values.activeDate).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
       console.log({
         id: values.id,
         activeValue: values.activeValue,
-        activeDate: values.activeDate.toString(),
+        activeDate: formattedDate,
       });
 
       api
         .post("/api/AdminRepositoryAPI/UpdateSetting", {
           id: values.id,
           activeValue: values.activeValue,
-          activeDate: values.activeDate,
+          activeDate: formattedDate,
         })
         .then((res) => {
           setUpdateDone((prev) => prev + 1);
@@ -75,48 +75,15 @@ export default function AdminSetting() {
     },
   });
 
-  const formatDate = (dateString) => {
-    const dateObj = new Date(dateString);
-
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-
-    return `${day}-${month}-${year}`;
-  };
-
   // const formatDate = (dateString) => {
-  //   const formattedDate = moment(dateString).format("DD-MM-YYYY");
-  //   return formattedDate;
+  //   const dateObj = new Date(dateString);
+
+  //   const day = dateObj.getDate();
+  //   const month = dateObj.getMonth() + 1;
+  //   const year = dateObj.getFullYear();
+
+  //   return `${day}-${month}-${year}`;
   // };
-
-  // useEffect(() => {
-  //   api
-  //     .get("/api/AdminRepositoryAPI/GetSettingList")
-  //     .then((res) => {
-  //       setMenuSetting(res.data);
-  //     })
-  //     .catch((err) => {});
-  // }, []);
-
-  // useEffect(() => {
-  //   const settingItem = menuSetting.filter((item) => item.id == id)[0];
-  //   if (settingItem != null && settingItem != undefined) {
-  //     {
-  //       const settingDetail = settingItem;
-  //       setInitialValues(settingDetail);
-  //       setActiveValue(settingDetail.activeValue);
-  //       // setActiveDate(settingDetail.activeDate);
-  //       setActiveDate(moment(settingDetail.activeDate));
-  //       setPreactiveValue(settingDetail.preactiveValue);
-  //       formik.setValues({
-  //         activeValue: settingDetail.activeValue,
-  //         activeDate: settingDetail.activeDate,
-  //         preactiveValue: settingDetail.preactiveValue,
-  //       });
-  //     }
-  //   }
-  // }, [id]);
 
   useEffect(() => {
     api
@@ -137,14 +104,13 @@ export default function AdminSetting() {
         id: settingDetail.id,
         activeValue: settingDetail.activeValue,
         activeDate: settingDetail.activeDate,
-        // activeDate: moment(settingDetail.activeDate),
         preactiveValue: settingDetail.preactiveValue,
       });
     }
   }, [id, updateDone]);
 
   // const formattedDate = formatDate(activeDate);
-  const formattedDate = formatDate(formik.values.activeDate);
+  //const formattedDate = formatDate(formik.values.activeDate);
   const handleChangeActiveValue = (value) => {
     formik.setFieldValue("activeValue", value);
     setActiveValue(value);
@@ -277,10 +243,10 @@ export default function AdminSetting() {
                                   <DatePicker
                                     name="activeDate"
                                     value={formik.values.activeDate}
-                                    onChange={(value) => {
-                                      setActiveDate(value);
-                                      formik.setFieldValue("activeDate", value);
-                                    }}
+                                    onChange={(value) =>
+                                      formik.setFieldValue("activeDate", value)
+                                    }
+                                    showTime
                                     placeholder="Enter"
                                   />
                                 </Form.Item>
