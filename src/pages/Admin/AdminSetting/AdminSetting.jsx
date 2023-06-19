@@ -35,14 +35,17 @@ export default function AdminSetting() {
       preactiveValue: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log({
+        id: values.id,
+        activeValue: values.activeValue,
+        activeDate: values.activeDate.toString(),
+      });
 
       api
-        .put("/api/AdminRepositoryAPI/UpdateSetting", {
+        .post("/api/AdminRepositoryAPI/UpdateSetting", {
           id: values.id,
           activeValue: values.activeValue,
           activeDate: values.activeDate,
-          preactiveValue: values.preactiveValue,
         })
         .then((res) => {
           setUpdateDone((prev) => prev + 1);
@@ -142,6 +145,10 @@ export default function AdminSetting() {
 
   // const formattedDate = formatDate(activeDate);
   const formattedDate = formatDate(formik.values.activeDate);
+  const handleChangeActiveValue = (value) => {
+    formik.setFieldValue("activeValue", value);
+    setActiveValue(value);
+  };
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
@@ -233,10 +240,10 @@ export default function AdminSetting() {
                                   <InputNumber
                                     name="activeValue"
                                     value={formik.values.activeValue}
-                                    onChange={formik.handleChange}
-                                    onInput={(e) => {
-                                      setActiveValue(e.target.value);
-                                    }}
+                                    onChange={handleChangeActiveValue}
+                                    // onInput={(e) => {
+                                    //   setActiveValue(e.target.value);
+                                    // }}
                                     placeholder="Enter"
                                   />
                                 </Form.Item>

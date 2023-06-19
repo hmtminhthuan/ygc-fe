@@ -145,8 +145,9 @@ export default function CourseClasses({
       }
     });
   };
-  const handleAddBooking = (classId, booking) => {
+  const handleAddBooking = (classId, booking, status) => {
     //  else {
+    let arr = "";
     api
       .post(`/CheckOutVNPAY/AddBooking`, {
         accountId: parseInt(
@@ -154,12 +155,31 @@ export default function CourseClasses({
         ),
         classId: classId,
         courseId: parseInt(courseId),
+        status: status,
       })
       .then((res) => {
         console.log(res);
         if (booking) {
-          localStorage.setItem("BOOKING_ITEM", res.data.id);
+          // localStorage.setItem("BOOKING_ITEM", res.data.id);
           window.location.href = "/transaction";
+        }
+        if (res.data.status == 5) {
+          if (
+            localStorage.getItem("trainee_list_booking") != undefined &&
+            localStorage.getItem("trainee_list_booking") != null
+          ) {
+            arr = localStorage.getItem("trainee_list_booking");
+            arr = `${arr},${res.data.id}`;
+          } else {
+            arr = `${res.data.id}`;
+          }
+          localStorage.setItem("trainee_list_booking", arr);
+        }
+        if (status == 0) {
+          localStorage.setItem(
+            "TRANSACTION_NOTIFICATION",
+            `PAY-${res.data.id}`
+          );
         }
       })
       .catch((err) => {
@@ -204,8 +224,7 @@ export default function CourseClasses({
           })
           .then((res) => {
             link = res.data;
-            handleAddBooking(classId, false);
-            localStorage.setItem("TRANSACTION_NOTIFICATION", "PAY");
+            handleAddBooking(classId, false, 0);
             // window.open(link, "_blank");
           })
           .catch((err) => {
@@ -222,7 +241,7 @@ export default function CourseClasses({
     if (
       listOfBooking.filter(
         (item) =>
-          item.account.accountID == userLogin.accountID && item.status == 0
+          item.account.accountID == userLogin.accountID && item.status == 5
       ).length > 0
     ) {
       Swal.fire({
@@ -263,32 +282,6 @@ export default function CourseClasses({
         allowOutsideClick: false,
       });
     } else {
-      // Swal.fire({
-      //   title: `<strong style="color:#d291bc">Policy For Payment By VNPay</strong>`,
-      //   html: `
-      //   <p style="text-align:justify; margin:0;"><b>Payment Policy:</b></br>
-      //   Payment should be completed within <b>15 minutes</b> and you will be added to class immediately.
-      //   </br></br>
-      //  <b>Refund Policy:</b></br>
-      //   Upon successful payment, in the next <b>${refundTime} hours</b>,
-      //   if you want to refund, please contact us via our hot line:
-      //   <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
-      //   After <b>${refundTime} hours</b>, we do not support you to refund the booking.
-      //   </p>
-      //   `,
-      //   showCloseButton: true,
-      //   showCancelButton: false,
-      //   showConfirmButton: true,
-      //   confirmButtonColor: "#d291bc",
-      //   confirmButtonText: "I have read and I agree with the policy",
-      //   focusConfirm: false,
-      //   allowOutsideClick: false,
-      // }).then((result) => {
-      //   if (result.isConfirmed === true) {
-      //     setPayWay(true);
-      //     localStorage.setItem("CLASS", classId);
-      //   }
-      // });
       setPayWay(true);
       localStorage.setItem("CLASS", classId);
     }
@@ -297,11 +290,11 @@ export default function CourseClasses({
     if (
       listOfBooking.filter(
         (item) =>
-          item.account.accountID == userLogin.accountID && item.status == 0
+          item.account.accountID == userLogin.accountID && item.status == 5
       ).length > 0
     ) {
       Swal.fire({
-        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        title: `<strong style="color:#d291bc">Failed Booking</strong>`,
         html: `
           <p style="text-align:justify; margin:0;">
           You have booked a class without being paid yet. Therefore, you could not book for another class now.</br></br>
@@ -310,17 +303,23 @@ export default function CourseClasses({
           Thank you very much for choosing our service.
           </p>
           `,
-        showCloseButton: true,
-        showCancelButton: false,
+        showCloseButton: false,
+        showCancelButton: true,
         showConfirmButton: true,
         confirmButtonColor: "#d291bc",
         confirmButtonText: "I understand",
+        cancelButtonText: "View Your Booking",
         focusConfirm: false,
+        focusCancel: false,
         allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed === false) {
+          window.location.href = "/transaction";
+        }
       });
     } else if (currentClass) {
       Swal.fire({
-        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        title: `<strong style="color:#d291bc">Failed Booking</strong>`,
         html: `
           <p style="text-align:center; margin:0;">
           You have a class being not finished at the present.</br></br>
@@ -371,7 +370,7 @@ export default function CourseClasses({
       }).then((result) => {
         if (result.isConfirmed === true) {
           localStorage.setItem("TRANSACTION_NOTIFICATION", "booking");
-          handleAddBooking(classId, true);
+          handleAddBooking(classId, true, 5);
         }
       });
     }
@@ -445,7 +444,11 @@ export default function CourseClasses({
         api
           .get(`/Trainee/getCurrentListClassForTrainee?id=${USER.accountID}`)
           .then((res) => {
-            if (res.data != null && res.data != undefined) {
+            if (
+              res.data != null &&
+              res.data != undefined &&
+              res.data.length > 0
+            ) {
               setCurrentClass(true);
             }
           })

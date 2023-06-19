@@ -19,7 +19,7 @@ export default function MenuAdmin() {
   }, []);
 
   return (
-    <div className="sidebar bg-dark">
+    <div className="sidebar bg-dark menu-scroll">
       <ul className="sidebar--items">
         <li>
           <a
