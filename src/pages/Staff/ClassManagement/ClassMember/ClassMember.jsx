@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api } from "../../constants/api";
-import maleImg from "../../assets/images/avt-male.jpg";
-import femaleImg from "../../assets/images/avt-female.jpg";
-import "./ClassOfTrainer.scss";
+import { api } from "../../../../constants/api";
+import maleImg from "../../../../assets/images/avt-male.jpg";
+import femaleImg from "../../../../assets/images/avt-female.jpg";
 import Swal from "sweetalert2";
 
-export default function ClassOfTrainer() {
+export default function ClassMember() {
   const [classDetail, setClassDetail] = useState({});
   const [trainees, setTrainees] = useState([]);
   const [available, setAvailable] = useState(false);
-  const { id } = useParams();
+  const { id, trainerId } = useParams();
   const comeBackHomeInvalid = () => {
     Swal.fire({
       position: "middle",
@@ -27,7 +26,8 @@ export default function ClassOfTrainer() {
     });
   };
   useEffect(() => {
-    const USER_ID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
+    const USER_ID = trainerId;
+    // JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
     api
       .get("/Trainer/getListClassForTrainer", {
         params: {
@@ -74,7 +74,7 @@ export default function ClassOfTrainer() {
       {available ? (
         <div className="main--content bg-white">
           <section
-            className="trainer-area pt-3 pb-3"
+            className="trainer-area pt-3 bg-dark"
             style={{ height: "100vh", overflowY: "scroll" }}
           >
             <div className="row flex trainer mt-2 mx-5 my-0">
@@ -84,7 +84,7 @@ export default function ClassOfTrainer() {
                     <div className="profile-header row">
                       <div className="">
                         <Link
-                          to={"/trainer/schedule"}
+                          to={"/staff/classManagement"}
                           className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                           style={{ fontSize: "18px", fontWeight: "500" }}
                         >

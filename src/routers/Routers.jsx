@@ -49,6 +49,7 @@ import StaffClassCreate from "../pages/Staff/ClassManagement/StaffClassCreate/St
 import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
 import CourseRevenue from "../pages/Admin/CourseManagement/CourseRevenue";
+import ClassMember from "../pages/Staff/ClassManagement/ClassMember/ClassMember";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -121,6 +122,10 @@ export default function Routers() {
         {
           path: "/staff/booking",
           element: <StaffBooking />,
+        },
+        {
+          path: "/staff/traineeOfClass/:id/:trainerId",
+          element: <ClassMember />,
         },
       ],
     },

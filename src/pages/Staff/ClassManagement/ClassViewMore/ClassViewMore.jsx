@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment/moment";
+import { Link } from "react-router-dom";
 
 export default function ClassViewMore({
   courseClasses,
@@ -168,7 +169,11 @@ export default function ClassViewMore({
                                 {countNo++}
                               </StyledTableCell>
                               <StyledTableCell align="left">
-                                {className}
+                                <Link
+                                  to={`/staff/traineeOfClass/${classId}/${trainerId}`}
+                                >
+                                  {className}
+                                </Link>
                               </StyledTableCell>
                               <StyledTableCell
                                 align="left"
