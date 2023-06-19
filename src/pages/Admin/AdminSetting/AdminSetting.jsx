@@ -23,15 +23,15 @@ export default function AdminSetting() {
   const [menuSetting, setMenuSetting] = useState([]);
   const [initialValues, setInitialValues] = useState({});
   const [activeValue, setActiveValue] = useState("");
-  // const [activeDate, setActiveDate] = useState("");
-  const [activeDate, setActiveDate] = useState(moment());
+  const [activeDate, setActiveDate] = useState("");
+  //const [activeDate, setActiveDate] = useState(moment());
   const [preactiveValue, setPreactiveValue] = useState("");
   const [form] = Form.useForm();
   const formik = useFormik({
     initialValues: {
-      id: "",
+      id: id,
       activeValue: "",
-      activeDate: moment(),
+      activeDate: "",
       preactiveValue: "",
     },
     onSubmit: (values) => {
@@ -41,7 +41,8 @@ export default function AdminSetting() {
         .put("/api/AdminRepositoryAPI/UpdateSetting", {
           id: values.id,
           activeValue: values.activeValue,
-          activeDate: values.activeDate.toISOString(),
+          activeDate: values.activeDate,
+          preactiveValue: values.preactiveValue,
         })
         .then((res) => {
           setUpdateDone((prev) => prev + 1);
@@ -132,8 +133,8 @@ export default function AdminSetting() {
       formik.setValues({
         id: settingDetail.id,
         activeValue: settingDetail.activeValue,
-        // activeDate: settingDetail.activeDate,
-        activeDate: moment(settingDetail.activeDate),
+        activeDate: settingDetail.activeDate,
+        // activeDate: moment(settingDetail.activeDate),
         preactiveValue: settingDetail.preactiveValue,
       });
     }
@@ -224,16 +225,6 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="activeValue"
                                   label=""
-                                  // rules={[
-                                  //   {
-                                  //     required: true,
-                                  //     message: " cannot be blank",
-                                  //   },
-                                  //   {
-                                  //     whitespace: true,
-                                  //     message: " cannot be empty",
-                                  //   },
-                                  // ]}
                                   initialValue={initialValues.activeValue}
                                   hasFeedback
                                 >
@@ -270,21 +261,11 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="activeDate"
                                   label=""
-                                  // rules={[
-                                  //   {
-                                  //     required: true,
-                                  //     message: " cannot be blank",
-                                  //   },
-                                  //   {
-                                  //     whitespace: true,
-                                  //     message: " cannot be empty",
-                                  //   },
-                                  // ]}
                                   initialValue={formik.values.activeDate}
                                   hasFeedback
                                 >
-                                  <p>{formattedDate}</p>
-                                  {/* <DatePicker
+                                  {/* <p>{formattedDate}</p> */}
+                                  <DatePicker
                                     name="activeDate"
                                     value={formik.values.activeDate}
                                     onChange={(value) => {
@@ -292,7 +273,7 @@ export default function AdminSetting() {
                                       formik.setFieldValue("activeDate", value);
                                     }}
                                     placeholder="Enter"
-                                  /> */}
+                                  />
                                 </Form.Item>
                               </div>
                             </div>
