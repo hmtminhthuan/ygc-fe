@@ -11,6 +11,7 @@ import { alert } from "../../../component/AlertComponent/Alert";
 import Swal from "sweetalert2";
 
 export default function AdminSetting() {
+  useEffect(() => {});
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -26,6 +27,30 @@ export default function AdminSetting() {
   const [preactiveValue, setPreactiveValue] = useState("");
   const [navigation, setNavigation] = useState(-1);
   const [form] = Form.useForm();
+  useEffect(() => {
+    api
+      .get("/api/AdminRepositoryAPI/GetSettingList")
+      .then((res) => {
+        setMenuSetting(res.data);
+      })
+      .catch((err) => {});
+
+    const settingItem = menuSetting.filter((item) => item.id === id)[0];
+    if (settingItem != null && settingItem != undefined) {
+      const settingDetail = settingItem;
+      setInitialValues(settingDetail);
+      setActiveValue(settingDetail.activeValue);
+      setActiveDate(moment(settingDetail.activeDate));
+      setPreactiveValue(settingDetail.preactiveValue);
+      formik.setValues({
+        id: settingDetail.id,
+        activeValue: settingDetail.activeValue,
+        activeDate: settingDetail.activeDate,
+        preactiveValue: settingDetail.preactiveValue,
+      });
+    }
+  }, [id, updateDone]);
+
   const formik = useFormik({
     initialValues: {
       id: id,
@@ -76,30 +101,6 @@ export default function AdminSetting() {
 
     return `${day}-${month}-${year}`;
   };
-
-  useEffect(() => {
-    api
-      .get("/api/AdminRepositoryAPI/GetSettingList")
-      .then((res) => {
-        setMenuSetting(res.data);
-      })
-      .catch((err) => {});
-
-    const settingItem = menuSetting.filter((item) => item.id === id)[0];
-    if (settingItem != null && settingItem != undefined) {
-      const settingDetail = settingItem;
-      setInitialValues(settingDetail);
-      setActiveValue(settingDetail.activeValue);
-      setActiveDate(moment(settingDetail.activeDate));
-      setPreactiveValue(settingDetail.preactiveValue);
-      formik.setValues({
-        id: settingDetail.id,
-        activeValue: settingDetail.activeValue,
-        activeDate: settingDetail.activeDate,
-        preactiveValue: settingDetail.preactiveValue,
-      });
-    }
-  }, [id, updateDone]);
 
   useEffect(() => {
     setTimeout(() => {

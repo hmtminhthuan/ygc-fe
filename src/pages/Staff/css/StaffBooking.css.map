@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,yBADuB,CACvB,qCAAqC,CAAC;EACpC,WAAW,EAAE,cAAc;EAC3B,sBAAsB,EAAE,IAAI;EAC5B,uBAAuB,EAAE,IAAI;CAC9B;;AALH,AAME,yBANuB,CAMvB,8BAA8B,CAAC;EAC7B,SAAS,EAAE,YAAY;EACvB,WAAW,EAAE,IAAI;CAElB",
+    "sources": [
+        "../Booking/StaffBooking.scss"
+    ],
+    "names": [],
+    "file": "StaffBooking.css"
+}

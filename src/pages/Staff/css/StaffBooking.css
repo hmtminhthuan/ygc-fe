@@ -1,0 +1,12 @@
+.staff-booking-navigation .staff-booking-navigation-item-normal {
+  padding-top: 5px !important;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+}
+
+.staff-booking-navigation .staff-booking-navigation-item {
+  -webkit-transform: scaleX(1.05);
+          transform: scaleX(1.05);
+  font-weight: bold;
+}
+/*# sourceMappingURL=StaffBooking.css.map */

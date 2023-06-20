@@ -71,27 +71,23 @@
   color: red;
 }
 
-.staff-template-scss table {
-  overflow-y: scroll !important;
+.staff-template-scss table tr {
+  z-index: 0 !important;
 }
 
-.staff-template-scss th,
-.staff-template-scss th button {
+.staff-template-scss table thead tr th,
+.staff-template-scss table thead tr th button {
   position: -webkit-sticky !important;
   position: sticky !important;
   z-index: 1 !important;
 }
 
-.staff-template-scss table tr {
-  z-index: 1 !important;
-}
-
 .staff-template-scss table th:first-child {
-  border-top-left-radius: 10px !important;
+  border-top-left-radius: 10px;
 }
 
 .staff-template-scss table th:last-child {
-  border-top-right-radius: 10px !important;
+  border-top-right-radius: 10px;
 }
 
 .staff-template-none-scss table {
@@ -101,5 +97,48 @@
 .staff-template-none-scss th,
 .staff-template-none-scss th button {
   position: static !important;
+}
+
+.staff-list-area {
+  min-height: calc(100vh - 50px) !important;
+  height: auto !important;
+}
+
+@media screen and (max-width: 1050px) {
+  .staff-list-area {
+    overflow-x: scroll !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c5c4c4;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f3f3f;
+  border-radius: 8px;
+}
+
+.table-none-border-radius-head thead tr th {
+  border-radius: 0px !important;
+}
+
+.table-none-border-radius-head ::-webkit-scrollbar-track {
+  border-radius: 0px !important;
+}
+
+.table-none-border-radius-head ::-webkit-scrollbar-thumb {
+  border-radius: 0px !important;
+}
+
+@media screen and (max-height: 500px) {
+  .menu-scroll {
+    overflow-y: scroll !important;
+  }
 }
 /*# sourceMappingURL=ListTrainer.css.map */

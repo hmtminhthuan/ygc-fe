@@ -127,28 +127,4 @@
 .course-detail-info .course-detail-classes ul li {
   list-style: circle;
 }
-
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: #c5c4c4;
-  border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #494949;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #464646;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: #444444;
-  border-radius: 10px;
-}
 /*# sourceMappingURL=CourseDetail.css.map */
