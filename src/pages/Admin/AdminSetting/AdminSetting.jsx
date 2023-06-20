@@ -52,41 +52,29 @@ export default function AdminSetting() {
         ])
         .then((res) => {
           setUpdateDone((prev) => prev + 1);
-
-          const Toast = Swal.mixin({
-            // toast: true,
-            position: "middle",
-            width: `30rem`,
-            padding: "1rem",
-            background: "#eef6ec",
-            showConfirmButton: false,
-            timer: 1000,
-            // timerProgressBar: true,
-            didOpen: (toast) => {
-              // toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "success",
-            title: `Update Successfully`,
-            html: ``,
-          });
+          alert.alertSuccessWithTime(
+            "Update Successfully",
+            "",
+            2000,
+            "30",
+            () => {
+              window.location.href = "/admin/dashboard";
+            }
+          );
         })
         .catch((err) => {});
     },
   });
 
-  // const formatDate = (dateString) => {
-  //   const dateObj = new Date(dateString);
+  const formatDate = (dateString) => {
+    const dateObj = new Date(dateString);
 
-  //   const day = dateObj.getDate();
-  //   const month = dateObj.getMonth() + 1;
-  //   const year = dateObj.getFullYear();
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
 
-  //   return `${day}-${month}-${year}`;
-  // };
+    return `${day}-${month}-${year}`;
+  };
 
   useEffect(() => {
     api
@@ -111,11 +99,9 @@ export default function AdminSetting() {
       });
     }
   }, [id, updateDone]);
-  // useEffect(() => {
-  //   form.resetFields();
-  // }, [id]);
-  // const formattedDate = formatDate(activeDate);
-  //const formattedDate = formatDate(formik.values.activeDate);
+
+  const formattedDate = formatDate(activeDate);
+
   const handleChangeActiveValue = (value) => {
     formik.setFieldValue("activeValue", value);
     setActiveValue(value);
@@ -170,6 +156,42 @@ export default function AdminSetting() {
                         <div className="card-body row mx-4">
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
+                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <span className="text-danger px-1">
+                                  <i
+                                    className="fa-solid fa-star-of-life"
+                                    style={{
+                                      fontSize: "6px",
+                                      verticalAlign: "middle",
+                                    }}
+                                  ></i>{" "}
+                                </span>
+                                <span>Active Date:</span>
+                              </p>
+
+                              <div className="col-8">
+                                <Form.Item
+                                  name="activeDate"
+                                  label=""
+                                  initialValue={formik.values.activeDate}
+                                  hasFeedback
+                                >
+                                  <DatePicker
+                                    name="activeDate"
+                                    value={formik.values.activeDate}
+                                    onChange={(value) =>
+                                      formik.setFieldValue("activeDate", value)
+                                    }
+                                    showTime
+                                    placeholder="Enter"
+                                  />
+                                </Form.Item>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="form-group col-md-12">
+                            <div className="row flex align-items-start justify-content-between">
                               {/* Other form elements */}
 
                               <div className="col-8">
@@ -212,9 +234,6 @@ export default function AdminSetting() {
                                     name="activeValue"
                                     value={formik.values.activeValue}
                                     onChange={handleChangeActiveValue}
-                                    // onInput={(e) => {
-                                    //   setActiveValue(e.target.value);
-                                    // }}
                                     placeholder="Enter"
                                   />
                                 </Form.Item>
@@ -225,16 +244,8 @@ export default function AdminSetting() {
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>Active Date:</span>
+                                <span className="text-danger px-1"></span>
+                                <span>Last Update:</span>
                               </p>
 
                               <div className="col-8">
@@ -244,16 +255,7 @@ export default function AdminSetting() {
                                   initialValue={formik.values.activeDate}
                                   hasFeedback
                                 >
-                                  {/* <p>{formattedDate}</p> */}
-                                  <DatePicker
-                                    name="activeDate"
-                                    value={formik.values.activeDate}
-                                    onChange={(value) =>
-                                      formik.setFieldValue("activeDate", value)
-                                    }
-                                    showTime
-                                    placeholder="Enter"
-                                  />
+                                  <p>{formattedDate}</p>
                                 </Form.Item>
                               </div>
                             </div>
@@ -262,15 +264,7 @@ export default function AdminSetting() {
                           <div className="form-group col-md-12">
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
+                                <span className="text-danger px-1"></span>
                                 <span>Current Value:</span>
                               </p>
 
