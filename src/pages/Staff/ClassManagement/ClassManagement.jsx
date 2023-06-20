@@ -19,6 +19,8 @@ export default function ClassManagement() {
   const [sortedClasses, setSortedClasses] = useState("Unsort");
   const [priority, setPriority] = useState("");
   const [viewData, setViewData] = useState(false);
+  const [minTrainee, setMinTrainee] = useState(-1);
+  const [maxTrainee, setMaxTrainee] = useState(-1);
 
   const symbolSorting = (item) => {
     switch (item) {
@@ -110,6 +112,21 @@ export default function ClassManagement() {
         setViewData(true);
       },
     });
+    api
+      .get(`/api/AdminRepositoryAPI/GetSettingList`)
+      .then((res) => {
+        res.data
+          .filter((item) => item.id == 4)
+          .forEach((item) => {
+            setMaxTrainee(item.preactiveValue);
+          });
+        res.data
+          .filter((item) => item.id == 3)
+          .forEach((item) => {
+            setMinTrainee(item.preactiveValue);
+          });
+      })
+      .catch((err) => {});
   }, []);
 
   const resetSort = () => {
@@ -246,6 +263,14 @@ export default function ClassManagement() {
               >
                 Create New Class
               </Link>
+            </div>
+            <div className="flex m-0 p-0">
+              <p style={{ fontWeight: "bolder" }} className="m-0 p-0 px-5">
+                Minimum Trainee: {minTrainee}
+              </p>
+              <p style={{ fontWeight: "bolder" }} className="m-0 p-0">
+                Maximum Trainee: {maxTrainee}
+              </p>
             </div>
           </div>
           <table>
