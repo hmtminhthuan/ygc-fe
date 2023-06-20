@@ -58,7 +58,7 @@ export default function HeaderStaff({ background, ...restParams }) {
       .catch((err) => {});
   };
   useEffect(() => {
-    const current_booking_id = localStorage.getItem("current_booking_id");
+    let current_booking_id = localStorage.getItem("current_booking_id");
     if (current_booking_id == null || current_booking_id == undefined) {
       if (listOfBooking.length > 0) {
         localStorage.setItem("staff_booking_notification_seen", true);
@@ -116,11 +116,16 @@ export default function HeaderStaff({ background, ...restParams }) {
       bookingList.forEach((item) => {
         let number =
           listOfBooking.filter(
-            (booking) => booking.status == parseInt(item.status)
+            (booking) => parseInt(booking.status) == parseInt(item.status)
           ).length - parseInt(item.quantity);
-        if (number > 0) {
+        if (
+          number > 0 &&
+          ((parseInt(item.status) == 5 &&
+            current_booking_id_real < listOfBooking.length) ||
+            parseInt(item.status) != 5)
+        ) {
           item.quantity = listOfBooking.filter(
-            (booking) => booking.status == parseInt(item.status)
+            (booking) => parseInt(booking.status) == parseInt(item.status)
           ).length;
           let pos = notificationList.findIndex(
             (theItem) =>
@@ -129,33 +134,31 @@ export default function HeaderStaff({ background, ...restParams }) {
               parseInt(theItem.status) == parseInt(item.status)
           );
           if (pos >= 0) {
-            notificationList.splice(pos, 1);
-            notificationList = [
-              ...notificationList,
-              {
-                name: "staff-booking",
-                status: item.status,
-                compare: localStorage.getItem("staff_booking_notification_seen")
-                  ? number
-                  : number + parseInt(notificationList[0].compare),
-                date: currentDate,
-              },
-            ];
-            // notificationList[0].compare = localStorage.getItem(
-            //   "staff_booking_notification_seen"
-            // )
-            //   ? number
-            //   : number + parseInt(notificationList[0].compare);
-            // notificationList[0].date = currentDate;
+            // notificationList.splice(pos, 1);
+            // notificationList = [
+            //   ...notificationList,
+            //   {
+            //     name: "staff-booking",
+            //     status: item.status,
+            //     compare: localStorage.getItem("staff_booking_notification_seen")
+            //       ? number
+            //       : number + parseInt(notificationList[0].compare),
+            //     date: currentDate,
+            //   },
+            // ];
+            notificationList[pos].compare = localStorage.getItem(
+              "staff_booking_notification_seen"
+            )
+              ? number
+              : number + parseInt(notificationList[pos].compare);
+            notificationList[pos].date = currentDate;
           } else {
             notificationList = [
               ...notificationList,
               {
                 name: "staff-booking",
                 status: item.status,
-                compare: localStorage.getItem("staff_booking_notification_seen")
-                  ? number
-                  : number + parseInt(notificationList[0].compare),
+                compare: number,
                 date: currentDate,
               },
             ];
@@ -163,17 +166,18 @@ export default function HeaderStaff({ background, ...restParams }) {
           localStorage.setItem("staff_booking_notification_seen", false);
           if (
             parseInt(item.status) == 1 ||
-            parseInt(item.status) == 5 ||
+            (parseInt(item.status) == 5 &&
+              current_booking_id_real < listOfBooking.length) ||
             parseInt(item.status) == 6
           ) {
             setAlarm(true);
           }
         }
       });
-      localStorage.setItem(
-        "staff_booking_notification",
-        JSON.stringify(bookingList)
-      );
+      // localStorage.setItem(
+      //   "staff_booking_notification",
+      //   JSON.stringify(bookingList)
+      // );
       localStorage.setItem(
         "staff_booking_notification_view",
         JSON.stringify(notificationList)
@@ -211,6 +215,7 @@ export default function HeaderStaff({ background, ...restParams }) {
           },
         ])
       );
+      localStorage.setItem("current_booking_id", listOfBooking.length);
       if (notificationList != null && notificationList != undefined) {
         setListOfNotification(notificationList);
       }
