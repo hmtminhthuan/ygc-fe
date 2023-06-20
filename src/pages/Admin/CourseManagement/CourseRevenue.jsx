@@ -116,7 +116,7 @@ export default function CourseRevenue() {
                         id="proTeamScroll"
                         tabIndex={2}
                         style={{
-                          // height: 400,
+                          height: 400,
                           overflow: "hidden",
                           outline: "none",
                         }}
@@ -127,10 +127,10 @@ export default function CourseRevenue() {
                         >
                           <thead>
                             <tr>
-                              <th>month</th>
-                              <th>numOfClass</th>
-                              <th>numOfTrainee</th>
-                              <th>monthlyRevenue</th>
+                              <th>Month</th>
+                              <th>NumOfClass</th>
+                              <th>NumOfTrainee</th>
+                              <th>MonthlyRevenue</th>
                             </tr>
                           </thead>
                           <tbody style={{ height: "auto" }}>
