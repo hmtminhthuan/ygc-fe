@@ -725,13 +725,14 @@ export default function StaffBooking() {
                                   Paid
                                 </span>
                                 {status == 3 ? (
-                                  <p
-                                    style={{ borderRadius: "10px" }}
-                                    className="m-0 p-0 py-1 px-2 
-                                      border-0 text-danger text-center"
-                                  >
-                                    Failed Refund
-                                  </p>
+                                  // <p
+                                  //   style={{ borderRadius: "10px" }}
+                                  //   className="m-0 p-0 py-1 px-2
+                                  //     border-0 text-danger text-center"
+                                  // >
+                                  //   Failed Refund
+                                  // </p>
+                                  <></>
                                 ) : (
                                   <></>
                                 )}
