@@ -24,6 +24,7 @@ export default function AdminSetting() {
   const [activeValue, setActiveValue] = useState("");
   const [activeDate, setActiveDate] = useState("");
   const [preactiveValue, setPreactiveValue] = useState("");
+  const [navigation, setNavigation] = useState(-1);
   const [form] = Form.useForm();
   const formik = useFormik({
     initialValues: {
@@ -100,6 +101,13 @@ export default function AdminSetting() {
     }
   }, [id, updateDone]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setId(1);
+      setNavigation(1);
+    }, 1000);
+  }, []);
+
   const formattedDate = formatDate(activeDate);
 
   const handleChangeActiveValue = (value) => {
@@ -125,10 +133,16 @@ export default function AdminSetting() {
                         key={setting.id}
                         className={`list-group-item list-group-item-action ${
                           id === 0 ? "list-group-item-active" : ""
+                        }
+                        ${
+                          navigation == setting.id
+                            ? "bg-dark bg-opacity-10"
+                            : ""
                         }`}
                         data-toggle="list"
                         onClick={() => {
                           setId(setting.id);
+                          setNavigation(setting.id);
                         }}
                         style={{ cursor: "pointer" }}
                       >
@@ -220,7 +234,16 @@ export default function AdminSetting() {
                                     }}
                                   ></i>{" "}
                                 </span>
-                                <span>Active Value:</span>
+                                <span>
+                                  Active Value
+                                  {navigation == 1 || navigation == 2
+                                    ? ` (hour)`
+                                    : ``}
+                                  {navigation == 3 || navigation == 4
+                                    ? ` (trainee)`
+                                    : ``}
+                                  :
+                                </span>
                               </p>
 
                               <div className="col-8">
@@ -265,7 +288,16 @@ export default function AdminSetting() {
                             <div className="row flex align-items-start justify-content-between">
                               <p className="col-4 p-0 m-0 px-3 mt-2 flex">
                                 <span className="text-danger px-1"></span>
-                                <span>Current Value:</span>
+                                <span>
+                                  Current Value
+                                  {navigation == 1 || navigation == 2
+                                    ? ` (hour)`
+                                    : ``}
+                                  {navigation == 3 || navigation == 4
+                                    ? ` (trainee)`
+                                    : ``}
+                                  :
+                                </span>
                               </p>
 
                               <div className="col-8">

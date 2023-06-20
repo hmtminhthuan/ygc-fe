@@ -1019,6 +1019,28 @@ export default function CourseManagement() {
                             </tr>
                             <tr
                               className="bg-dark bg-opacity-10"
+                              key={`description-${courseID}`}
+                            >
+                              <td
+                                className="text-black"
+                                colSpan={2}
+                                style={{
+                                  textAlign: "right",
+                                  fontWeight: "600",
+                                  verticalAlign: "top",
+                                }}
+                              >
+                                Revenue
+                              </td>
+                              <td colSpan={8} style={{ textAlign: "justify" }}>
+                                <Link to={`/revenue/${courseID}`}>
+                                  View Detail Of Revenue
+                                </Link>
+                              </td>
+                              <td colSpan={2}></td>
+                            </tr>
+                            <tr
+                              className="bg-dark bg-opacity-10"
                               key={`classes-${courseID}`}
                             >
                               <td

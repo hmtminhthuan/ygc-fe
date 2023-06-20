@@ -31,7 +31,10 @@ export default function CourseRevenue() {
     <>
       {available ? (
         <div className="main--content bg-white">
-          <section className="trainer-area pt-3 pb-3">
+          <section
+            className="trainer-area pt-3 pb-3"
+            style={{ height: "100vh", overflowY: "scroll" }}
+          >
             <div className="row flex trainer mt-2 mx-5 my-0">
               <div className="container bootstrap snippets bootdey">
                 <div className="col-md-12 ">
@@ -116,7 +119,6 @@ export default function CourseRevenue() {
                         id="proTeamScroll"
                         tabIndex={2}
                         style={{
-                          height: 400,
                           overflow: "hidden",
                           outline: "none",
                         }}
@@ -128,7 +130,7 @@ export default function CourseRevenue() {
                           <thead>
                             <tr>
                               <th>Month</th>
-                              <th>NumOfClass</th>
+                              {/* <th>NumOfClass</th> */}
                               <th>NumOfTrainee</th>
                               <th>MonthlyRevenue</th>
                             </tr>
@@ -138,7 +140,7 @@ export default function CourseRevenue() {
                               revenueDetail.monthlyReports.map((report) => (
                                 <tr key={report.month}>
                                   <td>{report.month}</td>
-                                  <td>{report.numOfClass}</td>
+                                  {/* <td>{report.numOfClass}</td> */}
                                   <td>{report.numOfTrainee}</td>
                                   <td>{report.monthlyRevenue}</td>
                                 </tr>
