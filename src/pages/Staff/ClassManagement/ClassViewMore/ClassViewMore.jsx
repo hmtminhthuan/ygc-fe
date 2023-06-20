@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
+import { api } from "../../../../constants/api";
 
 export default function ClassViewMore({
   courseClasses,
@@ -40,6 +41,7 @@ export default function ClassViewMore({
   const [markAvailable, setMarkAvailable] = useState(false);
   const [viewAllButton, setViewAllButton] = useState(false);
   const [hideButton, setHideButton] = useState(false);
+  const [maxTraniee, setMaxTrainee] = useState(-1);
 
   useEffect(() => {
     if (courseClasses.length > 0) {
@@ -68,6 +70,16 @@ export default function ClassViewMore({
     //     }
     //   }
     // }
+    api
+      .get(`/api/AdminRepositoryAPI/GetSettingList`)
+      .then((res) => {
+        res.data
+          .filter((item) => item.id == 4)
+          .forEach((item) => {
+            setMaxTrainee(item.preactiveValue);
+          });
+      })
+      .catch((err) => {});
     setViewAllButton(true);
   }, []);
   console.log(courseClasses, courseFinishedClasses);
@@ -212,6 +224,7 @@ export default function ClassViewMore({
                               </StyledTableCell>
                               <StyledTableCell align="right">
                                 {numberTrainee}
+                                {maxTraniee > 0 ? ` / ${maxTraniee}` : ""}
                               </StyledTableCell>
                             </StyledTableRow>
                           );
