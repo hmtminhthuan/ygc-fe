@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://monne0312-001-site1.etempurl.com/";
+const baseURL = "https://yogacenterapi.azurewebsites.net/";
 
 export const api = axios.create();
 
