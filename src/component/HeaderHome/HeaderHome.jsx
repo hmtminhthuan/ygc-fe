@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import "./HeaderHome.scss";
@@ -41,8 +42,8 @@ export default function HeaderHome() {
             className="flex justify-content-end px-3 py-2 pt-0 header-small navbar-item"
           >
             <Nav className="">
-              <Nav.Link
-                href="/"
+              <NavLink
+                to="/"
                 className={`px-4 nav-item
               ${
                 menu_active != null && menu_active == "home-home"
@@ -54,9 +55,9 @@ export default function HeaderHome() {
                 }}
               >
                 Home
-              </Nav.Link>
-              <Nav.Link
-                href="/course"
+              </NavLink>
+              <NavLink
+                to="/course"
                 className={`px-4 nav-item
               ${
                 menu_active != null && menu_active == "home-course"
@@ -68,9 +69,9 @@ export default function HeaderHome() {
                 }}
               >
                 Course
-              </Nav.Link>
-              <Nav.Link
-                href="/blog"
+              </NavLink>
+              <NavLink
+                to="/blog"
                 className={`px-4 nav-item
               ${
                 menu_active != null && menu_active == "home-blog"
@@ -82,7 +83,7 @@ export default function HeaderHome() {
                 }}
               >
                 Blog
-              </Nav.Link>
+              </NavLink>
               {USER_LOGIN != null &&
               userLogin.accountID != null &&
               userLogin.accountID != undefined ? (
@@ -90,7 +91,7 @@ export default function HeaderHome() {
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
-                    <Nav.Link
+                    <NavLink
                       className={`px-4 nav-item`}
                       onClick={() => {
                         if (userLogin.role.id == 1) {
@@ -102,7 +103,7 @@ export default function HeaderHome() {
                       }}
                     >
                       Dashboard
-                    </Nav.Link>
+                    </NavLink>
                   ) : (
                     <></>
                   )}
@@ -110,7 +111,7 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   userLogin.role.id == 3 ? (
                     <>
-                      <Nav.Link
+                      <NavLink
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
@@ -123,7 +124,7 @@ export default function HeaderHome() {
                         }}
                       >
                         Schedule
-                      </Nav.Link>
+                      </NavLink>
                     </>
                   ) : (
                     <></>
@@ -132,7 +133,7 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   userLogin.role.id == 4 ? (
                     <>
-                      <Nav.Link
+                      <NavLink
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
@@ -145,8 +146,8 @@ export default function HeaderHome() {
                         }}
                       >
                         Schedule
-                      </Nav.Link>
-                      <Nav.Link
+                      </NavLink>
+                      <NavLink
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-booking"
@@ -159,7 +160,7 @@ export default function HeaderHome() {
                         }}
                       >
                         History
-                      </Nav.Link>
+                      </NavLink>
                     </>
                   ) : (
                     <></>
@@ -167,7 +168,7 @@ export default function HeaderHome() {
                   {/* <p className="p-0 m-0 flex align-items-center px-2">
                     Welcome, {userLogin.firstName} {userLogin.lastName}
                   </p> */}
-                  <Nav.Link
+                  <NavLink
                     className={`px-4 nav-item
                      ${
                        menu_active != null && menu_active == "home-profile"
@@ -180,12 +181,12 @@ export default function HeaderHome() {
                     }}
                   >
                     Profile
-                  </Nav.Link>
+                  </NavLink>
                 </>
               ) : (
                 <>
-                  <Nav.Link
-                    href="/login"
+                  <NavLink
+                    to="/login"
                     className={`px-4 nav-item
               ${
                 menu_active != null && menu_active == "home-login"
@@ -197,9 +198,9 @@ export default function HeaderHome() {
                     }}
                   >
                     Log in
-                  </Nav.Link>
-                  <Nav.Link
-                    href="/register"
+                  </NavLink>
+                  <NavLink
+                    to="/register"
                     className={`px-4 nav-item
               ${
                 menu_active != null && menu_active == "home-register"
@@ -211,13 +212,13 @@ export default function HeaderHome() {
                     }}
                   >
                     Register
-                  </Nav.Link>
+                  </NavLink>
                 </>
               )}
               {USER_LOGIN != null &&
               userLogin.accountID != null &&
               userLogin.accountID != undefined ? (
-                <Nav.Link
+                <NavLink
                   className={`px-4 nav-item`}
                   onClick={() => {
                     localStorage.removeItem("USER_LOGIN");
@@ -228,7 +229,7 @@ export default function HeaderHome() {
                   }}
                 >
                   <div className="flex p-0 m-0">LogOut</div>
-                </Nav.Link>
+                </NavLink>
               ) : (
                 <></>
               )}
