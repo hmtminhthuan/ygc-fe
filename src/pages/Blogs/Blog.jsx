@@ -13,6 +13,7 @@ function Blog() {
   let [blogList, setBlogList] = useState([]);
   const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
   const userLogin = localStorage.getItem("USER_LOGIN");
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   if (
     redirectLink != null &&
     redirectLink != undefined &&
@@ -38,23 +39,31 @@ function Blog() {
       .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
   useEffect(() => {
-    setInterval(() => {
-      api
-        .get("/Blog/GetBlogList")
-        .then((res) => {
-          setBlogList(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 10000);
-  }, []);
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     api
+  //       .get("/Blog/GetBlogList")
+  //       .then((res) => {
+  //         setBlogList(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }, 10000);
+  // }, []);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);

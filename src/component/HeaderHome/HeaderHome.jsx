@@ -2,19 +2,35 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import "./HeaderHome.scss";
 export default function HeaderHome() {
   const menu_active = localStorage.getItem("MENU_ACTIVE");
   const [userLogin, setUserLogin] = useState({});
+  const navigateTo = (link) => {
+    localStorage.setItem("MENU_ACTIVE", link);
+    navigate(link);
+  };
+  const navigate = useNavigate();
+
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   if (USER_LOGIN != null && !userLogin.accountID) {
     USER = JSON.parse(USER_LOGIN);
     setUserLogin(USER);
   }
+
+  const handleDashboardClick = () => {
+    if (userLogin.role.id == 1) {
+      navigateTo("home-dashboard-admin");
+      navigate("/admin");
+    } else if (userLogin.role.id == 2) {
+      navigateTo("home-dashboard-staff");
+      navigate("/staff");
+    }
+  };
 
   return (
     <header>
@@ -50,8 +66,11 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
+                // onClick={() => {
+                //   localStorage.setItem("MENU_ACTIVE", "home-home");
+                // }}
                 onClick={() => {
-                  localStorage.setItem("MENU_ACTIVE", "home-home");
+                  navigateTo("home-home");
                 }}
               >
                 Home
@@ -64,8 +83,11 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
+                // onClick={() => {
+                //   localStorage.setItem("MENU_ACTIVE", "home-course");
+                // }}
                 onClick={() => {
-                  localStorage.setItem("MENU_ACTIVE", "home-course");
+                  navigateTo("home-course");
                 }}
               >
                 Course
@@ -78,8 +100,11 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
+                // onClick={() => {
+                //   localStorage.setItem("MENU_ACTIVE", "home-blog");
+                // }}
                 onClick={() => {
-                  localStorage.setItem("MENU_ACTIVE", "home-blog");
+                  navigateTo("home-blog");
                 }}
               >
                 Blog
@@ -95,10 +120,10 @@ export default function HeaderHome() {
                       className={`px-4 nav-item`}
                       onClick={() => {
                         if (userLogin.role.id == 1) {
-                          window.location.href = "/admin";
+                          navigate("/admin");
                         }
                         if (userLogin.role.id == 2) {
-                          window.location.href = "/staff";
+                          navigate("/staff");
                         }
                       }}
                     >
@@ -107,6 +132,7 @@ export default function HeaderHome() {
                   ) : (
                     <></>
                   )}
+
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   userLogin.role.id == 3 ? (
@@ -119,8 +145,8 @@ export default function HeaderHome() {
                         : ""
                     }`}
                         onClick={() => {
-                          localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                          window.location.href = "/trainer/schedule";
+                          navigateTo("home-schedule");
+                          navigate("/trainer/schedule");
                         }}
                       >
                         Schedule
@@ -140,9 +166,13 @@ export default function HeaderHome() {
                         ? "nav-item-after-login"
                         : ""
                     }`}
+                        // onClick={() => {
+                        //   localStorage.setItem("MENU_ACTIVE", "home-schedule");
+                        //   window.location.href = "/trainee/schedule";
+                        // }}
                         onClick={() => {
-                          localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                          window.location.href = "/trainee/schedule";
+                          navigateTo("home-schedule");
+                          navigate("/trainee/schedule");
                         }}
                       >
                         Schedule
@@ -154,9 +184,13 @@ export default function HeaderHome() {
                         ? "nav-item-after-login"
                         : ""
                     }`}
+                        // onClick={() => {
+                        //   localStorage.setItem("MENU_ACTIVE", "home-booking");
+                        //   window.location.href = "/transaction";
+                        // }}
                         onClick={() => {
-                          localStorage.setItem("MENU_ACTIVE", "home-booking");
-                          window.location.href = "/transaction";
+                          navigateTo("home-booking");
+                          navigate("/transaction");
                         }}
                       >
                         History
@@ -171,13 +205,13 @@ export default function HeaderHome() {
                   <NavLink
                     className={`px-4 nav-item
                      ${
-                       menu_active != null && menu_active == "home-profile"
+                       menu_active != null && menu_active === "home-profile"
                          ? "nav-item-after-login"
                          : ""
                      }`}
                     onClick={() => {
-                      localStorage.setItem("MENU_ACTIVE", "home-profile");
-                      window.location.href = `/profile`;
+                      navigateTo("home-profile");
+                      navigate(`/profile`);
                     }}
                   >
                     Profile
@@ -193,8 +227,11 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
+                    // onClick={() => {
+                    //   localStorage.setItem("MENU_ACTIVE", "home-login");
+                    // }}
                     onClick={() => {
-                      localStorage.setItem("MENU_ACTIVE", "home-login");
+                      navigateTo("home-login");
                     }}
                   >
                     Log in
@@ -207,8 +244,11 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
+                    // onClick={() => {
+                    //   localStorage.setItem("MENU_ACTIVE", "home-register");
+                    // }}
                     onClick={() => {
-                      localStorage.setItem("MENU_ACTIVE", "home-register");
+                      navigateTo("home-register");
                     }}
                   >
                     Register
@@ -225,7 +265,8 @@ export default function HeaderHome() {
                     localStorage.removeItem("MENU_ACTIVE");
                     USER = {};
                     setUserLogin({});
-                    window.location.href = "/";
+                    // window.location.href = "/";
+                    navigate("/");
                   }}
                 >
                   <div className="flex p-0 m-0">LogOut</div>

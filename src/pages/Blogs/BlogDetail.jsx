@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./BlogDetail.scss";
-// import image from "../../assets/images/img_blog.jpg";
-import { Link } from "react-router-dom";
-// /import BlogPage from "../pages/Blogs/BlogSingle/BlogPage";
+import { Link, NavLink } from "react-router-dom";
 export default function BlogDetail({
   blogID,
   header,
@@ -16,6 +14,7 @@ export default function BlogDetail({
   year,
   ...restParam
 }) {
+  // const navigate = useNavigate();
   return (
     <div className=" col-lg-4 col-md-6 flex justify-content-center">
       <Card className="blog-entry justify-content-end my-5 mx-5 shadow-none shadow-none border-0">
@@ -47,12 +46,13 @@ export default function BlogDetail({
 
           <Card.Text>
             <h3 className="heading mt-2 mb-2">
-              <a
-                href={`/blogPage/${blogID}`}
+              <NavLink
+                to={`/blogPage/${blogID}`}
                 style={{ textDecoration: "none" }}
+                // onClick={() => navigate(`/blogPage/${blogID}`)}
               >
                 {header}
-              </a>
+              </NavLink>
             </h3>
 
             <p>
@@ -60,12 +60,12 @@ export default function BlogDetail({
                 ? content.substring(0, 80).trim() + "..."
                 : content}{" "}
               {content.length >= 80 ? (
-                <Link
+                <NavLink
                   to={`/blogPage/${blogID}`}
                   className="text-decoration-none"
                 >
                   View More
-                </Link>
+                </NavLink>
               ) : (
                 <></>
               )}

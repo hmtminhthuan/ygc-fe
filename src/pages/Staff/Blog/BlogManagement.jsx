@@ -14,6 +14,7 @@ function BlogManagement() {
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [dateSort, setDateSort] = useState("All");
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     let timerInterval;
@@ -32,11 +33,18 @@ function BlogManagement() {
       .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);

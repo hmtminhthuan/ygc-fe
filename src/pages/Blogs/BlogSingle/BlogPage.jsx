@@ -9,23 +9,43 @@ import { Link } from "react-router-dom";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 
-function BlogPage() {
+export default function BlogPage() {
   localStorage.setItem("MENU_ACTIVE", "home-blog");
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Blog/GetBlogById", {
         params: { id: param.id },
       })
       .then((res) => {
         setBlogDetail(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [param.id]);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
 
   if (blogDetail === null) {
     return null;
@@ -145,4 +165,3 @@ function BlogPage() {
     </div>
   );
 }
-export default BlogPage;

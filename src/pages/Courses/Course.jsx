@@ -18,6 +18,9 @@ export default function Course() {
   const [discount, setDiscount] = useState("All");
   const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
   const userLogin = localStorage.getItem("USER_LOGIN");
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   if (
     redirectLink != null &&
     redirectLink != undefined &&
@@ -26,6 +29,7 @@ export default function Course() {
     localStorage.removeItem("REDIRECT_LINK_BOOK_CLASS");
     localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
   }
+
   useEffect(() => {
     let timerInterval;
     Swal.fire({
@@ -44,21 +48,28 @@ export default function Course() {
       .then(async (res) => {
         setCourseList(res.data);
         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
+        setIsDataLoaded(true);
       })
       .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
-      api
-        .get("/Course/GetAllCourseForAdmin")
-        .then(async (res) => {
-          setCourseList(res.data);
-          setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
-        })
-        .catch((err) => {});
-    }, 10000);
-  }, []);
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     api
+  //       .get("/Course/GetAllCourseForAdmin")
+  //       .then(async (res) => {
+  //         setCourseList(res.data);
+  //         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
+  //       })
+  //       .catch((err) => {});
+  //   }, 10000);
+  // }, []);
 
   useEffect(() => {
     let renderList = [...courseList];
