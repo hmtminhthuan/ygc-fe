@@ -22,16 +22,6 @@ export default function HeaderHome() {
     setUserLogin(USER);
   }
 
-  const handleDashboardClick = () => {
-    if (userLogin.role.id == 1) {
-      navigateTo("home-dashboard-admin");
-      navigate("/admin");
-    } else if (userLogin.role.id == 2) {
-      navigateTo("home-dashboard-staff");
-      navigate("/staff");
-    }
-  };
-
   return (
     <header>
       <Navbar
@@ -45,7 +35,12 @@ export default function HeaderHome() {
               src={logo}
               style={{ height: "40px", width: "40px", marginRight: "10px" }}
             />
-            <Navbar.Brand href="/" className="header-brand">
+            <Navbar.Brand
+              as={NavLink}
+              href="/"
+              className="header-brand"
+              onClick={() => navigateTo("home-home")}
+            >
               Yoga Center
             </Navbar.Brand>
           </div>
@@ -66,9 +61,6 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
-                // onClick={() => {
-                //   localStorage.setItem("MENU_ACTIVE", "home-home");
-                // }}
                 onClick={() => {
                   navigateTo("home-home");
                 }}
@@ -83,9 +75,6 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
-                // onClick={() => {
-                //   localStorage.setItem("MENU_ACTIVE", "home-course");
-                // }}
                 onClick={() => {
                   navigateTo("home-course");
                 }}
@@ -100,9 +89,6 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
-                // onClick={() => {
-                //   localStorage.setItem("MENU_ACTIVE", "home-blog");
-                // }}
                 onClick={() => {
                   navigateTo("home-blog");
                 }}
@@ -117,14 +103,10 @@ export default function HeaderHome() {
                   userLogin.role.id != null &&
                   (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
                     <NavLink
+                      to={userLogin.role.id == 1 ? "/admin" : "/staff"}
                       className={`px-4 nav-item`}
                       onClick={() => {
-                        if (userLogin.role.id == 1) {
-                          navigate("/admin");
-                        }
-                        if (userLogin.role.id == 2) {
-                          navigate("/staff");
-                        }
+                        navigateTo("home-dashboard");
                       }}
                     >
                       Dashboard
@@ -132,12 +114,12 @@ export default function HeaderHome() {
                   ) : (
                     <></>
                   )}
-
                   {userLogin.role.id != undefined &&
                   userLogin.role.id != null &&
                   userLogin.role.id == 3 ? (
                     <>
                       <NavLink
+                        to="/trainer/schedule"
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
@@ -146,7 +128,6 @@ export default function HeaderHome() {
                     }`}
                         onClick={() => {
                           navigateTo("home-schedule");
-                          navigate("/trainer/schedule");
                         }}
                       >
                         Schedule
@@ -160,37 +141,29 @@ export default function HeaderHome() {
                   userLogin.role.id == 4 ? (
                     <>
                       <NavLink
+                        to="/trainee/schedule"
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-schedule"
                         ? "nav-item-after-login"
                         : ""
                     }`}
-                        // onClick={() => {
-                        //   localStorage.setItem("MENU_ACTIVE", "home-schedule");
-                        //   window.location.href = "/trainee/schedule";
-                        // }}
                         onClick={() => {
                           navigateTo("home-schedule");
-                          navigate("/trainee/schedule");
                         }}
                       >
                         Schedule
                       </NavLink>
                       <NavLink
+                        to="/transaction"
                         className={`px-4 nav-item
                     ${
                       menu_active != null && menu_active == "home-booking"
                         ? "nav-item-after-login"
                         : ""
                     }`}
-                        // onClick={() => {
-                        //   localStorage.setItem("MENU_ACTIVE", "home-booking");
-                        //   window.location.href = "/transaction";
-                        // }}
                         onClick={() => {
                           navigateTo("home-booking");
-                          navigate("/transaction");
                         }}
                       >
                         History
@@ -202,17 +175,19 @@ export default function HeaderHome() {
                   {/* <p className="p-0 m-0 flex align-items-center px-2">
                     Welcome, {userLogin.firstName} {userLogin.lastName}
                   </p> */}
+
                   <NavLink
+                    to="/profile"
                     className={`px-4 nav-item
                      ${
-                       menu_active != null && menu_active === "home-profile"
+                       menu_active != null && menu_active == "home-profile"
                          ? "nav-item-after-login"
                          : ""
                      }`}
                     onClick={() => {
                       navigateTo("home-profile");
-                      navigate(`/profile`);
                     }}
+                    style={{ textDecoration: "none" }}
                   >
                     Profile
                   </NavLink>
@@ -227,9 +202,6 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
-                    // onClick={() => {
-                    //   localStorage.setItem("MENU_ACTIVE", "home-login");
-                    // }}
                     onClick={() => {
                       navigateTo("home-login");
                     }}
@@ -244,9 +216,6 @@ export default function HeaderHome() {
                   ? "nav-item-after-login"
                   : ""
               }`}
-                    // onClick={() => {
-                    //   localStorage.setItem("MENU_ACTIVE", "home-register");
-                    // }}
                     onClick={() => {
                       navigateTo("home-register");
                     }}
@@ -259,14 +228,13 @@ export default function HeaderHome() {
               userLogin.accountID != null &&
               userLogin.accountID != undefined ? (
                 <NavLink
+                  to="/"
                   className={`px-4 nav-item`}
                   onClick={() => {
                     localStorage.removeItem("USER_LOGIN");
                     localStorage.removeItem("MENU_ACTIVE");
                     USER = {};
                     setUserLogin({});
-                    // window.location.href = "/";
-                    navigate("/");
                   }}
                 >
                   <div className="flex p-0 m-0">LogOut</div>

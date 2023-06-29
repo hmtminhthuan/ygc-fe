@@ -11,6 +11,7 @@
   }
   .nav-item {
     color: white !important;
+    text-decoration: none !important;
   }
   .nav-item-after-login {
     color: rgba(210, 145, 188, 1) !important;
@@ -44,6 +45,7 @@
     background-color: #000 !important;
     width: 100%;
     color: white;
+    text-decoration: none !important;
   }
 
   .header-small {
@@ -69,6 +71,7 @@
   }
   .header-toggle {
     color: #000;
+    text-decoration: none !important;
     background-color: rgba(210, 145, 188, 1);
   }
   .navbar-item {
@@ -80,10 +83,12 @@
   .nav-item {
     font-size: 18px;
     color: #000;
+    text-decoration: none !important;
     @media only screen and (max-width: 940px) {
       color: white !important;
       margin: 0 !important;
       padding: 0 10px !important;
+
       &:hover {
         transform: scale(1.05) !important;
       }
