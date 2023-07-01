@@ -54,8 +54,9 @@ export default function FAQ() {
                       </div>
                     </div>
                   </div>
+
                   <div className="card mb-3">
-                    <div className="card-header" id="headingTwo">
+                    <div className="card-header" id="headingThree">
                       <h5 className="mb-0">
                         <button
                           className="btn btn-link collapsed"
@@ -86,33 +87,6 @@ export default function FAQ() {
                       </div>
                     </div>
                   </div>
-                  <div className="card mb-3">
-                    <div className="card-header" id="headingThree">
-                      <h5 className="mb-0">
-                        <button
-                          className="btn btn-link collapsed"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseThree"
-                          aria-expanded="false"
-                          aria-controls="collapseThree"
-                        >
-                          <span className="text-theme-secondary me-2">Q.</span>{" "}
-                          How long are the yoga classes?
-                        </button>
-                      </h5>
-                    </div>
-                    <div
-                      id="collapseThree"
-                      className="collapse"
-                      aria-labelledby="headingThree"
-                      data-bs-parent="#accordion"
-                    >
-                      <div className="card-body">
-                        Normally, the class lasts 90 minutes and will take 2-3
-                        sessions/week
-                      </div>
-                    </div>
-                  </div>
 
                   <div className="card mb-3">
                     <div className="card-header" id="headingFour">
@@ -122,7 +96,7 @@ export default function FAQ() {
                           data-bs-toggle="collapse"
                           data-bs-target="#collapseFour"
                           aria-expanded="false"
-                          aria-controls="collapseFive"
+                          aria-controls="collapseFour"
                         >
                           <span className="text-theme-secondary me-2">Q.</span>{" "}
                           Can yoga help with specific health conditions or
