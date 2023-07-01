@@ -4,7 +4,13 @@ import "./Register.scss";
 import Swal from "sweetalert2";
 import video from "../../assets/video.mp4";
 import { Form, Input, Select } from "antd";
-import { Await, Link } from "react-router-dom";
+import {
+  Await,
+  Link,
+  useNavigate,
+  useLocation,
+  NavLink,
+} from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
@@ -13,7 +19,11 @@ import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../component/AlertComponent/Alert";
 
 export default function Register() {
-  localStorage.setItem("MENU_ACTIVE", "home-register");
+  localStorage.setItem("MENU_ACTIVE", "/register");
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const navigate = useNavigate();
+
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -63,13 +73,21 @@ export default function Register() {
               timer: 2000,
             }).then(function () {
               if (userList[pos].role.id == 1) {
-                window.location.href = "/admin";
+                navigate("/admin");
               } else if (userList[pos].role.id == 2) {
-                window.location.href = "/staff";
+                navigate("/staff");
               } else if (userList[pos].role.id == 3) {
-                window.location.href = "/";
+                if (redirect) {
+                  navigate(redirect);
+                } else {
+                  navigate("/");
+                }
               } else if (userList[pos].role.id == 4) {
-                window.location.href = "/";
+                if (redirect) {
+                  navigate(redirect);
+                } else {
+                  navigate("/");
+                }
               }
             });
           })
@@ -574,9 +592,9 @@ export default function Register() {
 
                 <div className="footerDiv flex">
                   <span className="text">Already have an account?</span>
-                  <Link to={"/login"}>
+                  <NavLink to={"/login"}>
                     <button className="btn flex">Log In</button>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>

@@ -4,14 +4,19 @@ import "./Login.scss";
 import Swal from "sweetalert2";
 import video from "../../assets/video.mp4";
 import { Form, Input, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
+import { alert } from "../../component/AlertComponent/Alert";
 
 export default function Login() {
-  localStorage.setItem("MENU_ACTIVE", "home-login");
+  localStorage.setItem("MENU_ACTIVE", "/login");
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const navigate = useNavigate();
+
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -52,15 +57,21 @@ export default function Login() {
             timer: 1600,
           }).then(function () {
             if (res.data.role.id == 1) {
-              window.location.href = "/admin";
+              navigate("/admin");
             } else if (res.data.role.id == 2) {
-              window.location.href = "/staff";
+              navigate("/staff");
             } else if (res.data.role.id == 3) {
-              // window.location.href = "/trainer";
-              window.location.href = "/";
+              if (redirect) {
+                navigate(redirect);
+              } else {
+                navigate("/");
+              }
             } else if (res.data.role.id == 4) {
-              // window.location.href = "/trainee";
-              window.location.href = "/";
+              if (redirect) {
+                navigate(redirect);
+              } else {
+                navigate("/");
+              }
             }
           });
         })
@@ -167,7 +178,7 @@ export default function Login() {
           if (result.value == validationCode) {
             localStorage.setItem("CHECK_VERIFY_EMAIL_FORGET", "true");
             localStorage.setItem("accountID", `${accountID}`);
-            window.location.href = `/resetPassword`;
+            navigate(`/resetPassword`);
           } else {
             Swal.fire({
               position: "center",
@@ -272,9 +283,9 @@ export default function Login() {
 
                 <div className="footerDiv flex">
                   <span className="text">Don't have an account yet?</span>
-                  <Link to={"/register"}>
+                  <NavLink to={"/register"}>
                     <button className="btn flex">Register</button>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
               <div className="form-container form-login-container flex justify-content-center">
@@ -369,13 +380,13 @@ export default function Login() {
                     <span className="text-black" style={{ fontWeight: "500" }}>
                       Forget Password?
                     </span>{" "}
-                    <Link
+                    <NavLink
                       onClick={handleForgetPassword}
                       className="mt-3 text-center text-decoration-none text-danger text-forget-password"
                       style={{ fontWeight: "bolder" }}
                     >
                       Click here
-                    </Link>
+                    </NavLink>
                   </div>
                 </Form>
               </div>
