@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 import { api } from "../../../constants/api";
 import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
@@ -28,6 +28,7 @@ export default function AdminSetting() {
   const [preactiveValue, setPreactiveValue] = useState("");
   const [navigation, setNavigation] = useState(-1);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   useEffect(() => {
     api
       .get("/api/AdminRepositoryAPI/GetSettingList")
@@ -85,7 +86,7 @@ export default function AdminSetting() {
             2000,
             "30",
             () => {
-              window.location.href = "/admin/dashboard";
+              navigate("/admin");
             }
           );
         })
@@ -131,7 +132,7 @@ export default function AdminSetting() {
                 <div className="col-md-3 pt-0">
                   <div className="list-group list-group-flush account-settings-links">
                     {menuSetting.map((setting) => (
-                      <a
+                      <NavLink
                         key={setting.id}
                         className={`list-group-item list-group-item-action ${
                           id === 0 ? "list-group-item-active" : ""
@@ -149,7 +150,7 @@ export default function AdminSetting() {
                         style={{ cursor: "pointer" }}
                       >
                         {setting.settingName}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -190,6 +191,12 @@ export default function AdminSetting() {
                                   name="activeDate"
                                   label=""
                                   initialValue={formik.values.activeDate}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Date cannot be blank",
+                                    },
+                                  ]}
                                   hasFeedback
                                 >
                                   <DatePicker
@@ -252,6 +259,18 @@ export default function AdminSetting() {
                                 <Form.Item
                                   name="activeValue"
                                   label=""
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Active value cannot be blank",
+                                    },
+                                    {
+                                      pattern:
+                                        /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
+                                      message:
+                                        "Active value must be a positive number",
+                                    },
+                                  ]}
                                   initialValue={initialValues.activeValue}
                                   hasFeedback
                                 >

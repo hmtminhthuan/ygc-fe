@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import "./CreateStaff.scss";
 import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../../component/AlertComponent/Alert";
 
@@ -454,7 +454,7 @@ export default function CreateStaff() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <Link
+                          <NavLink
                             to={"/admin/listStaff"}
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
@@ -464,7 +464,7 @@ export default function CreateStaff() {
                             }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>

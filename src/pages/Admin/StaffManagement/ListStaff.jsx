@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
 import { Select } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 // import HeaderStaff from "../../component/Staff/HeaderStaff";
 // import MenuStaff from "../../component/Staff/MenuStaff";
@@ -22,17 +22,37 @@ export default function ListStaff() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Account/AccountListByRole?id=2")
       .then((res) => {
         setStaffList(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
 
   useEffect(() => {
     let sortedStaffs = [...staffList];
@@ -333,7 +353,7 @@ export default function ListStaff() {
                     </th>
                     <th>Address</th>
                     <th>
-                      <Link
+                      <NavLink
                         to={"/admin/createStaff"}
                         className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none"
                         style={{
@@ -343,7 +363,7 @@ export default function ListStaff() {
                         }}
                       >
                         Create
-                      </Link>
+                      </NavLink>
                     </th>
                   </tr>
                 </thead>
@@ -367,7 +387,7 @@ export default function ListStaff() {
                         if (listOfSearchedName.length <= 0) {
                           return true;
                         } else if (listOfSearchedName.length <= 1) {
-                          for (i = 0; i < listOfSearchedName.length; i++) {
+                          for (let i = 0; i < listOfSearchedName.length; i++) {
                             if (
                               item.firstName
                                 .trim()

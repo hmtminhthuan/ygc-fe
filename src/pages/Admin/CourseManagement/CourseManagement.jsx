@@ -6,7 +6,7 @@ import { api } from "../../../constants/api";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import moment from "moment/moment";
 import { Rating, Stack } from "@mui/material";
 import { alert } from "../../../component/AlertComponent/Alert";
@@ -468,13 +468,13 @@ export default function CourseManagement() {
               />
             </div>
             <div className="my-1">
-              <Link
+              <NavLink
                 className="px-2 py-1 my-1 text-decoration-none text-light bg-black bg-opacity-75 border-0"
                 style={{ borderRadius: "5px" }}
                 to="/admin/courseManagement/createCourse"
               >
                 Create New Course
-              </Link>
+              </NavLink>
             </div>
           </div>
           <table>
@@ -986,12 +986,12 @@ export default function CourseManagement() {
                               className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
                               style={{ borderRadius: "50%", fontSize: "15px" }}
                             >
-                              <Link
+                              <NavLink
                                 className="px-2 py-1 "
                                 to={`/admin/courseManagement/editCourse/${courseID}`}
                               >
                                 <i className="fa-solid fa-pen-to-square py-2" />
-                              </Link>
+                              </NavLink>
                             </button>
                           </td>
                         </tr>
@@ -1033,9 +1033,9 @@ export default function CourseManagement() {
                                 Revenue
                               </td>
                               <td colSpan={8} style={{ textAlign: "justify" }}>
-                                <Link to={`/revenue/${courseID}`}>
+                                <NavLink to={`/revenue/${courseID}`}>
                                   View Detail Of Revenue
-                                </Link>
+                                </NavLink>
                               </td>
                               <td colSpan={2}></td>
                             </tr>

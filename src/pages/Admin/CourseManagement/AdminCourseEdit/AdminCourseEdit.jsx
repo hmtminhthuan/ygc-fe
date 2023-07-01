@@ -3,7 +3,7 @@ import HeaderAdmin from "../../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../../component/Admin/MenuAdmin/MenuAdmin";
 import Swal from "sweetalert2";
 import { Form, Input, InputNumber, Select } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
@@ -128,14 +128,14 @@ export default function AdminCourseEdit() {
           >
             <div className="row justify-content-center">
               <div className="col-12">
-                <Link
+                <NavLink
                   to={"/admin/courseManagement"}
                   className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                   style={{ fontSize: "18px", fontWeight: "500" }}
                 >
                   <i className="fa-solid fa-arrow-left"></i>
                   <span className="mx-2">Back</span>
-                </Link>
+                </NavLink>
               </div>{" "}
             </div>
             <div className="title flex justify-content-center m-0 p-0 mt-2">

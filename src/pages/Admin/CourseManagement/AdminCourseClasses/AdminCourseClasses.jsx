@@ -42,7 +42,7 @@ export default function AdminCourseClasses({
 
   useEffect(() => {
     if (courseClasses.length > 0) {
-      for (i = 0; i < courseClasses.length; i++) {
+      for (let i = 0; i < courseClasses.length; i++) {
         // let current = moment(new Date()).format("DD-MM-YYYY");
         // let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
         //   "DD-MM-YYYY"

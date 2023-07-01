@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { api } from "../../../constants/api";
 
 import "./CourseRevenue.scss";
@@ -41,14 +41,14 @@ export default function CourseRevenue() {
                   <div className="profile-container mx-5">
                     <div className="profile-header row">
                       <div className="">
-                        <Link
+                        <NavLink
                           to={"/admin/courseManagement"}
                           className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                           style={{ fontSize: "18px", fontWeight: "500" }}
                         >
                           <i className="fa-solid fa-arrow-left"></i>
                           <span className="mx-2">Back</span>
-                        </Link>
+                        </NavLink>
                       </div>
                       <div className="col-md-4 col-sm-12 text-center mt-5">
                         {/* <img
