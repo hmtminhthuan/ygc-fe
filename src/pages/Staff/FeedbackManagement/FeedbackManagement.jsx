@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./FeedbackManagement.scss";
 import { api } from "../../../constants/api";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import { Rating } from "@mui/material";
 
 export default function FeedbackManagement() {
-  localStorage.setItem("MENU_ACTIVE", "staff-feedback");
+  localStorage.setItem("MENU_ACTIVE", "/staff/feedbackManagement");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [searchedName, setSearchedName] = useState("");
@@ -671,13 +671,13 @@ export default function FeedbackManagement() {
                               className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"
                               style={{ borderRadius: "50%" }}
                             >
-                              <Link
+                              <NavLink
                                 className="px-2 py-1 text-dark bg-dark bg-opacity-10"
                                 style={{ borderRadius: "50%" }}
                                 to={`/staff/feedbackManagement/${courseID}`}
                               >
                                 <i className="fa-solid fa-eye" />
-                              </Link>
+                              </NavLink>
                             </button>
                           </td>
                         </tr>

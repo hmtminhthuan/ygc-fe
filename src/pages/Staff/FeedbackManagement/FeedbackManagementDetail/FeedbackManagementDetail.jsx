@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../../constants/api";
 import Swal from "sweetalert2";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import maleImg from "../../../../assets/images/avt-male.jpg";
@@ -105,14 +105,14 @@ export default function FeedbackManagementDetail() {
         <div className="main--content pt-3 px-4">
           <div className="w-100">
             <div className="text-start">
-              <Link
+              <NavLink
                 to={"/staff/feedbackManagement"}
                 className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                 style={{ fontSize: "18px", fontWeight: "500" }}
               >
                 <i className="fa-solid fa-arrow-left"></i>
                 <span className="mx-2">Back</span>
-              </Link>
+              </NavLink>
             </div>
             <h2
               className="m-0 p-0 text-center"
@@ -227,7 +227,7 @@ export default function FeedbackManagementDetail() {
                     if (listOfSearchedName.length <= 0) {
                       return true;
                     } else if (listOfSearchedName.length <= 1) {
-                      for (i = 0; i < listOfSearchedName.length; i++) {
+                      for (let i = 0; i < listOfSearchedName.length; i++) {
                         if (
                           item.detail.firstname
                             .trim()

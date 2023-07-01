@@ -8,7 +8,7 @@ import { Rating } from "@mui/material";
 import moment from "moment/moment";
 
 export default function CourseView() {
-  localStorage.setItem("MENU_ACTIVE", "staff-course");
+  localStorage.setItem("MENU_ACTIVE", "/staff/course");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);
