@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./BlogDetail.scss";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 export default function BlogDetail({
   blogID,
   header,

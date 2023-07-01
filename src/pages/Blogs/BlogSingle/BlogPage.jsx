@@ -5,12 +5,12 @@ import HeaderHome from "../../../component/HeaderHome/HeaderHome";
 import user from "../../../assets/images/user.jpg";
 
 import "./BlogPage.scss";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 
 export default function BlogPage() {
-  localStorage.setItem("MENU_ACTIVE", "home-blog");
+  localStorage.setItem("MENU_ACTIVE", "/blog");
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -86,28 +86,12 @@ export default function BlogPage() {
         <div className={`box course-detail-area mt-5 my-5 px-5 pt-4`}>
           <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
             <div className="close px-0 mx-0">
-              <Link to={"/blog"}>
+              <NavLink to={"/blog"}>
                 <a href="">Close</a>
                 <i className="fa-solid fa-circle-xmark"></i>
-              </Link>
+              </NavLink>
             </div>
 
-            <div className="exit mt-5">
-              <a>
-                {previousBlogID > 0 && (
-                  <Link to={`/blogPage/${previousBlogID}`}>
-                    <i className="ri-arrow-left-line mx-3 mt-2">aaaaaa</i>
-                  </Link>
-                )}
-              </a>
-              <a>
-                {nextBlogID > 0 && (
-                  <Link to={`/blogPage/${nextBlogID}`}>
-                    <i className="fa-solid fa-arrow-right mx-3"></i>
-                  </Link>
-                )}
-              </a>
-            </div>
             <div className="title align-items-center justify-content-center text-center my-3 mb-4">
               <h1 style={{ fontWeight: "800" }}>{header}</h1>
             </div>

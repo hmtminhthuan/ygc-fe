@@ -9,7 +9,7 @@ import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 
 function Blog() {
-  localStorage.setItem("MENU_ACTIVE", "home-blog");
+  localStorage.setItem("MENU_ACTIVE", "/blog");
   let [blogList, setBlogList] = useState([]);
   const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
   const userLogin = localStorage.getItem("USER_LOGIN");
@@ -51,19 +51,6 @@ function Blog() {
       Swal.close();
     }
   }, [isDataLoaded]);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     api
-  //       .get("/Blog/GetBlogList")
-  //       .then((res) => {
-  //         setBlogList(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, 10000);
-  // }, []);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
