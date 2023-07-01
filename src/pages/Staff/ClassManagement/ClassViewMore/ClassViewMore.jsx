@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment/moment";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { api } from "../../../../constants/api";
 
 export default function ClassViewMore({
@@ -45,7 +45,7 @@ export default function ClassViewMore({
 
   useEffect(() => {
     if (courseClasses.length > 0) {
-      for (i = 0; i < courseClasses.length; i++) {
+      for (let i = 0; i < courseClasses.length; i++) {
         let current = moment(new Date()).format("DD-MM-YYYY");
         let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
           "DD-MM-YYYY"
@@ -181,11 +181,11 @@ export default function ClassViewMore({
                                 {countNo++}
                               </StyledTableCell>
                               <StyledTableCell align="left">
-                                <Link
+                                <NavLink
                                   to={`/staff/traineeOfClass/${classId}/${trainerId}`}
                                 >
                                   {className}
-                                </Link>
+                                </NavLink>
                               </StyledTableCell>
                               <StyledTableCell
                                 align="left"

@@ -3,13 +3,13 @@ import { api } from "../../../constants/api";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import moment from "moment/moment";
 import ClassViewMore from "./ClassViewMore/ClassViewMore";
 import "./ClassManagement.scss";
 
 export default function ClassManagement() {
-  localStorage.setItem("MENU_ACTIVE", "staff-class");
+  localStorage.setItem("MENU_ACTIVE", "/staff/classManagement");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);
@@ -255,14 +255,14 @@ export default function ClassManagement() {
               />
             </div>
             <div className="my-1">
-              <Link
+              <NavLink
                 className="px-2 py-1 my-1 text-decoration-none text-light staff-create-class-button border-0"
                 style={{ borderRadius: "5px" }}
                 to=""
                 //create class
               >
                 Create New Class
-              </Link>
+              </NavLink>
             </div>
             <div className="flex m-0 p-0">
               <p style={{ fontWeight: "bolder" }} className="m-0 p-0 px-5">
@@ -485,7 +485,7 @@ export default function ClassManagement() {
                             )}
                           </td>
                           <td className="">
-                            <Link
+                            <NavLink
                               to={`/staff/classDetail/${courseID}`}
                               className="px-2 py-1 text-decoration-none bg-black bg-opacity-100 text-light border-0 text-center"
                               style={{
@@ -494,10 +494,10 @@ export default function ClassManagement() {
                               }}
                             >
                               <i className="fa-solid fa-magnifying-glass"></i>
-                            </Link>
+                            </NavLink>
                           </td>
                           <td className="">
-                            <Link
+                            <NavLink
                               to={`/staff/createClass/${courseID}`}
                               className="px-2 py-1 text-decoration-none bg-dark bg-opacity-100 text-light border-0 text-center"
                               style={{
@@ -513,7 +513,7 @@ export default function ClassManagement() {
                               }}
                             >
                               <i className="fa-solid fa-plus"></i>
-                            </Link>
+                            </NavLink>
                           </td>
                         </tr>
                         {pos != null && pos >= 0 ? (

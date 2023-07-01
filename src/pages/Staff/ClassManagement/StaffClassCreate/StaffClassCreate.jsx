@@ -4,14 +4,14 @@ import MenuStaff from "../../../../component/Staff/MenuStaff";
 import { useFormik } from "formik";
 import { DatePicker, Form, Input, Select } from "antd";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import moment from "moment/moment";
 import { api } from "../../../../constants/api";
 import { alert } from "../../../../component/AlertComponent/Alert";
 
 export default function StaffClassCreate() {
-  localStorage.setItem("MENU_ACTIVE", "staff-class");
+  localStorage.setItem("MENU_ACTIVE", "/staff/classManagement");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 4 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -377,7 +377,7 @@ export default function StaffClassCreate() {
           .sort((a, b) => {
             let posA = -1;
             let posB = -1;
-            for (i = 0; i < listOfDay.length; i++) {
+            for (let i = 0; i < listOfDay.length; i++) {
               if (
                 a.dayOfWeek
                   .trim()
@@ -422,14 +422,14 @@ export default function StaffClassCreate() {
         <div className="main--content pt-3 px-5 staff-template-none-scss">
           <div className="row justify-content-center">
             <div className="col-12">
-              <Link
+              <NavLink
                 to={comeback}
                 className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                 style={{ fontSize: "18px", fontWeight: "500" }}
               >
                 <i className="fa-solid fa-arrow-left"></i>
                 <span className="mx-2">Back</span>
-              </Link>
+              </NavLink>
             </div>{" "}
           </div>
 

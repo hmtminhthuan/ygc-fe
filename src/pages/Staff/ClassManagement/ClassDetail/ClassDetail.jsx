@@ -12,10 +12,10 @@ import { useParams } from "react-router";
 import { api } from "../../../../constants/api";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function ClassDetail() {
-  localStorage.setItem("MENU_ACTIVE", "staff-class");
+  localStorage.setItem("MENU_ACTIVE", "/staff/classManagement");
   const param = useParams();
   const [course, setCourse] = useState({});
   const styleDate = (date) => {
@@ -78,7 +78,7 @@ export default function ClassDetail() {
 
   useEffect(() => {
     if (courseClasses.length > 0) {
-      for (i = 0; i < courseClasses.length; i++) {
+      for (let i = 0; i < courseClasses.length; i++) {
         // let current = moment(new Date()).format("DD-MM-YYYY");
         // let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
         //   "DD-MM-YYYY"
@@ -122,14 +122,14 @@ export default function ClassDetail() {
           // id="staff-class-management-area"
         >
           <div className="text-start">
-            <Link
+            <NavLink
               to={"/staff/classManagement"}
               className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
               style={{ fontSize: "18px", fontWeight: "500" }}
             >
               <i className="fa-solid fa-arrow-left"></i>
               <span className="mx-2">Back</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="">
             <h2 className="m-0 p-0 text-center">Classes Detail</h2>
@@ -193,7 +193,7 @@ export default function ClassDetail() {
                   ) : (
                     <></>
                   )}
-                  <Link
+                  <NavLink
                     to={`/staff/createClass/${param.id}`}
                     className="border-0 mt-2 mx-1
                      py-1 px-2 text-light"
@@ -209,7 +209,7 @@ export default function ClassDetail() {
                     }}
                   >
                     Create New Class
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
               {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
@@ -364,7 +364,7 @@ export default function ClassDetail() {
                                     </StyledTableCell>
                                     {viewAllButton ? (
                                       <>
-                                        <StyledTableCell align="center">
+                                        {/* <StyledTableCell align="center">
                                           <button
                                             className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
                                             style={{
@@ -372,12 +372,12 @@ export default function ClassDetail() {
                                               fontSize: "15px",
                                             }}
                                           >
-                                            <Link
+                                            <NavLink
                                               className="px-2 py-1 "
                                               to={``}
                                             >
                                               <i className="fa-solid fa-pen-to-square py-2" />
-                                            </Link>
+                                            </NavLink>
                                           </button>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
@@ -391,7 +391,7 @@ export default function ClassDetail() {
                                           >
                                             <i className="fa-solid fa-trash" />
                                           </button>
-                                        </StyledTableCell>
+                                        </StyledTableCell> */}
                                       </>
                                     ) : (
                                       <></>
@@ -517,12 +517,12 @@ export default function ClassDetail() {
                                               fontSize: "15px",
                                             }}
                                           >
-                                            <Link
+                                            <NavLink
                                               className="px-2 py-1 "
                                               to={``}
                                             >
                                               <i className="fa-solid fa-pen-to-square py-2" />
-                                            </Link>
+                                            </NavLink>
                                           </button>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { api } from "../../../../constants/api";
 import maleImg from "../../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../../assets/images/avt-female.jpg";
 import Swal from "sweetalert2";
 
 export default function ClassMember() {
+  const navigate = useNavigate();
   const [classDetail, setClassDetail] = useState({});
   const [trainees, setTrainees] = useState([]);
   const [available, setAvailable] = useState(false);
@@ -22,7 +23,7 @@ export default function ClassMember() {
       toast: true,
       timer: 1200,
     }).then(function () {
-      window.location.href = "/";
+      navigate("/");
     });
   };
   useEffect(() => {
@@ -83,14 +84,14 @@ export default function ClassMember() {
                   <div className="profile-container mx-5">
                     <div className="profile-header row">
                       <div className="">
-                        <Link
+                        <NavLink
                           to={"/staff/classManagement"}
                           className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                           style={{ fontSize: "18px", fontWeight: "500" }}
                         >
                           <i className="fa-solid fa-arrow-left"></i>
                           <span className="mx-2">Back</span>
-                        </Link>
+                        </NavLink>
                       </div>
                       <div className="col-md-4 col-sm-12 text-center mt-5">
                         <img

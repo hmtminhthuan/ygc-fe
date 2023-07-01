@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
 import "./StaffBooking.scss";
 export default function StaffBooking() {
-  localStorage.setItem("MENU_ACTIVE", "staff-booking");
+  localStorage.setItem("MENU_ACTIVE", "/staff/booking");
   const [listOfBooking, setListOfBooking] = useState([]);
   const [recently, setRecently] = useState([]);
   const [navigation, setNavigation] = useState(5);
