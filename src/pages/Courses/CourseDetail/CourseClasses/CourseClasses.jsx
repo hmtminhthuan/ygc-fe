@@ -12,6 +12,7 @@ import { api } from "../../../../constants/api";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { param } from "jquery";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function CourseClasses({
   courseId,
@@ -48,6 +49,8 @@ export default function CourseClasses({
       border: 0,
     },
   }));
+
+  const navigate = useNavigate();
 
   // const handlePayByAtm = (classId) => {
   //   Swal.fire({
@@ -169,7 +172,7 @@ export default function CourseClasses({
         console.log(res);
         if (booking) {
           // localStorage.setItem("BOOKING_ITEM", res.data.id);
-          window.location.href = "/transaction";
+          navigate("/transaction");
         }
         if (res.data.status == 5) {
           if (
@@ -240,7 +243,7 @@ export default function CourseClasses({
           })
           .finally(() => {
             // console.log(link);
-            window.location.href = link;
+            navigate(link);
           });
       }
     });
@@ -322,7 +325,7 @@ export default function CourseClasses({
         allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed === false) {
-          window.location.href = "/transaction";
+          navigate("/transaction");
         }
       });
     } else if (currentClass) {
@@ -464,7 +467,7 @@ export default function CourseClasses({
       }
     }
     if (courseClasses.length > 0) {
-      for (i = 0; i < courseClasses.length; i++) {
+      for (let i = 0; i < courseClasses.length; i++) {
         let current = moment(new Date());
         let end = moment(new Date(`${courseClasses[i].endDate}`));
         if (current <= end) {
@@ -594,19 +597,25 @@ export default function CourseClasses({
                                         denyButtonColor: "#d08fba",
                                       }).then((result) => {
                                         if (result.isDenied === true) {
-                                          localStorage.setItem(
-                                            "REDIRECT_LINK_BOOK_CLASS",
-                                            `/courseDetail/${courseId}`
+                                          // localStorage.setItem(
+                                          //   "REDIRECT_LINK_BOOK_CLASS",
+                                          //   `/courseDetail/${courseId}`
+                                          // );
+                                          // window.location.href = "/register";
+                                          navigate(
+                                            `/register?redirect=/courseDetail/${courseId}`
                                           );
-                                          window.location.href = "/register";
                                         } else if (
                                           result.isConfirmed === true
                                         ) {
-                                          localStorage.setItem(
-                                            "REDIRECT_LINK_BOOK_CLASS",
-                                            `/courseDetail/${courseId}`
+                                          // localStorage.setItem(
+                                          //   "REDIRECT_LINK_BOOK_CLASS",
+                                          //   `/courseDetail/${courseId}`
+                                          // );
+                                          // window.location.href = "/login";
+                                          navigate(
+                                            `/login?redirect=/courseDetail/${courseId}`
                                           );
-                                          window.location.href = "/login";
                                         }
                                       });
                                     } else if (userLogin.role.id != 4) {
@@ -618,6 +627,8 @@ export default function CourseClasses({
                                         confirmButtonText: "Confirm",
                                         allowOutsideClick: true,
                                       });
+                                    } else {
+                                      navigate(`/courseDetail/${courseId}`);
                                     }
                                   }}
                                 >

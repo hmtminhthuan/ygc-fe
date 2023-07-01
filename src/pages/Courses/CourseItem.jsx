@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./CourseItem.scss";
-import { Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import image from "../../assets/images/img-demo.jpg";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
@@ -26,6 +26,8 @@ export default function CourseDetail({
       currency: "VND",
     }).format(price);
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
@@ -82,12 +84,12 @@ export default function CourseDetail({
               ? description.substring(0, 100).trim() + "..."
               : description}{" "}
             {description.length >= 100 ? (
-              <Link
+              <NavLink
                 to={`/courseDetail/${courseID}`}
                 className="text-decoration-none"
               >
                 View More
-              </Link>
+              </NavLink>
             ) : (
               <></>
             )}
@@ -109,11 +111,16 @@ export default function CourseDetail({
 
           <div className="button text-center pt-1">
             <Button
-              href={`/courseDetail/${courseID}`}
+              // to={`/courseDetail/${courseID}`}
               className="course-view-detail mx-1 mt-1"
               variant=""
             >
-              View Details
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to={`/courseDetail/${courseID}`}
+              >
+                View Details
+              </NavLink>
             </Button>
             {availablePayment ? (
               <Button
@@ -158,21 +165,15 @@ export default function CourseDetail({
                           "NOTIFICATION_CHOOSE_CLASS",
                           `true`
                         );
-                        localStorage.setItem(
-                          "REDIRECT_LINK_BOOK_CLASS",
-                          `/courseDetail/${courseID}`
+                        navigate(
+                          `/register?redirect=/courseDetail/${courseID}`
                         );
-                        window.location.href = "/register";
                       } else if (result.isConfirmed === true) {
                         localStorage.setItem(
                           "NOTIFICATION_CHOOSE_CLASS",
                           `true`
                         );
-                        localStorage.setItem(
-                          "REDIRECT_LINK_BOOK_CLASS",
-                          `/courseDetail/${courseID}`
-                        );
-                        window.location.href = "/login";
+                        navigate(`/login?redirect=/courseDetail/${courseID}`);
                       }
                     });
                   } else if (userLogin.role.id != 4) {
@@ -184,6 +185,8 @@ export default function CourseDetail({
                       confirmButtonText: "Confirm",
                       allowOutsideClick: true,
                     });
+                  } else {
+                    navigate(`/courseDetail/${courseID}`);
                   }
                 }}
               >

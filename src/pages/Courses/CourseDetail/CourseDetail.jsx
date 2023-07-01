@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import HeaderHome from "../../../component/HeaderHome/HeaderHome";
 import axios from "axios";
 import image from "../../../assets/images/img-demo.jpg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./CourseDetail.scss";
 import { Button } from "react-bootstrap";
 import CourseClasses from "./CourseClasses/CourseClasses";
@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseDetail() {
-  localStorage.setItem("MENU_ACTIVE", "home-course");
+  localStorage.setItem("MENU_ACTIVE", "/course");
 
   const param = useParams();
   const [courseDetail, setCourseDetail] = useState([]);
@@ -170,14 +170,14 @@ export default function CourseDetail() {
           <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
             <div className="row justify-content-center">
               <div className="col-10 mt-3">
-                <Link
+                <NavLink
                   to={"/course"}
                   className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                   style={{ fontSize: "18px", fontWeight: "500" }}
                 >
                   <i className="fa-solid fa-arrow-left"></i>
                   <span className="mx-2">Back</span>
-                </Link>
+                </NavLink>
               </div>{" "}
             </div>
             {viewClassFirst ? (
