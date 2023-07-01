@@ -5,8 +5,10 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import "./Transaction.scss";
 import { timeLeft } from "./TimeLeft";
 import { alert } from "../../component/AlertComponent/Alert";
+import { useNavigate } from "react-router-dom";
 export default function Transaction() {
-  localStorage.setItem("MENU_ACTIVE", "home-booking");
+  const navigate = useNavigate();
+  localStorage.setItem("MENU_ACTIVE", "/transaction");
   const [payingTime, setPayingTime] = useState(-1);
   const [refundTime, setRefundTime] = useState(-1);
   const [current, setCurrent] = useState(new Date());
@@ -132,9 +134,7 @@ export default function Transaction() {
         } else {
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS_NONE", "true");
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
-          window.location.href = `/courseDetail/${
-            TRANSACTION_NOTIFICATION.split("-")[2]
-          }`;
+          navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
         }
       }
       localStorage.removeItem("TRANSACTION_NOTIFICATION");
@@ -206,7 +206,7 @@ export default function Transaction() {
       })
       .then((res) => {
         console.log(res);
-        window.location.href = res.data;
+        navigate(res.data);
       })
       .catch((err) => {});
   };

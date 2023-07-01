@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import "./ScheduleTrainer.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import Swal from "sweetalert2";
 
 export default function ScheduleTrainer() {
+  localStorage.setItem("MENU_ACTIVE", "/trainer/schedule");
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
   const [classList, setClassList] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const listOfDay = [
     "Monday",
     "Tuesday",
@@ -20,6 +23,18 @@ export default function ScheduleTrainer() {
   // const { id } = useParams();
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Timeframe/GetTimeFrameList")
       .then((res) => {
@@ -33,6 +48,7 @@ export default function ScheduleTrainer() {
       })
       .then((res) => {
         setSchedule(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {});
     api
@@ -48,6 +64,11 @@ export default function ScheduleTrainer() {
       })
       .catch((err) => {});
   }, [id]);
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
   return (
     <>
       <div className="header-top m-4 mx-0 mt-0">
@@ -121,7 +142,7 @@ export default function ScheduleTrainer() {
                                       borderRadius: "8px",
                                     }}
                                   />
-                                  <Link
+                                  <NavLink
                                     className="title text-decoration-none"
                                     to={`/trainer/classDetail/${filteredItem.classId}`}
                                   >
@@ -132,7 +153,7 @@ export default function ScheduleTrainer() {
                                     >
                                       {filteredItem.courseName}
                                     </p>
-                                  </Link>
+                                  </NavLink>
 
                                   <p className="m-0 p-0">
                                     Class: {filteredItem.className}

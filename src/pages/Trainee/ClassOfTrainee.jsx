@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { api } from "../../constants/api";
+import Swal from "sweetalert2";
 
 import "./ClassOfTrainee.scss";
 
 export default function ClassOfTrainee() {
+  const navigate = useNavigate();
   const [classDetail, setClassDetail] = useState({});
   const { id } = useParams();
   const comeBackHomeInvalid = () => {
@@ -19,7 +21,7 @@ export default function ClassOfTrainee() {
       toast: true,
       timer: 1200,
     }).then(function () {
-      window.location.href = "/";
+      navigate("/");
     });
   };
   useEffect(() => {
@@ -63,14 +65,14 @@ export default function ClassOfTrainee() {
               <div className="profile-container mx-5">
                 <div className="profile-header row">
                   <div className="">
-                    <Link
+                    <NavLink
                       to={"/trainee/schedule"}
                       className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                       style={{ fontSize: "18px", fontWeight: "500" }}
                     >
                       <i className="fa-solid fa-arrow-left"></i>
                       <span className="mx-2">Back</span>
-                    </Link>
+                    </NavLink>
                   </div>
                   <div className="col-md-4 col-sm-12 text-center mt-5">
                     <img

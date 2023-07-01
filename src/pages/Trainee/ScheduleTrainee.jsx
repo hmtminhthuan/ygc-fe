@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import "./ScheduleTrainee.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import Swal from "sweetalert2";
 
 export default function ScheduleTrainee() {
+  localStorage.setItem("MENU_ACTIVE", "/trainee/schedule");
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   // const { id } = useParams();
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
@@ -20,6 +23,18 @@ export default function ScheduleTrainee() {
     "Sunday",
   ];
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Timeframe/GetTimeFrameList")
       .then((res) => {
@@ -36,6 +51,12 @@ export default function ScheduleTrainee() {
       })
       .catch((err) => {});
   }, [id]);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
   return (
     <>
       <div className="header-top m-4 mx-0 mt-0">
@@ -112,7 +133,7 @@ export default function ScheduleTrainee() {
                                       borderRadius: "8px",
                                     }}
                                   />
-                                  <Link
+                                  <NavLink
                                     className="title text-decoration-none"
                                     to={`/trainee/classDetail/${filteredItem.classId}`}
                                   >
@@ -123,7 +144,7 @@ export default function ScheduleTrainee() {
                                     >
                                       {filteredItem.courseName}
                                     </p>
-                                  </Link>
+                                  </NavLink>
 
                                   <p className="m-0 p-0">
                                     Class: {filteredItem.className}
