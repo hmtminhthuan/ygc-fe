@@ -1,11 +1,13 @@
 import { Button, Form, Input } from "antd";
 import { useFormik } from "formik";
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { api } from "../../constants/api";
 import { alert } from "../../component/AlertComponent/Alert";
+import Swal from "sweetalert2";
 
 export default function ChangePassword({ userEmail, userId }) {
+  const navigate = useNavigate();
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -31,15 +33,24 @@ export default function ChangePassword({ userEmail, userId }) {
               })
               .then((res) => {
                 if (res.status == 200) {
-                  Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Update Password Successfully",
-                    showConfirmButton: false,
-                    timer: 1200,
-                  }).then(function () {
-                    window.location.href = `/updateProfile/${userId}`;
-                  });
+                  // Swal.fire({
+                  //   position: "center",
+                  //   icon: "success",
+                  //   title: "Update Password Successfully",
+                  //   showConfirmButton: false,
+                  //   timer: 1200,
+                  // }).then(function () {
+                  //   window.location.href = `/updateProfile/${userId}`;
+                  // });
+                  alert.alertSuccessWithTime(
+                    "Update Password Successfully",
+                    "",
+                    2000,
+                    "30",
+                    () => {
+                      navigate("/profile");
+                    }
+                  );
                 }
               })
               .catch((err) => {});
@@ -131,7 +142,7 @@ export default function ChangePassword({ userEmail, userId }) {
         } else if (result.isConfirmed === true) {
           if (result.value == validationCode) {
             localStorage.setItem("CHECK_VERIFY_EMAIL", "true");
-            window.location.href = `/changePassword/${userId}`;
+            navigate(`/changePassword`);
           } else {
             Swal.fire({
               position: "center",
@@ -341,11 +352,14 @@ export default function ChangePassword({ userEmail, userId }) {
         <button
           className="mx-1 text-decoration-none text-danger border-0 bg-transparent"
           style={{ fontWeight: "bolder" }}
-          onClick={() => {
-            handleForgetPassword();
-          }}
         >
-          {`${` `}Click here`}
+          <NavLink
+            onClick={() => {
+              handleForgetPassword();
+            }}
+          >
+            {`${` `}Click here`}
+          </NavLink>
         </button>
       </div>
     </>

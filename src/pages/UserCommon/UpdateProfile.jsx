@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
 import { Formik, useFormik } from "formik";
@@ -12,7 +12,8 @@ import ChangePassword from "./ChangePassword";
 import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 import { alert } from "../../component/AlertComponent/Alert";
 export default function UpdateProfile() {
-  localStorage.setItem("MENU_ACTIVE", "home-profile");
+  const navigate = useNavigate();
+  localStorage.setItem("MENU_ACTIVE", "/profile");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -35,7 +36,7 @@ export default function UpdateProfile() {
 
   if (!(USER_LOGIN != null && !accept)) {
     if (!accept) {
-      return <Navigate to={"/"} />;
+      navigate("/");
     }
   } else {
     USER = JSON.parse(USER_LOGIN);
@@ -46,7 +47,7 @@ export default function UpdateProfile() {
     ) {
       setAccept(true);
     } else {
-      return <Navigate to={"/"} />;
+      navigate("/");
     }
   }
 
@@ -113,28 +114,37 @@ export default function UpdateProfile() {
                   ]
                 )
               );
+              alert.alertSuccessWithTime(
+                "Update Profile Successfully",
+                "",
+                2000,
+                "30",
+                () => {
+                  navigate("/profile");
+                }
+              );
             })
             .catch((err) => {});
-          const Toast = Swal.mixin({
-            // toast: true,
-            position: "middle",
-            width: `30rem`,
-            padding: "1rem",
-            background: "#eef6ec",
-            showConfirmButton: false,
-            timer: 1000,
-            // timerProgressBar: true,
-            didOpen: (toast) => {
-              // toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
+          // const Toast = Swal.mixin({
+          //   // toast: true,
+          //   position: "middle",
+          //   width: `30rem`,
+          //   padding: "1rem",
+          //   background: "#eef6ec",
+          //   showConfirmButton: false,
+          //   timer: 1000,
+          //   // timerProgressBar: true,
+          //   didOpen: (toast) => {
+          //     // toast.addEventListener("mouseenter", Swal.stopTimer);
+          //     toast.addEventListener("mouseleave", Swal.resumeTimer);
+          //   },
+          // });
 
-          Toast.fire({
-            icon: "success",
-            title: `Update Successfully`,
-            html: ``,
-          });
+          // Toast.fire({
+          //   icon: "success",
+          //   title: `Update Successfully`,
+          //   html: ``,
+          // });
         })
         .catch((err) => {});
     },
@@ -194,14 +204,14 @@ export default function UpdateProfile() {
                 <div className="profile-tab-nav col-lg-3 col-md-12 border-md-0">
                   <div className="p-4 mt-0 w-100 ">
                     <div className="">
-                      <Link
+                      <NavLink
                         to={`/profile`}
                         className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
                         style={{ fontSize: "18px", fontWeight: "500" }}
                       >
                         <i className="fa-solid fa-arrow-left"></i>
                         <span className="mx-2">Back</span>
-                      </Link>
+                      </NavLink>
                     </div>
                     <div className="img-circle text-center mb-3 mt-4">
                       {profile.img == "male" && previewImg == "" ? (
@@ -547,7 +557,7 @@ export default function UpdateProfile() {
                                 style={{ fontSize: "17px" }}
                               >
                                 Change Current Password?
-                                <Link
+                                <NavLink
                                   className="mx-2 text-decoration-none"
                                   style={{ color: "rgba(210, 145, 188, 1)" }}
                                   onClick={() => {
@@ -555,7 +565,7 @@ export default function UpdateProfile() {
                                   }}
                                 >
                                   Click here
-                                </Link>
+                                </NavLink>
                               </div>
                             </div>
                           </div>
@@ -581,7 +591,7 @@ export default function UpdateProfile() {
                             style={{ fontSize: "17px" }}
                             className="py-3 pt-0 py-lg-0"
                           >
-                            <Link
+                            <NavLink
                               className="text-decoration-none"
                               style={{ color: "rgba(210, 145, 188, 1)" }}
                               onClick={() => {
@@ -589,7 +599,7 @@ export default function UpdateProfile() {
                               }}
                             >
                               Click here {"  "}
-                            </Link>
+                            </NavLink>
                             {"  "} to update other information
                           </div>
                         </div>

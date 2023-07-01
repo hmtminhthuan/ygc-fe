@@ -1,9 +1,10 @@
 import { Button, Form, Input } from "antd";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
+import { alert } from "../../component/AlertComponent/Alert";
 
 export default function ChangePasswordVerifyEmail() {
   // const { id } = useParams();
@@ -12,10 +13,11 @@ export default function ChangePasswordVerifyEmail() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const [accept, setAccept] = useState(false);
   const [verifyEmail, setVerifyEmail] = useState(false);
+  const navigate = useNavigate();
 
   if (!(USER_LOGIN != null && !accept)) {
     if (!accept) {
-      return <Navigate to={"/"} />;
+      navigate("/");
     }
   } else {
     USER = JSON.parse(USER_LOGIN);
@@ -26,7 +28,7 @@ export default function ChangePasswordVerifyEmail() {
     ) {
       setAccept(true);
     } else {
-      return <Navigate to={"/"} />;
+      navigate("/");
     }
   }
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function ChangePasswordVerifyEmail() {
       CHECK_VERIFY_EMAIL == "false"
     ) {
       localStorage.removeItem("CHECK_VERIFY_EMAIL");
-      window.location.href = "/";
+      navigate("/");
     }
     if (CHECK_VERIFY_EMAIL == "true") {
       localStorage.removeItem("CHECK_VERIFY_EMAIL");
@@ -64,15 +66,24 @@ export default function ChangePasswordVerifyEmail() {
         })
         .then((res) => {
           if (res.status == 200) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Reset Password Successfully",
-              showConfirmButton: false,
-              timer: 1200,
-            }).then(function () {
-              window.location.href = `/updateProfile/${id}`;
-            });
+            // Swal.fire({
+            //   position: "center",
+            //   icon: "success",
+            //   title: "Reset Password Successfully",
+            //   showConfirmButton: false,
+            //   timer: 1200,
+            // }).then(function () {
+            //   window.location.href = `/updateProfile/${id}`;
+            // });
+            alert.alertSuccessWithTime(
+              "Reset Password Successfully",
+              "",
+              2000,
+              "30",
+              () => {
+                navigate("/profile");
+              }
+            );
           }
         })
         .catch((err) => {});
@@ -94,13 +105,13 @@ export default function ChangePasswordVerifyEmail() {
     }).then((result) => {
       if (result.isDenied === true || result.isDismissed === true) {
       } else if (result.isConfirmed === true) {
-        window.location.href = `/updateProfile/${id}`;
+        navigate(`/updateProfile`);
       }
     });
   };
   return (
     <>
-      {verifyEmail ? (
+      {verifyEmail && (
         <div
           className={`update-profile-area w-100`}
           style={{
@@ -246,7 +257,7 @@ export default function ChangePasswordVerifyEmail() {
                           </Button>
                         </div>
                         <div className="form-group col-6 flex m-0">
-                          <Link
+                          <NavLink
                             className="w-100 h-100
                         flex align-items-center justify-content-center
                         text-decoration-none"
@@ -261,7 +272,7 @@ export default function ChangePasswordVerifyEmail() {
                             }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>
@@ -271,8 +282,6 @@ export default function ChangePasswordVerifyEmail() {
             </div>
           </div>
         </div>
-      ) : (
-        <></>
       )}
     </>
   );

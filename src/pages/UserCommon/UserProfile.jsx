@@ -4,13 +4,13 @@ import "./UserProfile.scss";
 import video from "../../assets/video.mp4";
 import "remixicon/fonts/remixicon.css";
 import { api } from "../../constants/api";
-import { Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 
 function UserProfile() {
-  localStorage.setItem("MENU_ACTIVE", "home-profile");
+  localStorage.setItem("MENU_ACTIVE", "/profile");
   // const { paramID } = useParams();
   const paramID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const [profile, setProfile] = useState([]);
@@ -18,11 +18,12 @@ function UserProfile() {
   const [accept, setAccept] = useState(false);
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!(USER_LOGIN != null && !accept)) {
       if (!accept) {
-        window.location.href = "/";
+        navigate("/");
       }
     } else {
       USER = JSON.parse(USER_LOGIN);
@@ -45,7 +46,7 @@ function UserProfile() {
           },
         });
       } else {
-        window.location.href = "/";
+        navigate("/");
       }
     }
     api
@@ -178,7 +179,7 @@ function UserProfile() {
                                 borderRadius: "20px",
                               }}
                             >
-                              <Link
+                              <NavLink
                                 to={`/updateProfile`}
                                 className="updateInfo text-light"
                               >
@@ -192,7 +193,7 @@ function UserProfile() {
                                   className="ri-edit-2-line mx-0 px-0 mt-2 text-light"
                                   style={{ fontSize: "14px" }}
                                 ></i>
-                              </Link>
+                              </NavLink>
                             </div>
                           </div>
                         </div>

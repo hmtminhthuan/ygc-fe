@@ -1,9 +1,10 @@
 import { Button, Form, Input } from "antd";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { api } from "../../constants/api";
 export default function ChangePasswordLogin() {
+  const navigate = useNavigate();
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [accountID, setAccountID] = useState("");
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function ChangePasswordLogin() {
       CHECK_VERIFY_EMAIL_FORGET == "false"
     ) {
       localStorage.removeItem("CHECK_VERIFY_EMAIL_FORGET");
-      window.location.href = "/";
+      navigate("/");
     }
     if (CHECK_VERIFY_EMAIL_FORGET == "true") {
       setAccountID(localStorage.getItem("accountID"));
@@ -69,13 +70,21 @@ export default function ChangePasswordLogin() {
                   timer: 1500,
                 }).then(function () {
                   if (userList[pos].role.id == 1) {
-                    window.location.href = "/admin";
+                    navigate("/admin");
                   } else if (userList[pos].role.id == 2) {
-                    window.location.href = "/staff";
+                    navigate("/staff");
                   } else if (userList[pos].role.id == 3) {
-                    window.location.href = "/";
+                    if (redirect) {
+                      navigate(redirect);
+                    } else {
+                      navigate("/");
+                    }
                   } else if (userList[pos].role.id == 4) {
-                    window.location.href = "/";
+                    if (redirect) {
+                      navigate(redirect);
+                    } else {
+                      navigate("/");
+                    }
                   }
                 });
               })
@@ -101,7 +110,7 @@ export default function ChangePasswordLogin() {
     }).then((result) => {
       if (result.isDenied === true || result.isDismissed === true) {
       } else if (result.isConfirmed === true) {
-        window.location.href = `/login`;
+        navigate(`/login`);
       }
     });
   };
@@ -253,7 +262,7 @@ export default function ChangePasswordLogin() {
                           </Button>
                         </div>
                         <div className="form-group col-6 flex m-0">
-                          <Link
+                          <NavLink
                             className="w-100 h-100
                           flex align-items-center justify-content-center
                           text-decoration-none"
@@ -268,7 +277,7 @@ export default function ChangePasswordLogin() {
                             }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>
