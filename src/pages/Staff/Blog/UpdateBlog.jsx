@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Form, Input, Button } from "antd";
 import { useFormik } from "formik";
@@ -11,6 +11,7 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function UpdateBlog() {
+  const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState("");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -69,7 +70,7 @@ export default function UpdateBlog() {
             2000,
             "30",
             () => {
-              window.location.href = "/staff/blogManagement";
+              navigate("/staff/blogManagement");
             }
           );
         })
@@ -256,13 +257,13 @@ export default function UpdateBlog() {
                           </Button>
                         </div>
                         <div className="col-6 flex align-items-center">
-                          <Link
+                          <NavLink
                             to={"/staff/blogManagement"}
                             className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center text-decoration-none text-light"
                             style={{ borderRadius: "10px" }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>

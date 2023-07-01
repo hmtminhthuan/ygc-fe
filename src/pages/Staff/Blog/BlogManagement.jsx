@@ -3,14 +3,15 @@ import { Select } from "antd";
 import "remixicon/fonts/remixicon.css";
 import Swal from "sweetalert2";
 import { api } from "../../../constants/api";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
 import { alert } from "../../../component/AlertComponent/Alert";
 
-function BlogManagement() {
-  localStorage.setItem("MENU_ACTIVE", "staff-blog");
+export default function BlogManagement() {
+  const navigate = useNavigate();
+  localStorage.setItem("MENU_ACTIVE", "/staff/blogManagement");
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [dateSort, setDateSort] = useState("All");
@@ -198,13 +199,13 @@ function BlogManagement() {
                   </div>
                 </div>
                 <div className="col-lg-6 create flex mb-2 justify-content-end">
-                  <Link
+                  <NavLink
                     to={"/staff/createBlog"}
                     className="p-2 h-100 flex align-items-center justify-content-end text-decoration-none text-light"
                     style={{ borderRadius: "10px", backgroundColor: "#000" }}
                   >
                     Create new blog
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
 
@@ -240,12 +241,12 @@ function BlogManagement() {
                               ? blog.content.substring(0, 80).trim() + "..."
                               : blog.content}{" "}
                             {blog.content.length >= 80 ? (
-                              <a
+                              <NavLink
                                 className="view-content mr-2"
                                 onClick={() => handleViewContent(blog.content)}
                               >
                                 View more
-                              </a>
+                              </NavLink>
                             ) : (
                               <></>
                             )}
@@ -261,12 +262,12 @@ function BlogManagement() {
                             {`${blog.firstName}`} {`${blog.lastName}`}
                           </td>
                           <td className="setting">
-                            <Link
+                            <NavLink
                               to={`/staff/updateBlog/${blog.blogID}`}
                               className="updateInfo"
                             >
                               <i className="ri-edit-2-line mt-2 "></i>
-                            </Link>
+                            </NavLink>
                           </td>
                           <td className="setting">
                             <i
@@ -287,5 +288,3 @@ function BlogManagement() {
     </>
   );
 }
-
-export default BlogManagement;

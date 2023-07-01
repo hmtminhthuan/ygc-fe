@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { api } from "../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Button, DatePicker } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import Swal from "sweetalert2";
 import "./CreateBlog.scss";
@@ -12,6 +12,7 @@ import moment from "moment/moment";
 import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CreateBlog() {
+  const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState("");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -41,7 +42,7 @@ export default function CreateBlog() {
             2000,
             "30",
             () => {
-              window.location.href = "/staff/blogManagement";
+              navigate("/staff/blogManagement");
             }
           );
         })
@@ -261,14 +262,14 @@ export default function CreateBlog() {
                           </Button>
                         </div>
                         <div className="col-6 flex align-items-center">
-                          <Link
+                          <NavLink
                             to={"/staff/blogManagement"}
                             className="cancel-update-profile-button bg-dark h-100 w-100 flex align-items-center justify-content-center
                   text-decoration-none text-light"
                             style={{ borderRadius: "10px" }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>
