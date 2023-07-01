@@ -11,7 +11,8 @@ import { alert } from "../../../component/AlertComponent/Alert";
 import Swal from "sweetalert2";
 
 export default function AdminSetting() {
-  useEffect(() => {});
+  localStorage.setItem("MENU_ACTIVE", "/admin/setting");
+
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },

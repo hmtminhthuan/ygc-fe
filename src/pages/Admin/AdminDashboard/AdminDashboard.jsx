@@ -5,7 +5,7 @@ import { api } from "../../../constants/api";
 import "./AdminDashboard.scss";
 
 export default function AdminDashboard() {
-  localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
+  localStorage.setItem("MENU_ACTIVE", "/admin");
   const [countList, setCountList] = useState([]);
   useEffect(() => {
     api

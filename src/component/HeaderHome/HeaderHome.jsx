@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import "./HeaderHome.scss";
@@ -13,6 +13,7 @@ export default function HeaderHome() {
     localStorage.setItem("MENU_ACTIVE", link);
     navigate(link);
   };
+
   const navigate = useNavigate();
 
   let USER = {};
@@ -37,9 +38,9 @@ export default function HeaderHome() {
             />
             <Navbar.Brand
               as={NavLink}
-              href="/"
+              to="/"
               className="header-brand"
-              onClick={() => navigateTo("home-home")}
+              onClick={() => navigateTo("/")}
             >
               Yoga Center
             </Navbar.Brand>
@@ -56,11 +57,11 @@ export default function HeaderHome() {
               <NavLink
                 to="/"
                 className={`px-4 nav-item
-              ${
-                menu_active != null && menu_active == "home-home"
-                  ? "nav-item-after-login"
-                  : ""
-              }`}
+                ${
+                  menu_active != null && menu_active == "home-home"
+                    ? "nav-item-after-login"
+                    : ""
+                }`}
                 onClick={() => {
                   navigateTo("home-home");
                 }}
@@ -70,27 +71,34 @@ export default function HeaderHome() {
               <NavLink
                 to="/course"
                 className={`px-4 nav-item
-              ${
-                menu_active != null && menu_active == "home-course"
-                  ? "nav-item-after-login"
-                  : ""
-              }`}
+                ${
+                  menu_active != null && menu_active == "/course"
+                    ? "nav-item-after-login"
+                    : ""
+                }`}
                 onClick={() => {
-                  navigateTo("home-course");
+                  navigateTo("/course");
                 }}
+
+                // className={`px-4 nav-item ${
+                //   menuActive === "home-course" ? "nav-item-after-login" : ""
+                // }`}
+                // onClick={() => {
+                //   navigateTo("home-course");
+                // }}
               >
                 Course
               </NavLink>
               <NavLink
                 to="/blog"
                 className={`px-4 nav-item
-              ${
-                menu_active != null && menu_active == "home-blog"
-                  ? "nav-item-after-login"
-                  : ""
-              }`}
+                ${
+                  menu_active != null && menu_active == "/blog"
+                    ? "nav-item-after-login"
+                    : ""
+                }`}
                 onClick={() => {
-                  navigateTo("home-blog");
+                  navigateTo("/blog");
                 }}
               >
                 Blog
@@ -106,7 +114,9 @@ export default function HeaderHome() {
                       to={userLogin.role.id == 1 ? "/admin" : "/staff"}
                       className={`px-4 nav-item`}
                       onClick={() => {
-                        navigateTo("home-dashboard");
+                        navigateTo(
+                          userLogin.role.id == 1 ? "/admin" : "/staff"
+                        );
                       }}
                     >
                       Dashboard
@@ -121,13 +131,14 @@ export default function HeaderHome() {
                       <NavLink
                         to="/trainer/schedule"
                         className={`px-4 nav-item
-                    ${
-                      menu_active != null && menu_active == "home-schedule"
-                        ? "nav-item-after-login"
-                        : ""
-                    }`}
+                        ${
+                          menu_active != null &&
+                          menu_active == "/trainer/schedule"
+                            ? "nav-item-after-login"
+                            : ""
+                        }`}
                         onClick={() => {
-                          navigateTo("home-schedule");
+                          navigateTo("/trainer/schedule");
                         }}
                       >
                         Schedule
@@ -143,13 +154,14 @@ export default function HeaderHome() {
                       <NavLink
                         to="/trainee/schedule"
                         className={`px-4 nav-item
-                    ${
-                      menu_active != null && menu_active == "home-schedule"
-                        ? "nav-item-after-login"
-                        : ""
-                    }`}
+                        ${
+                          menu_active != null &&
+                          menu_active == "/trainee/schedule"
+                            ? "nav-item-after-login"
+                            : ""
+                        }`}
                         onClick={() => {
-                          navigateTo("home-schedule");
+                          navigateTo("/trainee/schedule");
                         }}
                       >
                         Schedule
@@ -157,13 +169,13 @@ export default function HeaderHome() {
                       <NavLink
                         to="/transaction"
                         className={`px-4 nav-item
-                    ${
-                      menu_active != null && menu_active == "home-booking"
-                        ? "nav-item-after-login"
-                        : ""
-                    }`}
+                        ${
+                          menu_active != null && menu_active == "/transaction"
+                            ? "nav-item-after-login"
+                            : ""
+                        }`}
                         onClick={() => {
-                          navigateTo("home-booking");
+                          navigateTo("/transaction");
                         }}
                       >
                         History
@@ -180,12 +192,12 @@ export default function HeaderHome() {
                     to="/profile"
                     className={`px-4 nav-item
                      ${
-                       menu_active != null && menu_active == "home-profile"
+                       menu_active != null && menu_active == "/profile"
                          ? "nav-item-after-login"
                          : ""
                      }`}
                     onClick={() => {
-                      navigateTo("home-profile");
+                      navigateTo("/profile");
                     }}
                     style={{ textDecoration: "none" }}
                   >
@@ -197,13 +209,13 @@ export default function HeaderHome() {
                   <NavLink
                     to="/login"
                     className={`px-4 nav-item
-              ${
-                menu_active != null && menu_active == "home-login"
-                  ? "nav-item-after-login"
-                  : ""
-              }`}
+                    ${
+                      menu_active != null && menu_active == "/login"
+                        ? "nav-item-after-login"
+                        : ""
+                    }`}
                     onClick={() => {
-                      navigateTo("home-login");
+                      navigateTo("/login");
                     }}
                   >
                     Log in
@@ -211,13 +223,13 @@ export default function HeaderHome() {
                   <NavLink
                     to="/register"
                     className={`px-4 nav-item
-              ${
-                menu_active != null && menu_active == "home-register"
-                  ? "nav-item-after-login"
-                  : ""
-              }`}
+                    ${
+                      menu_active != null && menu_active == "/register"
+                        ? "nav-item-after-login"
+                        : ""
+                    }`}
                     onClick={() => {
-                      navigateTo("home-register");
+                      navigateTo("/register");
                     }}
                   >
                     Register

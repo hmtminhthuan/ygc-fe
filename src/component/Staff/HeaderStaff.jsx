@@ -3,11 +3,12 @@ import logo from "../../assets/images/logo.png";
 import user from "../../assets/images/user.jpg";
 import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./HeaderStaff.scss";
 import { api } from "../../constants/api";
 import moment from "moment/moment";
 export default function HeaderStaff({ background, ...restParams }) {
+  const navigate = useNavigate();
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
   const [alarm, setAlarm] = useState(false);
@@ -250,7 +251,7 @@ export default function HeaderStaff({ background, ...restParams }) {
           <h2
             style={{ cursor: "pointer" }}
             onClick={() => {
-              window.location.href = "/";
+              navigate("/");
             }}
           >
             <img src={logo} />

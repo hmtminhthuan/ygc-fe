@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function MenuStaff() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
   const menu_active = localStorage.getItem("MENU_ACTIVE");
   if (menu_active == null) {
-    localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+    localStorage.setItem("MENU_ACTIVE", "/staff");
   }
 
   useEffect(() => {
@@ -17,6 +18,12 @@ export default function MenuStaff() {
       mainContent.classList.toggle("active");
     };
   }, []);
+
+  const navigateTo = (link) => {
+    localStorage.setItem("MENU_ACTIVE", link);
+    navigate(link);
+  };
+  const navigate = useNavigate();
   return (
     <div
       className="sidebar pt-0 mt-0 pt-3 border-none menu-scroll"
@@ -27,39 +34,36 @@ export default function MenuStaff() {
     >
       <ul className="sidebar--items">
         <li>
-          <a
+          <NavLink
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+              navigateTo("/staff");
             }}
             className={`${
-              menu_active == null || menu_active == "staff-dashboard"
+              menu_active == null || menu_active == "/staff"
                 ? "sidebar--items--active"
                 : ""
             }`}
-            href="/staff/dashboard"
+            to="/staff"
             id="active--link"
           >
             <span className="icon icon-1">
-              <i
-                className="ri-layout-grid-line"
-                //  style={{ color: "#59bea0" }}
-              />
+              <i className="ri-layout-grid-line" />
             </span>
             <span className="sidebar--item">Dashboard</span>
-          </a>
+          </NavLink>
         </li>
 
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-trainer"
+              menu_active != null && menu_active == "/staff/listTrainer"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-trainer");
+              navigateTo("/staff/listTrainer");
             }}
-            href="/staff/listTrainer"
+            to="/staff/listTrainer"
           >
             <span className="icon icon-4">
               <i className="ri-user-2-line" style={{ color: "#ff9aa2" }} />
@@ -67,37 +71,37 @@ export default function MenuStaff() {
             <span className="sidebar--item" style={{ whiteSpace: "nowrap" }}>
               Trainer
             </span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-trainee"
+              menu_active != null && menu_active == "/staff/listTrainee"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-trainee");
+              navigateTo("/staff/listTrainee");
             }}
-            href="/staff/listTrainee"
+            to="/staff/listTrainee"
           >
             <span className="icon icon-4">
               <i className="ri-team-line" style={{ color: "#faa46a" }} />
             </span>
             <span className="sidebar--item">Trainee</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-course"
+              menu_active != null && menu_active == "/staff/course"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-course");
+              navigateTo("/staff/course");
             }}
-            href="/staff/course"
+            to="/staff/course"
           >
             <span className="icon icon-5">
               <i
@@ -106,37 +110,37 @@ export default function MenuStaff() {
               />
             </span>
             <span className="sidebar--item">Course</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-class"
+              menu_active != null && menu_active == "/staff/classManagement"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-class");
+              navigateTo("/staff/classManagement");
             }}
-            href="/staff/classManagement"
+            to="/staff/classManagement"
           >
             <span className="icon icon-7">
               <i className=" ri-community-line" style={{ color: "#a9c555" }} />
             </span>
             <span className="sidebar--item">Class</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-feedback"
+              menu_active != null && menu_active == "/staff/feedbackManagement"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-feedback");
+              navigateTo("/staff/feedbackManagement");
             }}
-            href="/staff/feedbackManagement"
+            to="/staff/feedbackManagement"
           >
             <span className="icon icon-6">
               <i className="fa-sharp fa-solid fa-comments"></i>
@@ -147,37 +151,37 @@ export default function MenuStaff() {
             >
               Feedback
             </span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-blog"
+              menu_active != null && menu_active == "/staff/blogManagement"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-blog");
+              navigateTo("/staff/blogManagement");
             }}
-            href="/staff/blogManagement"
+            to="/staff/blogManagement"
           >
             <span className="icon icon-2">
               <i className="  ri-terminal-window-fill" />
             </span>
             <span className="sidebar--item">Blog</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "staff-booking"
+              menu_active != null && menu_active == "/staff/booking"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "staff-booking");
+              navigateTo("/staff/booking");
             }}
-            href="/staff/booking"
+            to="/staff/booking"
           >
             <span className="icon icon-5">
               <i className="fa-solid fa-money-bill"></i>
@@ -188,28 +192,30 @@ export default function MenuStaff() {
             >
               Booking
             </span>
-          </a>
+          </NavLink>
         </li>
       </ul>
       <ul className="sidebar--bottom-items">
         <li>
-          <a
-            href="/"
+          <NavLink
+            to="/"
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "home-home");
+              navigateTo("home-home");
+              // localStorage.setItem("MENU_ACTIVE", "home-home");
             }}
           >
             <span className="icon icon-4">
               <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
             <span className="sidebar--item">Home</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
-            href={`/profile`}
+          <NavLink
+            to={`/profile`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "home-profile");
+              navigateTo("/profile");
+              //localStorage.setItem("MENU_ACTIVE", "home-profile");
             }}
           >
             <span className="icon icon-7">
@@ -219,22 +225,22 @@ export default function MenuStaff() {
               ></i>{" "}
             </span>
             <span className="sidebar--item">Profile</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
-            href="/"
+          <NavLink
+            to="/"
             onClick={() => {
               localStorage.removeItem("USER_LOGIN");
               localStorage.removeItem("MENU_ACTIVE");
-              window.location.href = "/";
+              navigate("/");
             }}
           >
             <span className="icon icon-8">
               <i className="ri-logout-box-r-line" />
             </span>
             <span className="sidebar--item">Log out</span>
-          </a>
+          </NavLink>
         </li>
       </ul>
     </div>

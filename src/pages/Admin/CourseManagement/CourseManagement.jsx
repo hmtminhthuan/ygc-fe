@@ -12,7 +12,7 @@ import { Rating, Stack } from "@mui/material";
 import { alert } from "../../../component/AlertComponent/Alert";
 
 export default function CourseManagement() {
-  localStorage.setItem("MENU_ACTIVE", "admin-course");
+  localStorage.setItem("MENU_ACTIVE", "/admin/courseManagement");
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [infoMoreList, setInfoMoreList] = useState([]);

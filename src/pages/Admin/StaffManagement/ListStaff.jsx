@@ -11,7 +11,7 @@ import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { alert } from "../../../component/AlertComponent/Alert";
 export default function ListStaff() {
-  localStorage.setItem("MENU_ACTIVE", "admin-staff");
+  localStorage.setItem("MENU_ACTIVE", "/admin/listStaff");
   const [staffList, setStaffList] = useState([]);
   const [sortedStaffs, setSortedStaffs] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");

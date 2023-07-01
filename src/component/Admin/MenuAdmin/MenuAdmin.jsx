@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 export default function MenuAdmin() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
   const menu_active = localStorage.getItem("MENU_ACTIVE");
   if (menu_active == null) {
-    localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
+    localStorage.setItem("MENU_ACTIVE", "/admin");
   }
   useEffect(() => {
     const menu = document.querySelector(".menu");
@@ -18,75 +18,80 @@ export default function MenuAdmin() {
     };
   }, []);
 
+  const navigateTo = (link) => {
+    localStorage.setItem("MENU_ACTIVE", link);
+    navigate(link);
+  };
+  const navigate = useNavigate();
   return (
     <div className="sidebar bg-dark menu-scroll">
       <ul className="sidebar--items">
         <li>
-          <a
+          <NavLink
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "admin-dashboard");
+              navigateTo("/admin");
             }}
             className={`${
-              menu_active == null || menu_active == "admin-dashboard"
+              menu_active == null || menu_active == "/admin"
                 ? "sidebar--items--active"
                 : ""
             }`}
-            href="/admin/dashboard"
+            to="/admin"
           >
             <span className="icon icon-1">
               <i className="ri-layout-grid-line" />
             </span>
             <span className="sidebar--item">Dashboard</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "admin-staff"
+              menu_active != null && menu_active == "/admin/listStaff"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "admin-staff");
+              navigateTo("/admin/listStaff");
             }}
-            href="/admin/listStaff"
+            to="/admin/listStaff"
           >
             <span className="icon icon-4">
               <i className="ri-user-star-line" style={{ color: "#ff9aa2" }} />
             </span>
 
             <span className="sidebar--item">Staff</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "admin-course"
+              menu_active != null && menu_active == "/admin/courseManagement"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "admin-course");
+              navigateTo("/admin/courseManagement");
             }}
-            href="/admin/courseManagement"
+            to="/admin/courseManagement"
           >
             <span className="icon icon-5">
               <i className="ri-book-mark-line" style={{ color: "#a9c555" }} />
             </span>
             <span className="sidebar--item">Course</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
+          <NavLink
             className={`${
-              menu_active != null && menu_active == "admin-setting"
+              menu_active != null && menu_active == "/admin/setting"
                 ? "sidebar--items--active"
                 : ""
             }`}
             onClick={() => {
-              localStorage.setItem("MENU_ACTIVE", "admin-setting");
+              navigateTo("/admin/setting");
             }}
-            href="/admin/setting"
+            to="/admin/setting"
           >
             <span className="icon icon-5">
               <i className="fa-solid fa-gear"></i>
@@ -97,28 +102,20 @@ export default function MenuAdmin() {
             >
               Setting
             </span>
-          </a>
+          </NavLink>
         </li>
-        {/* <li>
-                    <a href="#">
-                        <span className="icon icon-6">
-                            <i className="  ri-terminal-window-fill" />
-                        </span>
-                        <span className="sidebar--item">Blogs</span>
-                    </a>
-                </li> */}
       </ul>
       <ul className="sidebar--bottom-items">
         <li>
-          <a href="/">
+          <NavLink to="/">
             <span className="icon icon-4">
               <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
             <span className="sidebar--item">Home</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href={`/profile`}>
+          <NavLink to={`/profile`}>
             <span className="icon icon-7">
               <i
                 className="fa-sharp fa-solid fa-address-card"
@@ -126,22 +123,22 @@ export default function MenuAdmin() {
               ></i>{" "}
             </span>
             <span className="sidebar--item">Profile</span>
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a
-            href="/"
+          <NavLink
+            to="/"
             onClick={() => {
               localStorage.removeItem("USER_LOGIN");
               localStorage.removeItem("MENU_ACTIVE");
-              window.location.href = "/";
+              navigate("/");
             }}
           >
             <span className="icon icon-8">
               <i className="ri-logout-box-r-line" />
             </span>
             <span className="sidebar--item">Log out</span>
-          </a>
+          </NavLink>
         </li>
       </ul>
     </div>

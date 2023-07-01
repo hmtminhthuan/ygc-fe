@@ -3,10 +3,11 @@ import logo from "../../../assets/images/logo.png";
 import user from "../../../assets/images/user.jpg";
 import maleImg from "../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../assets/images/avt-female.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function HeaderAdmin({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
+  const navigate = useNavigate();
   return (
     <section className="headerdb bg-black border-0 p-0">
       <div className="logo mt-2">
@@ -20,7 +21,7 @@ export default function HeaderAdmin({ background, ...restParams }) {
           style={{ cursor: "pointer" }}
           className="px-3"
           onClick={() => {
-            window.location.href = "/";
+            navigate("/");
           }}
         >
           <img src={logo} />
