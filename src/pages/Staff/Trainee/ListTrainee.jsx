@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
 import { Select } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainee.scss";
@@ -9,7 +9,7 @@ import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
 export default function ListTrainee() {
-  localStorage.setItem("MENU_ACTIVE", "staff-trainee");
+  localStorage.setItem("MENU_ACTIVE", "/staff/listTrainee");
   const [traineeList, setTraineeList] = useState([]);
   const [sortedTrainees, setSortedTrainees] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
@@ -21,14 +21,28 @@ export default function ListTrainee() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     let arr = [];
     api
       .get("/Trainee/GetAllInformationTraineeList")
       .then((res) => {
         arr = res.data;
         setTraineeList(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +73,11 @@ export default function ListTrainee() {
           });
       });
   }, []);
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
 
   useEffect(() => {
     let sortedTrainees = [...traineeList];
@@ -368,7 +387,7 @@ export default function ListTrainee() {
                       <th>Class</th>
                       {/* <th>Level</th> */}
                       <th>
-                        <Link
+                        <NavLink
                           to={"/staff/createTrainee"}
                           className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none"
                           style={{
@@ -379,7 +398,7 @@ export default function ListTrainee() {
                         >
                           Create
                           {/* <i className=" ri-user-add-line mx-2 flex"></i>Create */}
-                        </Link>
+                        </NavLink>
                       </th>
                     </tr>
                   </thead>
@@ -403,7 +422,11 @@ export default function ListTrainee() {
                           if (listOfSearchedName.length <= 0) {
                             return true;
                           } else if (listOfSearchedName.length <= 1) {
-                            for (i = 0; i < listOfSearchedName.length; i++) {
+                            for (
+                              let i = 0;
+                              i < listOfSearchedName.length;
+                              i++
+                            ) {
                               if (
                                 item.firstName
                                   .trim()

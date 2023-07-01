@@ -6,11 +6,11 @@ import femaleImg from "../../../assets/images/avt-female.jpg";
 import user from "../../../assets/images/user.jpg";
 import { api } from "../../../constants/api";
 import logo from "../../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 export default function Dashboard() {
-  localStorage.setItem("MENU_ACTIVE", "staff-dashboard");
+  localStorage.setItem("MENU_ACTIVE", "/staff");
 
   useEffect(() => {
     let timerInterval;
@@ -249,12 +249,12 @@ export default function Dashboard() {
                 </div>
 
                 <div className="more">
-                  <Link to={`/staff/listTrainer`} className="updateInfo">
+                  <NavLink to={`/staff/listTrainer`} className="updateInfo">
                     <i
                       className=" ri-arrow-right-s-line mx-4 mt-2 "
                       style={{ color: "#333", fontSize: "40px" }}
                     ></i>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>

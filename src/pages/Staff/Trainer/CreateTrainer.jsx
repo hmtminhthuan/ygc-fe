@@ -2,7 +2,7 @@ import React from "react";
 import { api } from "../../../constants/api";
 import { useFormik } from "formik";
 import { Form, Input, Select, Button } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./CreateTrainer.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
@@ -455,7 +455,7 @@ export default function CreateTrainer() {
                           </button>
                         </div>
                         <div className="col-6">
-                          <Link
+                          <NavLink
                             to={"/staff/listTrainer"}
                             className="btn btn-primary flex align-items-center
                             text-light bg-black border-0"
@@ -465,7 +465,7 @@ export default function CreateTrainer() {
                             }}
                           >
                             Cancel
-                          </Link>
+                          </NavLink>
                         </div>
                       </div>
                     </Form>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
 import { Select } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 import "./ListTrainer.scss";
@@ -9,7 +9,7 @@ import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
 export default function ListTrainer() {
-  localStorage.setItem("MENU_ACTIVE", "staff-trainer");
+  localStorage.setItem("MENU_ACTIVE", "/staff/listTrainer");
   const [trainerList, setTrainerList] = useState([]);
   const [sortedTrainers, setSortedTrainers] = useState([]);
   const [firstNameSort, setfirstNameSort] = useState("All");
@@ -20,12 +20,26 @@ export default function ListTrainer() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
         setTrainerList(res.data);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -337,7 +351,7 @@ export default function ListTrainer() {
                       <th>Address</th>
 
                       <th>
-                        <Link
+                        <NavLink
                           to={"/staff/createTrainer"}
                           className="p-2 h-100 flex align-items-center justify-content-center text-decoration-none"
                           style={{
@@ -347,7 +361,7 @@ export default function ListTrainer() {
                           }}
                         >
                           Create
-                        </Link>
+                        </NavLink>
                       </th>
                     </tr>
                   </thead>
@@ -371,7 +385,11 @@ export default function ListTrainer() {
                           if (listOfSearchedName.length <= 0) {
                             return true;
                           } else if (listOfSearchedName.length <= 1) {
-                            for (i = 0; i < listOfSearchedName.length; i++) {
+                            for (
+                              let i = 0;
+                              i < listOfSearchedName.length;
+                              i++
+                            ) {
                               if (
                                 item.firstName
                                   .trim()
