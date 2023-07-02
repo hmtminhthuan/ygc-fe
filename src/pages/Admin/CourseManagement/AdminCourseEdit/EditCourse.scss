@@ -1,0 +1,62 @@
+.editcourse {
+  .containerud {
+    max-width: 1140px !important;
+    padding: 0 15px !important;
+    margin: 0 189.6px !important;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    line-height: 24px;
+    height: 100vh;
+  }
+
+  form {
+    margin: 0 auto !important;
+  }
+
+  button {
+    background-color: rgba(210, 145, 188, 1);
+    color: #333;
+    font-weight: 800;
+    &:hover {
+      background-color: rgb(142, 255, 142) !important;
+      color: #333 !important;
+    }
+  }
+
+  .shadow {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 20px !important;
+  }
+  h1 {
+    font-size: 40px !important;
+    font-weight: 600 !important;
+    line-height: 48px;
+    margin: 20px auto !important;
+    color: rgba(218, 37, 179, 0.835);
+  }
+  .profile-tab-nav {
+    min-width: 250px;
+    border-right: 1px solid #dee2e6 !important;
+  }
+
+  .img-circle img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: 5px solid #fff;
+  }
+
+  .tab-content {
+    flex: 1;
+    border-radius: 17px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-control {
+    padding: 6px 12px !important;
+  }
+}
