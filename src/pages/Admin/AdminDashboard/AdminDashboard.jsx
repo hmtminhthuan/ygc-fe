@@ -7,17 +7,37 @@ import "./AdminDashboard.scss";
 export default function AdminDashboard() {
   localStorage.setItem("MENU_ACTIVE", "/admin");
   const [countList, setCountList] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 10000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/api/AdminRepositoryAPI/GetOverallStatistics")
       .then((res) => {
         const total = res.data;
         setCountList(total);
+        setIsDataLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      Swal.close();
+    }
+  }, [isDataLoaded]);
   return (
     <>
       <HeaderAdmin />

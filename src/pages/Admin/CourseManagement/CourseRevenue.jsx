@@ -34,7 +34,7 @@ export default function CourseRevenue() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1000,
+      timer: 10000,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
