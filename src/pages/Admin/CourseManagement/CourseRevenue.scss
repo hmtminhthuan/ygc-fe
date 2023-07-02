@@ -189,4 +189,15 @@
   .progress {
     box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.15);
   }
+
+  .charts {
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: center;
+    .chart {
+      width: 90%;
+      // background-color: blue;
+      // margin: 20px;
+    }
+  }
 }
