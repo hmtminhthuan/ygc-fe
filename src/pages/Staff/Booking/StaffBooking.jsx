@@ -72,7 +72,10 @@ export default function StaffBooking() {
             }
           });
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setTimeout(renderSetting, 5000); // Call the API again after 5 seconds
+      });
   };
   useEffect(() => {
     renderBooking();
@@ -84,7 +87,7 @@ export default function StaffBooking() {
   useEffect(() => {
     if (payingTime >= 0) {
       listOfBooking
-        .filter((item) => item.status == 5)
+        .filter((item) => item.status == 5 || item.status == 7)
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
             setTimeout(() => {
@@ -200,6 +203,34 @@ export default function StaffBooking() {
         );
       });
   };
+  const handleConfirmInternetBankingBooking = (id) => {
+    api
+      .post(`/CheckOutVNPAY/ConfirmBookingByStaff?bookingId=${id}`)
+      .then((res) => {
+        console.log(res);
+        alert.alertSuccessWithTime(
+          "Confirm Payment Successfully",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        alert.alertFailedWithTime(
+          "Failed To Confirm",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+      })
+      .finally(() => {
+        renderBooking();
+      });
+  };
+
   const styleDateAndTime = (date) => {
     return moment(
       new Date(`${date}`)
@@ -242,11 +273,7 @@ export default function StaffBooking() {
       setCurrentDate(new Date());
     }, 5000);
   }, []);
-  useEffect(() => {
-    setInterval(() => {
-      renderSetting();
-    }, 5000);
-  }, []);
+
   const handleCancelBooking = (id) => {
     Swal.fire({
       title: `Are you sure to cancel booking?`,
@@ -315,6 +342,25 @@ export default function StaffBooking() {
                 }}
               >
                 Reserved
+              </button>
+              <button
+                className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal
+                ${
+                  navigation == 7
+                    ? "staff-booking-navigation-item bg-info text-black"
+                    : ""
+                }`}
+                style={{
+                  border: "none",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  width: "80px",
+                }}
+                onClick={() => {
+                  setNavigation(7);
+                }}
+              >
+                Confirm
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal 
@@ -406,6 +452,11 @@ export default function StaffBooking() {
                   ) : (
                     <></>
                   )}
+                  {navigation == 7 ? (
+                    <th style={{ textAlign: "center" }}>Confirm Payment</th>
+                  ) : (
+                    <></>
+                  )}
                   <th style={{ textAlign: "center" }}>Status</th>
                   {/* {navigation == 1 ? (
                     <>
@@ -430,6 +481,12 @@ export default function StaffBooking() {
                   })
                   .sort((a, b) => {
                     if (navigation == 5) {
+                      return (
+                        new Date(b.bookingDate).getTime() -
+                        new Date(a.bookingDate).getTime()
+                      );
+                    }
+                    if (navigation == 7) {
                       return (
                         new Date(b.bookingDate).getTime() -
                         new Date(a.bookingDate).getTime()
@@ -683,6 +740,81 @@ export default function StaffBooking() {
                                     }}
                                   >
                                     Deny
+                                  </button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </td>
+                          ) : (
+                            <></>
+                          )}
+                          {navigation == 7 ? (
+                            <td style={{ textAlign: "center" }}>
+                              {refundDate != null &&
+                              refundDate != undefined &&
+                              refundDate != "" ? (
+                                <div className="p-0 m-0 flex-column">
+                                  <p className="p-0 m-0">
+                                    {styleDateAndTime(refundDate)
+                                      .split(",")[0]
+                                      .trim()}
+                                  </p>
+                                  <p className="p-0 m-0">
+                                    {styleDateAndTime(refundDate)
+                                      .split(",")[1]
+                                      .trim()}
+                                  </p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {status == 7 ? (
+                                <>
+                                  <button
+                                    className="bg-success text-light border-0 py-1 px-2 mt-0"
+                                    style={{ borderRadius: "10px" }}
+                                    onClick={() => {
+                                      Swal.fire({
+                                        title: `Are you sure to confirm payment?`,
+                                        icon: "info",
+                                        showCancelButton: true,
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Yes",
+                                        cancelButtonText: "No",
+                                        allowOutsideClick: false,
+                                        focusCancel: true,
+                                        focusConfirm: false,
+                                        confirmButtonColor: "red",
+                                        cancelButtonColor: "green",
+                                      }).then((result) => {
+                                        if (
+                                          result.isDenied === true ||
+                                          result.isDismissed === true
+                                        ) {
+                                        } else if (
+                                          result.isConfirmed === true
+                                        ) {
+                                          handleConfirmInternetBankingBooking(
+                                            id
+                                          );
+                                          setRecently([...recently, id]);
+                                        }
+                                      });
+                                    }}
+                                  >
+                                    Confirm
+                                  </button>
+                                  <br></br>
+                                  <button
+                                    className="bg-danger text-light border-0 py-1 mt-1 px-2 mt-0"
+                                    style={{ borderRadius: "10px" }}
+                                    onClick={() => {
+                                      handleCancelBooking(id);
+                                      setRecently([...recently, id]);
+                                    }}
+                                  >
+                                    Cancel
                                   </button>
                                 </>
                               ) : (

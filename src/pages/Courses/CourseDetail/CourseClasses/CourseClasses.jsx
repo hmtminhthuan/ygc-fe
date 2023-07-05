@@ -145,9 +145,60 @@ export default function CourseClasses({
     }).then((result) => {
       if (result.isConfirmed === true) {
         setPayWay(false);
+        localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
+        handleAddBooking(classId, true, 7);
       }
     });
   };
+
+  const handlePayByAtm = (classId) => {
+    Swal.fire({
+      title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
+      // icon: 'info',
+      html: `
+        <p style="text-align:justify; margin:0;">
+        Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
+
+        Our ATM Accounts</br>
+        1. Bank: Vietcombank</br>
+        ATM Number: 1001 1059 2003 2002</br>
+        Name: Vũ Ngọc Ánh Tuyết</br>
+        Content: ${
+          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+        }</br></br>
+
+        2. Bank: VIB</br>
+        ATM Number: 101 109 203</br>
+        Name: Vũ Ngọc Ánh Tuyết</br>
+        Content: ${
+          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+        }</br></br>
+
+        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
+        or <a href="">0989 565 565</a></b></br>
+        Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
+        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
+        </p>
+        `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: "#d291bc",
+      confirmButtonText: "Confirm",
+      focusConfirm: false,
+      allowOutsideClick: false,
+      // showCloseButton: false,
+      didOpen: () => {},
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
+        handleAddBooking(classId, true, 7);
+      } else if (result.dismiss === Swal.DismissReason.close) {
+        navigate("/course");
+      }
+    });
+  };
+
   const handleAddBooking = (classId, booking, status) => {
     //  else {
     console.log({
@@ -186,6 +237,20 @@ export default function CourseClasses({
           }
           localStorage.setItem("trainee_list_booking", arr);
         }
+
+        if (res.data.status == 7) {
+          if (
+            localStorage.getItem("trainee_list_booking") != undefined &&
+            localStorage.getItem("trainee_list_booking") != null
+          ) {
+            arr = localStorage.getItem("trainee_list_booking");
+            arr = `${arr},${res.data.id}`;
+          } else {
+            arr = `${res.data.id}`;
+          }
+          localStorage.setItem("trainee_list_booking", arr);
+        }
+
         if (res.data.status == 0) {
           localStorage.setItem(
             "TRANSACTION_NOTIFICATION",
@@ -243,7 +308,7 @@ export default function CourseClasses({
           })
           .finally(() => {
             // console.log(link);
-            navigate(link);
+            window.location.href = link;
           });
       }
     });
@@ -748,7 +813,7 @@ export default function CourseClasses({
                       localStorage.removeItem("CLASS");
                     }}
                   >
-                    {/* <td className="row flex">
+                    <td className="row flex">
                       <div className="col-4 text-end">
                         <img
                           src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
@@ -760,7 +825,7 @@ export default function CourseClasses({
                       <div className="col-8 text-start">
                         <h4 className="m-0 p-0">Payment Using ATM</h4>
                       </div>
-                    </td> */}
+                    </td>
                   </tr>
 
                   <tr

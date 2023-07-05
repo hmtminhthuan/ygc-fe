@@ -6,6 +6,7 @@ import "./Transaction.scss";
 import { timeLeft } from "./TimeLeft";
 import { alert } from "../../component/AlertComponent/Alert";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 export default function Transaction() {
   const navigate = useNavigate();
   localStorage.setItem("MENU_ACTIVE", "/transaction");
@@ -13,37 +14,90 @@ export default function Transaction() {
   const [refundTime, setRefundTime] = useState(-1);
   const [current, setCurrent] = useState(new Date());
   const [listOfBooking, setListOfBooking] = useState([]);
+  const [payWay, setPayWay] = useState(false);
+  const [userLogin, setUserLogin] = useState({});
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
     }).format(price);
   };
+
+  const handleRegisterClass = (link, classId, id) => {
+    if (
+      listOfBooking.filter(
+        (item) =>
+          item.account.accountID == userLogin.accountID && item.status === 5
+      ).length > 0
+    ) {
+      Swal.fire({
+        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
+        html: `
+          <p style="text-align:justify; margin:0;">
+          You have booked a class without being paid yet. Therefore, you could not register for another class now.</br></br>
+          In case that you want to register for another class and cancel the current class you have booked,
+          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
+          Thank you very much for choosing our service.
+          </p>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonColor: "#d291bc",
+        confirmButtonText: "I understand",
+        focusConfirm: false,
+        allowOutsideClick: false,
+      });
+    } else {
+      setPayWay(true);
+      localStorage.setItem("CLASS", classId);
+    }
+    navigate("/transaction");
+  };
+
+  // const renderBooking = () => {
+  //   api
+  //     .get(`/CheckOutVNPAY/GetAllBooking`)
+  //     .then((res) => {
+  //       setListOfBooking(
+  //         [...res.data]
+  //           .filter((item) => {
+  //             return (
+  //               item.account.accountID ==
+  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+  //             );
+  //           })
+  //           .sort((a, b) => {
+  //             if (
+  //               moment(new Date(a.bookingDate)) <
+  //               moment(new Date(b.bookingDate))
+  //             ) {
+  //               return 1;
+  //             }
+  //             return -1;
+  //           })
+  //       );
+  //     })
+  //     .catch((err) => {});
+  // };
   const renderBooking = () => {
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
-        setListOfBooking(
-          [...res.data]
-            .filter((item) => {
-              return (
-                item.account.accountID ==
-                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-              );
-            })
-            .sort((a, b) => {
-              if (
-                moment(new Date(a.bookingDate)) <
-                moment(new Date(b.bookingDate))
-              ) {
-                return 1;
-              }
-              return -1;
-            })
+        const userAccountID = JSON.parse(
+          localStorage.getItem("USER_LOGIN")
+        ).accountID;
+        const filteredBookings = res.data.filter(
+          (item) => item.account.accountID === userAccountID
         );
+        setListOfBooking([...filteredBookings]);
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setTimeout(renderBooking, 5000); // Call the API again after 5 seconds
+      });
   };
+
   const renderSetting = () => {
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
@@ -80,7 +134,10 @@ export default function Transaction() {
             }
           });
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setTimeout(renderSetting, 5000); // Call the API again after 5 seconds
+      });
   };
   useEffect(() => {
     renderBooking();
@@ -95,7 +152,7 @@ export default function Transaction() {
         "TRANSACTION_NOTIFICATION"
       );
       if (TRANSACTION_NOTIFICATION == "booking") {
-        if (listOfBooking.filter((item) => item.status == 5).length > 0) {
+        if (listOfBooking.filter((item) => item.status === 5).length > 0) {
           alert.alertSuccessWithTime(
             "Book Course Successfully",
             "",
@@ -113,6 +170,44 @@ export default function Transaction() {
           );
         }
       }
+      if (TRANSACTION_NOTIFICATION == "atm") {
+        if (listOfBooking.filter((item) => item.status === 7).length > 0) {
+          alert.alertSuccessWithTime(
+            "Confirm Payment Using ATM Successfully",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        } else {
+          alert.alertFailedWithTime(
+            "Failed To Book Course By ATM",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        }
+      }
+      if (TRANSACTION_NOTIFICATION == "cash") {
+        if (listOfBooking.filter((item) => item.status === 7).length > 0) {
+          alert.alertSuccessWithTime(
+            "Confirm Payment Using Cash Successfully",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        } else {
+          alert.alertFailedWithTime(
+            "Failed To Book Course By Cash",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        }
+      }
       if (
         TRANSACTION_NOTIFICATION != undefined &&
         TRANSACTION_NOTIFICATION.includes("PAY")
@@ -120,7 +215,7 @@ export default function Transaction() {
         if (
           listOfBooking.filter(
             (item) =>
-              item.status == 1 &&
+              item.status === 1 &&
               item.id.toString() == TRANSACTION_NOTIFICATION.split("-")[1]
           ).length > 0
         ) {
@@ -134,7 +229,7 @@ export default function Transaction() {
         } else {
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS_NONE", "true");
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
-          navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
+          //navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
         }
       }
       localStorage.removeItem("TRANSACTION_NOTIFICATION");
@@ -175,7 +270,7 @@ export default function Transaction() {
   useEffect(() => {
     if (payingTime >= 0) {
       listOfBooking
-        .filter((item) => item.status == 5)
+        .filter((item) => item.status === 5)
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
             setTimeout(() => {
@@ -195,21 +290,21 @@ export default function Transaction() {
       0
     );
   };
-  const handlePayAgain = (amount, classID, courseID, id) => {
-    localStorage.setItem("TRANSACTION_NOTIFICATION", `PAY-${id}`);
-    api
-      .post(`/CheckOutVNPAY`, {
-        amount: amount,
-        accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
-        courseId: courseID,
-        classId: classID,
-      })
-      .then((res) => {
-        console.log(res);
-        navigate(res.data);
-      })
-      .catch((err) => {});
-  };
+  // const handlePayAgain = (amount, classID, courseID, id) => {
+  //   localStorage.setItem("TRANSACTION_NOTIFICATION", `PAY-${id}`);
+  //   api
+  //     .post(`/CheckOutVNPAY`, {
+  //       amount: amount,
+  //       accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
+  //       courseId: courseID,
+  //       classId: classID,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       navigate(res.data);
+  //     })
+  //     .catch((err) => {});
+  // };
   const handleRefund = (id) => {
     api
       .put(`/CheckOutVNPAY/ChangeToPendingRefund?BookingId=${id}`)
@@ -275,18 +370,151 @@ export default function Transaction() {
       }
     });
   };
-  useEffect(() => {
-    setInterval(() => {
-      console.log("render ne");
-      renderBooking();
-    }, 5000);
-  }, []);
-  console.log(listOfBooking);
-  useEffect(() => {
-    setInterval(() => {
-      renderSetting();
-    }, 5000);
-  }, []);
+
+  const handlePayAgainByVNPay = (amount, classID, courseID, id) => {
+    localStorage.setItem("TRANSACTION_NOTIFICATION", `PAY-${id}`);
+    api
+      .post(`/CheckOutVNPAY`, {
+        amount: amount,
+        accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
+        courseId: courseID,
+        classId: classID,
+      })
+      .then((res) => {
+        console.log(res);
+        window.location.href = res.data;
+      })
+      .catch((err) => {});
+  };
+
+  const handlePayAgainByAtm = (id) => {
+    Swal.fire({
+      title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
+
+      html: `
+        <p style="text-align:justify; margin:0;">
+        Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
+
+        Our ATM Accounts</br>
+        1. Bank: Vietcombank</br>
+        ATM Number: 1001 1059 2003 2002</br>
+        Name: Vũ Ngọc Ánh Tuyết</br>
+        Content: ${
+          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+        }</br></br>
+
+        2. Bank: VIB</br>
+        ATM Number: 101 109 203</br>
+        Name: Vũ Ngọc Ánh Tuyết</br>
+        Content: ${
+          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+        }</br></br>
+
+        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
+        or <a href="">0989 565 565</a></b></br>
+        Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
+        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
+        </p>
+        `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: "#d291bc",
+      confirmButtonText: "Confirm",
+      focusConfirm: false,
+      allowOutsideClick: false,
+
+      didOpen: () => {},
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        //localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
+        api
+          .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
+
+          .then((res) => {
+            console.log(res);
+            alert.alertSuccessWithTime(
+              "Confirm Payment Successfully",
+              "",
+              2000,
+              "30",
+              () => {}
+            );
+            navigate("/transaction");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert.alertFailedWithTime(
+              "Failed To Confirm",
+              "",
+              2000,
+              "30",
+              () => {}
+            );
+          })
+          .finally(() => {
+            navigate("/transaction");
+          });
+        setPayWay(false);
+      }
+    });
+  };
+
+  const handlePayAgainByCash = (id) => {
+    Swal.fire({
+      title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
+
+      html: `
+        <p style="text-align:justify; margin:0;">
+        Thank you for choosing our service. You should come to our place to complete payment.</br></br>
+        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b></br></br>
+        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a> or <a href="">0989 565 565</a></b></br>
+        Or via our Email: <b>yogacenter.contact@gmail.com</b>
+        </p>
+        `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: "#d291bc",
+      confirmButtonText: "I understand",
+      focusConfirm: false,
+      allowOutsideClick: false,
+      didOpen: () => {},
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        //localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
+        api
+          .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
+
+          .then((res) => {
+            console.log(res);
+            alert.alertSuccessWithTime(
+              "Confirm Payment Successfully",
+              "",
+              2000,
+              "30",
+              () => {}
+            );
+            navigate("/transaction");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert.alertFailedWithTime(
+              "Failed To Confirm",
+              "",
+              2000,
+              "30",
+              () => {}
+            );
+          })
+          .finally(() => {
+            navigate("/transaction");
+          });
+        setPayWay(false);
+      }
+    });
+  };
+
   return (
     <>
       <div className=" m-0 p-0">
@@ -300,7 +528,7 @@ export default function Transaction() {
             localStorage.getItem("TRANSACTION_NOTIFICATION").includes("PAY") &&
             listOfBooking.filter(
               (item) =>
-                item.status == 1 &&
+                item.status === 1 &&
                 item.id.toString() ==
                   localStorage.getItem("TRANSACTION_NOTIFICATION").split("-")[1]
             ).length <= 0
@@ -331,22 +559,22 @@ export default function Transaction() {
 
             <tbody style={{ height: "auto" }}>
               {listOfBooking
-                .filter((item) => {
-                  if (item.status == 2) {
-                    return (
-                      localStorage.getItem("trainee_list_booking") != null &&
-                      localStorage.getItem("trainee_list_booking") !=
-                        undefined &&
-                      localStorage
-                        .getItem("trainee_list_booking")
-                        .split(",")
-                        .filter(
-                          (theItem) => theItem.toString() == item.id.toString()
-                        ).length > 0
-                    );
-                  }
-                  return true;
-                })
+                // .filter((item) => {
+                //   if (item.status == 2) {
+                //     return (
+                //       localStorage.getItem("trainee_list_booking") != null &&
+                //       localStorage.getItem("trainee_list_booking") !=
+                //         undefined &&
+                //       localStorage
+                //         .getItem("trainee_list_booking")
+                //         .split(",")
+                //         .filter(
+                //           (theItem) => theItem.toString() == item.id.toString()
+                //         ).length > 0
+                //     );
+                //   }
+                //   return true;
+                // })
                 .map(
                   (
                     {
@@ -358,6 +586,8 @@ export default function Transaction() {
                       account,
                       payDate,
                       refundDate,
+                      linkPayment,
+                      classId,
                       ...restParams
                     },
                     index
@@ -374,7 +604,7 @@ export default function Transaction() {
                           {formatPrice(amount)}
                         </td>
                         <td style={{ textAlign: "center" }}>
-                          {status == 5 ? (
+                          {status === 5 ? (
                             <>
                               <span
                                 style={{
@@ -389,7 +619,22 @@ export default function Transaction() {
                           ) : (
                             <></>
                           )}
-                          {status == 1 || status == 3 ? (
+                          {status === 0 ? (
+                            <>
+                              <span
+                                style={{
+                                  borderRadius: "10px",
+                                  fontWeight: "bolder",
+                                }}
+                                className="m-0 p-0 py-1 px-2 border-0 bg-secondary bg-opacity-10 text-secondary"
+                              >
+                                Payment failed
+                              </span>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                          {status === 1 || status === 3 ? (
                             <>
                               <span
                                 style={{
@@ -404,17 +649,33 @@ export default function Transaction() {
                           ) : (
                             <></>
                           )}
-                          {status == 2 &&
-                          localStorage.getItem("trainee_list_booking") !=
-                            null &&
-                          localStorage.getItem("trainee_list_booking") !=
-                            undefined &&
-                          localStorage
-                            .getItem("trainee_list_booking")
-                            .split(",")
-                            .filter(
-                              (theItem) => theItem.toString() == id.toString()
-                            ).length > 0 ? (
+                          {status === 7 ? (
+                            <>
+                              <span
+                                style={{
+                                  borderRadius: "10px",
+                                  fontWeight: "bolder",
+                                }}
+                                className="m-0 p-0 py-1 px-2 border-0 bg-info bg-opacity-10 text-info"
+                              >
+                                Waiting Confirm
+                              </span>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                          {status === 2 ? (
+                            // &&
+                            // localStorage.getItem("trainee_list_booking") !=
+                            //   null &&
+                            // localStorage.getItem("trainee_list_booking") !=
+                            //   undefined &&
+                            // localStorage
+                            //   .getItem("trainee_list_booking")
+                            //   .split(",")
+                            //   .filter(
+                            //     (theItem) => theItem.toString() == id.toString()
+                            //   ).length > 0
                             <>
                               <span
                                 style={{
@@ -429,7 +690,7 @@ export default function Transaction() {
                           ) : (
                             <></>
                           )}
-                          {status == 4 || status == 6 ? (
+                          {status === 4 || status === 6 ? (
                             <>
                               <span
                                 style={{
@@ -450,61 +711,225 @@ export default function Transaction() {
                           {styleDateAndTime(bookingDate)}
                         </td>
                         <td>
-                          {status == 5 && payingTime >= 0 ? (
+                          {!payWay ? (
                             <>
-                              <span
-                                style={{ fontWeight: "bolder" }}
-                                className="text-success "
-                              >
-                                Time Left To Pay
-                              </span>
-                              <p
-                                style={{
-                                  fontWeight: "bolder",
-                                  fontSize: "18px",
-                                }}
-                                className="text-success p-0 m-0"
-                                id={`timeleft-id-${id}`}
-                              ></p>
-                              <button
-                                className="p-0 m-0 bg-success text-light border-0 px-3 py-1 "
-                                style={{
-                                  borderRadius: "15px",
-                                  fontSize: "16px",
-                                  fontWeight: "450",
-                                }}
-                                onClick={() => {
-                                  handlePayAgain(
-                                    amount,
-                                    restParams.class.classID,
-                                    courseID,
-                                    id
-                                  );
-                                }}
-                              >
-                                Pay Now
-                              </button>
-                              <br></br>
-                              <b className="p-0 m-0"> or</b>
-                              <button
-                                className="p-0 m-0 mt-0 bg-transparent 
+                              {(status === 5 && payingTime >= 0) ||
+                              status === 0 ? (
+                                <>
+                                  <span
+                                    style={{ fontWeight: "bolder" }}
+                                    className="text-success "
+                                  >
+                                    Time Left To Pay
+                                  </span>
+                                  <p
+                                    style={{
+                                      fontWeight: "bolder",
+                                      fontSize: "18px",
+                                    }}
+                                    className="text-success p-0 m-0"
+                                    id={`timeleft-id-${id}`}
+                                  ></p>
+                                  <button
+                                    className="p-0 m-0 bg-success text-light border-0 px-3 py-1 "
+                                    style={{
+                                      borderRadius: "15px",
+                                      fontSize: "16px",
+                                      fontWeight: "450",
+                                    }}
+                                    onClick={() => {
+                                      handleRegisterClass(linkPayment, classId);
+                                    }}
+                                  >
+                                    {status === 5 ? "Pay Now" : "Pay Again"}
+                                  </button>
+                                  <br></br>
+                                  <b className="p-0 m-0"> or</b>
+                                  <button
+                                    className="p-0 m-0 mt-0 bg-transparent 
                                 text-danger border-0 mt-1 px-1"
-                                style={{
-                                  borderRadius: "15px",
-                                  fontSize: "14px",
-                                  fontWeight: "450",
-                                }}
-                                onClick={() => {
-                                  handleCancelBooking(id);
-                                }}
-                              >
-                                Cancel
-                              </button>
+                                    style={{
+                                      borderRadius: "15px",
+                                      fontSize: "14px",
+                                      fontWeight: "450",
+                                    }}
+                                    onClick={() => {
+                                      handleCancelBooking(id);
+                                    }}
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </>
                           ) : (
-                            <></>
+                            <div
+                              className="bg-light"
+                              style={{
+                                position: "fixed",
+                                width: "100%",
+                                height: "100%",
+                                zIndex: "1000",
+                                top: "0",
+                                left: "0",
+                                bottom: "0",
+                                right: "0",
+                                overflow: "none",
+                              }}
+                            >
+                              <div
+                                className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
+        text-center px-5 align-items-center"
+                              >
+                                <div className="px-5" style={{ width: "45%" }}>
+                                  <table
+                                    className="bg-light"
+                                    style={{ height: "auto" }}
+                                  >
+                                    <thead>
+                                      <tr>
+                                        <th className="py-4">
+                                          <h4 className="m-0 p-0">
+                                            Choose Your Payment Method
+                                          </h4>
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody
+                                      style={{
+                                        height: "auto",
+                                        verticalAlign: "middle",
+                                      }}
+                                    >
+                                      <tr
+                                        className="payment-item"
+                                        style={{
+                                          borderBottom: "1px solid #333333",
+                                        }}
+                                        onClick={() => {
+                                          handlePayAgainByVNPay(
+                                            amount,
+                                            restParams.class.classID,
+                                            courseID,
+                                            id
+                                          );
+                                        }}
+                                      >
+                                        <td className="row flex">
+                                          <div className="col-4 text-end">
+                                            <img
+                                              src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
+                                              alt=""
+                                              style={{
+                                                width: "30px",
+                                                height: "30px",
+                                              }}
+                                              className="mx-0"
+                                            />
+                                          </div>
+                                          <div className="col-8 text-start">
+                                            <h4 className="m-0 p-0">
+                                              Payment By VNPay
+                                            </h4>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                      <tr
+                                        className="payment-item"
+                                        style={{
+                                          borderBottom: "1px solid #333333",
+                                        }}
+                                        onClick={() => {
+                                          handlePayAgainByAtm(id);
+                                        }}
+                                      >
+                                        <td className="row flex">
+                                          <div className="col-4 text-end">
+                                            <img
+                                              src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
+                                              alt=""
+                                              style={{
+                                                width: "30px",
+                                                height: "30px",
+                                              }}
+                                              className="mx-0"
+                                            />
+                                          </div>
+                                          <div className="col-8 text-start">
+                                            <h4 className="m-0 p-0">
+                                              Payment Using ATM
+                                            </h4>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                      <tr
+                                        className="payment-item"
+                                        style={{
+                                          borderBottom: "1px solid #333333",
+                                        }}
+                                        onClick={() => {
+                                          handlePayAgainByCash(id);
+                                        }}
+                                      >
+                                        <td className="row flex">
+                                          <div className="col-4 text-end">
+                                            <img
+                                              src="https://cdn3.iconfinder.com/data/icons/money-and-credit-card/100/money_pay_payment_dollar-08-512.png"
+                                              alt=""
+                                              style={{
+                                                width: "30px",
+                                                height: "30px",
+                                              }}
+                                              className="mx-0"
+                                            />
+                                          </div>
+                                          <div className="col-8 text-start">
+                                            {" "}
+                                            <h4 className="m-0 p-0">
+                                              Payment By Cash
+                                            </h4>{" "}
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <button
+                                    className="border-0 mt-3 bg-black text-light"
+                                    style={{ borderRadius: "10px" }}
+                                    onClick={() => {
+                                      Swal.fire({
+                                        title: `<strong>Are you sure to cancel?</strong>`,
+                                        showCloseButton: true,
+                                        showCancelButton: true,
+                                        showConfirmButton: true,
+                                        confirmButtonColor: "red",
+                                        confirmButtonText: "Yes",
+                                        cancelButtonColor: "green",
+                                        cancelButtonText: "No",
+                                        focusCancel: true,
+                                        allowOutsideClick: false,
+                                      }).then((result) => {
+                                        if (result.isConfirmed === true) {
+                                          setPayWay(false);
+                                          localStorage.removeItem("CLASS");
+                                        } else {
+                                        }
+                                      });
+                                    }}
+                                  >
+                                    <h5 className="m-0 p-0 py-2 px-3">
+                                      Cancel
+                                    </h5>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
                           )}
-                          {(status == 1 || status == 3) &&
+                          {(status === 1 || status === 7 || status === 3) &&
                           payDate != null &&
                           payDate != undefined &&
                           payDate != "" ? (
@@ -513,7 +938,7 @@ export default function Transaction() {
                               <br />
                               {styleDateAndTime(payDate)}
                               <br />
-                              {status == 1 ? (
+                              {status === 1 ? (
                                 <button
                                   className="p-0 m-0 px-2 py-1 text-primary
                               bg-primary bg-opacity-10 border-0"
@@ -558,7 +983,7 @@ export default function Transaction() {
                           ) : (
                             ""
                           )}
-                          {status == 6 &&
+                          {status === 6 &&
                           payDate != null &&
                           payDate != undefined &&
                           payDate != "" ? (
@@ -566,7 +991,7 @@ export default function Transaction() {
                           ) : (
                             ""
                           )}
-                          {status == 4 &&
+                          {status === 4 &&
                           refundDate != null &&
                           refundDate != undefined &&
                           refundDate != "" ? (
