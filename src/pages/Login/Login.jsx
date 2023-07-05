@@ -315,6 +315,10 @@ export default function Login() {
                       // label="Phone Number"
                       rules={[
                         {
+                          required: true,
+                          message: "Phone cannot be blank",
+                        },
+                        {
                           message: "Phone must be 10-11 numbers",
                           pattern: /^([0-9]{10,11})$/,
                         },
