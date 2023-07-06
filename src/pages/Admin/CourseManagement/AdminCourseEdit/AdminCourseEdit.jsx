@@ -54,9 +54,7 @@ export default function AdminCourseEdit() {
         showConfirmButton: true,
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
-        preConfirm: (login) => {
-          // console.log(login);
-        },
+        preConfirm: (login) => {},
         allowOutsideClick: true,
       }).then((result) => {
         if (result.isDenied === true || result.isDismissed === true) {
@@ -67,7 +65,6 @@ export default function AdminCourseEdit() {
               values
             )
             .then((res) => {
-              console.log("res", res);
               alert.alertSuccessWithTime(
                 "Edit Course Successfully",
                 "",
@@ -76,9 +73,7 @@ export default function AdminCourseEdit() {
                 () => {}
               );
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
         }
       });
     },
@@ -97,23 +92,17 @@ export default function AdminCourseEdit() {
         setPreviewPrice(res.data.price);
         setPreviewDiscount(res.data.discount);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     api
       .get("Level/GetAllLevel")
       .then((res) => {
         setLevelList(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
-  const handleSubmitForm = (values) => {
-    console.log(values);
-  };
+  const handleSubmitForm = (values) => {};
   return (
     <>
       <HeaderAdmin />

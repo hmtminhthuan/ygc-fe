@@ -13,6 +13,7 @@ import { api } from "../../../../constants/api";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import { NavLink } from "react-router-dom";
+import { alert } from "../../../../component/AlertComponent/Alert";
 
 export default function ClassDetail() {
   localStorage.setItem("MENU_ACTIVE", "/staff/classManagement");
@@ -46,7 +47,7 @@ export default function ClassDetail() {
   const [viewAllButton, setViewAllButton] = useState(false);
   const [hideButton, setHideButton] = useState(false);
 
-  useEffect(() => {
+  const renderClass = () => {
     api
       .get(`Course/GetCourseByID?id=${param.id}`)
       .then((res) => {
@@ -74,15 +75,15 @@ export default function ClassDetail() {
       .finally(() => {
         setCourseFinishedClasses(arr2);
       });
+  };
+
+  useEffect(() => {
+    renderClass();
   }, []);
 
   useEffect(() => {
     if (courseClasses.length > 0) {
       for (let i = 0; i < courseClasses.length; i++) {
-        // let current = moment(new Date()).format("DD-MM-YYYY");
-        // let end = moment(new Date(`${courseClasses[i].endDate}`)).format(
-        //   "DD-MM-YYYY"
-        // );
         if (
           moment(new Date()) <= moment(new Date(`${courseClasses[i].endDate}`))
         ) {
@@ -92,35 +93,49 @@ export default function ClassDetail() {
         }
       }
     }
-
-    // if (courseClasses.length > 0) {
-    //   for (i = 0; i < courseClasses.length; i++) {
-    //     // let current = moment(new Date()).format("DD-MM-YYYY");
-    //     // let end = styleDate(courseClasses[i].endDate);
-    //     if (
-    //       moment(new Date()) > moment(new Date(`${courseClasses[i].endDate}`))
-    //     ) {
-    //       setViewAllButton(true);
-    //       break;
-    //     }
-    //   }
-    // }
-    // if (courseClasses.length > 0 && !viewAllButton) {setViewAllButton(true);}
     setViewAllButton(true);
   }, [courseClasses]);
 
   let countNo = 1;
-  console.log("finished", courseFinishedClasses);
-  console.log("current", courseClasses);
+  const handleDeleteClass = (classId) => {
+    Swal.fire({
+      title: `<strong>Are you sure to delete?</strong>`,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "red",
+      confirmButtonText: "Yes",
+      cancelButtonColor: "green",
+      cancelButtonText: "No",
+      focusCancel: true,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        api
+          .post(`/Class/DeleteClass?classId=${classId}`)
+          .then((res) => {
+            alert.alertSuccessWithTime(
+              "Delete Class Successfully",
+              "",
+              3000,
+              30,
+              () => {}
+            );
+          })
+          .catch((err) => {})
+          .finally(() => {
+            renderClass();
+          });
+      } else {
+      }
+    });
+  };
   return (
     <>
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div
-          className="main--content pt-3 px-4"
-          // id="staff-class-management-area"
-        >
+        <div className="main--content pt-3 px-4">
           <div className="text-start">
             <NavLink
               to={"/staff/classManagement"}
@@ -364,7 +379,7 @@ export default function ClassDetail() {
                                     </StyledTableCell>
                                     {viewAllButton ? (
                                       <>
-                                        {/* <StyledTableCell align="center">
+                                        <StyledTableCell align="center">
                                           <button
                                             className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
                                             style={{
@@ -387,11 +402,13 @@ export default function ClassDetail() {
                                               borderRadius: "50%",
                                               fontSize: "15px",
                                             }}
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                              handleDeleteClass(classId);
+                                            }}
                                           >
                                             <i className="fa-solid fa-trash" />
                                           </button>
-                                        </StyledTableCell> */}
+                                        </StyledTableCell>
                                       </>
                                     ) : (
                                       <></>

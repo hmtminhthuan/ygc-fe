@@ -46,9 +46,7 @@ export default function Dashboard() {
           .slice(0, 7);
         setTrainerList(filteredTrainers);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   // Traineelist
@@ -62,9 +60,7 @@ export default function Dashboard() {
         );
         setTraineeList(filteredTrainees);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   //Count
@@ -76,9 +72,7 @@ export default function Dashboard() {
         const total = res.data;
         setCountList(total);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   return (

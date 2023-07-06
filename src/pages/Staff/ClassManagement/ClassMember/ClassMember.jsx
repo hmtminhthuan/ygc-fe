@@ -218,7 +218,7 @@ export default function ClassMember() {
                                 </td>
                                 <td>
                                   <h6 className="mb-0 font-13">
-                                    {trainee.firstName}
+                                    {trainee.firstName} {trainee.id}
                                   </h6>
                                 </td>
                                 <td>{trainee.lastName}</td>

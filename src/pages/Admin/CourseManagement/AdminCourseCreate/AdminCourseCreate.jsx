@@ -51,9 +51,7 @@ export default function AdminCourseCreate() {
         showConfirmButton: true,
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
-        preConfirm: (login) => {
-          // console.log(login);
-        },
+        preConfirm: (login) => {},
         allowOutsideClick: true,
       }).then((result) => {
         if (result.isDenied === true || result.isDismissed === true) {
@@ -61,7 +59,6 @@ export default function AdminCourseCreate() {
           api
             .post("Course/CreateCourse", values)
             .then((res) => {
-              console.log("res", res);
               alert.alertSuccessWithTime(
                 "Create Course Successfully",
                 "",
@@ -70,9 +67,7 @@ export default function AdminCourseCreate() {
                 () => {}
               );
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
         }
       });
     },
@@ -84,7 +79,7 @@ export default function AdminCourseCreate() {
     api
       .get("Level/GetAllLevel")
       .then((res) => setLevelList(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, []);
   return (
     <>

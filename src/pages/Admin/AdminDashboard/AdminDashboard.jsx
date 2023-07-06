@@ -28,9 +28,7 @@ export default function AdminDashboard() {
         setCountList(total);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {

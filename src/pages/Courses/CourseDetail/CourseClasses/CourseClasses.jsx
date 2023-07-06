@@ -51,77 +51,6 @@ export default function CourseClasses({
   }));
 
   const navigate = useNavigate();
-
-  // const handlePayByAtm = (classId) => {
-  //   Swal.fire({
-  //     title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
-  //     // icon: 'info',
-  //     html: `
-  //       <p style="text-align:justify; margin:0;">
-  //       Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
-
-  //       Our ATM Accounts</br>
-  //       1. Bank: Vietcombank</br>
-  //       ATM Number: 1001 1059 2003 2002</br>
-  //       Name: Vũ Ngọc Ánh Tuyết</br>
-  //       Content: ${
-  //         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-  //       }</br></br>
-
-  //       2. Bank: VIB</br>
-  //       ATM Number: 101 109 203</br>
-  //       Name: Vũ Ngọc Ánh Tuyết</br>
-  //       Content: ${
-  //         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-  //       }</br></br>
-
-  //       In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
-  //       or <a href="">0989 565 565</a></b></br>
-  //       Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
-  //       Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
-  //       </p>
-  //       `,
-  //     showCloseButton: true,
-  //     showCancelButton: false,
-  //     showConfirmButton: true,
-  //     confirmButtonColor: "#d291bc",
-  //     confirmButtonText: "I understand",
-  //     focusConfirm: false,
-  //     allowOutsideClick: false,
-  //     // showCloseButton: false,
-  //     didOpen: () => {},
-  //   }).then((result) => {
-  //     if (result.isConfirmed === true) {
-  //       if (
-  //         listOfBooking.filter(
-  //           (item) =>
-  //             item.account.accountID ==
-  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID &&
-  //             item.course.courseID == parseInt(courseId) &&
-  //             item.status == 0
-  //         ).length <= 0
-  //       ) {
-  //         api
-  //           .post(`/CheckOutVNPAY/AddBooking`, {
-  //             accountId: parseInt(
-  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-  //             ),
-  //             classId: classId,
-  //             courseId: parseInt(courseId),
-  //           })
-  //           .then((res) => {
-  //             console.log(res);
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           })
-  //           .finally(function () {
-  //             window.location.href = "/transaction";
-  //           });
-  //       }
-  //     }
-  //   });
-  // };
   const handlePayByCash = (classId) => {
     Swal.fire({
       title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
@@ -147,6 +76,8 @@ export default function CourseClasses({
         setPayWay(false);
         localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
         handleAddBooking(classId, true, 7);
+      } else if (result.dismiss === Swal.DismissReason.close) {
+        // navigate("/course");
       }
     });
   };
@@ -194,21 +125,27 @@ export default function CourseClasses({
         localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
         handleAddBooking(classId, true, 7);
       } else if (result.dismiss === Swal.DismissReason.close) {
-        navigate("/course");
+        // navigate("/course");
       }
     });
   };
 
   const handleAddBooking = (classId, booking, status) => {
-    //  else {
-    console.log({
-      accountId: parseInt(
-        JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-      ),
-      classId: classId,
-      courseId: parseInt(courseId),
-      status: status,
-    });
+    if (booking) {
+      Swal.fire({
+        title: "Booking request is pending",
+        html: "Please wait for a few seconds...",
+        timer: 3500,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          setViewData(true);
+          clearInterval(timerInterval);
+        },
+      });
+    }
     let arr = "";
     api
       .post(`/CheckOutVNPAY/AddBooking`, {
@@ -220,9 +157,7 @@ export default function CourseClasses({
         status: status,
       })
       .then((res) => {
-        console.log(res);
         if (booking) {
-          // localStorage.setItem("BOOKING_ITEM", res.data.id);
           navigate("/transaction");
         }
         if (res.data.status == 5) {
@@ -259,7 +194,30 @@ export default function CourseClasses({
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (status == 5) {
+          let filteredBookings = [];
+          api
+            .get(`/CheckOutVNPAY/GetAllBooking`)
+            .then((res) => {
+              const userAccountID = JSON.parse(
+                localStorage.getItem("USER_LOGIN")
+              ).accountID;
+              filteredBookings = res.data.filter(
+                (item) =>
+                  item.account.accountID === userAccountID && item.status === 0
+              );
+              filteredBookings.forEach((item) => {
+                api
+                  .put(`/CheckOutVNPAY/CancelBooking?bookingId=${item.id}`)
+                  .then((res) => {})
+                  .catch((err) => {});
+              });
+            })
+            .catch((err) => {})
+            .finally(() => {
+              handleAddBooking(classId, booking, status);
+            });
+        }
       });
     // }
   };
@@ -307,7 +265,6 @@ export default function CourseClasses({
             // window.open(link, "_blank");
           })
           .finally(() => {
-            // console.log(link);
             window.location.href = link;
           });
       }
@@ -478,7 +435,7 @@ export default function CourseClasses({
       })
       .catch((err) => {});
   }, []);
-  console.log(payingTime, refundTime);
+
   useEffect(() => {
     setClasses(courseClasses);
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");

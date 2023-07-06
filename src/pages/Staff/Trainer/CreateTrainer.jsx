@@ -31,7 +31,6 @@ export default function CreateTrainer() {
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      console.log(values);
       formik.setFieldValue("firstname", "");
       api
         .post("/Account/CreateAccount", values)

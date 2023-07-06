@@ -71,7 +71,7 @@ export default function AdminCourseClasses({
   }, []);
 
   let countNo = 1;
-  console.log(courseClasses, courseFinishedClasses);
+
   return (
     <div className="row flex justify-content-start">
       <div className="course-detail-classes col-10">

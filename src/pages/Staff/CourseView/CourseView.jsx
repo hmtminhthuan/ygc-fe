@@ -362,7 +362,7 @@ export default function CourseView() {
         break;
     }
   }, [sortedRating]);
-  console.log("list", courseListFeedbacks);
+
   return (
     <>
       <HeaderStaff />

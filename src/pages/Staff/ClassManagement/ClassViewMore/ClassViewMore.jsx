@@ -82,7 +82,6 @@ export default function ClassViewMore({
       .catch((err) => {});
     setViewAllButton(true);
   }, []);
-  console.log(courseClasses, courseFinishedClasses);
   let countNo = 1;
   return (
     <div className="row flex justify-content-center">
@@ -275,7 +274,11 @@ export default function ClassViewMore({
                                 {countNo++}
                               </StyledTableCell>
                               <StyledTableCell align="left">
-                                {className}
+                                <NavLink
+                                  to={`/staff/traineeOfClass/${classId}/${trainerId}`}
+                                >
+                                  {className}
+                                </NavLink>
                               </StyledTableCell>
                               <StyledTableCell
                                 align="left"
@@ -314,6 +317,7 @@ export default function ClassViewMore({
                               </StyledTableCell>
                               <StyledTableCell align="right">
                                 {numberTrainee}
+                                {maxTraniee > 0 ? ` / ${maxTraniee}` : ""}
                               </StyledTableCell>
                             </StyledTableRow>
                           );
@@ -328,7 +332,7 @@ export default function ClassViewMore({
         {viewAllButton &&
         [...courseClasses, ...courseFinishedClasses].length > 0 &&
         [...courseClasses, ...courseFinishedClasses].length >
-          [...courseClasses].length ? (
+          [...courseFinishedClasses].length ? (
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1

@@ -84,7 +84,6 @@ export default function UpdateProfile() {
       img: "",
     },
     onSubmit: (values) => {
-      console.log(values);
       if (values.img == "") {
         values.img = "female";
         if (profile.gender) {

@@ -47,7 +47,6 @@ export default function CreateBlog() {
           );
         })
         .catch((err) => {
-          console.log(err);
           setSubmitting(false);
         });
     },

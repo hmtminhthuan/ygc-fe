@@ -23,7 +23,7 @@ export default function Transaction() {
     }).format(price);
   };
 
-  const handleRegisterClass = (link, classId, id) => {
+  const handleRegisterClass = (link, classId) => {
     if (
       listOfBooking.filter(
         (item) =>
@@ -55,31 +55,6 @@ export default function Transaction() {
     navigate("/transaction");
   };
 
-  // const renderBooking = () => {
-  //   api
-  //     .get(`/CheckOutVNPAY/GetAllBooking`)
-  //     .then((res) => {
-  //       setListOfBooking(
-  //         [...res.data]
-  //           .filter((item) => {
-  //             return (
-  //               item.account.accountID ==
-  //               JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-  //             );
-  //           })
-  //           .sort((a, b) => {
-  //             if (
-  //               moment(new Date(a.bookingDate)) <
-  //               moment(new Date(b.bookingDate))
-  //             ) {
-  //               return 1;
-  //             }
-  //             return -1;
-  //           })
-  //       );
-  //     })
-  //     .catch((err) => {});
-  // };
   const renderBooking = () => {
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
@@ -87,9 +62,14 @@ export default function Transaction() {
         const userAccountID = JSON.parse(
           localStorage.getItem("USER_LOGIN")
         ).accountID;
-        const filteredBookings = res.data.filter(
-          (item) => item.account.accountID === userAccountID
-        );
+        const filteredBookings = res.data
+          .filter((item) => item.account.accountID === userAccountID)
+          .sort((a, b) => {
+            return (
+              new Date(b.bookingDate).getTime() -
+              new Date(a.bookingDate).getTime()
+            );
+          });
         setListOfBooking([...filteredBookings]);
       })
       .catch((err) => {})
@@ -139,10 +119,12 @@ export default function Transaction() {
         setTimeout(renderSetting, 5000); // Call the API again after 5 seconds
       });
   };
+
   useEffect(() => {
     renderBooking();
     renderSetting();
   }, []);
+
   useEffect(() => {
     if (
       localStorage.getItem("TRANSACTION_NOTIFICATION") != undefined &&
@@ -210,6 +192,26 @@ export default function Transaction() {
       }
       if (
         TRANSACTION_NOTIFICATION != undefined &&
+        TRANSACTION_NOTIFICATION.includes("PAYAGAINVNPAY")
+      ) {
+        if (
+          listOfBooking.filter(
+            (item) =>
+              item.status === 1 &&
+              item.id.toString() == TRANSACTION_NOTIFICATION.split("-")[1]
+          ).length > 0
+        ) {
+          alert.alertSuccessWithTime(
+            "Pay Successfully",
+            "",
+            3000,
+            "25",
+            () => {}
+          );
+          renderBookingAgain();
+        }
+      } else if (
+        TRANSACTION_NOTIFICATION != undefined &&
         TRANSACTION_NOTIFICATION.includes("PAY")
       ) {
         if (
@@ -226,61 +228,41 @@ export default function Transaction() {
             "25",
             () => {}
           );
+          renderBookingAgain();
         } else {
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS_NONE", "true");
           localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
-          //navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
+          if (TRANSACTION_NOTIFICATION.split("-")[2] != undefined) {
+            navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
+          }
         }
       }
       localStorage.removeItem("TRANSACTION_NOTIFICATION");
     }
   }, [listOfBooking.length]);
 
-  // useEffect(() => {
-  //   if (payingTime >= 0) {
-  //     listOfBooking
-  //       .filter((item) => item.status == 0)
-  //       .forEach((item) => {
-  //         // if (
-  //         //   payingTime * 60 * 60 -
-  //         //     Math.abs(
-  //         //       Math.round(
-  //         //         (new Date().getTime() -
-  //         //           (new Date(item.bookingDate).getTime() +
-  //         //             14 * 1000 * 60 * 60)) /
-  //         //           1000
-  //         //       )
-  //         //     ) >
-  //         //   0
-  //         // ) {
-  //         timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {\
-  //         });
-  //         // }
-  //       });
-  //   }
-  // }, [listOfBooking, payingTime]);
-
-  const styleDateAndTime = (date) => {
-    return moment(
-      new Date(`${date}`)
-      // .setTime(new Date(`${date}`).getTime())
-    ).format("DD-MM-YYYY, HH:mm");
-  };
-  // console.log(listOfBooking[0]);
   useEffect(() => {
     if (payingTime >= 0) {
       listOfBooking
         .filter((item) => item.status === 5)
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
-            setTimeout(() => {
-              // setCurrent(new Date());
-              renderBooking();
-            }, 3500);
+            setTimeout(() => {}, 3500);
           });
         });
     }
   }, [listOfBooking.length, payingTime]);
+
+  const styleDateAndTime = (date) => {
+    return moment(new Date(`${date}`)).format("DD-MM-YYYY, HH:mm");
+  };
+
+  const renderBookingAgain = () => {
+    setTimeout(() => {
+      renderBooking();
+    }, 5000);
+  };
+
   const isRefundAvailableView = (payDate) => {
     return (
       new Date(payDate).setTime(
@@ -290,26 +272,11 @@ export default function Transaction() {
       0
     );
   };
-  // const handlePayAgain = (amount, classID, courseID, id) => {
-  //   localStorage.setItem("TRANSACTION_NOTIFICATION", `PAY-${id}`);
-  //   api
-  //     .post(`/CheckOutVNPAY`, {
-  //       amount: amount,
-  //       accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
-  //       courseId: courseID,
-  //       classId: classID,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       navigate(res.data);
-  //     })
-  //     .catch((err) => {});
-  // };
+
   const handleRefund = (id) => {
     api
       .put(`/CheckOutVNPAY/ChangeToPendingRefund?BookingId=${id}`)
       .then((res) => {
-        console.log(res);
         alert.alertSuccessWithTime(
           "Request To Refund Successfully",
           "We will contact you as soon as possible",
@@ -317,9 +284,9 @@ export default function Transaction() {
           "33",
           () => {}
         );
+        renderBookingAgain();
       })
       .catch((err) => {
-        console.log(err);
         alert.alertFailedWithTime(
           "Request To Refund Failed",
           "",
@@ -329,6 +296,7 @@ export default function Transaction() {
         );
       });
   };
+
   const handleCancelBooking = (id) => {
     Swal.fire({
       title: `Are you sure to cancel booking?`,
@@ -348,7 +316,6 @@ export default function Transaction() {
         api
           .put(`/CheckOutVNPAY/CancelBooking?bookingId=${id}`)
           .then((res) => {
-            console.log(res);
             alert.alertSuccessWithTime(
               `Cancel Booking Successfully`,
               "",
@@ -356,9 +323,9 @@ export default function Transaction() {
               "25",
               () => {}
             );
+            renderBookingAgain();
           })
           .catch((err) => {
-            console.log(err);
             alert.alertFailedWithTime(
               `Failed To Cancel Booking`,
               "",
@@ -372,7 +339,7 @@ export default function Transaction() {
   };
 
   const handlePayAgainByVNPay = (amount, classID, courseID, id) => {
-    localStorage.setItem("TRANSACTION_NOTIFICATION", `PAY-${id}`);
+    localStorage.setItem("TRANSACTION_NOTIFICATION", `PAYAGAINVNPAY-${id}`);
     api
       .post(`/CheckOutVNPAY`, {
         amount: amount,
@@ -381,7 +348,6 @@ export default function Transaction() {
         classId: classID,
       })
       .then((res) => {
-        console.log(res);
         window.location.href = res.data;
       })
       .catch((err) => {});
@@ -432,7 +398,6 @@ export default function Transaction() {
           .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
 
           .then((res) => {
-            console.log(res);
             alert.alertSuccessWithTime(
               "Confirm Payment Successfully",
               "",
@@ -440,10 +405,10 @@ export default function Transaction() {
               "30",
               () => {}
             );
+            renderBookingAgain();
             navigate("/transaction");
           })
           .catch((err) => {
-            console.log(err);
             alert.alertFailedWithTime(
               "Failed To Confirm",
               "",
@@ -487,7 +452,6 @@ export default function Transaction() {
           .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
 
           .then((res) => {
-            console.log(res);
             alert.alertSuccessWithTime(
               "Confirm Payment Successfully",
               "",
@@ -495,10 +459,10 @@ export default function Transaction() {
               "30",
               () => {}
             );
+            renderBookingAgain();
             navigate("/transaction");
           })
           .catch((err) => {
-            console.log(err);
             alert.alertFailedWithTime(
               "Failed To Confirm",
               "",
@@ -520,23 +484,7 @@ export default function Transaction() {
       <div className=" m-0 p-0">
         <HeaderHome />
       </div>
-      <div
-        className="mt-5 pt-3"
-        style={{
-          display: `${
-            localStorage.getItem("TRANSACTION_NOTIFICATION") != undefined &&
-            localStorage.getItem("TRANSACTION_NOTIFICATION").includes("PAY") &&
-            listOfBooking.filter(
-              (item) =>
-                item.status === 1 &&
-                item.id.toString() ==
-                  localStorage.getItem("TRANSACTION_NOTIFICATION").split("-")[1]
-            ).length <= 0
-              ? "none"
-              : ""
-          }`,
-        }}
-      >
+      <div className="mt-5 pt-3">
         <h1 className="m-0 p-0 my-3 text-center">Billing History</h1>
         <div
           className="main--content transaction-trainee m-0 px-5 w-100"
@@ -551,9 +499,6 @@ export default function Transaction() {
                 <th style={{ textAlign: "center" }}>Status</th>
                 <th style={{ textAlign: "center" }}>Booking Time</th>
                 <th style={{ textAlign: "center" }}>Note</th>
-                {/* <th style={{ textAlign: "center" }}>Payment Date</th>
-                <th style={{ textAlign: "center" }}>Refund Date</th> */}
-                {/* <th style={{ textAlign: "center" }}></th> */}
               </tr>
             </thead>
 
@@ -628,7 +573,7 @@ export default function Transaction() {
                                 }}
                                 className="m-0 p-0 py-1 px-2 border-0 bg-secondary bg-opacity-10 text-secondary"
                               >
-                                Payment failed
+                                Failed Payment
                               </span>
                             </>
                           ) : (
@@ -658,7 +603,7 @@ export default function Transaction() {
                                 }}
                                 className="m-0 p-0 py-1 px-2 border-0 bg-info bg-opacity-10 text-info"
                               >
-                                Waiting Confirm
+                                Confirming
                               </span>
                             </>
                           ) : (
@@ -711,7 +656,7 @@ export default function Transaction() {
                           {styleDateAndTime(bookingDate)}
                         </td>
                         <td>
-                          {!payWay ? (
+                          {!payWay && status === 5 ? (
                             <>
                               {(status === 5 && payingTime >= 0) ||
                               status === 0 ? (
@@ -765,6 +710,9 @@ export default function Transaction() {
                               )}
                             </>
                           ) : (
+                            <></>
+                          )}
+                          {payWay && status === 5 ? (
                             <div
                               className="bg-light"
                               style={{
@@ -866,7 +814,7 @@ export default function Transaction() {
                                         </td>
                                       </tr>
 
-                                      <tr
+                                      {/* <tr
                                         className="payment-item"
                                         style={{
                                           borderBottom: "1px solid #333333",
@@ -894,7 +842,7 @@ export default function Transaction() {
                                             </h4>{" "}
                                           </div>
                                         </td>
-                                      </tr>
+                                      </tr> */}
                                     </tbody>
                                   </table>
                                   <button
@@ -928,6 +876,8 @@ export default function Transaction() {
                                 </div>
                               </div>
                             </div>
+                          ) : (
+                            <></>
                           )}
                           {(status === 1 || status === 7 || status === 3) &&
                           payDate != null &&

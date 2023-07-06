@@ -4,12 +4,14 @@ import { api } from "../../constants/api";
 import "./ScheduleTrainee.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import Swal from "sweetalert2";
+import { faB } from "@fortawesome/free-solid-svg-icons";
 
 export default function ScheduleTrainee() {
   localStorage.setItem("MENU_ACTIVE", "/trainee/schedule");
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [listOfFinishedClasses, setListOfFinishedClasses] = useState([]);
 
   // const { id } = useParams();
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
@@ -23,18 +25,18 @@ export default function ScheduleTrainee() {
     "Sunday",
   ];
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 800,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
     api
       .get("/Timeframe/GetTimeFrameList")
       .then((res) => {
@@ -50,8 +52,37 @@ export default function ScheduleTrainee() {
         setSchedule(res.data);
       })
       .catch((err) => {});
-  }, [id]);
 
+    api
+      .get(`/Trainee/getListClassForTrainee?id=${id}`)
+      .then((res) => {
+        setListOfFinishedClasses(res.data);
+        let arr = [...res.data];
+        arr.forEach((item) => {
+          api
+            .get(
+              `/Feedback/GetCourseFeedbackbyIdForStaff?courseId=${item.courseId}`
+            )
+            .then((res) => {
+              let fbArr = [];
+              fbArr = res.data;
+              fbArr = fbArr.filter((item) => item.traineeId == id);
+              if (fbArr.length > 0) {
+                item.feedback = fbArr[0];
+              } else {
+                item.feedback = {};
+              }
+            })
+            .catch((err) => {})
+            .finally(() => {
+              setListOfFinishedClasses([...arr]);
+            });
+        });
+      })
+      .catch((err) => {})
+      .finally(() => {});
+  }, []);
+  console.log(listOfFinishedClasses);
   useEffect(() => {
     if (isDataLoaded) {
       Swal.close();
@@ -67,7 +98,7 @@ export default function ScheduleTrainee() {
         <img src="img/content/timetable.png" alt />
       </div> */}
         <section className="trainer-area pt-3 pb-3">
-          <div className="row flex trainer mt-2 mx-5 mb-5">
+          <div className="row flex trainer mt-2 mx-5 mb-4">
             <div className="headerlist mt-5">
               <h1
                 className="m-0 p-0 mb-4"
@@ -169,6 +200,55 @@ export default function ScheduleTrainee() {
               </table>
             </div>
           </div>
+          {listOfFinishedClasses.length > 0 ? (
+            <div className="row flex trainer mt-1 mx-5 px-2 mb-5">
+              <div>
+                <h4 className="" style={{ color: "#e540ae" }}>
+                  <i className="ri-bookmark-line"></i> Finished Courses
+                </h4>
+              </div>
+              <div className="row">
+                {listOfFinishedClasses.map(
+                  (
+                    {
+                      courseName,
+                      courseImg,
+                      level,
+                      className,
+                      startDate,
+                      endDate,
+                    },
+                    index
+                  ) => {
+                    return (
+                      <>
+                        <div key={index} className="col-lg-6 col-md-12 px-5">
+                          <div
+                            className="py-3 px-4 w-100"
+                            style={{
+                              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                              borderRadius: "15px",
+                            }}
+                          >
+                            <img
+                              // src={courseImg}
+                              src="https://tse1.mm.bing.net/th?id=OIP.4XB8NF1awQyApnQDDmBmQwHaEo&pid=Api&P=0&h=180"
+                              style={{
+                                width: "100px",
+                                borderRadius: "8px",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }
+                )}
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </section>
       </div>
     </>

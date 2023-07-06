@@ -44,9 +44,7 @@ export default function ListTrainee() {
         setTraineeList(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => {
         let finalArr = [...arr];
         api
@@ -165,7 +163,6 @@ export default function ListTrainee() {
           api
             .delete(`/Account/DeleteAccount?id=${traineeId}`)
             .then(() => {
-              // console.log("Trainee deleted successfully.");
               // Refresh the trainee list after deletion
               setTraineeList((prevList) =>
                 prevList.filter((trainee) => trainee.accountID !== traineeId)

@@ -421,7 +421,9 @@ export default function ClassManagement() {
                               }}
                             />
                           </td>
-                          <td style={{ textAlign: "left" }}>{courseName}</td>
+                          <td style={{ textAlign: "left" }}>
+                            {courseName} {courseID}
+                          </td>
                           <td style={{ textAlign: "left" }}>{levelName}</td>
                           {classInfo != null && classInfo != undefined ? (
                             <td style={{ textAlign: "right" }}>

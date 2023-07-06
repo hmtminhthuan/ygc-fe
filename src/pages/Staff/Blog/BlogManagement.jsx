@@ -36,9 +36,7 @@ export default function BlogManagement() {
         setBlogList(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {

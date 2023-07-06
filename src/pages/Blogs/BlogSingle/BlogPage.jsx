@@ -36,9 +36,7 @@ export default function BlogPage() {
         setBlogDetail(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [param.id]);
 
   useEffect(() => {

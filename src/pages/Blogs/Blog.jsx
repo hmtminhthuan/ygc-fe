@@ -41,9 +41,7 @@ function Blog() {
         setBlogList(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {

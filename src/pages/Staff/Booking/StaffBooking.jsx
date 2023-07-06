@@ -33,6 +33,12 @@ export default function StaffBooking() {
             .sort((a, b) => {
               return a.status - b.status;
             })
+            .sort((a, b) => {
+              return (
+                new Date(b.bookingDate).getTime() -
+                new Date(a.bookingDate).getTime()
+              );
+            })
         );
       })
       .catch((err) => {});
@@ -117,29 +123,8 @@ export default function StaffBooking() {
         });
     }
   }, [listOfBooking.length, refundTime]);
-  // const handleAcceptFromPending = (accountID, courseID, classID) => {
-  //   api
-  //     .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
-  //       status: 1,
-  //       accountId: parseInt(accountID),
-  //       classId: parseInt(classID),
-  //       courseId: parseInt(courseID),
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       renderBooking();
-  //     });
-  // };
+
   const handleRefund = (accountID, courseID, classID) => {
-    console.log({
-      accId: parseInt(accountID),
-      courseId: parseInt(courseID),
-    });
     api
       .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
         status: 4,
@@ -147,12 +132,8 @@ export default function StaffBooking() {
         classId: parseInt(classID),
         courseId: parseInt(courseID),
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      .then((res) => {})
+      .catch((err) => {})
       .finally(() => {
         renderBooking();
       });
@@ -162,7 +143,6 @@ export default function StaffBooking() {
         courseId: parseInt(courseID),
       })
       .then((res) => {
-        console.log(res);
         alert.alertSuccessWithTime(
           "Refund Successfully",
           "",
@@ -170,9 +150,9 @@ export default function StaffBooking() {
           "25",
           () => {}
         );
+        renderAgain();
       })
       .catch((err) => {
-        console.log(err);
         alert.alertFailedWithTime("Failed To Refund", "", 2000, "25", () => {});
       })
       .finally(() => {
@@ -183,7 +163,6 @@ export default function StaffBooking() {
     api
       .put(`/CheckOutVNPAY/DenyRefund?bookingId=${id}`)
       .then((res) => {
-        console.log(res);
         alert.alertSuccessWithTime(
           "Deny The Refund Successfully",
           "",
@@ -191,9 +170,9 @@ export default function StaffBooking() {
           "30",
           () => {}
         );
+        renderAgain();
       })
       .catch((err) => {
-        console.log(err);
         alert.alertFailedWithTime(
           "Failed To Deny The Refund",
           "",
@@ -207,7 +186,6 @@ export default function StaffBooking() {
     api
       .post(`/CheckOutVNPAY/ConfirmBookingByStaff?bookingId=${id}`)
       .then((res) => {
-        console.log(res);
         alert.alertSuccessWithTime(
           "Confirm Payment Successfully",
           "",
@@ -215,9 +193,9 @@ export default function StaffBooking() {
           "30",
           () => {}
         );
+        renderAgain();
       })
       .catch((err) => {
-        console.log(err);
         alert.alertFailedWithTime(
           "Failed To Confirm",
           "",
@@ -267,11 +245,17 @@ export default function StaffBooking() {
     }
     renderBooking();
   }, [navigation]);
+
+  const renderAgain = () => {
+    setTimeout(() => {
+      renderBooking();
+    }, 3000);
+  };
+
   useEffect(() => {
     setInterval(() => {
       renderBooking();
-      setCurrentDate(new Date());
-    }, 5000);
+    }, 10000);
   }, []);
 
   const handleCancelBooking = (id) => {
@@ -293,7 +277,6 @@ export default function StaffBooking() {
         api
           .put(`/CheckOutVNPAY/CancelBooking?bookingId=${id}`)
           .then((res) => {
-            console.log(res);
             alert.alertSuccessWithTime(
               `Cancel Booking Successfully`,
               "",
@@ -301,9 +284,9 @@ export default function StaffBooking() {
               "25",
               () => {}
             );
+            renderAgain();
           })
           .catch((err) => {
-            console.log(err);
             alert.alertFailedWithTime(
               `Failed To Cancel Booking`,
               "",
@@ -315,7 +298,6 @@ export default function StaffBooking() {
       }
     });
   };
-  console.log(listOfBooking);
   return (
     <>
       <HeaderStaff />
@@ -354,13 +336,13 @@ export default function StaffBooking() {
                   border: "none",
                   borderTopLeftRadius: "10px",
                   borderTopRightRadius: "10px",
-                  width: "80px",
+                  width: "88px",
                 }}
                 onClick={() => {
                   setNavigation(7);
                 }}
               >
-                Confirm
+                Confirming
               </button>
               <button
                 className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal 
@@ -453,11 +435,15 @@ export default function StaffBooking() {
                     <></>
                   )}
                   {navigation == 7 ? (
-                    <th style={{ textAlign: "center" }}>Confirm Payment</th>
+                    <th style={{ textAlign: "center" }}>Confirm</th>
                   ) : (
                     <></>
                   )}
-                  <th style={{ textAlign: "center" }}>Status</th>
+                  {navigation != 7 ? (
+                    <th style={{ textAlign: "center" }}>Status</th>
+                  ) : (
+                    <></>
+                  )}
                   {/* {navigation == 1 ? (
                     <>
                       <th style={{ textAlign: "center" }}>Refund</th>
@@ -807,7 +793,8 @@ export default function StaffBooking() {
                                   </button>
                                   <br></br>
                                   <button
-                                    className="bg-danger text-light border-0 py-1 mt-1 px-2 mt-0"
+                                    className="bg-danger text-light border-0
+                                     py-1 mt-1 px-2 mt-0"
                                     style={{ borderRadius: "10px" }}
                                     onClick={() => {
                                       handleCancelBooking(id);

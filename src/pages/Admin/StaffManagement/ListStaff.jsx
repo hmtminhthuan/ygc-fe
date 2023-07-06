@@ -43,9 +43,7 @@ export default function ListStaff() {
         setStaffList(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {

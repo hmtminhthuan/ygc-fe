@@ -41,9 +41,7 @@ export default function ListTrainer() {
         setTrainerList(res.data);
         setIsDataLoaded(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
@@ -132,7 +130,6 @@ export default function ListTrainer() {
           api
             .delete(`/Account/DeleteAccount?id=${trainerId}`)
             .then(() => {
-              // console.log("Trainer deleted successfully.");
               // Refresh the trainee list after deletion
               setTrainerList((prevList) =>
                 prevList.filter((trainer) => trainer.accountID !== trainerId)

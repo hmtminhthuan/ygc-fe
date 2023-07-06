@@ -64,11 +64,6 @@ export default function AdminSetting() {
       const formattedDate =
         moment(new Date(values.activeDate)).format("YYYY-MM-DDTHH:mm:ss.SSS") +
         "Z";
-      console.log({
-        id: values.id,
-        activeValue: values.activeValue,
-        activeDate: formattedDate,
-      });
 
       api
         .post("/api/AdminRepositoryAPI/UpdateSetting", [
