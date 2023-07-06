@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../constants/api";
-import { Select } from "antd";
+import { Pagination, Select } from "antd";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
@@ -12,7 +12,6 @@ export default function ListTrainee() {
   localStorage.setItem("MENU_ACTIVE", "/staff/listTrainee");
   const [traineeList, setTraineeList] = useState([]);
   const [sortedTrainees, setSortedTrainees] = useState([]);
-  const [firstNameSort, setfirstNameSort] = useState("All");
   const [genderSort, setgenderSort] = useState("All");
   const [searchedEmail, setSearchedEmail] = useState("");
   const [searchedPhone, setSearchedPhone] = useState("");
@@ -22,6 +21,9 @@ export default function ListTrainee() {
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [numberOfPage, setNumberOfPage] = useState(1);
+  const [currentPagination, setCurrentPagination] = useState(1);
 
   useEffect(() => {
     let timerInterval;
@@ -64,6 +66,9 @@ export default function ListTrainee() {
                 finalArr = [...finalArr, item];
               }
             });
+            if (res.data.length >= 8) {
+              setNumberOfPage(Math.floor(res.data.length / 8));
+            }
           })
           .catch((err) => {})
           .finally(() => {
@@ -76,10 +81,18 @@ export default function ListTrainee() {
       Swal.close();
     }
   }, [isDataLoaded]);
-
+  useEffect(() => {
+    setNumberOfPage(-1);
+    if (
+      (searchedName != "" || searchedPhone != "" || searchedEmail != "") &&
+      currentPagination != 1
+    ) {
+      setCurrentPagination(1);
+    }
+  }, [searchedEmail, searchedPhone, searchedName]);
   useEffect(() => {
     let sortedTrainees = [...traineeList];
-
+    setNumberOfPage(1);
     switch (genderSort) {
       case "all":
         sortedTrainees = [...traineeList];
@@ -98,27 +111,10 @@ export default function ListTrainee() {
         sortedTrainees = [...traineeList];
         break;
     }
-
-    switch (firstNameSort) {
-      case "all":
-        sortedTrainees = [...traineeList];
-        break;
-      case "asc":
-        sortedTrainees = sortedTrainees.sort((a, b) =>
-          a.firstName.localeCompare(b.firstName, { sensitivity: "base" })
-        );
-        break;
-      case "desc":
-        sortedTrainees = sortedTrainees.sort((a, b) =>
-          b.firstName.localeCompare(a.firstName, { sensitivity: "base" })
-        );
-        break;
-      default:
-        break;
-    }
-
+    setNumberOfPage(Math.floor(sortedTrainees.length / 8));
+    setCurrentPagination(1);
     setSortedTrainees(sortedTrainees);
-  }, [firstNameSort, genderSort, traineeList]);
+  }, [genderSort, traineeList]);
 
   useEffect(() => {
     if (searchedName == "") {
@@ -259,9 +255,9 @@ export default function ListTrainee() {
                             backgroundColor: "#333333",
                           }}
                         >
+                          <option value="all">All</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
-                          <option value="all">All</option>
                         </select>
                       </th>
                       <th>
@@ -469,6 +465,15 @@ export default function ListTrainee() {
                         }
                       })
                       .map((trainee, index) => {
+                        let indexCompare = Math.floor(index / 8);
+                        if (indexCompare > numberOfPage) {
+                          setNumberOfPage(indexCompare + 1);
+                        }
+                        if (numberOfPage >= 1) {
+                          if (!(indexCompare === currentPagination - 1)) {
+                            return <></>;
+                          }
+                        }
                         return (
                           <tr key={trainee.accountID}>
                             {/* <td>{`${trainee.accountID}`}</td> */}
@@ -494,6 +499,23 @@ export default function ListTrainee() {
                           </tr>
                         );
                       })}
+                    {numberOfPage >= 2 ? (
+                      <tr>
+                        <td colSpan={9}>
+                          <Pagination
+                            onChange={(value) => {
+                              setCurrentPagination(parseInt(value));
+                            }}
+                            current={currentPagination}
+                            defaultCurrent={1}
+                            defaultPageSize={1}
+                            total={numberOfPage === -1 ? 2 : numberOfPage}
+                          />
+                        </td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
                   </tbody>
                 </table>
               </div>

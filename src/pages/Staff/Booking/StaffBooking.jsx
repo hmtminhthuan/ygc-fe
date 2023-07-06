@@ -7,6 +7,7 @@ import { timeLeft } from "../../Trainee/TimeLeft";
 import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
 import "./StaffBooking.scss";
+import { Pagination } from "antd";
 export default function StaffBooking() {
   localStorage.setItem("MENU_ACTIVE", "/staff/booking");
   const [listOfBooking, setListOfBooking] = useState([]);
@@ -15,6 +16,14 @@ export default function StaffBooking() {
   const [payingTime, setPayingTime] = useState(-1);
   const [refundTime, setRefundTime] = useState(-1);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [numberOfPage, setNumberOfPage] = useState(-1);
+  const [currentPagination, setCurrentPagination] = useState(-1);
+  const [viewPagination, setViewPagination] = useState(false);
+  const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
+  const [searchedPhone, setSearchedPhone] = useState("");
+  const [viewNameSearch, setViewNameSearch] = useState(false);
+  const [searchedName, setSearchedName] = useState("");
+  const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -83,13 +92,42 @@ export default function StaffBooking() {
         setTimeout(renderSetting, 5000); // Call the API again after 5 seconds
       });
   };
+
   useEffect(() => {
     renderBooking();
     renderSetting();
   }, []);
+
   useEffect(() => {
     renderBooking();
+    setNumberOfPage(-1);
+    setViewPagination(false);
+    setCurrentPagination(1);
   }, [navigation]);
+
+  useEffect(() => {
+    if (searchedName == "") {
+      setListOfSearchedName([]);
+    } else {
+      let list = [];
+      let values = searchedName.split(" ");
+      values.forEach((item) => {
+        if (item.trim() != "") {
+          list = [...list, item.trim()];
+          setListOfSearchedName(list);
+        }
+      });
+    }
+  }, [searchedName]);
+
+  useEffect(() => {
+    setNumberOfPage(-1);
+    setViewPagination(false);
+    if ((searchedName != "" || searchedPhone != "") && currentPagination != 1) {
+      setCurrentPagination(1);
+    }
+  }, [searchedName, searchedPhone]);
+
   useEffect(() => {
     if (payingTime >= 0) {
       listOfBooking
@@ -298,6 +336,7 @@ export default function StaffBooking() {
       }
     });
   };
+
   return (
     <>
       <HeaderStaff />
@@ -409,8 +448,116 @@ export default function StaffBooking() {
               <thead>
                 <tr>
                   <th style={{ textAlign: "left" }}>No.</th>
-                  <th style={{ textAlign: "left" }}>Name</th>
-                  <th style={{ textAlign: "left" }}>Phone</th>
+                  <th style={{ textAlign: "left" }}>
+                    Name
+                    <button
+                      className="border-0 px-2 bg-transparent"
+                      style={{ position: "relative", cursor: "static" }}
+                    >
+                      <i
+                        className="fa-solid fa-magnifying-glass"
+                        style={{
+                          cursor: "pointer",
+                          transform: "scale(0.8)",
+                          color: "#fff",
+                        }}
+                        onClick={() => {
+                          if (viewNameSearch) {
+                            setViewNameSearch(false);
+                            setSearchedName("");
+                          } else {
+                            setViewPhoneSearch(false);
+                            setSearchedPhone("");
+                            setViewNameSearch(true);
+                          }
+                        }}
+                      ></i>
+                      {viewNameSearch ? (
+                        <div
+                          className=""
+                          style={{
+                            position: "absolute",
+                            top: "100%",
+                            right: "50%",
+                            width: "100px",
+                          }}
+                        >
+                          <input
+                            type="search"
+                            placeholder="Enter Part Of Name..."
+                            style={{
+                              borderRadius: "5px",
+                              border: "1px solid gray",
+                              outline: "none",
+                              fontSize: "13px",
+                            }}
+                            className="px-1 py-1"
+                            value={searchedName}
+                            onChange={(e) => {
+                              setSearchedName(e.target.value);
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </button>
+                  </th>
+                  <th style={{ textAlign: "left" }}>
+                    Phone
+                    <button
+                      className="border-0 px-2 bg-transparent"
+                      style={{ position: "relative", cursor: "static" }}
+                    >
+                      <i
+                        className="fa-solid fa-magnifying-glass"
+                        style={{
+                          cursor: "pointer",
+                          transform: "scale(0.8)",
+                          color: "#fff",
+                        }}
+                        onClick={() => {
+                          if (viewPhoneSearch) {
+                            setViewPhoneSearch(false);
+                            setSearchedPhone("");
+                          } else {
+                            setViewNameSearch(false);
+                            setSearchedName("");
+                            setViewPhoneSearch(true);
+                          }
+                        }}
+                      ></i>
+                      {viewPhoneSearch ? (
+                        <div
+                          className=""
+                          style={{
+                            position: "absolute",
+                            top: "100%",
+                            right: "50%",
+                            width: "100px",
+                          }}
+                        >
+                          <input
+                            type="search"
+                            placeholder="Enter Phone..."
+                            style={{
+                              borderRadius: "5px",
+                              border: "1px solid gray",
+                              outline: "none",
+                              fontSize: "13px",
+                            }}
+                            className="px-1 py-1"
+                            value={searchedPhone}
+                            onChange={(e) => {
+                              setSearchedPhone(e.target.value);
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </button>
+                  </th>
                   <th style={{ textAlign: "left" }}>Course</th>
                   <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                   <th style={{ textAlign: "center" }}>Booking Time</th>
@@ -464,6 +611,67 @@ export default function StaffBooking() {
                       return item.status == 4 || item.status == 6;
                     }
                     return item.status == navigation;
+                  })
+                  .filter((item) =>
+                    item.account.phone
+                      .trim()
+                      .toLowerCase()
+                      .includes(searchedPhone.trim().toLowerCase())
+                  )
+                  .filter((item) => {
+                    if (
+                      item != null &&
+                      item != undefined &&
+                      item.account != null &&
+                      item.account != undefined
+                    ) {
+                      if (listOfSearchedName.length <= 0) {
+                        return true;
+                      } else if (listOfSearchedName.length <= 1) {
+                        for (let i = 0; i < listOfSearchedName.length; i++) {
+                          if (
+                            item.account.firstName
+                              .trim()
+                              .toLowerCase()
+                              .includes(
+                                listOfSearchedName[i]
+                                  .toString()
+                                  .trim()
+                                  .toLowerCase()
+                              ) ||
+                            item.account.lastName
+                              .trim()
+                              .toLowerCase()
+                              .includes(
+                                listOfSearchedName[i]
+                                  .toString()
+                                  .trim()
+                                  .toLowerCase()
+                              )
+                          ) {
+                            return true;
+                          }
+                        }
+                      } else {
+                        let fullname = `${item.firstName} ${item.lastName}`;
+                        let fullnameReverse = `${item.lastName} ${item.firstName}`;
+                        if (
+                          searchedName
+                            .trim()
+                            .toLowerCase()
+                            .includes(fullname.toLowerCase()) ||
+                          searchedName
+                            .trim()
+                            .toLowerCase()
+                            .includes(fullnameReverse.toLowerCase())
+                        ) {
+                          return true;
+                        }
+                      }
+                      return false;
+                    } else {
+                      return true;
+                    }
                   })
                   .sort((a, b) => {
                     if (navigation == 5) {
@@ -524,6 +732,18 @@ export default function StaffBooking() {
                     ) => {
                       let { accountID, firstName, lastName, phone } = account;
                       let { courseName, courseID } = course;
+                      let indexCompare = Math.floor(index / 7);
+                      if (index >= 7 && !viewPagination) {
+                        setViewPagination(true);
+                      }
+                      if (indexCompare > numberOfPage) {
+                        setNumberOfPage(indexCompare + 1);
+                      }
+                      if (viewPagination) {
+                        if (!(indexCompare === currentPagination - 1)) {
+                          return <></>;
+                        }
+                      }
                       return (
                         <tr key={index}>
                           <td
@@ -914,6 +1134,23 @@ export default function StaffBooking() {
                       );
                     }
                   )}
+                {viewPagination ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <Pagination
+                        onChange={(value) => {
+                          setCurrentPagination(parseInt(value));
+                        }}
+                        current={currentPagination}
+                        defaultCurrent={1}
+                        defaultPageSize={1}
+                        total={numberOfPage === -1 ? 2 : numberOfPage}
+                      />
+                    </td>
+                  </tr>
+                ) : (
+                  <></>
+                )}
               </tbody>
             </table>
             <div className="">
