@@ -288,12 +288,17 @@ export default function CourseClasses({
           </p>
           `,
         showCloseButton: true,
-        showCancelButton: false,
+        showCancelButton: true,
         showConfirmButton: true,
         confirmButtonColor: "#d291bc",
         confirmButtonText: "I understand",
+        cancelButtonText: "View Your Booking",
         focusConfirm: false,
         allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed === false) {
+          navigate("/transaction");
+        }
       });
     } else if (currentClass) {
       Swal.fire({
@@ -500,8 +505,15 @@ export default function CourseClasses({
       }
     }
   }, [courseClasses.length]);
+  useEffect(() => {
+    if (payWay) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+  }, [payWay]);
   return (
-    <section className="p-0" style={{ position: "relative" }}>
+    <section className="p-0">
       {!payWay ? (
         <div className={`row flex justify-content-center`}>
           <div className="course-detail-classes col-10">
@@ -713,8 +725,8 @@ export default function CourseClasses({
           className="bg-light"
           style={{
             position: "fixed",
-            width: "100%",
-            height: "100%",
+            width: "100vw",
+            height: "100vh",
             zIndex: "1000",
             top: "0",
             left: "0",
@@ -724,10 +736,17 @@ export default function CourseClasses({
           }}
         >
           <div
-            className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
+            className="bg-dark bg-opacity-25  flex justify-content-center
         text-center px-5 align-items-center"
+            style={{ width: "100vw", height: "100vh" }}
           >
-            <div className="px-5" style={{ width: "45%" }}>
+            <div
+              className="px-5"
+              style={{
+                width: "100vw",
+                maxWidth: "680px",
+              }}
+            >
               <table className="bg-light" style={{ height: "auto" }}>
                 <thead>
                   <tr>

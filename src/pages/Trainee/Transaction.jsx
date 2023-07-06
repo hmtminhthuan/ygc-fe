@@ -478,7 +478,13 @@ export default function Transaction() {
       }
     });
   };
-
+  useEffect(() => {
+    if (payWay) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+  }, [payWay]);
   return (
     <>
       <div className=" m-0 p-0">
@@ -731,7 +737,13 @@ export default function Transaction() {
                                 className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
         text-center px-5 align-items-center"
                               >
-                                <div className="px-5" style={{ width: "45%" }}>
+                                <div
+                                  className="px-5"
+                                  style={{
+                                    width: "100vw",
+                                    maxWidth: "680px",
+                                  }}
+                                >
                                   <table
                                     className="bg-light"
                                     style={{ height: "auto" }}
