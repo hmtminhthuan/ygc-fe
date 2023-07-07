@@ -249,16 +249,21 @@ export default function Course() {
               .filter((item) => !item.deleted)
               .map((course, index) => {
                 return (
-                  <CourseDetail
-                    key={index}
-                    courseID={course.courseID}
-                    courseName={course.courseName}
-                    description={course.description}
-                    levelName={course.levelName}
-                    price={course.price.toString()}
-                    discount={course.discount}
-                    courseImg={course.courseImg}
-                  />
+                  <div
+                    className="col-lg-4 col-sm-12 col-md-6 flex justify-content-center"
+                    data-aos="fade-up"
+                  >
+                    <CourseDetail
+                      key={index}
+                      courseID={course.courseID}
+                      courseName={course.courseName}
+                      description={course.description}
+                      levelName={course.levelName}
+                      price={course.price.toString()}
+                      discount={course.discount}
+                      courseImg={course.courseImg}
+                    />
+                  </div>
                 );
               })}
           </div>

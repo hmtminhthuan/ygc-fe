@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import "./HomeCarousel.scss";
+import Aos from "aos";
 
 export default function HomeCarousel() {
+  Aos.init();
   useEffect(() => {
     var TxtType = function (el, toRotate, period) {
       this.toRotate = toRotate;

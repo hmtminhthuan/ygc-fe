@@ -7,6 +7,7 @@ import "./Blog.scss";
 import "./BlogDetail.scss";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
+import Aos from "aos";
 
 function Blog() {
   localStorage.setItem("MENU_ACTIVE", "/blog");
@@ -59,7 +60,7 @@ function Blog() {
 
     return `${day}-${month}-${year}`;
   };
-
+  Aos.init();
   return (
     <div>
       <HeaderHome />
@@ -76,19 +77,24 @@ function Blog() {
               });
               const year = dateObj.getFullYear();
               return (
-                <BlogDetail
-                  // key={index}
-                  blogID={blog.blogID}
-                  header={blog.header}
-                  content={blog.content}
-                  // date={formattedDate}
-                  day={day}
-                  month={month}
-                  year={year}
-                  firstName={blog.firstName}
-                  lastName={blog.lastName}
-                  img={blog.img}
-                />
+                <div
+                  className=" col-lg-4 col-md-6 flex justify-content-center"
+                  data-aos="zoom-in-up"
+                >
+                  <BlogDetail
+                    // key={index}
+                    blogID={blog.blogID}
+                    header={blog.header}
+                    content={blog.content}
+                    // date={formattedDate}
+                    day={day}
+                    month={month}
+                    year={year}
+                    firstName={blog.firstName}
+                    lastName={blog.lastName}
+                    img={blog.img}
+                  />
+                </div>
               );
             })}
           </div>

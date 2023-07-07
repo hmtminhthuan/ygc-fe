@@ -1,12 +1,11 @@
-import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 export const HomeTemplate = () => {
   return (
-    <>
-      <div style={{}}>
-        <Outlet />
-      </div>
-    </>
+    <div style={{}}>
+      <Outlet />
+    </div>
   );
 };

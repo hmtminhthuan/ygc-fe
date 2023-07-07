@@ -13,6 +13,7 @@ import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
+import Aos from "aos";
 
 export default function CourseDetail() {
   localStorage.setItem("MENU_ACTIVE", "/course");
@@ -147,6 +148,7 @@ export default function CourseDetail() {
       }
     }
   }, []);
+
   let {
     courseName,
     levelName,
@@ -245,64 +247,6 @@ export default function CourseDetail() {
                     </p>
                   )}
                 </div>
-                {/* <div className="flex justify-content-center mt-2">
-                  {availablePayment ? (
-                    <Button
-                      href={linkPayment}
-                      target="blank"
-                      className="w-75 flex"
-                      variant=""
-                    >
-                      <p
-                        className="p-0 m-0 bg-success text-light py-2 bg-opacity-100"
-                        style={{ borderRadius: "8px", fontWeight: "bolder" }}
-                      >
-                        Register Now
-                      </p>
-                    </Button>
-                  ) : (
-                    <button
-                      className="w-75 flex justify-content-center text-cente py-2 border-0"
-                      style={{ borderRadius: "8px" }}
-                      onClick={() => {
-                        if (
-                          userLogin.role == null ||
-                          userLogin.role == undefined
-                        ) {
-                          Swal.fire({
-                            title: `You need to Log in first`,
-                            html: `Do you want to Log in now?`,
-                            icon: "info",
-                            showCancelButton: true,
-                            showConfirmButton: true,
-                            confirmButtonText: "Yes",
-                            cancelButtonText: "No",
-                            allowOutsideClick: false,
-                          }).then((result) => {
-                            if (
-                              result.isDenied === true ||
-                              result.isDismissed === true
-                            ) {
-                            } else if (result.isConfirmed === true) {
-                              window.location.href = "/login";
-                            }
-                          });
-                        } else if (userLogin.role.id != 4) {
-                          Swal.fire({
-                            title: `Your account cannot register course.`,
-                            icon: "info",
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonText: "Confirm",
-                            allowOutsideClick: true,
-                          });
-                        }
-                      }}
-                    >
-                      Register Now
-                    </button>
-                  )}
-                </div> */}
               </div>
             </div>
 

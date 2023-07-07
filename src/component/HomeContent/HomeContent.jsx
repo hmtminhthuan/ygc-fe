@@ -15,8 +15,10 @@ import "swiper/swiper-bundle.min.css";
 // swiper core styles
 import "swiper/css";
 import "swiper/swiper.min.css";
+import Aos from "aos";
 
 export default function HomeContent() {
+  Aos.init();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
@@ -33,7 +35,10 @@ export default function HomeContent() {
     <div className="HomeContent">
       <div className="container">
         <div className="grid grid-cols-12 flex items-center">
-          <div className="left col-span-6  w-5/6 px-2 px-5">
+          <div
+            className="left col-span-6  w-5/6 px-2 px-5"
+            data-aos="fade-right"
+          >
             <h2 className="text-4xl font-semibold first-content-title">
               A super perfect chance of <br className="d-none d-lg-block"></br>{" "}
               health care at your fingertips
@@ -81,7 +86,10 @@ export default function HomeContent() {
               </li>
             </ul>
           </div>
-          <div className="right col-span-6 d-md-none d-sm-none d-lg-block">
+          <div
+            className="right col-span-6 d-md-none d-sm-none d-lg-block"
+            data-aos="fade-left"
+          >
             <img
               src="https://www.meghantelpner.com/wp-content/uploads/2011/09/Yoga_Thailand_Resort_Anantara.jpg"
               alt="..."
@@ -117,7 +125,7 @@ export default function HomeContent() {
         <h3 className="text-center pt-5 slider-content-title">
           What our Trainees Say ?
         </h3>
-        <div className="container my-5 mt-0">
+        <div className="container my-5 mt-0" data-aos="zoom-in">
           <Fragment>
             <Swiper
               loop
