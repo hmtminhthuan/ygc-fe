@@ -63,7 +63,7 @@ export default function HeaderHome() {
             id="basic-navbar-nav"
             className="flex justify-content-end px-3 py-2 pt-0 header-small navbar-item"
           >
-            <Nav className="">
+            <Nav className="" style={{ transform: "translateY(5px)" }}>
               <NavLink
                 to="/"
                 className={`px-4 nav-item

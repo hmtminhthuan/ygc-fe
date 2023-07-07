@@ -3,6 +3,7 @@
   background-color: #000 !important;
   position: fixed !important;
   width: 100% !important;
+  transition: background ease-in-out 0.2s;
   .header-container {
     width: 80%;
     @media only screen and (max-width: 900px) {
@@ -16,7 +17,7 @@
   .nav-item-after-login {
     color: rgba(210, 145, 188, 1) !important;
     font-weight: bold !important;
-    transform: scale(1.3);
+    transform: scale(1.1);
   }
 }
 .hello-user {
@@ -84,32 +85,36 @@
     font-size: 18px;
     color: #000;
     text-decoration: none !important;
+    transition: all ease 0.2s;
     @media only screen and (max-width: 940px) {
       color: white !important;
       margin: 0 !important;
       padding: 0 10px !important;
+      transition: all ease 0.2s;
 
       &:hover {
         transform: scale(1.05) !important;
+        transition: all ease 0.2s;
       }
     }
     &:hover {
       color: rgba(210, 145, 188, 1) !important;
+      transition: all ease 0.2s;
       font-weight: 500;
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
   }
 }
 .nav-item-after-login {
   color: rgba(210, 145, 188, 1) !important;
   font-weight: bold !important;
-  transform: scale(1.3);
+  transform: scale(1.1);
   // text-decoration: underline !important;
 }
 .nav-item-after-login-not-underline {
   color: rgba(210, 145, 188, 1) !important;
   font-weight: bold !important;
-  transform: scale(1.3);
+  transform: scale(1.1);
 }
 #bg-header {
   @media screen and (max-width: 1010px) {
