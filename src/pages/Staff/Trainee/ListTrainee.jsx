@@ -24,6 +24,7 @@ export default function ListTrainee() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [numberOfPage, setNumberOfPage] = useState(1);
   const [currentPagination, setCurrentPagination] = useState(1);
+  const [currentPageSize, setCurrentPageSize] = useState(8);
 
   useEffect(() => {
     let timerInterval;
@@ -465,7 +466,7 @@ export default function ListTrainee() {
                         }
                       })
                       .map((trainee, index) => {
-                        let indexCompare = Math.floor(index / 8);
+                        let indexCompare = Math.floor(index / currentPageSize);
                         if (indexCompare > numberOfPage) {
                           setNumberOfPage(indexCompare + 1);
                         }
@@ -499,17 +500,28 @@ export default function ListTrainee() {
                           </tr>
                         );
                       })}
-                    {numberOfPage >= 2 ? (
+                    {numberOfPage >= 1 ? (
                       <tr>
                         <td colSpan={9}>
                           <Pagination
-                            onChange={(value) => {
-                              setCurrentPagination(parseInt(value));
+                            onChange={(page, pageSize) => {
+                              setCurrentPagination(parseInt(page));
                             }}
                             current={currentPagination}
                             defaultCurrent={1}
-                            defaultPageSize={1}
-                            total={numberOfPage === -1 ? 2 : numberOfPage}
+                            defaultPageSize={7}
+                            total={
+                              numberOfPage === -1
+                                ? 2
+                                : numberOfPage * currentPageSize
+                            }
+                            pageSize={currentPageSize}
+                            pageSizeOptions={[8, 10, 20, 50, 100]}
+                            showSizeChanger={true}
+                            onShowSizeChange={(current, size) => {
+                              setNumberOfPage(-1);
+                              setCurrentPageSize(parseInt(size));
+                            }}
                           />
                         </td>
                       </tr>
