@@ -258,7 +258,36 @@ export default function ScheduleTrainee() {
                 <tbody>
                   {timeFrames.map((timeFrame) => (
                     <tr key={timeFrame.id}>
-                      <td className="align-middle">{timeFrame.timeFrame1}</td>
+                      <td className="align-middle">
+                        {responsive ? (
+                          <>
+                            {timeFrame.timeFrame1
+                              .split("-")
+                              .map((item, index) => {
+                                if (index === 0) {
+                                  return (
+                                    <span key={index}>
+                                      {item}
+                                      <br></br>- - -<br></br>
+                                    </span>
+                                  );
+                                }
+                                return <span key={index}>{item}</span>;
+                              })}
+                          </>
+                        ) : (
+                          <>
+                            {timeFrame.timeFrame1
+                              .split("-")
+                              .map((item, index) => {
+                                if (index === 0) {
+                                  return <span key={index}>{item} - </span>;
+                                }
+                                return <span key={index}>{item}</span>;
+                              })}
+                          </>
+                        )}
+                      </td>
                       {listOfDay.map((theDay, index) => {
                         return (
                           <td
@@ -330,9 +359,12 @@ export default function ScheduleTrainee() {
             ${responsive ? "mx-4" : "mx-5"}`}
             >
               <div>
-                <h4 className="mb-4 text-center" style={{ color: "#e540ae" }}>
+                <h2
+                  className="mb-4 text-center"
+                  style={{ color: "rgb(229, 64, 174)" }}
+                >
                   <i className="ri-bookmark-line"></i> Finished Courses
-                </h4>
+                </h2>
               </div>
               <div className="row">
                 {listOfFinishedClasses
