@@ -67,18 +67,18 @@ export default function ScheduleTrainee() {
       .catch((err) => {});
   };
   useEffect(() => {
-    // let timerInterval;
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 800,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // });
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 800,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Timeframe/GetTimeFrameList")
       .then((res) => {
@@ -389,6 +389,7 @@ export default function ScheduleTrainee() {
                         startDate,
                         endDate,
                         feedback,
+                        classId,
                       },
                       index
                     ) => {
@@ -423,7 +424,7 @@ export default function ScheduleTrainee() {
                               </div> */}
                                 <div className="col-6 px-4 text-center">
                                   <span style={{ fontWeight: "600" }}>
-                                    Course:
+                                    Course{responsive ? "" : ":"}
                                   </span>{" "}
                                   <span
                                     style={{
@@ -444,14 +445,13 @@ export default function ScheduleTrainee() {
                                 </div>
                                 <div className="col-6 px-4 text-center">
                                   <span style={{ fontWeight: "600" }}>
-                                    Class:
+                                    Class{responsive ? "" : ":"}
                                   </span>{" "}
                                   <span
                                     style={{
                                       display: `${responsive ? "none" : ""}`,
                                     }}
                                   >
-                                    {" "}
                                     {className}
                                   </span>
                                   <p
@@ -466,7 +466,7 @@ export default function ScheduleTrainee() {
                                 </div>
                                 <div className="col-6 px-4 text-center mt-2">
                                   <span style={{ fontWeight: "600" }}>
-                                    Start Date:
+                                    Start Date{responsive ? "" : ":"}
                                   </span>{" "}
                                   <span
                                     style={{
@@ -491,7 +491,7 @@ export default function ScheduleTrainee() {
                                 </div>
                                 <div className="col-6 px-4 text-center mt-2">
                                   <span style={{ fontWeight: "600" }}>
-                                    End Date:
+                                    End Date{responsive ? "" : ":"}
                                   </span>{" "}
                                   <span
                                     style={{
@@ -513,6 +513,25 @@ export default function ScheduleTrainee() {
                                       "DD - MM - YYYY"
                                     )}
                                   </p>
+                                </div>
+                                <div className="col-12 px-4 text-center mt-2">
+                                  <NavLink
+                                    className="title text-decoration-none"
+                                    to={`/trainee/classDetail/${classId}`}
+                                  >
+                                    <span
+                                      className="m-0 p-0 mt-2 bg-black text-light py-1 px-2"
+                                      title="View detail"
+                                      style={{
+                                        color: "rgb(229, 64, 174)",
+                                        borderRadius: "20px",
+                                        fontWeight: "500",
+                                      }}
+                                    >
+                                      Click here to view more detail of the
+                                      class
+                                    </span>
+                                  </NavLink>
                                 </div>
                                 <div className="col-12 flex justify-content-center mt-2">
                                   <hr className="m-0 p-0 mt-2 w-75" />

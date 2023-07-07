@@ -26,6 +26,18 @@ export default function ClassOfTrainee() {
   };
 
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 1000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     api
       .get("/Trainee/getListClassForTrainee", {
         params: {

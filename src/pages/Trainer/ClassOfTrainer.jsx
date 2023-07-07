@@ -28,6 +28,18 @@ export default function ClassOfTrainer() {
     });
   };
   useEffect(() => {
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 1000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
     const USER_ID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
     api
       .get("/Trainer/getListClassForTrainer", {
@@ -59,7 +71,7 @@ export default function ClassOfTrainer() {
         setTrainees(res.data);
       })
       .catch((err) => {});
-  }, [id]);
+  }, []);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
