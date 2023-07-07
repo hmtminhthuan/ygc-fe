@@ -36,13 +36,13 @@ export default function Home() {
       userLogin != undefined ? (
         <></>
       ) : (
-        <section>
+        <>
           <HeaderHome />
           <HomeCarousel />
           <HomeContent />
           <FAQ />
           <FooterHome />
-        </section>
+        </>
       )}
     </div>
   );
