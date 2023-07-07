@@ -24,6 +24,7 @@ export default function StaffBooking() {
   const [viewNameSearch, setViewNameSearch] = useState(false);
   const [searchedName, setSearchedName] = useState("");
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
+  const [currentPageSize, setCurrentPageSize] = useState(5);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -322,6 +323,7 @@ export default function StaffBooking() {
               "25",
               () => {}
             );
+            setRecently([...recently, id]);
             renderAgain();
           })
           .catch((err) => {
@@ -444,119 +446,130 @@ export default function StaffBooking() {
                 Cancel
               </button>
             </div>
-            <table>
+            <table
+              style={{
+                fontSize: `${navigation === 5 ? "12.5px" : ""}`,
+              }}
+            >
               <thead>
                 <tr>
                   <th style={{ textAlign: "left" }}>No.</th>
                   <th style={{ textAlign: "left" }}>
-                    Name
-                    <button
-                      className="border-0 px-2 bg-transparent"
-                      style={{ position: "relative", cursor: "static" }}
-                    >
-                      <i
-                        className="fa-solid fa-magnifying-glass"
-                        style={{
-                          cursor: "pointer",
-                          transform: "scale(0.8)",
-                          color: "#fff",
-                        }}
-                        onClick={() => {
-                          if (viewNameSearch) {
-                            setViewNameSearch(false);
-                            setSearchedName("");
-                          } else {
-                            setViewPhoneSearch(false);
-                            setSearchedPhone("");
-                            setViewNameSearch(true);
-                          }
-                        }}
-                      ></i>
-                      {viewNameSearch ? (
-                        <div
-                          className=""
+                    <div className="flex">
+                      Name
+                      <button
+                        className="border-0 px-2 bg-transparent"
+                        style={{ position: "relative", cursor: "static" }}
+                      >
+                        <i
+                          className="fa-solid fa-magnifying-glass"
                           style={{
-                            position: "absolute",
-                            top: "100%",
-                            right: "50%",
-                            width: "100px",
+                            cursor: "pointer",
+                            transform: "scale(0.8)",
+                            color: "#fff",
                           }}
-                        >
-                          <input
-                            type="search"
-                            placeholder="Enter Part Of Name..."
+                          onClick={() => {
+                            if (viewNameSearch) {
+                              setViewNameSearch(false);
+                              setSearchedName("");
+                            } else {
+                              setViewPhoneSearch(false);
+                              setSearchedPhone("");
+                              setViewNameSearch(true);
+                            }
+                          }}
+                        ></i>
+                        {viewNameSearch ? (
+                          <div
+                            className=""
                             style={{
-                              borderRadius: "5px",
-                              border: "1px solid gray",
-                              outline: "none",
-                              fontSize: "13px",
+                              position: "absolute",
+                              top: "100%",
+                              right: "50%",
+                              width: "100px",
                             }}
-                            className="px-1 py-1"
-                            value={searchedName}
-                            onChange={(e) => {
-                              setSearchedName(e.target.value);
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </button>
+                          >
+                            <input
+                              type="search"
+                              placeholder="Enter Part Of Name..."
+                              style={{
+                                borderRadius: "5px",
+                                border: "1px solid gray",
+                                outline: "none",
+                                fontSize: "13px",
+                              }}
+                              className="px-1 py-1"
+                              value={searchedName}
+                              onChange={(e) => {
+                                setSearchedName(e.target.value);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </button>
+                    </div>
                   </th>
                   <th style={{ textAlign: "left" }}>
-                    Phone
-                    <button
-                      className="border-0 px-2 bg-transparent"
-                      style={{ position: "relative", cursor: "static" }}
-                    >
-                      <i
-                        className="fa-solid fa-magnifying-glass"
+                    <div className="flex">
+                      Phone
+                      <button
+                        className="border-0 px-2 bg-transparent"
                         style={{
-                          cursor: "pointer",
-                          transform: "scale(0.8)",
-                          color: "#fff",
+                          position: "relative",
+                          cursor: "static",
                         }}
-                        onClick={() => {
-                          if (viewPhoneSearch) {
-                            setViewPhoneSearch(false);
-                            setSearchedPhone("");
-                          } else {
-                            setViewNameSearch(false);
-                            setSearchedName("");
-                            setViewPhoneSearch(true);
-                          }
-                        }}
-                      ></i>
-                      {viewPhoneSearch ? (
-                        <div
-                          className=""
+                      >
+                        <i
+                          className="fa-solid fa-magnifying-glass"
                           style={{
-                            position: "absolute",
-                            top: "100%",
-                            right: "50%",
-                            width: "100px",
+                            cursor: "pointer",
+                            transform: "scale(0.8)",
+                            color: "#fff",
                           }}
-                        >
-                          <input
-                            type="search"
-                            placeholder="Enter Phone..."
+                          onClick={() => {
+                            if (viewPhoneSearch) {
+                              setViewPhoneSearch(false);
+                              setSearchedPhone("");
+                            } else {
+                              setViewNameSearch(false);
+                              setSearchedName("");
+                              setViewPhoneSearch(true);
+                            }
+                          }}
+                        ></i>
+                        {viewPhoneSearch ? (
+                          <div
+                            className=""
                             style={{
-                              borderRadius: "5px",
-                              border: "1px solid gray",
-                              outline: "none",
-                              fontSize: "13px",
+                              position: "absolute",
+                              top: "100%",
+                              right: "50%",
+                              width: "100px",
                             }}
-                            className="px-1 py-1"
-                            value={searchedPhone}
-                            onChange={(e) => {
-                              setSearchedPhone(e.target.value);
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </button>
+                          >
+                            <input
+                              type="search"
+                              placeholder="Enter Phone..."
+                              style={{
+                                borderRadius: "5px",
+                                border: "1px solid gray",
+                                outline: "none",
+                                fontSize: "13px",
+                              }}
+                              className="px-1 py-1"
+                              value={searchedPhone}
+                              onChange={(e) => {
+                                setSearchedPhone(e.target.value);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </button>
+                    </div>
                   </th>
                   <th style={{ textAlign: "left" }}>Course</th>
                   <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
@@ -586,11 +599,11 @@ export default function StaffBooking() {
                   ) : (
                     <></>
                   )}
-                  {navigation != 7 ? (
+                  {/* {navigation != 7 ? (
                     <th style={{ textAlign: "center" }}>Status</th>
                   ) : (
                     <></>
-                  )}
+                  )} */}
                   {/* {navigation == 1 ? (
                     <>
                       <th style={{ textAlign: "center" }}>Refund</th>
@@ -601,7 +614,11 @@ export default function StaffBooking() {
                 </tr>
               </thead>
 
-              <tbody style={{ height: "auto" }}>
+              <tbody
+                style={{
+                  height: "auto",
+                }}
+              >
                 {listOfBooking
                   .filter((item) => {
                     if (navigation == 1) {
@@ -732,8 +749,8 @@ export default function StaffBooking() {
                     ) => {
                       let { accountID, firstName, lastName, phone } = account;
                       let { courseName, courseID } = course;
-                      let indexCompare = Math.floor(index / 7);
-                      if (index >= 7 && !viewPagination) {
+                      let indexCompare = Math.floor(index / currentPageSize);
+                      if (index >= currentPageSize && !viewPagination) {
                         setViewPagination(true);
                       }
                       if (indexCompare > numberOfPage) {
@@ -989,10 +1006,10 @@ export default function StaffBooking() {
                                         confirmButtonText: "Yes",
                                         cancelButtonText: "No",
                                         allowOutsideClick: false,
-                                        focusCancel: true,
-                                        focusConfirm: false,
-                                        confirmButtonColor: "red",
-                                        cancelButtonColor: "green",
+                                        focusCancel: false,
+                                        focusConfirm: true,
+                                        confirmButtonColor: "green",
+                                        cancelButtonColor: "red",
                                       }).then((result) => {
                                         if (
                                           result.isDenied === true ||
@@ -1018,7 +1035,6 @@ export default function StaffBooking() {
                                     style={{ borderRadius: "10px" }}
                                     onClick={() => {
                                       handleCancelBooking(id);
-                                      setRecently([...recently, id]);
                                     }}
                                   >
                                     Cancel
@@ -1031,80 +1047,83 @@ export default function StaffBooking() {
                           ) : (
                             <></>
                           )}
-
-                          <td style={{ textAlign: "center" }}>
-                            {status == 6 ? (
-                              <span
-                                style={{ borderRadius: "10px" }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
-                              >
-                                Pending
-                              </span>
-                            ) : (
-                              <></>
-                            )}
-                            {status == 5 ? (
-                              <>
+                          {/* {status == 7 ? (
+                            <></>
+                          ) : (
+                            <td style={{ textAlign: "center" }}>
+                              {status == 6 ? (
                                 <span
                                   style={{ borderRadius: "10px" }}
                                   className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
                                 >
-                                  Reserved
+                                  Pending
                                 </span>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {status == 1 || status == 3 ? (
-                              <>
-                                <span
-                                  style={{ borderRadius: "10px" }}
-                                  className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
-                                >
-                                  Paid
-                                </span>
-                                {status == 3 ? (
-                                  // <p
-                                  //   style={{ borderRadius: "10px" }}
-                                  //   className="m-0 p-0 py-1 px-2
-                                  //     border-0 text-danger text-center"
-                                  // >
-                                  //   Failed Refund
-                                  // </p>
-                                  <></>
-                                ) : (
-                                  <></>
-                                )}
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {status == 2 ? (
-                              <>
-                                {" "}
-                                <span
-                                  style={{ borderRadius: "10px" }}
-                                  className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
-                                >
-                                  Cancel
-                                </span>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {status == 4 ? (
-                              <>
-                                <span
-                                  style={{ borderRadius: "10px" }}
-                                  className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
-                                >
-                                  Refund
-                                </span>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                          </td>
+                              ) : (
+                                <></>
+                              )}
+                              {status == 5 ? (
+                                <>
+                                  <span
+                                    style={{ borderRadius: "10px" }}
+                                    className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
+                                  >
+                                    Reserved
+                                  </span>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {status == 1 || status == 3 ? (
+                                <>
+                                  <span
+                                    style={{ borderRadius: "10px" }}
+                                    className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
+                                  >
+                                    Paid
+                                  </span>
+                                  {status == 3 ? (
+                                    // <p
+                                    //   style={{ borderRadius: "10px" }}
+                                    //   className="m-0 p-0 py-1 px-2
+                                    //     border-0 text-danger text-center"
+                                    // >
+                                    //   Failed Refund
+                                    // </p>
+                                    <></>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {status == 2 ? (
+                                <>
+                                  {" "}
+                                  <span
+                                    style={{ borderRadius: "10px" }}
+                                    className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
+                                  >
+                                    Cancel
+                                  </span>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {status == 4 ? (
+                                <>
+                                  <span
+                                    style={{ borderRadius: "10px" }}
+                                    className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
+                                  >
+                                    Refund
+                                  </span>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </td>
+                          )} */}
 
                           {/* {navigation == 1 ? (
                             <td style={{ textAlign: "center" }}>
@@ -1138,13 +1157,24 @@ export default function StaffBooking() {
                   <tr>
                     <td colSpan={7}>
                       <Pagination
-                        onChange={(value) => {
-                          setCurrentPagination(parseInt(value));
+                        onChange={(page, pageSize) => {
+                          setCurrentPagination(parseInt(page));
                         }}
                         current={currentPagination}
                         defaultCurrent={1}
-                        defaultPageSize={1}
-                        total={numberOfPage === -1 ? 2 : numberOfPage}
+                        defaultPageSize={7}
+                        total={
+                          numberOfPage === -1
+                            ? 2
+                            : numberOfPage * currentPageSize
+                        }
+                        pageSize={currentPageSize}
+                        pageSizeOptions={[5, 10, 20, 50, 100]}
+                        showSizeChanger={true}
+                        onShowSizeChange={(current, size) => {
+                          setNumberOfPage(-1);
+                          setCurrentPageSize(parseInt(size));
+                        }}
                       />
                     </td>
                   </tr>

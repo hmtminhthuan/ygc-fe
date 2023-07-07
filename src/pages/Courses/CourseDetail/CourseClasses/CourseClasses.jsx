@@ -75,7 +75,7 @@ export default function CourseClasses({
       if (result.isConfirmed === true) {
         setPayWay(false);
         localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
-        handleAddBooking(classId, true, 7);
+        handleAddBooking(classId, false, 7);
       } else if (result.dismiss === Swal.DismissReason.close) {
         // navigate("/course");
       }
@@ -123,7 +123,7 @@ export default function CourseClasses({
     }).then((result) => {
       if (result.isConfirmed === true) {
         localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
-        handleAddBooking(classId, true, 7);
+        handleAddBooking(classId, false, 7);
       } else if (result.dismiss === Swal.DismissReason.close) {
         // navigate("/course");
       }
@@ -136,6 +136,21 @@ export default function CourseClasses({
         title: "Booking request is pending",
         html: "Please wait for a few seconds...",
         timer: 3500,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          setViewData(true);
+          clearInterval(timerInterval);
+        },
+      });
+    }
+    if (status === 7) {
+      Swal.fire({
+        title: "Your request is pending",
+        html: "Please wait for a few seconds...",
+        timer: 2000,
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -184,6 +199,7 @@ export default function CourseClasses({
             arr = `${res.data.id}`;
           }
           localStorage.setItem("trainee_list_booking", arr);
+          navigate("/transaction");
         }
 
         if (res.data.status == 0) {
@@ -194,7 +210,7 @@ export default function CourseClasses({
         }
       })
       .catch((err) => {
-        if (status == 5) {
+        if (status === 5 || status === 7) {
           let filteredBookings = [];
           api
             .get(`/CheckOutVNPAY/GetAllBooking`)
@@ -249,6 +265,19 @@ export default function CourseClasses({
     }).then((result) => {
       if (result.isConfirmed === true) {
         let link = "";
+        Swal.fire({
+          title: "Your request is pending",
+          html: "Please wait for a few seconds...",
+          timer: 1200,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          willClose: () => {
+            setViewData(true);
+            clearInterval(timerInterval);
+          },
+        });
         api
           .post(`/CheckOutVNPAY`, {
             amount: price * (1 - discount / 100),
