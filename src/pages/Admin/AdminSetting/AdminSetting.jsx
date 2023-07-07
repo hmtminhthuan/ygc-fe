@@ -29,6 +29,14 @@ export default function AdminSetting() {
   const [navigation, setNavigation] = useState(-1);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setId(1);
+      setNavigation(1);
+    }, 1000);
+  }, []);
+
   useEffect(() => {
     api
       .get("/api/AdminRepositoryAPI/GetSettingList")
@@ -96,15 +104,8 @@ export default function AdminSetting() {
     const month = dateObj.getMonth() + 1;
     const year = dateObj.getFullYear();
 
-    return `${day}-${month}-${year}`;
+    return `${day} - ${month} - ${year}`;
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setId(1);
-      setNavigation(1);
-    }, 1000);
-  }, []);
 
   const formattedDate = formatDate(activeDate);
 
@@ -112,6 +113,7 @@ export default function AdminSetting() {
     formik.setFieldValue("activeValue", value);
     setActiveValue(value);
   };
+  console.log(id, navigation);
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
@@ -124,7 +126,7 @@ export default function AdminSetting() {
             </h2>
             <div className="card overflow-hidden">
               <div className="row no-gutters row-bordered row-border-light">
-                <div className="col-md-3 pt-0">
+                <div className="col-md-4 pt-0">
                   <div className="list-group list-group-flush account-settings-links">
                     {menuSetting.map((setting) => (
                       <NavLink
@@ -133,7 +135,7 @@ export default function AdminSetting() {
                           id === 0 ? "list-group-item-active" : ""
                         }
                         ${
-                          navigation == setting.id
+                          parseInt(navigation) == parseInt(setting.id)
                             ? "bg-dark bg-opacity-10"
                             : ""
                         }`}
@@ -144,12 +146,19 @@ export default function AdminSetting() {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {setting.settingName}
+                        {parseInt(setting.id) == 1 ? "Paying Time" : ""}
+                        {parseInt(setting.id) == 2 ? "Refund Time" : ""}
+                        {parseInt(setting.id) == 3
+                          ? "Minimum number of trainee per class"
+                          : ""}
+                        {parseInt(setting.id) == 4
+                          ? "Maximum number of trainee per class"
+                          : ""}
                       </NavLink>
                     ))}
                   </div>
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-8">
                   <div className="tab-content">
                     <div
                       className={`tab-pane fade active show ${
@@ -195,13 +204,15 @@ export default function AdminSetting() {
                                   hasFeedback
                                 >
                                   <DatePicker
+                                    style={{ width: "100%" }}
                                     name="activeDate"
                                     value={formik.values.activeDate}
+                                    format={`DD-MM-YYYY, HH:mm`}
                                     onChange={(value) =>
                                       formik.setFieldValue("activeDate", value)
                                     }
                                     showTime
-                                    placeholder="Enter"
+                                    placeholder="Enter active date"
                                   />
                                 </Form.Item>
                               </div>
@@ -270,10 +281,11 @@ export default function AdminSetting() {
                                   hasFeedback
                                 >
                                   <InputNumber
+                                    style={{ width: "100%" }}
                                     name="activeValue"
                                     value={formik.values.activeValue}
                                     onChange={handleChangeActiveValue}
-                                    placeholder="Enter"
+                                    placeholder="Enter new value"
                                   />
                                 </Form.Item>
                               </div>
