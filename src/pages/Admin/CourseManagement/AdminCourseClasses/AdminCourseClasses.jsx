@@ -76,10 +76,7 @@ export default function AdminCourseClasses({
     <div className="row flex justify-content-start">
       <div className="course-detail-classes col-10">
         {courseClasses.length > 0 ? (
-          <p
-            className="text-black p-0 m-0 mx-2 mb-2"
-            style={{ fontWeight: "bold" }}
-          >
+          <p className="text-black p-0 m-0 mb-2">
             Number of Current Classes:{" "}
             {
               courseClasses.filter((item) => {
@@ -92,10 +89,7 @@ export default function AdminCourseClasses({
         ) : (
           <></>
         )}
-        <p
-          className="text-black p-0 m-0 mx-2 mb-3"
-          style={{ fontWeight: "bold" }}
-        >
+        <p className="text-black p-0 m-0 mb-3">
           Number of Total Classes:{" "}
           {[...courseClasses, ...courseFinishedClasses].length}{" "}
         </p>

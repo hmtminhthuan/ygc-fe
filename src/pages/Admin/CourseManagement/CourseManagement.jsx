@@ -478,7 +478,7 @@ export default function CourseManagement() {
             </div>
           </div>
           <table>
-            <thead className="table-head">
+            <thead className="table-head" style={{ fontSize: "12px" }}>
               <tr>
                 <th>No.</th>
                 {/* <th>ID</th> */}
