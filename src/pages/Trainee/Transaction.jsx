@@ -58,18 +58,19 @@ export default function Transaction() {
 
   const renderBooking = () => {
     api
-      .get(
-        `/CheckOutVNPAY/GetBookingByTraineeId?accountId=${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
-        }`
-      )
+      .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
-        const filteredBookings = res.data.sort((a, b) => {
-          return (
-            new Date(b.bookingDate).getTime() -
-            new Date(a.bookingDate).getTime()
-          );
-        });
+        const userAccountID = JSON.parse(
+          localStorage.getItem("USER_LOGIN")
+        ).accountID;
+        const filteredBookings = res.data
+          .filter((item) => item.account.accountID === userAccountID)
+          .sort((a, b) => {
+            return (
+              new Date(b.bookingDate).getTime() -
+              new Date(a.bookingDate).getTime()
+            );
+          });
         setListOfBooking([...filteredBookings]);
       })
       .catch((err) => {})
@@ -558,18 +559,18 @@ export default function Transaction() {
                       refundDate,
                       linkPayment,
                       classId,
-                      courseID,
                       ...restParams
                     },
                     index
                   ) => {
-                    // let { courseName, courseID } = course;
+                    let { courseName, courseID } = course;
                     return (
                       <tr
                         key={index}
                         data-aos="zoom-out"
                         data-aos-duration="100"
                         data-aos-delay="0"
+                        data-aos-offset="0"
                       >
                         <td style={{ textAlign: "left" }}>{index + 1}</td>
                         <td style={{ textAlign: "left" }}>

@@ -4,6 +4,7 @@ import { api } from "../../constants/api";
 import Swal from "sweetalert2";
 
 import "./ClassOfTrainee.scss";
+import Aos from "aos";
 
 export default function ClassOfTrainee() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function ClassOfTrainee() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1000,
+      timer: 500,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -69,6 +70,9 @@ export default function ClassOfTrainee() {
   };
 
   const levelName = classDetail.level ? classDetail.level.levelName : "";
+
+  Aos.init();
+
   return (
     <div className="main--content bg-white">
       <section className="trainer-area pt-3 pb-3">
@@ -76,7 +80,12 @@ export default function ClassOfTrainee() {
           <div className="container bootstrap snippets bootdey">
             <div className="col-md-12 ">
               <div className="profile-container mx-5">
-                <div className="profile-header row">
+                <div
+                  className="profile-header row"
+                  data-aos="zoom-in-up"
+                  data-aos-duration="150"
+                  data-aos-delay="550"
+                >
                   <div className="">
                     <NavLink
                       to={"/trainee/schedule"}

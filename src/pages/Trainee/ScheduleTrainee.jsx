@@ -8,6 +8,7 @@ import { faB } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment/moment";
 import { Rating } from "@mui/material";
 import { alert } from "../../component/AlertComponent/Alert";
+import Aos from "aos";
 
 export default function ScheduleTrainee() {
   localStorage.setItem("MENU_ACTIVE", "/trainee/schedule");
@@ -70,7 +71,7 @@ export default function ScheduleTrainee() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 800,
+      timer: 900,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -79,6 +80,9 @@ export default function ScheduleTrainee() {
         clearInterval(timerInterval);
       },
     });
+    if (window.innerWidth <= 800 && !responsive) {
+      setResponsive(true);
+    }
     api
       .get("/Timeframe/GetTimeFrameList")
       .then((res) => {
@@ -206,6 +210,8 @@ export default function ScheduleTrainee() {
     });
   };
 
+  Aos.init();
+
   return (
     <>
       <div className="header-top m-4 mx-0 mt-0">
@@ -312,6 +318,10 @@ export default function ScheduleTrainee() {
                                 <div
                                   className="content py-3"
                                   key={filteredItem.courseId}
+                                  data-aos="zoom-in-down"
+                                  data-aos-duration="100"
+                                  data-aos-delay="0"
+                                  data-aos-offset="0"
                                 >
                                   <img
                                     src={filteredItem.courseImg}
@@ -360,6 +370,10 @@ export default function ScheduleTrainee() {
             <div
               className={`row flex trainer mt-5 mb-5 
             ${responsive ? "mx-4" : "mx-5"}`}
+              data-aos="zoom-in-down"
+              data-aos-duration="200"
+              data-aos-delay="900"
+              data-aos-offset="0"
             >
               <div>
                 <h2
@@ -589,7 +603,7 @@ export default function ScheduleTrainee() {
                                           </div>
                                         </div>
                                       </div>
-                                      {parseInt(feedback.rating) <= 3 ? (
+                                      {/* {parseInt(feedback.rating) <= 3 ? (
                                         <div className="text-center">
                                           <button
                                             className="m-0 p-0 border-0 text-light
@@ -606,7 +620,7 @@ export default function ScheduleTrainee() {
                                         </div>
                                       ) : (
                                         <></>
-                                      )}
+                                      )} */}
                                     </>
                                   ) : (
                                     <></>
