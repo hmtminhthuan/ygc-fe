@@ -258,7 +258,10 @@ export default function ScheduleTrainee() {
                 <tbody>
                   {timeFrames.map((timeFrame) => (
                     <tr key={timeFrame.id}>
-                      <td className="align-middle">
+                      <td
+                        className="align-middle"
+                        style={{ fontWeight: "bold" }}
+                      >
                         {responsive ? (
                           <>
                             {timeFrame.timeFrame1
