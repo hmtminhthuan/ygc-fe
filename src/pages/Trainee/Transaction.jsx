@@ -13,7 +13,6 @@ export default function Transaction() {
   localStorage.setItem("MENU_ACTIVE", "/transaction");
   const [payingTime, setPayingTime] = useState(-1);
   const [refundTime, setRefundTime] = useState(-1);
-  const [current, setCurrent] = useState(new Date());
   const [listOfBooking, setListOfBooking] = useState([]);
   const [payWay, setPayWay] = useState(false);
   const [userLogin, setUserLogin] = useState({});
