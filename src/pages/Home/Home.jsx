@@ -4,7 +4,6 @@ import FooterHome from "../../component/FooterHome/FooterHome";
 import HomeCarousel from "../../templates/HomeTemplate/HomeCarousel/HomeCarousel";
 import HomeContent from "../../component/HomeContent/HomeContent";
 import FAQ from "../../component/FAQ/FAQ";
-import { motion } from "framer-motion";
 export default function Home() {
   let arr = [];
 

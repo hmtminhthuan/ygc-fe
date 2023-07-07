@@ -11,6 +11,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import ChangePassword from "./ChangePassword";
 import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 import { alert } from "../../component/AlertComponent/Alert";
+import Aos from "aos";
 export default function UpdateProfile() {
   const navigate = useNavigate();
   localStorage.setItem("MENU_ACTIVE", "/profile");
@@ -153,6 +154,8 @@ export default function UpdateProfile() {
     return null;
   }
 
+  Aos.init();
+
   return (
     <>
       {accept ? (
@@ -197,6 +200,7 @@ export default function UpdateProfile() {
                 </h1>
               </div>
               <div
+                data-aos="zoom-in-down"
                 className="row bg-white shadow rounded-lg d-md-flex justify-content-center mx-lg-5"
                 style={{ borderRadius: "15px" }}
               >

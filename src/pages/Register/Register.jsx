@@ -17,6 +17,7 @@ import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../component/AlertComponent/Alert";
+import Aos from "aos";
 
 export default function Register() {
   localStorage.setItem("MENU_ACTIVE", "/register");
@@ -232,6 +233,8 @@ export default function Register() {
     formik.setFieldValue("gender", gender);
   };
 
+  Aos.init();
+
   return (
     <div>
       <div className="header-top m-4 mx-0 mt-0">
@@ -241,10 +244,16 @@ export default function Register() {
         <div
           className="box m-0 mt-5 register-scroll"
           style={{ height: "90vh" }}
+          data-aos="fade-in"
+          data-aos-duration="300"
         >
           <div className="inner-box inner-register flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
-              <div className="form-container form-register-container flex justify-content-center">
+              <div
+                className="form-container form-register-container flex justify-content-center"
+                data-aos="fade-down-right"
+                data-aos-delay="50"
+              >
                 <Form
                   onFinish={formik.handleSubmit}
                   {...formItemLayout}
@@ -580,7 +589,11 @@ export default function Register() {
                   </Form.Item>
                 </Form>
               </div>
-              <div className="videoDiv d-none d-lg-flex d-md-none d-sm-none">
+              <div
+                className="videoDiv d-none d-lg-flex d-md-none d-sm-none"
+                data-aos="fade-up-left"
+                data-aos-delay="50"
+              >
                 <video src={video} autoPlay muted loop></video>
 
                 <div className="textDiv py-2">

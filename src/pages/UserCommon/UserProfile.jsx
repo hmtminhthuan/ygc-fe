@@ -8,6 +8,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
+import Aos from "aos";
 
 function UserProfile() {
   localStorage.setItem("MENU_ACTIVE", "/profile");
@@ -86,6 +87,9 @@ function UserProfile() {
   } else if (roleId == 4) {
     roleColor = "text-green";
   }
+
+  Aos.init();
+
   return (
     <>
       <>
@@ -109,7 +113,7 @@ function UserProfile() {
             <video src={video} autoPlay muted loop></video>
           </div>
           {accept ? (
-            <div className="padding mx-5 mt-5">
+            <div className="padding mx-5 mt-5" data-aos="zoom-in-down">
               <div className="row container d-flex justify-content-center">
                 <div className="col-xl-6 col-md-12 mt-md-4">
                   <div className="card user-card-full mt-md-4">

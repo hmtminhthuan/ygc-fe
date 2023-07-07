@@ -7,6 +7,7 @@ import { timeLeft } from "./TimeLeft";
 import { alert } from "../../component/AlertComponent/Alert";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Aos from "aos";
 export default function Transaction() {
   const navigate = useNavigate();
   localStorage.setItem("MENU_ACTIVE", "/transaction");
@@ -57,19 +58,18 @@ export default function Transaction() {
 
   const renderBooking = () => {
     api
-      .get(`/CheckOutVNPAY/GetAllBooking`)
+      .get(
+        `/CheckOutVNPAY/GetBookingByTraineeId?accountId=${
+          JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+        }`
+      )
       .then((res) => {
-        const userAccountID = JSON.parse(
-          localStorage.getItem("USER_LOGIN")
-        ).accountID;
-        const filteredBookings = res.data
-          .filter((item) => item.account.accountID === userAccountID)
-          .sort((a, b) => {
-            return (
-              new Date(b.bookingDate).getTime() -
-              new Date(a.bookingDate).getTime()
-            );
-          });
+        const filteredBookings = res.data.sort((a, b) => {
+          return (
+            new Date(b.bookingDate).getTime() -
+            new Date(a.bookingDate).getTime()
+          );
+        });
         setListOfBooking([...filteredBookings]);
       })
       .catch((err) => {})
@@ -123,6 +123,18 @@ export default function Transaction() {
   useEffect(() => {
     renderBooking();
     renderSetting();
+    let timerInterval;
+    Swal.fire({
+      title: "Loading...",
+      timer: 1000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -485,6 +497,9 @@ export default function Transaction() {
       document.body.style.overflow = "visible";
     }
   }, [payWay]);
+
+  Aos.init();
+
   return (
     <>
       <div className=" m-0 p-0">
@@ -496,7 +511,11 @@ export default function Transaction() {
           className="main--content transaction-trainee m-0 px-5 w-100"
           style={{ margin: "0 auto" }}
         >
-          <table>
+          <table
+            data-aos="zoom-in"
+            data-aos-duration="300"
+            data-aos-delay="1100"
+          >
             <thead>
               <tr>
                 <th style={{ textAlign: "left" }}>No.</th>
@@ -539,14 +558,19 @@ export default function Transaction() {
                       refundDate,
                       linkPayment,
                       classId,
+                      courseID,
                       ...restParams
                     },
                     index
                   ) => {
-                    let { firstName, lastName, phone } = account;
-                    let { courseName, courseID } = course;
+                    // let { courseName, courseID } = course;
                     return (
-                      <tr key={index}>
+                      <tr
+                        key={index}
+                        data-aos="zoom-out"
+                        data-aos-duration="100"
+                        data-aos-delay="0"
+                      >
                         <td style={{ textAlign: "left" }}>{index + 1}</td>
                         <td style={{ textAlign: "left" }}>
                           {course.courseName}

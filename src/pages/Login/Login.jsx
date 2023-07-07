@@ -10,6 +10,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 import { alert } from "../../component/AlertComponent/Alert";
+import Aos from "aos";
 
 export default function Login() {
   localStorage.setItem("MENU_ACTIVE", "/login");
@@ -261,6 +262,8 @@ export default function Login() {
       .catch((err) => {});
   };
 
+  Aos.init();
+
   return (
     <div>
       <div className="header-top m-4 mx-0 mt-0">
@@ -268,10 +271,19 @@ export default function Login() {
       </div>
 
       <main>
-        <div className="box m-0 mt-5" style={{ height: "90vh" }}>
+        <div
+          className="box m-0 mt-5"
+          style={{ height: "90vh" }}
+          data-aos="fade-in"
+          data-aos-duration="300"
+        >
           <div className="inner-box inner-log-in flex justify-content-center">
             <div className="container flex justify-content-center">
-              <div className="videoDiv d-none d-lg-flex d-md-none d-sm-none">
+              <div
+                className="videoDiv d-none d-lg-flex d-md-none d-sm-none"
+                data-aos="fade-up-right"
+                data-aos-delay="50"
+              >
                 <video src={video} autoPlay muted loop></video>
 
                 <div className="textDiv py-2">
@@ -288,7 +300,11 @@ export default function Login() {
                   </NavLink>
                 </div>
               </div>
-              <div className="form-container form-login-container flex justify-content-center">
+              <div
+                className="form-container form-login-container flex justify-content-center"
+                data-aos="fade-down-left"
+                data-aos-delay="50"
+              >
                 <Form
                   onFinish={formik.handleSubmit}
                   {...formItemLayout}
