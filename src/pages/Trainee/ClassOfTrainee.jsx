@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
@@ -24,6 +24,7 @@ export default function ClassOfTrainee() {
       navigate("/");
     });
   };
+
   useEffect(() => {
     api
       .get("/Trainee/getListClassForTrainee", {
@@ -43,7 +44,7 @@ export default function ClassOfTrainee() {
       .catch((err) => {
         comeBackHomeInvalid();
       });
-  }, [id]);
+  }, []);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
