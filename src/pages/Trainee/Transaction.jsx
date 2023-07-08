@@ -16,6 +16,7 @@ export default function Transaction() {
   const [listOfBooking, setListOfBooking] = useState([]);
   const [payWay, setPayWay] = useState(false);
   const [userLogin, setUserLogin] = useState({});
+  const [idBookingPayNow, setIdBookingPayNow] = useState(0);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -23,36 +24,8 @@ export default function Transaction() {
     }).format(price);
   };
 
-  const handleRegisterClass = (link, classId) => {
-    if (
-      listOfBooking.filter(
-        (item) =>
-          item.account.accountID == userLogin.accountID && item.status === 5
-      ).length > 0
-    ) {
-      Swal.fire({
-        title: `<strong style="color:#d291bc">Failed Registration</strong>`,
-        html: `
-          <p style="text-align:justify; margin:0;">
-          You have booked a class without being paid yet. Therefore, you could not register for another class now.</br></br>
-          In case that you want to register for another class and cancel the current class you have booked,
-          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
-          Thank you very much for choosing our service.
-          </p>
-          `,
-        showCloseButton: true,
-        showCancelButton: false,
-        showConfirmButton: true,
-        confirmButtonColor: "#d291bc",
-        confirmButtonText: "I understand",
-        focusConfirm: false,
-        allowOutsideClick: false,
-      });
-    } else {
-      setPayWay(true);
-      localStorage.setItem("CLASS", classId);
-    }
-    navigate("/transaction");
+  const handleRegisterClass = () => {
+    setPayWay(true);
   };
 
   const renderBooking = () => {
@@ -408,7 +381,6 @@ export default function Transaction() {
         //localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
         api
           .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
-
           .then((res) => {
             alert.alertSuccessWithTime(
               "Confirm Payment Successfully",
@@ -430,7 +402,7 @@ export default function Transaction() {
             );
           })
           .finally(() => {
-            navigate("/transaction");
+            renderBookingAgain();
           });
         setPayWay(false);
       }
@@ -462,7 +434,6 @@ export default function Transaction() {
         //localStorage.setItem("TRANSACTION_NOTIFICATION", "atm");
         api
           .put(`/CheckOutVNPAY/ChangeStatusToSuccessWithATM?bookingId=${id}`)
-
           .then((res) => {
             alert.alertSuccessWithTime(
               "Confirm Payment Successfully",
@@ -484,12 +455,13 @@ export default function Transaction() {
             );
           })
           .finally(() => {
-            navigate("/transaction");
+            renderBookingAgain();
           });
         setPayWay(false);
       }
     });
   };
+
   useEffect(() => {
     if (payWay) {
       document.body.style.overflow = "hidden";
@@ -713,7 +685,8 @@ export default function Transaction() {
                                       fontWeight: "450",
                                     }}
                                     onClick={() => {
-                                      handleRegisterClass(linkPayment, classId);
+                                      handleRegisterClass();
+                                      setIdBookingPayNow(id);
                                     }}
                                   >
                                     {status === 5 ? "Pay Now" : "Pay Again"}
@@ -739,179 +712,6 @@ export default function Transaction() {
                                 <></>
                               )}
                             </>
-                          ) : (
-                            <></>
-                          )}
-                          {payWay && status === 5 ? (
-                            <div
-                              className="bg-light"
-                              style={{
-                                position: "fixed",
-                                width: "100%",
-                                height: "100%",
-                                zIndex: "1000",
-                                top: "0",
-                                left: "0",
-                                bottom: "0",
-                                right: "0",
-                                overflow: "none",
-                              }}
-                            >
-                              <div
-                                className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
-        text-center px-5 align-items-center"
-                              >
-                                <div
-                                  className="px-5"
-                                  style={{
-                                    width: "100vw",
-                                    maxWidth: "680px",
-                                  }}
-                                >
-                                  <table
-                                    className="bg-light"
-                                    style={{ height: "auto" }}
-                                  >
-                                    <thead>
-                                      <tr>
-                                        <th className="py-4">
-                                          <h4 className="m-0 p-0">
-                                            Choose Your Payment Method
-                                          </h4>
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody
-                                      style={{
-                                        height: "auto",
-                                        verticalAlign: "middle",
-                                      }}
-                                    >
-                                      <tr
-                                        className="payment-item"
-                                        style={{
-                                          borderBottom: "1px solid #333333",
-                                        }}
-                                        onClick={() => {
-                                          handlePayAgainByVNPay(
-                                            amount,
-                                            restParams.class.classID,
-                                            courseID,
-                                            id
-                                          );
-                                        }}
-                                      >
-                                        <td className="row flex">
-                                          <div className="col-4 text-end">
-                                            <img
-                                              src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
-                                              alt=""
-                                              style={{
-                                                width: "30px",
-                                                height: "30px",
-                                              }}
-                                              className="mx-0"
-                                            />
-                                          </div>
-                                          <div className="col-8 text-start">
-                                            <h4 className="m-0 p-0">
-                                              Payment By VNPay
-                                            </h4>
-                                          </div>
-                                        </td>
-                                      </tr>
-
-                                      <tr
-                                        className="payment-item"
-                                        style={{
-                                          borderBottom: "1px solid #333333",
-                                        }}
-                                        onClick={() => {
-                                          handlePayAgainByAtm(id);
-                                        }}
-                                      >
-                                        <td className="row flex">
-                                          <div className="col-4 text-end">
-                                            <img
-                                              src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
-                                              alt=""
-                                              style={{
-                                                width: "30px",
-                                                height: "30px",
-                                              }}
-                                              className="mx-0"
-                                            />
-                                          </div>
-                                          <div className="col-8 text-start">
-                                            <h4 className="m-0 p-0">
-                                              Payment Using ATM
-                                            </h4>
-                                          </div>
-                                        </td>
-                                      </tr>
-
-                                      {/* <tr
-                                        className="payment-item"
-                                        style={{
-                                          borderBottom: "1px solid #333333",
-                                        }}
-                                        onClick={() => {
-                                          handlePayAgainByCash(id);
-                                        }}
-                                      >
-                                        <td className="row flex">
-                                          <div className="col-4 text-end">
-                                            <img
-                                              src="https://cdn3.iconfinder.com/data/icons/money-and-credit-card/100/money_pay_payment_dollar-08-512.png"
-                                              alt=""
-                                              style={{
-                                                width: "30px",
-                                                height: "30px",
-                                              }}
-                                              className="mx-0"
-                                            />
-                                          </div>
-                                          <div className="col-8 text-start">
-                                            {" "}
-                                            <h4 className="m-0 p-0">
-                                              Payment By Cash
-                                            </h4>{" "}
-                                          </div>
-                                        </td>
-                                      </tr> */}
-                                    </tbody>
-                                  </table>
-                                  <button
-                                    className="border-0 mt-3 bg-black text-light"
-                                    style={{ borderRadius: "10px" }}
-                                    onClick={() => {
-                                      Swal.fire({
-                                        title: `<strong>Are you sure to cancel?</strong>`,
-                                        showCloseButton: true,
-                                        showCancelButton: true,
-                                        showConfirmButton: true,
-                                        confirmButtonColor: "red",
-                                        confirmButtonText: "Yes",
-                                        cancelButtonColor: "green",
-                                        cancelButtonText: "No",
-                                        focusCancel: true,
-                                        allowOutsideClick: false,
-                                      }).then((result) => {
-                                        if (result.isConfirmed === true) {
-                                          setPayWay(false);
-                                          localStorage.removeItem("CLASS");
-                                        } else {
-                                        }
-                                      });
-                                    }}
-                                  >
-                                    <h5 className="m-0 p-0 py-2 px-3">
-                                      Cancel
-                                    </h5>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
                           ) : (
                             <></>
                           )}
@@ -990,36 +790,177 @@ export default function Transaction() {
                             ""
                           )}
                         </td>
-                        {/* <td style={{ textAlign: "center" }}>
-                        {payDate != null &&
-                        payDate != undefined &&
-                        payDate != "" ? (
-                          <>
-                            {styleDateAndTime(payDate)}
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        {refundDate != null &&
-                        refundDate != undefined &&
-                        refundDate != "" ? (
-                          <>
-                            {moment(new Date(`${refundDate}`)).format(
-                              `DD-MM-YYYY, HH:mm`
-                            )}
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </td> */}
                       </tr>
                     );
                   }
                 )}
             </tbody>
           </table>
+
+          {payWay ? (
+            <div
+              className="bg-light"
+              style={{
+                position: "fixed",
+                width: "100%",
+                height: "100%",
+                zIndex: "1000",
+                top: "0",
+                left: "0",
+                bottom: "0",
+                right: "0",
+                overflow: "none",
+              }}
+            >
+              <div
+                className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
+        text-center px-5 align-items-center"
+              >
+                <div
+                  className="px-5"
+                  style={{
+                    width: "100vw",
+                    maxWidth: "680px",
+                  }}
+                >
+                  <table className="bg-light" style={{ height: "auto" }}>
+                    <thead>
+                      <tr>
+                        <th className="py-4">
+                          <h4 className="m-0 p-0">
+                            Choose Your Payment Method
+                          </h4>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      style={{
+                        height: "auto",
+                        verticalAlign: "middle",
+                      }}
+                    >
+                      <tr
+                        className="payment-item"
+                        style={{
+                          borderBottom: "1px solid #333333",
+                        }}
+                        onClick={() => {
+                          listOfBooking
+                            .filter((item) => item.id === idBookingPayNow)
+                            .forEach((item) => {
+                              handlePayAgainByVNPay(
+                                item.amount,
+                                item.class.classID,
+                                item.courseID,
+                                item.id
+                              );
+                            });
+                        }}
+                      >
+                        <td className="row flex">
+                          <div className="col-4 text-end">
+                            <img
+                              src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
+                              alt=""
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                              }}
+                              className="mx-0"
+                            />
+                          </div>
+                          <div className="col-8 text-start">
+                            <h4 className="m-0 p-0">Payment By VNPay</h4>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        className="payment-item"
+                        style={{
+                          borderBottom: "1px solid #333333",
+                        }}
+                        onClick={() => {
+                          handlePayAgainByAtm(idBookingPayNow);
+                        }}
+                      >
+                        <td className="row flex">
+                          <div className="col-4 text-end">
+                            <img
+                              src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
+                              alt=""
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                              }}
+                              className="mx-0"
+                            />
+                          </div>
+                          <div className="col-8 text-start">
+                            <h4 className="m-0 p-0">Payment Using ATM</h4>
+                          </div>
+                        </td>
+                      </tr>
+
+                      {/* <tr
+                        className="payment-item"
+                        style={{
+                          borderBottom: "1px solid #333333",
+                        }}
+                        onClick={() => {
+                          handlePayAgainByCash(idBookingPayNow);
+                        }}
+                      >
+                        <td className="row flex">
+                          <div className="col-4 text-end">
+                            <img
+                              src="https://cdn3.iconfinder.com/data/icons/money-and-credit-card/100/money_pay_payment_dollar-08-512.png"
+                              alt=""
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                              }}
+                              className="mx-0"
+                            />
+                          </div>
+                          <div className="col-8 text-start">
+                            <h4 className="m-0 p-0">Payment By Cash</h4>
+                          </div>
+                        </td>
+                      </tr> */}
+                    </tbody>
+                  </table>
+                  <button
+                    className="border-0 mt-3 bg-black text-light"
+                    style={{ borderRadius: "10px" }}
+                    onClick={() => {
+                      Swal.fire({
+                        title: `<strong>Are you sure to cancel?</strong>`,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes",
+                        cancelButtonColor: "green",
+                        cancelButtonText: "No",
+                        focusCancel: true,
+                        allowOutsideClick: false,
+                      }).then((result) => {
+                        if (result.isConfirmed === true) {
+                          setPayWay(false);
+                        } else {
+                        }
+                      });
+                    }}
+                  >
+                    <h5 className="m-0 p-0 py-2 px-3">Cancel</h5>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>

@@ -53,7 +53,9 @@ export default function Login() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: `Log In Successfully</br> Welcome ${res.data.firstName} ${res.data.lastName}`,
+            // title: `Log In Successfully</br> Welcome ${res.data.firstName} ${res.data.lastName}`,
+            title: `Log In Successfully`,
+            html: `Welcome ${res.data.firstName} ${res.data.lastName}`,
             showConfirmButton: false,
             timer: 1600,
           }).then(function () {

@@ -31,6 +31,7 @@ export default function CourseClasses({
   const [currentClass, setCurrentClass] = useState(false);
   const [payingTime, setPayingTime] = useState(0);
   const [refundTime, setRefundTime] = useState(0);
+  const [classChosen, setClassChosen] = useState(-1);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -74,10 +75,8 @@ export default function CourseClasses({
     }).then((result) => {
       if (result.isConfirmed === true) {
         setPayWay(false);
-        localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
-        handleAddBooking(classId, false, 7);
-      } else if (result.dismiss === Swal.DismissReason.close) {
-        // navigate("/course");
+        // localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
+        // handleAddBooking(classId, false, 7);
       }
     });
   };
@@ -135,7 +134,7 @@ export default function CourseClasses({
       Swal.fire({
         title: "Booking request is pending",
         html: "Please wait for a few seconds...",
-        timer: 3500,
+        timer: 10000,
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -150,7 +149,7 @@ export default function CourseClasses({
       Swal.fire({
         title: "Your request is pending",
         html: "Please wait for a few seconds...",
-        timer: 2000,
+        timer: 10000,
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -350,7 +349,7 @@ export default function CourseClasses({
       });
     } else {
       setPayWay(true);
-      localStorage.setItem("CLASS", classId);
+      setClassChosen(classId);
     }
   };
   const handleBookingClass = (link, classId) => {
@@ -789,9 +788,7 @@ export default function CourseClasses({
                     className="payment-item"
                     style={{ borderBottom: "1px solid #333333" }}
                     onClick={() => {
-                      const classId = localStorage.getItem("CLASS");
-                      handlePayByVnpay(classId);
-                      localStorage.removeItem("CLASS");
+                      handlePayByVnpay(classChosen);
                     }}
                   >
                     <td className="row flex">
@@ -813,9 +810,7 @@ export default function CourseClasses({
                     className="payment-item"
                     style={{ borderBottom: "1px solid #333333" }}
                     onClick={() => {
-                      const classId = localStorage.getItem("CLASS");
-                      handlePayByAtm(classId);
-                      localStorage.removeItem("CLASS");
+                      handlePayByAtm(classChosen);
                     }}
                   >
                     <td className="row flex">
@@ -837,9 +832,7 @@ export default function CourseClasses({
                     className="payment-item"
                     style={{ borderBottom: "1px solid #333333" }}
                     onClick={() => {
-                      const classId = localStorage.getItem("CLASS");
-                      handlePayByCash(classId);
-                      localStorage.removeItem("CLASS");
+                      handlePayByCash(classChosen);
                     }}
                   >
                     <td className="row flex">
@@ -853,7 +846,7 @@ export default function CourseClasses({
                       </div>
                       <div className="col-8 text-start">
                         {" "}
-                        <h4 className="m-0 p-0">Payment By Cash</h4>{" "}
+                        <h4 className="m-0 p-0">Payment By Cash</h4>
                       </div>
                     </td>
                   </tr>
@@ -877,7 +870,6 @@ export default function CourseClasses({
                   }).then((result) => {
                     if (result.isConfirmed === true) {
                       setPayWay(false);
-                      localStorage.removeItem("CLASS");
                     } else {
                     }
                   });
