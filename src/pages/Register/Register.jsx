@@ -10,6 +10,7 @@ import {
   useNavigate,
   useLocation,
   NavLink,
+  Navigate,
 } from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
@@ -20,6 +21,39 @@ import { alert } from "../../component/AlertComponent/Alert";
 import Aos from "aos";
 
 export default function Register() {
+  const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  let USER = {};
+  USER = JSON.parse(USER_LOGIN);
+  if (
+    !(
+      USER_LOGIN == null ||
+      USER_LOGIN == undefined ||
+      USER.accountID == undefined
+    )
+  ) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: "35rem",
+      padding: "2rem",
+      background: "#e8ffff",
+      showConfirmButton: false,
+      timer: 7000,
+      timerProgressBar: true,
+      showCloseButton: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "info",
+      title: `You have logged in already.`,
+      html: `In case you want to register another account.</br>Please log out first.`,
+    });
+    return <Navigate to="/" />;
+  }
   localStorage.setItem("MENU_ACTIVE", "/register");
   const location = useLocation();
   const redirect = new URLSearchParams(location.search).get("redirect");

@@ -4,7 +4,13 @@ import "./Login.scss";
 import Swal from "sweetalert2";
 import video from "../../assets/video.mp4";
 import { Form, Input, Select } from "antd";
-import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { useFormik } from "formik";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
@@ -13,6 +19,37 @@ import { alert } from "../../component/AlertComponent/Alert";
 import Aos from "aos";
 
 export default function Login() {
+  const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  let USER = {};
+  USER = JSON.parse(USER_LOGIN);
+  if (
+    !(
+      USER_LOGIN == null ||
+      USER_LOGIN == undefined ||
+      USER.accountID == undefined
+    )
+  ) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      width: "25rem",
+      padding: "2rem",
+      background: "#e8ffff",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "info",
+      title: `You have logged in already.`,
+    });
+    return <Navigate to="/" />;
+  }
   localStorage.setItem("MENU_ACTIVE", "/login");
   const location = useLocation();
   const redirect = new URLSearchParams(location.search).get("redirect");
