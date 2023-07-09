@@ -5,7 +5,7 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import "./Transaction.scss";
 import { timeLeft } from "./TimeLeft";
 import { alert } from "../../component/AlertComponent/Alert";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Aos from "aos";
 export default function Transaction() {
@@ -15,17 +15,12 @@ export default function Transaction() {
   const [refundTime, setRefundTime] = useState(-1);
   const [listOfBooking, setListOfBooking] = useState([]);
   const [payWay, setPayWay] = useState(false);
-  const [userLogin, setUserLogin] = useState({});
   const [idBookingPayNow, setIdBookingPayNow] = useState(0);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
-      style: "currency",
+      // style: "currency",
       currency: "VND",
     }).format(price);
-  };
-
-  const handleRegisterClass = () => {
-    setPayWay(true);
   };
 
   const renderBooking = () => {
@@ -94,20 +89,27 @@ export default function Transaction() {
   };
 
   useEffect(() => {
-    renderBooking();
-    renderSetting();
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 1000,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+    let USER = {};
+    USER = JSON.parse(USER_LOGIN);
+    if (USER_LOGIN == null || USER_LOGIN == undefined || !(USER.role.id == 4)) {
+      navigate("/");
+    } else {
+      renderBooking();
+      renderSetting();
+      let timerInterval;
+      Swal.fire({
+        title: "Loading...",
+        timer: 1000,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -175,10 +177,7 @@ export default function Transaction() {
           );
         }
       }
-      if (
-        TRANSACTION_NOTIFICATION != undefined &&
-        TRANSACTION_NOTIFICATION.includes("PAYAGAINVNPAY")
-      ) {
+      if (TRANSACTION_NOTIFICATION.includes("PAYAGAINVNPAY")) {
         if (
           listOfBooking.filter(
             (item) =>
@@ -195,10 +194,7 @@ export default function Transaction() {
           );
           renderBookingAgain();
         }
-      } else if (
-        TRANSACTION_NOTIFICATION != undefined &&
-        TRANSACTION_NOTIFICATION.includes("PAY")
-      ) {
+      } else if (TRANSACTION_NOTIFICATION.includes("PAY")) {
         if (
           listOfBooking.filter(
             (item) =>
@@ -245,7 +241,7 @@ export default function Transaction() {
   const renderBookingAgain = () => {
     setTimeout(() => {
       renderBooking();
-    }, 5000);
+    }, 1500);
   };
 
   const isRefundAvailableView = (payDate) => {
@@ -258,28 +254,56 @@ export default function Transaction() {
     );
   };
 
-  const handleRefund = (id) => {
-    api
-      .put(`/CheckOutVNPAY/ChangeToPendingRefund?BookingId=${id}`)
-      .then((res) => {
-        alert.alertSuccessWithTime(
-          "Request To Refund Successfully",
-          "We will contact you as soon as possible",
-          5500,
-          "33",
-          () => {}
-        );
-        renderBookingAgain();
-      })
-      .catch((err) => {
-        alert.alertFailedWithTime(
-          "Request To Refund Failed",
-          "",
-          3000,
-          "30",
-          () => {}
-        );
-      });
+  const handleRefund = (id, status) => {
+    if (status === 8) {
+      api
+        .put(`/CheckOutVNPAY/ChangeToPendingRefundWithATM?BookingId=${id}`)
+        .then((res) => {
+          alert.alertSuccessWithTime(
+            "Request To Refund Successfully",
+            "We will contact you as soon as possible",
+            5500,
+            "33",
+            () => {}
+          );
+        })
+        .catch((err) => {
+          alert.alertFailedWithTime(
+            "Request To Refund Failed",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        })
+        .finally(() => {
+          renderBookingAgain();
+        });
+    } else {
+      api
+        .put(`/CheckOutVNPAY/ChangeToPendingRefund?BookingId=${id}`)
+        .then((res) => {
+          alert.alertSuccessWithTime(
+            "Request To Refund Successfully",
+            "We will contact you as soon as possible",
+            5500,
+            "33",
+            () => {}
+          );
+        })
+        .catch((err) => {
+          alert.alertFailedWithTime(
+            "Request To Refund Failed",
+            "",
+            3000,
+            "30",
+            () => {}
+          );
+        })
+        .finally(() => {
+          renderBookingAgain();
+        });
+    }
   };
 
   const handleCancelBooking = (id) => {
@@ -325,6 +349,19 @@ export default function Transaction() {
 
   const handlePayAgainByVNPay = (amount, classID, courseID, id) => {
     localStorage.setItem("TRANSACTION_NOTIFICATION", `PAYAGAINVNPAY-${id}`);
+    Swal.fire({
+      title: "Your request is pending",
+      html: "Please wait for a few seconds...",
+      timer: 10000,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        setViewData(true);
+        clearInterval(timerInterval);
+      },
+    });
     api
       .post(`/CheckOutVNPAY`, {
         amount: amount,
@@ -339,33 +376,45 @@ export default function Transaction() {
   };
 
   const handlePayAgainByAtm = (id) => {
+    const booking = listOfBooking.filter((item) => item.id === id)[0];
     Swal.fire({
       title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
 
       html: `
-        <p style="text-align:justify; margin:0;">
-        Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
+      <p style="text-align:justify; margin:0;">
+      Thank you for choosing our service. You could complete your payment by banking to our following ATM accounts.</br></br>
 
-        Our ATM Accounts</br>
-        1. Bank: Vietcombank</br>
-        ATM Number: 1001 1059 2003 2002</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+      <b>Our ATM Accounts</br>
+      1. Bank: Vietcombank</br>
+      ATM Number: 1001 1059 2003 2002</br>
+      Name: Vũ Ngọc Ánh Tuyết</br>
+      Amount: ${formatPrice(booking.amount)} VND</br>
+      Content: ${
+        JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+      }</br></br>
 
-        2. Bank: VIB</br>
-        ATM Number: 101 109 203</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+      2. Bank: VIB</br>
+      ATM Number: 101 109 203</br>
+      Name: Vũ Ngọc Ánh Tuyết</br>
+      Amount: ${formatPrice(booking.amount)} VND</br>
+      Content: ${
+        JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+      }</b></br></br>
 
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
-        or <a href="">0989 565 565</a></b></br>
-        Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
-        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
-        </p>
+      After banking, you need to <b>click "Confirm"</b> below, our staffs will check your banking immediately.
+      Right after our confirming your banking, you will be added to your class.
+
+      </br></br>
+
+      In case you have some question, please contact us via phone number: <b>
+      <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+      or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+      Or via our Email: <b> 
+      <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+      </br></br>
+      Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+      </br> Our center is open from 4:30 A.M to 10:00 P.M.  
+      </p>
         `,
       showCloseButton: true,
       showCancelButton: false,
@@ -560,7 +609,7 @@ export default function Transaction() {
                                 }}
                                 className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
                               >
-                                Unpaid
+                                Booking
                               </span>
                             </>
                           ) : (
@@ -575,13 +624,13 @@ export default function Transaction() {
                                 }}
                                 className="m-0 p-0 py-1 px-2 border-0 bg-secondary bg-opacity-10 text-secondary"
                               >
-                                Failed Payment
+                                Pending
                               </span>
                             </>
                           ) : (
                             <></>
                           )}
-                          {status === 1 || status === 3 ? (
+                          {status === 1 || status === 8 || status === 3 ? (
                             <>
                               <span
                                 style={{
@@ -637,7 +686,7 @@ export default function Transaction() {
                           ) : (
                             <></>
                           )}
-                          {status === 4 || status === 6 ? (
+                          {status === 4 || status === 6 || status === 9 ? (
                             <>
                               <span
                                 style={{
@@ -685,8 +734,8 @@ export default function Transaction() {
                                       fontWeight: "450",
                                     }}
                                     onClick={() => {
-                                      handleRegisterClass();
                                       setIdBookingPayNow(id);
+                                      setPayWay(true);
                                     }}
                                   >
                                     {status === 5 ? "Pay Now" : "Pay Again"}
@@ -715,7 +764,10 @@ export default function Transaction() {
                           ) : (
                             <></>
                           )}
-                          {(status === 1 || status === 7 || status === 3) &&
+                          {(status === 1 ||
+                            status === 8 ||
+                            status === 7 ||
+                            status === 3) &&
                           payDate != null &&
                           payDate != undefined &&
                           payDate != "" ? (
@@ -724,7 +776,7 @@ export default function Transaction() {
                               <br />
                               {styleDateAndTime(payDate)}
                               <br />
-                              {status === 1 ? (
+                              {status === 1 || status === 8 ? (
                                 <button
                                   className="p-0 m-0 px-2 py-1 text-primary
                               bg-primary bg-opacity-10 border-0"
@@ -755,7 +807,7 @@ export default function Transaction() {
                                         result.isDismissed === true
                                       ) {
                                       } else if (result.isConfirmed === true) {
-                                        handleRefund(id);
+                                        handleRefund(id, status);
                                       }
                                     });
                                   }}
@@ -769,10 +821,11 @@ export default function Transaction() {
                           ) : (
                             ""
                           )}
-                          {status === 6 &&
-                          payDate != null &&
-                          payDate != undefined &&
-                          payDate != "" ? (
+                          {status === 6 ||
+                          (status === 9 &&
+                            payDate != null &&
+                            payDate != undefined &&
+                            payDate != "") ? (
                             <span className="text-primary">Pending...</span>
                           ) : (
                             ""
@@ -811,6 +864,10 @@ export default function Transaction() {
                 right: "0",
                 overflow: "none",
               }}
+              data-aos="fade-in"
+              data-aos-duration="200"
+              data-aos-delay="0"
+              data-aos-offset="0"
             >
               <div
                 className="bg-dark bg-opacity-25 w-100 h-100 flex justify-content-center
@@ -851,7 +908,7 @@ export default function Transaction() {
                               handlePayAgainByVNPay(
                                 item.amount,
                                 item.class.classID,
-                                item.courseID,
+                                item.course.courseID,
                                 item.id
                               );
                             });

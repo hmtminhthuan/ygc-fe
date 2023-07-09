@@ -155,7 +155,6 @@ export default function StaffBooking() {
             () => {
               setTimeout(() => {
                 setCurrentDate(new Date());
-                // renderBooking();
               }, 3500);
             }
           );
@@ -163,25 +162,15 @@ export default function StaffBooking() {
     }
   }, [listOfBooking.length, refundTime]);
 
-  const handleRefund = (accountID, courseID, classID) => {
-    api
-      .post(`/api/AdminRepositoryAPI/UpdateBooking`, {
-        status: 4,
-        accountId: parseInt(accountID),
-        classId: parseInt(classID),
-        courseId: parseInt(courseID),
-      })
-      .then((res) => {})
-      .catch((err) => {})
-      .finally(() => {
-        renderBooking();
-      });
+  const handleRefund = (accountID, courseID, status, bookingId) => {
     api
       .post(`/CheckOutVNPay/Refund`, {
         accId: parseInt(accountID),
         courseId: parseInt(courseID),
+        status: status,
       })
       .then((res) => {
+        console.log(res);
         alert.alertSuccessWithTime(
           "Refund Successfully",
           "",
@@ -189,15 +178,17 @@ export default function StaffBooking() {
           "25",
           () => {}
         );
-        renderAgain();
+        setRecently([...recently, bookingId]);
       })
       .catch((err) => {
+        console.log(err);
         alert.alertFailedWithTime("Failed To Refund", "", 2000, "25", () => {});
       })
       .finally(() => {
-        renderBooking();
+        renderAgain();
       });
   };
+
   const handleDenyRefund = (accountID, courseID, classID, id) => {
     api
       .put(`/CheckOutVNPAY/DenyRefund?bookingId=${id}`)
@@ -232,7 +223,6 @@ export default function StaffBooking() {
           "30",
           () => {}
         );
-        renderAgain();
       })
       .catch((err) => {
         alert.alertFailedWithTime(
@@ -244,7 +234,7 @@ export default function StaffBooking() {
         );
       })
       .finally(() => {
-        renderBooking();
+        renderAgain();
       });
   };
 
@@ -621,13 +611,21 @@ export default function StaffBooking() {
               >
                 {listOfBooking
                   .filter((item) => {
-                    if (navigation == 1) {
-                      return item.status == 1 || item.status == 3;
+                    if (navigation === 1) {
+                      return (
+                        item.status === 1 ||
+                        item.status === 3 ||
+                        item.status === 8
+                      );
                     }
-                    if (navigation == 4) {
-                      return item.status == 4 || item.status == 6;
+                    if (navigation === 4) {
+                      return (
+                        item.status === 4 ||
+                        item.status === 6 ||
+                        item.status === 9
+                      );
                     }
-                    return item.status == navigation;
+                    return item.status === navigation;
                   })
                   .filter((item) =>
                     item.account.phone
@@ -888,7 +886,7 @@ export default function StaffBooking() {
                               ) : (
                                 ""
                               )}
-                              {status == 6 ? (
+                              {status === 6 || status === 9 ? (
                                 <>
                                   <button
                                     className="bg-primary text-light border-0 py-1 px-2 mt-0"
@@ -917,9 +915,9 @@ export default function StaffBooking() {
                                           handleRefund(
                                             accountID,
                                             courseID,
-                                            restParams.class.classID
+                                            status,
+                                            id
                                           );
-                                          setRecently([...recently, id]);
                                         }
                                       });
                                     }}
@@ -1210,7 +1208,6 @@ export default function StaffBooking() {
               )}
               {navigation != 1 ? (
                 <>
-                  {" "}
                   {listOfBooking
                     .filter((item) => item.status == 1)
                     .map(({ id, status, ...restParams }, index) => {

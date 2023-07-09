@@ -52,16 +52,28 @@ export default function CourseClasses({
   }));
 
   const navigate = useNavigate();
+  const formatPrice = (price) => {
+    return Intl.NumberFormat("vi-VN", {
+      // style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
   const handlePayByCash = (classId) => {
     Swal.fire({
       title: `<strong style="color:#d291bc">Payment By Cash</strong>`,
       // icon: 'info',
       html: `
         <p style="text-align:justify; margin:0;">
-        Thank you for choosing our service. You should come to our place to complete payment.</br></br>
+        Thank you for choosing our service. You should come to our place to complete your payment as soon as possible.</br></br>
         Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b></br></br>
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a> or <a href="">0989 565 565</a></b></br>
-        Or via our Email: <b>yogacenter.contact@gmail.com</b>
+        In case you have some question, please contact us via phone number: <b>
+        <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+        or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+        Or via our Email: <b> 
+        <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+        </br></br>
+        Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+        </br> Our center is open from 4:30 A.M to 10:00 P.M. 
         </p>
         `,
       showCloseButton: true,
@@ -75,8 +87,6 @@ export default function CourseClasses({
     }).then((result) => {
       if (result.isConfirmed === true) {
         setPayWay(false);
-        // localStorage.setItem("TRANSACTION_NOTIFICATION", "cash");
-        // handleAddBooking(classId, false, 7);
       }
     });
   };
@@ -84,30 +94,40 @@ export default function CourseClasses({
   const handlePayByAtm = (classId) => {
     Swal.fire({
       title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
-      // icon: 'info',
       html: `
         <p style="text-align:justify; margin:0;">
-        Thank you for choosing our service. You should complete payment as soon as possible in 12 hourse.</br></br>
+        Thank you for choosing our service. You could complete your payment by banking to our following ATM accounts.</br></br>
 
-        Our ATM Accounts</br>
-        1. Bank: Vietcombank</br>
-        ATM Number: 1001 1059 2003 2002</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+        <b>Our ATM Accounts</br>
+      1. Bank: Vietcombank</br>
+      ATM Number: 1001 1059 2003 2002</br>
+      Name: Vũ Ngọc Ánh Tuyết</br>
+      Amount: ${formatPrice(booking.amount)} VND</br>
+      Content: ${
+        JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+      }</br></br>
 
-        2. Bank: VIB</br>
-        ATM Number: 101 109 203</br>
-        Name: Vũ Ngọc Ánh Tuyết</br>
-        Content: ${
-          JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
-        }</br></br>
+      2. Bank: VIB</br>
+      ATM Number: 101 109 203</br>
+      Name: Vũ Ngọc Ánh Tuyết</br>
+      Amount: ${formatPrice(booking.amount)} VND</br>
+      Content: ${
+        JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
+      }</b></br></br>
 
-        In case you have some question, please contact us via phone number: <b><a href="">0989 545 545</a>
-        or <a href="">0989 565 565</a></b></br>
-        Or via our Email: <b>yogacenter.contact@gmail.com</b></br></br>
-        Our Address: <b>E12a, Long Thanh My Ward, District 9, Ho Chi Minh City</b>
+        After banking, you need to <b>click "Confirm"</b> below, our staffs will check your banking immediately.
+        Right after our confirming your banking, you will be added to your class.
+
+        </br></br>
+
+        In case you have some question, please contact us via phone number: <b>
+        <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+        or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+        Or via our Email: <b> 
+        <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+        </br></br>
+        Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+        </br> Our center is open from 4:30 A.M to 10:00 P.M.  
         </p>
         `,
       showCloseButton: true,
@@ -236,6 +256,7 @@ export default function CourseClasses({
       });
     // }
   };
+
   const handlePayByVnpay = (classId) => {
     Swal.fire({
       title: `<strong style="color:#d291bc">Policy</strong>`,
@@ -246,12 +267,19 @@ export default function CourseClasses({
      <b>Refund Policy:</b></br>
       Upon successful payment, in the next <b>${refundTime}  ${
         refundTime > 1 ? " hours" : " hour"
-      }</b>,
-      if you want to refund, please contact us via our hot line: 
-      <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
+      }</b>, you would have a chance to send a request to refund if you want.
+      After your request, our staff will contact to support you.
       After <b>${refundTime}  ${
         refundTime > 1 ? " hours" : " hour"
-      }</b>, we do not support you to refund the booking.
+      }</b>, we do not support you to refund the booking. <br /><br />  
+      In case you have some question, please contact us via phone number: <b>
+        <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+        or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+        Or via our Email: <b> 
+        <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+        </br></br>
+        Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+        </br> Our center is open from 4:30 A.M to 10:00 P.M. 
       </p>
       `,
       showCloseButton: true,
@@ -287,18 +315,16 @@ export default function CourseClasses({
           .then((res) => {
             link = res.data;
             handleAddBooking(classId, false, 0);
-            // window.open(link, "_blank");
           })
-          .catch((err) => {
-            // window.open(link, "_blank");
-          })
+          .catch((err) => {})
           .finally(() => {
             window.location.href = link;
           });
       }
     });
   };
-  const handleRegisterClass = (link, classId) => {
+
+  const handleRegisterClass = (classId) => {
     if (
       listOfBooking.filter(
         (item) =>
@@ -348,11 +374,11 @@ export default function CourseClasses({
         allowOutsideClick: false,
       });
     } else {
-      setPayWay(true);
       setClassChosen(classId);
+      setPayWay(true);
     }
   };
-  const handleBookingClass = (link, classId) => {
+  const handleBookingClass = (classId) => {
     if (
       listOfBooking.filter(
         (item) =>
@@ -416,14 +442,21 @@ export default function CourseClasses({
         }</b>, the booking will be cancelled.
         </br></br>
        <b>Refund Policy:</b></br>
-        Upon successful payment, in the next <b>${refundTime}  ${
+       Upon successful payment, in the next <b>${refundTime}  ${
           refundTime > 1 ? " hours" : " hour"
-        }</b>,
-        if you want to refund, please contact us via our hot line: 
-        <b><a href="">0989 545 545</a> </b> or <b> <a href="">0989 565 565</a></b> to receive support.</br>
-        After <b>${refundTime}  ${
+        }</b>, you would have a chance to send a request to refund if you want.
+       After your request, our staff will contact to support you.
+       After <b>${refundTime}  ${
           refundTime > 1 ? " hours" : " hour"
-        }</b>, we do not support you to refund the booking.
+        }</b>, we do not support you to refund the booking. <br /><br />  
+        In case you have some question, please contact us via phone number: <b>
+          <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+          or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+          Or via our Email: <b> 
+          <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+          </br></br>
+          Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+          </br> Our center is open from 4:30 A.M to 10:00 P.M. 
         </p>
         `,
         showCloseButton: true,
@@ -486,27 +519,6 @@ export default function CourseClasses({
         )
       ) {
         setAvailablePayment(true);
-        let arr = [];
-        courseClasses.forEach((classItem) => {
-          api
-            .post(`/CheckOutVNPAY`, {
-              amount: price * (1 - discount / 100),
-              accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
-              courseId: parseInt(courseId),
-              classId: classItem.classId,
-            })
-            .then((res) => {
-              classItem.linkPayment = res.data;
-              arr = [...arr, classItem];
-            })
-            .catch((err) => {
-              classItem.linkPayment = "";
-              arr = [...arr, classItem];
-            })
-            .finally(() => {
-              setClasses(arr);
-            });
-        });
         api
           .get(`/Trainee/getCurrentListClassForTrainee?id=${USER.accountID}`)
           .then((res) => {
@@ -521,6 +533,7 @@ export default function CourseClasses({
           .catch((err) => {});
       }
     }
+
     if (courseClasses.length > 0) {
       for (let i = 0; i < courseClasses.length; i++) {
         let current = moment(new Date());
@@ -533,6 +546,7 @@ export default function CourseClasses({
       }
     }
   }, [courseClasses.length]);
+
   useEffect(() => {
     if (payWay) {
       document.body.style.overflow = "hidden";
@@ -540,6 +554,7 @@ export default function CourseClasses({
       document.body.style.overflow = "visible";
     }
   }, [payWay]);
+
   return (
     <section className="p-0">
       {!payWay ? (
@@ -585,7 +600,6 @@ export default function CourseClasses({
                           firstname,
                           lastname,
                           schedule,
-                          linkPayment,
                         },
                         index
                       ) => {
@@ -600,10 +614,8 @@ export default function CourseClasses({
                                       backgroundColor: "#d291bc",
                                       border: "none",
                                     }}
-                                    // href={linkPayment}
-                                    // target="_blank"
                                     onClick={() => {
-                                      handleRegisterClass(linkPayment, classId);
+                                      handleRegisterClass(classId);
                                     }}
                                   >
                                     Pay Now
@@ -616,10 +628,8 @@ export default function CourseClasses({
                                       color: "#fff",
                                       border: "none",
                                     }}
-                                    // href={linkPayment}
-                                    // target="_blank"
                                     onClick={() => {
-                                      handleBookingClass(linkPayment, classId);
+                                      handleBookingClass(classId);
                                     }}
                                   >
                                     Booking
@@ -761,6 +771,7 @@ export default function CourseClasses({
             bottom: "0",
             right: "0",
             overflow: "none",
+            zIndex: "100",
           }}
         >
           <div
