@@ -1033,7 +1033,7 @@ export default function CourseManagement() {
                                 Revenue
                               </td>
                               <td colSpan={8} style={{ textAlign: "justify" }}>
-                                <NavLink to={`/revenue/${courseID}`}>
+                                <NavLink to={`/admin/revenue/${courseID}`}>
                                   View Detail Of Revenue
                                 </NavLink>
                               </td>
