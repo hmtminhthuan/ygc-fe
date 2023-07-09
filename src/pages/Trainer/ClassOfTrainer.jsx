@@ -5,6 +5,7 @@ import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
 import "./ClassOfTrainer.scss";
 import Swal from "sweetalert2";
+import Aos from "aos";
 
 export default function ClassOfTrainer() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function ClassOfTrainer() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1000,
+      timer: 800,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -82,6 +83,7 @@ export default function ClassOfTrainer() {
 
     return `${day}-${month}-${year}`;
   };
+  Aos.init();
   return (
     <>
       {available ? (
@@ -94,7 +96,12 @@ export default function ClassOfTrainer() {
               <div className="container bootstrap snippets bootdey">
                 <div className="col-md-12 ">
                   <div className="profile-container mx-5">
-                    <div className="profile-header row">
+                    <div
+                      className="profile-header row"
+                      data-aos="zoom-in-up"
+                      data-aos-duration="150"
+                      data-aos-delay="0"
+                    >
                       <div className="">
                         <NavLink
                           to={"/trainer/schedule"}
@@ -161,7 +168,12 @@ export default function ClassOfTrainer() {
                 </div>
 
                 <div className="col-md-12 mt-5 list-container">
-                  <div className="card-container mx-5">
+                  <div
+                    className="card-container mx-5"
+                    data-aos="zoom-in-up"
+                    data-aos-duration="150"
+                    data-aos-delay="0"
+                  >
                     <div className="card-header">
                       <h4>Trainee List</h4>
                     </div>

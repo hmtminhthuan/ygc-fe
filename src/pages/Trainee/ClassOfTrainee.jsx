@@ -30,7 +30,7 @@ export default function ClassOfTrainee() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 500,
+      timer: 1000,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -84,7 +84,7 @@ export default function ClassOfTrainee() {
                   className="profile-header row"
                   data-aos="zoom-in-up"
                   data-aos-duration="150"
-                  data-aos-delay="550"
+                  data-aos-delay="600"
                 >
                   <div className="">
                     <NavLink
