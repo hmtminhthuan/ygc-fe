@@ -36,11 +36,9 @@ import CommonTemplate from "../templates/CommonTemplate/CommonTemplate";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import ClassManagement from "../pages/Staff/ClassManagement/ClassManagement";
 import ClassDetail from "../pages/Staff/ClassManagement/ClassDetail/ClassDetail";
-
 import ScheduleTrainer from "../pages/Trainer/ScheduleTrainer";
 import Transaction from "../pages/Trainee/Transaction";
 import ScheduleTrainee from "../pages/Trainee/ScheduleTrainee";
-
 import ClassOfTrainer from "../pages/Trainer/ClassOfTrainer";
 import ClassOfTrainee from "../pages/Trainee/ClassOfTrainee";
 import ChangePasswordVerifyEmail from "../pages/UserCommon/ChangePasswordVerifyEmail";
@@ -66,7 +64,6 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
-        { path: "/revenue/:id", element: <CourseRevenue /> },
       ],
     },
     {
@@ -74,7 +71,6 @@ export default function Routers() {
       element: <AdminTemplate />,
       children: [
         { path: "/admin", element: <AdminDashboard /> },
-        // { path: "/admin/dashboard", element: <AdminDashboard /> },
         { path: "/admin/listStaff", element: <ListStaff /> },
         { path: "/admin/createStaff", element: <CreateStaff /> },
         { path: "/admin/courseManagement", element: <CourseManagement /> },
@@ -87,6 +83,8 @@ export default function Routers() {
           element: <AdminCourseEdit />,
         },
         { path: "/admin/setting", element: <AdminSetting /> },
+
+        { path: "/admin/revenue/:id", element: <CourseRevenue /> },
       ],
     },
     {
@@ -102,7 +100,6 @@ export default function Routers() {
       element: <StaffTemplate />,
       children: [
         { path: "/staff", element: <StaffDashboard /> },
-        // { path: "/staff/dashboard", element: <StaffDashboard /> },
         { path: "/staff/course", element: <CourseView /> },
         { path: "/staff/listTrainee", element: <ListTrainee /> },
         { path: "/staff/listTrainer", element: <ListTrainer /> },
@@ -134,7 +131,6 @@ export default function Routers() {
       element: <TrainerTemplate />,
 
       children: [
-        // { path: "/trainer", element: <TrainerHome /> },
         { path: "/trainer/schedule", element: <ScheduleTrainer /> },
         { path: "/trainer/classDetail/:id", element: <ClassOfTrainer /> },
       ],
@@ -143,7 +139,6 @@ export default function Routers() {
       path: "/trainee",
       element: <TraineeTemplate />,
       children: [
-        // { path: "/trainee", element: <TraineeHome /> },
         { path: "/trainee/schedule", element: <ScheduleTrainee /> },
         { path: "/trainee/classDetail/:id", element: <ClassOfTrainee /> },
       ],
