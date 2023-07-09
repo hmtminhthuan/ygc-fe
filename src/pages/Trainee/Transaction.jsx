@@ -194,30 +194,41 @@ export default function Transaction() {
           );
           renderBookingAgain();
         }
-      } else if (TRANSACTION_NOTIFICATION.includes("PAY")) {
+      } else if (TRANSACTION_NOTIFICATION.includes("PAYVNPAY")) {
         if (
           listOfBooking.filter(
             (item) =>
               item.status === 1 &&
-              item.id.toString() == TRANSACTION_NOTIFICATION.split("-")[1]
+              item.class.classID.toString() ==
+                TRANSACTION_NOTIFICATION.split("-")[1]
           ).length > 0
         ) {
-          alert.alertSuccessWithTime(
-            "Pay Successfully",
-            "",
-            3000,
-            "25",
-            () => {}
-          );
-          renderBookingAgain();
+          alert.alertSuccessWithTime("Pay Successfully", "", 3000, "25", () => {
+            renderBookingAgain();
+          });
         } else {
-          localStorage.setItem("NOTIFICATION_CHOOSE_CLASS_NONE", "true");
-          localStorage.setItem("NOTIFICATION_CHOOSE_CLASS", "true");
           if (TRANSACTION_NOTIFICATION.split("-")[2] != undefined) {
             navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
           }
         }
       }
+      // else if (TRANSACTION_NOTIFICATION.includes("PAY")) {
+      //   if (
+      //     listOfBooking.filter(
+      //       (item) =>
+      //         item.status === 1 &&
+      //         item.id.toString() == TRANSACTION_NOTIFICATION.split("-")[1]
+      //     ).length > 0
+      //   ) {
+      //     alert.alertSuccessWithTime("Pay Successfully", "", 3000, "25", () => {
+      //       renderBookingAgain();
+      //     });
+      //   } else {
+      //     if (TRANSACTION_NOTIFICATION.split("-")[2] != undefined) {
+      //       navigate(`/courseDetail/${TRANSACTION_NOTIFICATION.split("-")[2]}`);
+      //     }
+      //   }
+      // }
       localStorage.removeItem("TRANSACTION_NOTIFICATION");
     }
   }, [listOfBooking.length]);

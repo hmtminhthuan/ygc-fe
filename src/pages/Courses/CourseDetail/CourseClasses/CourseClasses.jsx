@@ -102,7 +102,7 @@ export default function CourseClasses({
       1. Bank: Vietcombank</br>
       ATM Number: 1001 1059 2003 2002</br>
       Name: Vũ Ngọc Ánh Tuyết</br>
-      Amount: ${formatPrice(booking.amount)} VND</br>
+      Amount: ${formatPrice(price * (1 - discount / 100))} VND</br>
       Content: ${
         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
       }</br></br>
@@ -110,7 +110,7 @@ export default function CourseClasses({
       2. Bank: VIB</br>
       ATM Number: 101 109 203</br>
       Name: Vũ Ngọc Ánh Tuyết</br>
-      Amount: ${formatPrice(booking.amount)} VND</br>
+      Amount: ${formatPrice(price * (1 - discount / 100))} VND</br>
       Content: ${
         JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber
       }</b></br></br>
@@ -186,9 +186,9 @@ export default function CourseClasses({
         accountId: parseInt(
           JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
         ),
-        classId: classId,
+        classId: parseInt(classId),
         courseId: parseInt(courseId),
-        status: status,
+        status: parseInt(status),
       })
       .then((res) => {
         if (booking) {
@@ -221,12 +221,12 @@ export default function CourseClasses({
           navigate("/transaction");
         }
 
-        if (res.data.status == 0) {
-          localStorage.setItem(
-            "TRANSACTION_NOTIFICATION",
-            `PAY-${res.data.id}-${courseId}`
-          );
-        }
+        // if (res.data.status == 0) {
+        //   localStorage.setItem(
+        //     "TRANSACTION_NOTIFICATION",
+        //     `PAY-${res.data.id}-${res.data.courseId}`
+        //   );
+        // }
       })
       .catch((err) => {
         if (status === 5 || status === 7) {
@@ -310,10 +310,14 @@ export default function CourseClasses({
             amount: price * (1 - discount / 100),
             accId: JSON.parse(localStorage.getItem("USER_LOGIN")).accountID,
             courseId: parseInt(courseId),
-            classId: classId,
+            classId: parseInt(classId),
           })
           .then((res) => {
             link = res.data;
+            localStorage.setItem(
+              "TRANSACTION_NOTIFICATION",
+              `PAYVNPAY-${classId}-${courseId}`
+            );
             handleAddBooking(classId, false, 0);
           })
           .catch((err) => {})
