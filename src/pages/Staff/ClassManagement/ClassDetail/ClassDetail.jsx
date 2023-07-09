@@ -256,7 +256,7 @@ export default function ClassDetail() {
                         <StyledTableCell align="center">
                           Quantity
                         </StyledTableCell>
-                        {viewAllButton ? (
+                        {/* {viewAllButton ? (
                           <>
                             <StyledTableCell align="center">
                               Edit
@@ -267,7 +267,7 @@ export default function ClassDetail() {
                           </>
                         ) : (
                           <></>
-                        )}
+                        )} */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -377,7 +377,7 @@ export default function ClassDetail() {
                                     <StyledTableCell align="center">
                                       {numberTrainee}
                                     </StyledTableCell>
-                                    {viewAllButton ? (
+                                    {/* {viewAllButton ? (
                                       <>
                                         <StyledTableCell align="center">
                                           <button
@@ -412,7 +412,7 @@ export default function ClassDetail() {
                                       </>
                                     ) : (
                                       <></>
-                                    )}
+                                    )} */}
                                   </StyledTableRow>
                                 );
                               }
