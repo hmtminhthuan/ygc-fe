@@ -17,7 +17,7 @@ export default function AdminCourseCreate() {
   const [levelList, setLevelList] = useState([]);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
-      style: "currency",
+      // style: "currency",
       currency: "VND",
     }).format(price);
   };
@@ -277,15 +277,20 @@ export default function AdminCourseCreate() {
                               setPreviewDiscount(e.target.value);
                             }
                           }}
-                          placeholder="Enter Discount (default = 0)"
+                          placeholder="Enter Discount (Default: 0%)"
                         />
                       </Form.Item>{" "}
                     </div>
                   </div>
+
                   {previewPrice > 0 && previewDiscount <= 0 ? (
-                    <Form.Item className="preview-item" label="Preview Price">
+                    <Form.Item
+                      className="preview-item ps-1"
+                      label="Preview Price"
+                    >
                       <p className="p-0 m-0 preview-item-content text-primary">
                         {formatPrice(previewPrice)}
+                        {" VND "}
                       </p>
                     </Form.Item>
                   ) : (
@@ -294,18 +299,25 @@ export default function AdminCourseCreate() {
                   {previewPrice > 0 &&
                   previewDiscount > 0 &&
                   previewDiscount <= 100 ? (
-                    <Form.Item className="preview-item" label="Preview Price">
+                    <Form.Item
+                      className="preview-item ps-1"
+                      label="Preview Price"
+                    >
                       <p className="p-0 m-0 preview-item-content text-primary">
-                        <span className="text-danger">
-                          {formatPrice(previewPrice)}{" "}
-                        </span>
                         <span className="">
+                          {formatPrice(previewPrice)}
+                          {" VND "}
+                        </span>
+                        <span className="ps-1">
+                          (Discount: {previewDiscount}%)
+                        </span>
+                        <span className="text-danger">
                           <i className="fa-solid fa-arrow-right px-2" />{" "}
-                          {formatPrice(
-                            previewPrice * (1 - previewDiscount / 100)
-                          )}
-                          <span className="px-2">
-                            (Discount: {previewDiscount}%)
+                          <span>
+                            {formatPrice(
+                              previewPrice * (1 - previewDiscount / 100)
+                            )}
+                            {" VND "}
                           </span>
                         </span>
                       </p>
@@ -378,7 +390,21 @@ export default function AdminCourseCreate() {
                       Image:
                     </p>
                     <div className="col-10">
-                      <Form.Item name="img" label="" rules={[]} hasFeedback>
+                      <Form.Item
+                        name="img"
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Image cannot be blank",
+                          },
+                          {
+                            whitespace: true,
+                            message: "Image cannot be empty",
+                          },
+                        ]}
+                        hasFeedback
+                      >
                         {/* <Input
                                     style={{ width: "100%" }}
                                     name="img"
@@ -403,7 +429,11 @@ export default function AdminCourseCreate() {
                           value={formik.values.img}
                           onChange={formik.handleChange}
                           onInput={(e) => {
-                            setPreviewImg(e.target.value);
+                            if (e.target.value.trim() === "") {
+                              setPreviewImg("");
+                            } else {
+                              setPreviewImg(e.target.value);
+                            }
                           }}
                           placeholder="Enter Link Of Image"
                         />

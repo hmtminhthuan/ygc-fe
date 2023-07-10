@@ -133,6 +133,7 @@ export default function AdminCourseClasses({
                 {viewAllButton ? (
                   <>
                     {courseClasses
+                      .filter((item) => new Date(item.endDate) - new Date() > 0)
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
@@ -216,6 +217,7 @@ export default function AdminCourseClasses({
                 ) : (
                   <>
                     {[...courseClasses, ...courseFinishedClasses]
+                      .filter((item) => new Date(item.endDate) - new Date() < 0)
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
@@ -302,9 +304,9 @@ export default function AdminCourseClasses({
           </TableContainer>
         )}
         {viewAllButton &&
-        [...courseClasses, ...courseFinishedClasses].length > 0 &&
-        [...courseClasses, ...courseFinishedClasses].length >
-          [...courseClasses].length ? (
+        [...courseClasses].filter(
+          (item) => new Date(item.endDate) - new Date() < 0
+        ).length > 0 ? (
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1 
@@ -316,7 +318,7 @@ export default function AdminCourseClasses({
                 setAvailable(true);
               }}
             >
-              View All Classes
+              View Finished Classes
             </button>
           </div>
         ) : (

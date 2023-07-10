@@ -26,10 +26,10 @@ export default function CourseManagement() {
   const [sortedClasses, setSortedClasses] = useState("Unsort");
   const [sortedRating, setSortedRating] = useState("Unsort");
   const [priority, setPriority] = useState("");
-  const [courseListClass, setCourseListClass] = useState([]);
-  const [courseListClassFinished, setCourseListClassFinished] = useState([]);
-  const [courseListFeedbacks, setCourseListFeedbacks] = useState([]);
+  const [renderCount, setRenderCount] = useState(0);
+  const [renderCount2, setRenderCount2] = useState(0);
   const [viewData, setViewData] = useState(false);
+
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -63,90 +63,85 @@ export default function CourseManagement() {
     api
       .get("/Course/GetAllCourseForAdmin")
       .then((res) => {
-        let courseListEnd1 = [];
-        let courseListEnd2 = [];
         courseListEnd = res.data.sort((a, b) => a.courseID - b.courseID);
-        setCourseList(courseListEnd);
-        setRenderCourseList(courseListEnd);
-        [...courseListEnd].forEach((course) => {
-          api
+        let countNum = 0;
+        courseListEnd.forEach(async (course) => {
+          countNum++;
+          await api
             .get("/Class/GetClassByCourseIDForAdmin", {
               params: { courseid: course.courseID },
             })
             .then((res) => {
-              let classInfo = res.data;
-              let courseID = course.courseID;
-              courseListEnd1 = [...courseListEnd1, { courseID, classInfo }];
+              if (res.data.length > 0) {
+                course.classInfo = res.data;
+              } else {
+                course.classInfo = [];
+              }
             })
             .catch((err) => {
-              let classInfo = [];
-              let courseID = course.courseID;
-              courseListEnd1 = [...courseListEnd1, { courseID, classInfo }];
+              course.classInfo = [];
             })
-            .finally(() => {
-              if (courseListEnd1.length == [...courseListEnd].length) {
-                setCourseListClass([...courseListEnd1]);
-              }
-            });
+            .finally(() => {});
 
           api
+            .get(
+              `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
+            )
+            .then((res) => {
+              if (res.data.length > 0) {
+                course.classInfoFinished = res.data;
+              } else {
+                course.classInfoFinished = [];
+              }
+            })
+            .catch((err) => {
+              course.classInfoFinished = [];
+            })
+            .finally(() => {});
+          if (countNum == courseListEnd.length) {
+            setRenderCount((pre) => pre + 1);
+          }
+        });
+
+        let countNum2 = 0;
+        courseListEnd.forEach(async (course) => {
+          countNum2++;
+
+          await api
             .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
               params: { courseid: course.courseID },
             })
             .then((res) => {
               let feedbackInfo = res.data;
               let rating = 0;
-              let courseID = course.courseID;
               feedbackInfo.forEach((item) => {
                 rating += item.rating;
               });
               if (feedbackInfo.length > 0) {
-                rating = rating / feedbackInfo.length;
+                rating = parseFloat(rating) / parseFloat(feedbackInfo.length);
                 rating = rating.toFixed(2);
+                course.feedbackInfo = feedbackInfo;
+                course.rating = parseFloat(rating);
+              } else {
+                course.feedbackInfo = [];
+                course.rating = 0;
               }
-              course = { courseID, feedbackInfo, rating };
-              courseListEnd2 = [...courseListEnd2, course];
             })
             .catch((err) => {
-              let feedbackInfo = [];
-              let rating = 0;
-              let courseID = course.courseID;
-              course = { courseID, feedbackInfo, rating };
-              courseListEnd2 = [...courseListEnd2, course];
+              course.feedbackInfo = [];
+              course.rating = 0;
             })
-            .finally(() => {
-              if (courseListEnd2.length == courseListEnd.length) {
-                setCourseListFeedbacks(courseListEnd2);
-              }
-            });
+            .finally(() => {});
+
+          if (countNum2 == courseListEnd.length) {
+            setRenderCount2((pre) => pre + 1);
+          }
         });
       })
       .catch((err) => {})
       .finally(() => {
-        let courseListEnd3 = [];
-        courseListEnd.forEach((course) => {
-          api
-            .get(
-              `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
-            )
-            .then((res) => {
-              let classInfoFinished = [...res.data];
-              let courseID = course.courseID;
-              course = { courseID, classInfoFinished };
-              courseListEnd3 = [...courseListEnd3, course];
-            })
-            .catch((err) => {
-              let classInfoFinished = [];
-              let courseID = course.courseID;
-              course = { courseID, classInfoFinished };
-              courseListEnd3 = [...courseListEnd3, course];
-            })
-            .finally(() => {
-              if (courseListEnd3.length == courseListEnd.length) {
-                setCourseListClassFinished(courseListEnd3);
-              }
-            });
-        });
+        setRenderCourseList(courseListEnd);
+        setCourseList(courseListEnd);
       });
   };
 
@@ -155,7 +150,7 @@ export default function CourseManagement() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1100,
+      timer: 1500,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -166,6 +161,7 @@ export default function CourseManagement() {
       },
     });
   }, []);
+
   const resetSort = () => {
     if (
       sortedName.trim().toLowerCase().includes("unsort") &&
@@ -712,32 +708,14 @@ export default function CourseManagement() {
                       levelName,
                       description,
                       courseImg,
+                      deleted,
                       classInfo,
                       classInfoFinished,
                       feedbackInfo,
-                      deleted,
                       rating,
                     },
                     index
                   ) => {
-                    if (courseListClass.length > 0) {
-                      classInfo = courseListClass.filter(
-                        (item) => item.courseID == courseID
-                      )[0].classInfo;
-                    }
-                    if (courseListFeedbacks.length > 0) {
-                      feedbackInfo = courseListFeedbacks.filter(
-                        (item) => item.courseID == courseID
-                      )[0].feedbackInfo;
-                      rating = courseListFeedbacks.filter(
-                        (item) => item.courseID == courseID
-                      )[0].rating;
-                    }
-                    if (courseListClassFinished.length > 0) {
-                      classInfoFinished = courseListClassFinished.filter(
-                        (item) => item.courseID == courseID
-                      )[0].classInfoFinished;
-                    }
                     let pos = infoMoreList.findIndex((obj) => {
                       return obj == `more-info-id-${courseID}`;
                     });
@@ -772,7 +750,9 @@ export default function CourseManagement() {
                           <td style={{ textAlign: "right" }}>
                             {formatPrice(price * (1 - discount / 100))}
                           </td>
-                          {classInfo != null && classInfo != undefined ? (
+                          {renderCount >= 0 &&
+                          classInfo != null &&
+                          classInfo != undefined ? (
                             <td style={{ textAlign: "right" }}>
                               {classInfo != null &&
                               classInfo.filter((item) => {
@@ -794,7 +774,9 @@ export default function CourseManagement() {
                           ) : (
                             <td></td>
                           )}
-                          {feedbackInfo != null && feedbackInfo != undefined ? (
+                          {renderCount2 >= 0 &&
+                          feedbackInfo != null &&
+                          feedbackInfo != undefined ? (
                             <td
                               style={{ textAlign: "center" }}
                               className={`
@@ -823,7 +805,6 @@ export default function CourseManagement() {
                                     {rating}
                                   </p>
                                   <p className="p-0 m-0 text-center">
-                                    {" "}
                                     <Rating
                                       name="half-rating-read"
                                       defaultValue={rating}

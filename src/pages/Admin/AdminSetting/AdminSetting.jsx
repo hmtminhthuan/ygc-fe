@@ -98,13 +98,7 @@ export default function AdminSetting() {
   });
 
   const formatDate = (dateString) => {
-    const dateObj = new Date(dateString);
-
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-
-    return `${day} - ${month} - ${year}`;
+    return moment(new Date(dateString)).format("DD - MM - YYYY, HH:mm");
   };
 
   const formattedDate = formatDate(activeDate);
@@ -113,7 +107,7 @@ export default function AdminSetting() {
     formik.setFieldValue("activeValue", value);
     setActiveValue(value);
   };
-  console.log(id, navigation);
+
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
       <HeaderAdmin />
@@ -146,13 +140,13 @@ export default function AdminSetting() {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {parseInt(setting.id) == 1 ? "Paying Time" : ""}
-                        {parseInt(setting.id) == 2 ? "Refund Time" : ""}
+                        {parseInt(setting.id) == 1 ? "Paying Time (hour)" : ""}
+                        {parseInt(setting.id) == 2 ? "Refund Time (hour)" : ""}
                         {parseInt(setting.id) == 3
-                          ? "Minimum number of trainee per class"
+                          ? "Minimum trainee per class (trainee)"
                           : ""}
                         {parseInt(setting.id) == 4
-                          ? "Maximum number of trainee per class"
+                          ? "Maximum trainee per class (trainee)"
                           : ""}
                       </NavLink>
                     ))}
@@ -339,7 +333,7 @@ export default function AdminSetting() {
                                 </Form.Item>
                               </div>
                               <button type="submit" className="mx-3">
-                                Save changes
+                                Update
                               </button>
                             </div>
                           </div>
