@@ -5,6 +5,10 @@ import { api } from "../../../constants/api";
 import "./CourseRevenue.scss";
 
 export default function CourseRevenue() {
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const handleYearSelection = (year) => {
+    setSelectedYear(year);
+  };
   const MONTHS = [
     "January",
     "February",
@@ -47,16 +51,26 @@ export default function CourseRevenue() {
       .get("/api/AdminRepositoryAPI/GetCourseRevenue", {
         params: {
           courseId: id,
-          year: new Date().getFullYear(),
+          year: selectedYear,
         },
       })
       .then((res) => {
         setRevenueDetail(res.data);
         setAvailable(true);
         setIsDataLoaded(true);
+        // if (res.data) {
+        //   setRevenueDetail(res.data);
+        //   setAvailable(true);
+        //   setIsDataLoaded(true);
+        // } else {
+        //   setAvailable(false);
+        //   setIsDataLoaded(true);
+        // }
       })
       .catch((err) => {
         console.error(err);
+        setAvailable(false);
+        setIsDataLoaded(true);
       });
 
     api
@@ -67,7 +81,7 @@ export default function CourseRevenue() {
         setCourseDetail(res.data);
       })
       .catch((err) => {});
-  }, [id]);
+  }, [id, selectedYear]);
 
   useEffect(() => {
     if (isDataLoaded) {
@@ -153,86 +167,107 @@ export default function CourseRevenue() {
                   <div className="card-container mx-5">
                     <div className="card-header">
                       <h4>Monthly Reports</h4>
+                      <div className="year-selection mx-3">
+                        <select
+                          value={selectedYear}
+                          onChange={handleYearSelection}
+                        >
+                          <option value={new Date().getFullYear() - 1}>
+                            2022
+                          </option>
+                          <option value={new Date().getFullYear()}>2023</option>
+                          <option value={new Date().getFullYear() + 1}>
+                            2024
+                          </option>
+                          <option value={new Date().getFullYear() + 2}>
+                            2025
+                          </option>
+                          <option value={new Date().getFullYear() + 3}>
+                            2026
+                          </option>
+                          {/* Add more options for additional years */}
+                        </select>
+                      </div>
                     </div>
                     <div className="card-body">
                       <div className="wrapper">
                         <div className="charts">
                           <div className="chart">
-                            <canvas
-                              data-type="line"
-                              data-color-datalabels="#2e2a2a"
-                              ref={(ref) => {
-                                if (ref) {
-                                  const { type, colorDatalabels } = ref.dataset;
+                            {selectedYear && (
+                              <canvas
+                                data-type="line"
+                                data-color-datalabels="#2e2a2a"
+                                ref={(ref) => {
+                                  if (ref) {
+                                    const { type, colorDatalabels } =
+                                      ref.dataset;
 
-                                  const data = {
-                                    labels: MONTHS.slice(0, 12),
-                                    datasets: [
-                                      {
-                                        label: "Revenue",
-                                        backgroundColor: "rgb(255, 99, 132)",
-                                        borderColor: "rgb(255, 99, 132)",
-                                        data: revenueDetail.monthlyReports.map(
-                                          (report) => report.monthlyRevenue
-                                        ),
-                                        tension: 0.2,
-                                      },
-                                    ],
-                                  };
+                                    const data = {
+                                      labels: MONTHS.slice(0, 12),
+                                      datasets: [
+                                        {
+                                          label: "Revenue",
+                                          backgroundColor: "rgb(255, 99, 132)",
+                                          borderColor: "rgb(255, 99, 132)",
+                                          data: revenueDetail.monthlyReports.map(
+                                            (report) => report.monthlyRevenue
+                                          ),
+                                          tension: 0.2,
+                                        },
+                                      ],
+                                    };
 
-                                  const config = {
-                                    type: type,
-                                    data: data,
-                                    options: {
-                                      aspectRatio: 16 / 9,
-                                      layout: {
-                                        padding: 10,
-                                      },
-                                      plugins: {
-                                        tooltip: {
-                                          titleFont: {
-                                            size: 22,
+                                    const config = {
+                                      type: type,
+                                      data: data,
+                                      options: {
+                                        aspectRatio: 16 / 9,
+                                        layout: {
+                                          padding: 10,
+                                        },
+                                        plugins: {
+                                          tooltip: {
+                                            titleFont: {
+                                              size: 22,
+                                            },
+                                            bodyFont: {
+                                              size: 22,
+                                            },
+                                            callbacks: {
+                                              label: (context) =>
+                                                `Total: ${context.formattedValue} VNĐ`,
+                                            },
                                           },
-                                          bodyFont: {
-                                            size: 22,
-                                          },
-                                          callbacks: {
-                                            label: (context) =>
-                                              `Total: ${context.formattedValue} VNĐ`,
+                                          datalabels: {
+                                            color: colorDatalabels,
+                                            font: { size: 18 },
+                                            formatter: function (
+                                              value,
+                                              context
+                                            ) {
+                                              return value;
+                                            },
+                                            display: function (context) {
+                                              if (type === "line")
+                                                return (
+                                                  context.dataIndex > 0 &&
+                                                  context.dataIndex <
+                                                    MONTHS.length - 1
+                                                );
+
+                                              return true;
+                                            },
                                           },
                                         },
-                                        datalabels: {
-                                          color: colorDatalabels,
-                                          font: { size: 18 },
-                                          formatter: function (value, context) {
-                                            return value;
-                                          },
-                                          display: function (context) {
-                                            if (type === "line")
-                                              return (
-                                                context.dataIndex > 0 &&
-                                                context.dataIndex <
-                                                  MONTHS.length - 1
-                                              );
-
-                                            return true;
-                                          },
-                                        },
                                       },
-                                    },
-                                  };
+                                    };
 
-                                  new Chart(ref, config);
-                                }
-                              }}
-                            />
+                                    new Chart(ref, config);
+                                  }
+                                }}
+                              />
+                            )}
                           </div>
-                          {/* <div className="chart">
-                            <canvas
-                              data-type="bar"
-                              data-color-datalabels="#ffffff"
-                            />
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -243,7 +278,9 @@ export default function CourseRevenue() {
           </section>
         </div>
       ) : (
-        <></>
+        <>
+          <h1>Not yet</h1>
+        </>
       )}
     </>
   );
