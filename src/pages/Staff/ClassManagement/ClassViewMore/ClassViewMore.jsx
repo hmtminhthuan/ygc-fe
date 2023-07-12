@@ -139,6 +139,7 @@ export default function ClassViewMore({
                 {viewAllButton ? (
                   <>
                     {courseClasses
+                      .filter((item) => new Date(item.endDate) - new Date() > 0)
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
@@ -233,6 +234,7 @@ export default function ClassViewMore({
                 ) : (
                   <>
                     {[...courseClasses, ...courseFinishedClasses]
+                      .filter((item) => new Date(item.endDate) - new Date() < 0)
                       .sort((a, b) => {
                         return moment(new Date(`${b.endDate}`)) >
                           moment(new Date(`${a.endDate}`))
@@ -330,9 +332,12 @@ export default function ClassViewMore({
           </TableContainer>
         )}
         {viewAllButton &&
-        [...courseClasses, ...courseFinishedClasses].length > 0 &&
-        [...courseClasses, ...courseFinishedClasses].length >
-          [...courseFinishedClasses].length ? (
+        [...courseClasses].filter(
+          (item) => new Date(item.endDate) - new Date() < 0
+        ).length > 0 ? (
+          // [...courseClasses, ...courseFinishedClasses].length > 0 &&
+          // [...courseClasses, ...courseFinishedClasses].length >
+          //   [...courseFinishedClasses].length
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1
@@ -344,7 +349,7 @@ export default function ClassViewMore({
                 setAvailable(true);
               }}
             >
-              View All Classes
+              View Finished Classes
             </button>
           </div>
         ) : (

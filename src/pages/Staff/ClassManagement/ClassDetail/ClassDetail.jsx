@@ -166,7 +166,10 @@ export default function ClassDetail() {
                   )}
                 </div>
                 <div className="flex">
-                  {viewAllButton && [...courseFinishedClasses].length > 0 ? (
+                  {viewAllButton &&
+                  [...courseClasses].filter(
+                    (item) => new Date(item.endDate) - new Date() < 0
+                  ).length > 0 ? (
                     <div className="text-end">
                       <button
                         className="border-0 mt-2 mx-1
@@ -274,6 +277,9 @@ export default function ClassDetail() {
                       {viewAllButton ? (
                         <>
                           {courseClasses
+                            .filter(
+                              (item) => new Date(item.endDate) - new Date() > 0
+                            )
                             .sort((a, b) => {
                               if (!viewAllButton) {
                                 return moment(new Date(`${b.endDate}`)) >
@@ -420,7 +426,10 @@ export default function ClassDetail() {
                         </>
                       ) : (
                         <>
-                          {courseFinishedClasses
+                          {[...courseClasses, ...courseFinishedClasses]
+                            .filter(
+                              (item) => new Date(item.endDate) - new Date() < 0
+                            )
                             .sort((a, b) => {
                               if (!viewAllButton) {
                                 return moment(new Date(`${b.endDate}`)) >
