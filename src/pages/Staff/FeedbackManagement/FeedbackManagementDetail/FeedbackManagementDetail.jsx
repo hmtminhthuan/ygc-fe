@@ -180,7 +180,6 @@ export default function FeedbackManagementDetail() {
                 )}
               </div>
             </div>
-
             <table>
               <thead className="table-head">
                 <tr>
