@@ -11,9 +11,13 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import ChangePassword from "./ChangePassword";
 import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 import { alert } from "../../component/AlertComponent/Alert";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../../constants/firebase";
+import { v4 } from "uuid";
 import Aos from "aos";
 export default function UpdateProfile() {
   const navigate = useNavigate();
+  const [imageUpload, setImageUpload] = useState(null);
   localStorage.setItem("MENU_ACTIVE", "/profile");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -75,7 +79,76 @@ export default function UpdateProfile() {
       })
       .catch((err) => {});
   }, [updateDone]);
+  const uploadImage = () => {
+    // if (imageUpload == null) {
+    //   return;
+    // }
+    // const imageRef = ref(storage, `testImages/${imageUpload.name + v4()}`);
+    // uploadBytes(imageRef, imageUpload).then((snapshot) => {
+    //   getDownloadURL(snapshot.ref).then((url) => {
+    //     console.log(url);
+    //     //   setImageList((prev) => [...prev, url]);
+    //   });
+    // });
+  };
+  const handleUpdateAccount = (values) => {
+    api
+      .put(`/Account/UpdateAccount?id=${profile.id}`, values)
+      .then((res) => {
+        setUpdateDone((prev) => prev + 1);
+        api
+          .get("/Account/AccountList")
+          .then((res) => {
+            let userList = [];
+            userList = res.data;
+            localStorage.removeItem("USER_LOGIN");
+            localStorage.setItem(
+              "USER_LOGIN",
+              JSON.stringify(
+                userList[
+                  userList.findIndex((obj) => {
+                    return (
+                      obj.phoneNumber.toString().trim() ==
+                      values.phoneNumber.toString().trim()
+                    );
+                  })
+                ]
+              )
+            );
+            alert.alertSuccessWithTime(
+              "Update Profile Successfully",
+              "",
+              2000,
+              "30",
+              () => {
+                navigate("/updateProfile");
+              }
+            );
+          })
+          .catch((err) => {});
+        // const Toast = Swal.mixin({
+        //   // toast: true,
+        //   position: "middle",
+        //   width: `30rem`,
+        //   padding: "1rem",
+        //   background: "#eef6ec",
+        //   showConfirmButton: false,
+        //   timer: 1000,
+        //   // timerProgressBar: true,
+        //   didOpen: (toast) => {
+        //     // toast.addEventListener("mouseenter", Swal.stopTimer);
+        //     toast.addEventListener("mouseleave", Swal.resumeTimer);
+        //   },
+        // });
 
+        // Toast.fire({
+        //   icon: "success",
+        //   title: `Update Successfully`,
+        //   html: ``,
+        // });
+      })
+      .catch((err) => {});
+  };
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -91,62 +164,24 @@ export default function UpdateProfile() {
           values.img = "male";
         }
       }
-      api
-        .put(`/Account/UpdateAccount?id=${profile.id}`, values)
-        .then((res) => {
-          setUpdateDone((prev) => prev + 1);
-          api
-            .get("/Account/AccountList")
-            .then((res) => {
-              let userList = [];
-              userList = res.data;
-              localStorage.removeItem("USER_LOGIN");
-              localStorage.setItem(
-                "USER_LOGIN",
-                JSON.stringify(
-                  userList[
-                    userList.findIndex((obj) => {
-                      return (
-                        obj.phoneNumber.toString().trim() ==
-                        values.phoneNumber.toString().trim()
-                      );
-                    })
-                  ]
-                )
-              );
-              alert.alertSuccessWithTime(
-                "Update Profile Successfully",
-                "",
-                2000,
-                "30",
-                () => {
-                  navigate("/profile");
-                }
-              );
+      if (values.img != "") {
+        const imageRef = ref(
+          storage,
+          `userImages/${"userImage-" + id + "-" + imageUpload.name + v4()}`
+        );
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              values.img = url;
             })
-            .catch((err) => {});
-          // const Toast = Swal.mixin({
-          //   // toast: true,
-          //   position: "middle",
-          //   width: `30rem`,
-          //   padding: "1rem",
-          //   background: "#eef6ec",
-          //   showConfirmButton: false,
-          //   timer: 1000,
-          //   // timerProgressBar: true,
-          //   didOpen: (toast) => {
-          //     // toast.addEventListener("mouseenter", Swal.stopTimer);
-          //     toast.addEventListener("mouseleave", Swal.resumeTimer);
-          //   },
-          // });
-
-          // Toast.fire({
-          //   icon: "success",
-          //   title: `Update Successfully`,
-          //   html: ``,
-          // });
-        })
-        .catch((err) => {});
+            .finally(() => {
+              handleUpdateAccount(values);
+              console.log(values);
+            });
+        });
+      } else {
+        handleUpdateAccount(values);
+      }
     },
   });
 
@@ -217,8 +252,10 @@ export default function UpdateProfile() {
                       </NavLink>
                     </div>
                     <div className="img-circle text-center mb-3 mt-4">
-                      {profile.img == "male" && previewImg == "" ? (
+                      {profile.img == null ||
+                      (profile.img == "male" && previewImg == "") ? (
                         <img
+                          id="avatarImg"
                           src={male}
                           alt="Image"
                           className="shadow img-user-profile"
@@ -231,9 +268,12 @@ export default function UpdateProfile() {
                       ) : (
                         <></>
                       )}
-                      {profile.img == "female" && previewImg == "" ? (
+                      {profile.img != null &&
+                      profile.img == "female" &&
+                      previewImg == "" ? (
                         <img
                           src={female}
+                          id="avatarImg"
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
@@ -250,6 +290,7 @@ export default function UpdateProfile() {
                       ) : (
                         <img
                           src={previewImg}
+                          id="avatarImg"
                           alt="Image"
                           className="shadow img-user-profile"
                           style={{
@@ -488,7 +529,7 @@ export default function UpdateProfile() {
                                 <div className="row flex align-items-start justify-content-between">
                                   <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
                                     <span className="text-danger px-1"></span>
-                                    <span>Image:</span>
+                                    <span>Avatar:</span>
                                   </p>
                                   <div className="col-md-9 col-sm-12">
                                     <Form.Item
@@ -497,14 +538,14 @@ export default function UpdateProfile() {
                                       className="w-100"
                                       rules={[]}
                                       hasFeedback
-                                      initialValue={`${
-                                        profile.img != "male" &&
-                                        profile.img != "female"
-                                          ? profile.img
-                                          : ""
-                                      }`}
+                                      // initialValue={`${
+                                      //   profile.img != "male" &&
+                                      //   profile.img != "female"
+                                      //     ? profile.img
+                                      //     : ""
+                                      // }`}
                                     >
-                                      <TextArea
+                                      {/* <TextArea
                                         style={{
                                           width: "100%",
                                           height: "75px",
@@ -516,7 +557,55 @@ export default function UpdateProfile() {
                                           setPreviewImg(e.target.value);
                                         }}
                                         placeholder="Enter Link Of Image"
+                                      /> */}
+                                      <Input
+                                        style={{
+                                          width: "100%",
+                                          cursor: "pointer",
+                                        }}
+                                        name="img"
+                                        value={formik.values.img}
+                                        // onChange={formik.handleChange}
+                                        placeholder="Select Image"
+                                        id="imgInp"
+                                        type="file"
+                                        onChange={(e) => {
+                                          // console.log(e.target.files[0]);
+                                          setImageUpload(e.target.files[0]);
+                                          const [file] = imgInp.files;
+                                          if (
+                                            e.target.files &&
+                                            e.target.files[0]
+                                          ) {
+                                            const link =
+                                              URL.createObjectURL(file);
+                                            avatarImg.src = link;
+
+                                            formik.setFieldValue("img", link);
+                                            // console.log(avatarImg);
+                                          }
+                                        }}
                                       />
+                                      {/* <Input
+                                        style={{ width: "100%" }}
+                                        name="img"
+                                        value={formik.values.img}
+                                        onChange={formik.handleChange}
+                                        onInput={(e) => {
+                                          console.log(e.target.files[0]);
+                                          const [file] = imgInp.files;
+                                          if (
+                                            e.target.files &&
+                                            e.target.files[0]
+                                          ) {
+                                            blah.src =
+                                              URL.createObjectURL(file);
+                                            console.log(blah.src);
+                                            setPreviewImg(blah.src);
+                                          }
+                                        }}
+                                        placeholder="Enter Link Of Image"
+                                      /> */}
                                     </Form.Item>
                                   </div>{" "}
                                 </div>{" "}

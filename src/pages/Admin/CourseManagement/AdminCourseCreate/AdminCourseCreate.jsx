@@ -8,6 +8,9 @@ import { useFormik } from "formik";
 import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../../../component/AlertComponent/Alert";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../../constants/firebase";
+import { v4 } from "uuid";
 import "./CreateCourse.scss";
 
 export default function AdminCourseCreate() {
@@ -15,6 +18,7 @@ export default function AdminCourseCreate() {
   const [previewPrice, setPreviewPrice] = useState(-1);
   const [previewDiscount, setPreviewDiscount] = useState(-1);
   const [levelList, setLevelList] = useState([]);
+  const [imageUpload, setImageUpload] = useState(null);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -423,20 +427,22 @@ export default function AdminCourseCreate() {
                                     type="file"
                                     accept="image/png, image/jpeg, image/jpg"
                                 /> */}
-                        <Input
+                        {/* <Input
                           style={{ width: "100%" }}
                           name="img"
                           value={formik.values.img}
                           onChange={formik.handleChange}
                           onInput={(e) => {
-                            if (e.target.value.trim() === "") {
-                              setPreviewImg("");
-                            } else {
-                              setPreviewImg(e.target.value);
+                            console.log(e.target.files[0]);
+                            const [file] = imgInp.files;
+                            if (e.target.files && e.target.files[0]) {
+                              blah.src = URL.createObjectURL(file);
+                              console.log(blah.src);
+                              setPreviewImg(blah.src);
                             }
                           }}
                           placeholder="Enter Link Of Image"
-                        />
+                        /> */}
                       </Form.Item>
                     </div>
                   </div>

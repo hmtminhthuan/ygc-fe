@@ -48,6 +48,7 @@ import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
 import CourseRevenue from "../pages/Admin/CourseManagement/CourseRevenue";
 import ClassMember from "../pages/Staff/ClassManagement/ClassMember/ClassMember";
+import Test from "../constants/test";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -64,6 +65,15 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
+        { path: "/test", element: <Test /> },
+      ],
+    },
+    {
+      element: <CommonTemplate />,
+      children: [
+        { path: "/profile", element: <UserProfile /> },
+        { path: "/updateProfile", element: <UpdateProfile /> },
+        { path: "/changePassword", element: <ChangePasswordVerifyEmail /> },
       ],
     },
     {
@@ -85,14 +95,6 @@ export default function Routers() {
         { path: "/admin/setting", element: <AdminSetting /> },
 
         { path: "/admin/revenue/:id", element: <CourseRevenue /> },
-      ],
-    },
-    {
-      element: <CommonTemplate />,
-      children: [
-        { path: "/profile", element: <UserProfile /> },
-        { path: "/updateProfile", element: <UpdateProfile /> },
-        { path: "/changePassword", element: <ChangePasswordVerifyEmail /> },
       ],
     },
     {
