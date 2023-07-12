@@ -92,7 +92,7 @@ export default function CourseRevenue() {
   return (
     <>
       {available ? (
-        <div className="main--content bg-white">
+        <div className="main--content bg-white revenue-area">
           <section
             className="trainer-area pt-3 pb-3"
             style={{ height: "100vh", overflowY: "scroll" }}

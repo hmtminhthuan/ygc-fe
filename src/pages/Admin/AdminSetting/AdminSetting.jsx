@@ -113,238 +113,250 @@ export default function AdminSetting() {
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className={`main--content px-4 pt-3`}>
-          <div className="container light-style flex-grow-1 container-p-y">
-            <h2 className="py-2 pt-0 text-center" style={{ color: "#e049c0" }}>
-              SETTING
-            </h2>
-            <div className="card overflow-hidden">
-              <div className="row no-gutters row-bordered row-border-light">
-                <div className="col-md-4 pt-0">
-                  <div className="list-group list-group-flush account-settings-links">
-                    {menuSetting.map((setting) => (
-                      <NavLink
-                        key={setting.id}
-                        className={`list-group-item list-group-item-action ${
-                          id === 0 ? "list-group-item-active" : ""
-                        }
+        <div className={`main--content`}>
+          <section class="staff-list-area p-0 mt-2 px-4">
+            <div className="container light-style flex-grow-1 container-p-y">
+              <h2
+                className="py-2 pt-0 text-center"
+                style={{ color: "#e049c0" }}
+              >
+                SETTING
+              </h2>
+              <div className="card overflow-hidden">
+                <div className="row no-gutters row-bordered row-border-light">
+                  <div className="col-md-4 pt-0">
+                    <div className="list-group list-group-flush account-settings-links">
+                      {menuSetting.map((setting) => (
+                        <NavLink
+                          key={setting.id}
+                          className={`list-group-item list-group-item-action ${
+                            id === 0 ? "list-group-item-active" : ""
+                          }
                         ${
                           parseInt(navigation) == parseInt(setting.id)
                             ? "bg-dark bg-opacity-10"
                             : ""
                         }`}
-                        data-toggle="list"
-                        onClick={() => {
-                          setId(setting.id);
-                          setNavigation(setting.id);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {parseInt(setting.id) == 1 ? "Paying Time (hour)" : ""}
-                        {parseInt(setting.id) == 2 ? "Refund Time (hour)" : ""}
-                        {parseInt(setting.id) == 3
-                          ? "Minimum trainee per class (trainee)"
-                          : ""}
-                        {parseInt(setting.id) == 4
-                          ? "Maximum trainee per class (trainee)"
-                          : ""}
-                      </NavLink>
-                    ))}
+                          data-toggle="list"
+                          onClick={() => {
+                            setId(setting.id);
+                            setNavigation(setting.id);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {parseInt(setting.id) == 1
+                            ? "Paying Time (hour)"
+                            : ""}
+                          {parseInt(setting.id) == 2
+                            ? "Refund Time (hour)"
+                            : ""}
+                          {parseInt(setting.id) == 3
+                            ? "Minimum trainee per class (trainee)"
+                            : ""}
+                          {parseInt(setting.id) == 4
+                            ? "Maximum trainee per class (trainee)"
+                            : ""}
+                        </NavLink>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-8">
-                  <div className="tab-content">
-                    <div
-                      className={`tab-pane fade active show ${
-                        id === 0 ? "d-none" : ""
-                      }`}
-                      id="setting-payingtime"
-                    >
-                      <hr className="border-light m-0" />
-                      <Form
-                        {...formItemLayout}
-                        onFinish={formik.handleSubmit}
-                        form={form}
-                        size="large"
-                        autoComplete="off"
+                  <div className="col-md-8">
+                    <div className="tab-content">
+                      <div
+                        className={`tab-pane fade active show ${
+                          id === 0 ? "d-none" : ""
+                        }`}
+                        id="setting-payingtime"
                       >
-                        <div className="card-body row mx-4">
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>Active Date:</span>
-                              </p>
+                        <hr className="border-light m-0" />
+                        <Form
+                          {...formItemLayout}
+                          onFinish={formik.handleSubmit}
+                          form={form}
+                          size="large"
+                          autoComplete="off"
+                        >
+                          <div className="card-body row mx-4">
+                            <div className="form-group col-md-12">
+                              <div className="row flex align-items-start justify-content-between">
+                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                  <span className="text-danger px-1">
+                                    <i
+                                      className="fa-solid fa-star-of-life"
+                                      style={{
+                                        fontSize: "6px",
+                                        verticalAlign: "middle",
+                                      }}
+                                    ></i>{" "}
+                                  </span>
+                                  <span>Active Date:</span>
+                                </p>
 
-                              <div className="col-8">
-                                <Form.Item
-                                  name="activeDate"
-                                  label=""
-                                  initialValue={formik.values.activeDate}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Date cannot be blank",
-                                    },
-                                  ]}
-                                  hasFeedback
-                                >
-                                  <DatePicker
-                                    style={{ width: "100%" }}
+                                <div className="col-8">
+                                  <Form.Item
                                     name="activeDate"
-                                    value={formik.values.activeDate}
-                                    format={`DD-MM-YYYY, HH:mm`}
-                                    onChange={(value) =>
-                                      formik.setFieldValue("activeDate", value)
-                                    }
-                                    showTime
-                                    placeholder="Enter active date"
-                                  />
-                                </Form.Item>
+                                    label=""
+                                    initialValue={formik.values.activeDate}
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: "Date cannot be blank",
+                                      },
+                                    ]}
+                                    hasFeedback
+                                  >
+                                    <DatePicker
+                                      style={{ width: "100%" }}
+                                      name="activeDate"
+                                      value={formik.values.activeDate}
+                                      format={`DD-MM-YYYY, HH:mm`}
+                                      onChange={(value) =>
+                                        formik.setFieldValue(
+                                          "activeDate",
+                                          value
+                                        )
+                                      }
+                                      showTime
+                                      placeholder="Enter active date"
+                                    />
+                                  </Form.Item>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              {/* Other form elements */}
+                            <div className="form-group col-md-12">
+                              <div className="row flex align-items-start justify-content-between">
+                                {/* Other form elements */}
 
-                              <div className="col-8">
-                                <Form.Item
-                                  name="id"
-                                  label=""
-                                  initialValue={initialValues.id}
-                                  hasFeedback
-                                  style={{ display: "none" }} // Add this style to hide the input field
-                                >
-                                  <p>{id}</p>
-                                </Form.Item>
+                                <div className="col-8">
+                                  <Form.Item
+                                    name="id"
+                                    label=""
+                                    initialValue={initialValues.id}
+                                    hasFeedback
+                                    style={{ display: "none" }} // Add this style to hide the input field
+                                  >
+                                    <p>{id}</p>
+                                  </Form.Item>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>
-                                  Active Value
-                                  {navigation == 1 || navigation == 2
-                                    ? ` (hour)`
-                                    : ``}
-                                  {navigation == 3 || navigation == 4
-                                    ? ` (trainee)`
-                                    : ``}
-                                  :
-                                </span>
-                              </p>
+                            <div className="form-group col-md-12">
+                              <div className="row flex align-items-start justify-content-between">
+                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                  <span className="text-danger px-1">
+                                    <i
+                                      className="fa-solid fa-star-of-life"
+                                      style={{
+                                        fontSize: "6px",
+                                        verticalAlign: "middle",
+                                      }}
+                                    ></i>{" "}
+                                  </span>
+                                  <span>
+                                    Active Value
+                                    {navigation == 1 || navigation == 2
+                                      ? ` (hour)`
+                                      : ``}
+                                    {navigation == 3 || navigation == 4
+                                      ? ` (trainee)`
+                                      : ``}
+                                    :
+                                  </span>
+                                </p>
 
-                              <div className="col-8">
-                                <Form.Item
-                                  name="activeValue"
-                                  label=""
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Active value cannot be blank",
-                                    },
-                                    {
-                                      pattern:
-                                        /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
-                                      message:
-                                        "Active value must be a positive number",
-                                    },
-                                  ]}
-                                  initialValue={initialValues.activeValue}
-                                  hasFeedback
-                                >
-                                  <InputNumber
-                                    style={{ width: "100%" }}
+                                <div className="col-8">
+                                  <Form.Item
                                     name="activeValue"
-                                    value={formik.values.activeValue}
-                                    onChange={handleChangeActiveValue}
-                                    placeholder="Enter new value"
-                                  />
-                                </Form.Item>
+                                    label=""
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: "Active value cannot be blank",
+                                      },
+                                      {
+                                        pattern:
+                                          /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
+                                        message:
+                                          "Active value must be a positive number",
+                                      },
+                                    ]}
+                                    initialValue={initialValues.activeValue}
+                                    hasFeedback
+                                  >
+                                    <InputNumber
+                                      style={{ width: "100%" }}
+                                      name="activeValue"
+                                      value={formik.values.activeValue}
+                                      onChange={handleChangeActiveValue}
+                                      placeholder="Enter new value"
+                                    />
+                                  </Form.Item>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="form-group col-md-12">
+                              <div className="row flex align-items-start justify-content-between">
+                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                  <span className="text-danger px-1"></span>
+                                  <span>Last Update:</span>
+                                </p>
+
+                                <div className="col-8">
+                                  <Form.Item
+                                    name="activeDate"
+                                    label=""
+                                    initialValue={formik.values.activeDate}
+                                    hasFeedback
+                                  >
+                                    <p>{formattedDate}</p>
+                                  </Form.Item>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="form-group col-md-12">
+                              <div className="row flex align-items-start justify-content-between">
+                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                  <span className="text-danger px-1"></span>
+                                  <span>
+                                    Current Value
+                                    {navigation == 1 || navigation == 2
+                                      ? ` (hour)`
+                                      : ``}
+                                    {navigation == 3 || navigation == 4
+                                      ? ` (trainee)`
+                                      : ``}
+                                    :
+                                  </span>
+                                </p>
+
+                                <div className="col-8">
+                                  <Form.Item
+                                    name="preactiveValue"
+                                    label=""
+                                    initialValue={initialValues.preactiveValue}
+                                    hasFeedback
+                                  >
+                                    <p>{preactiveValue}</p>
+                                  </Form.Item>
+                                </div>
+                                <button type="submit" className="mx-3">
+                                  Update
+                                </button>
                               </div>
                             </div>
                           </div>
-
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1"></span>
-                                <span>Last Update:</span>
-                              </p>
-
-                              <div className="col-8">
-                                <Form.Item
-                                  name="activeDate"
-                                  label=""
-                                  initialValue={formik.values.activeDate}
-                                  hasFeedback
-                                >
-                                  <p>{formattedDate}</p>
-                                </Form.Item>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="form-group col-md-12">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1"></span>
-                                <span>
-                                  Current Value
-                                  {navigation == 1 || navigation == 2
-                                    ? ` (hour)`
-                                    : ``}
-                                  {navigation == 3 || navigation == 4
-                                    ? ` (trainee)`
-                                    : ``}
-                                  :
-                                </span>
-                              </p>
-
-                              <div className="col-8">
-                                <Form.Item
-                                  name="preactiveValue"
-                                  label=""
-                                  initialValue={initialValues.preactiveValue}
-                                  hasFeedback
-                                >
-                                  <p>{preactiveValue}</p>
-                                </Form.Item>
-                              </div>
-                              <button type="submit" className="mx-3">
-                                Update
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </Form>
+                        </Form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </section>

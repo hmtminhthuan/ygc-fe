@@ -135,131 +135,134 @@ export default function ClassDetail() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-4">
-          <div className="text-start">
-            <NavLink
-              to={"/staff/classManagement"}
-              className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
-              style={{ fontSize: "18px", fontWeight: "500" }}
-            >
-              <i className="fa-solid fa-arrow-left"></i>
-              <span className="mx-2">Back</span>
-            </NavLink>
-          </div>
-          <div className="">
-            <h2 className="m-0 p-0 text-center">Classes Detail</h2>
-            <h5 className="m-0 p-0 py-1 my-3 mt-0 text-center">
-              Course Name: {course.courseName}{" "}
-            </h5>
-          </div>
-          <div className="row flex justify-content-center">
-            <div className="course-detail-classes col-10">
-              <div className=" my-2 mt-0 flex justify-content-between align-items-end p-0">
-                <div
-                  className="p-0 m-0 flex align-items-end"
-                  // style={{ color: "#7C903A" }}
-                >
-                  {viewAllButton ? (
-                    <h4 className="p-0 m-0">Current Classes</h4>
-                  ) : (
-                    <h4 className="p-0 m-0">Finished Classes</h4>
-                  )}
-                </div>
-                <div className="flex">
-                  {viewAllButton &&
-                  [...courseClasses].filter(
-                    (item) => new Date(item.endDate) - new Date() < 0
-                  ).length > 0 ? (
-                    <div className="text-end">
-                      <button
-                        className="border-0 mt-2 mx-1
-                   py-1 px-2"
-                        style={{
-                          borderRadius: "5px",
-                          backgroundColor: "#e36ac8",
-                          fontWeight: "500",
-                        }}
-                        onClick={() => {
-                          setViewAllButton(false);
-                          setHideButton(true);
-                          setAvailable(true);
-                        }}
-                      >
-                        View Finished Classes
-                      </button>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  {hideButton ? (
-                    <div className="text-end">
-                      <button
-                        className="border-0 mt-2 mx-1
-                    text-light bg-black bg-opacity-75 py-1 px-2"
-                        style={{ borderRadius: "5px" }}
-                        onClick={() => {
-                          setViewAllButton(true);
-                          setHideButton(false);
-                          if (!markAvailable) {
-                            setAvailable(false);
-                          }
-                        }}
-                      >
-                        View Current Classes
-                      </button>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  <NavLink
-                    to={`/staff/createClass/${param.id}`}
-                    className="border-0 mt-2 mx-1
-                     py-1 px-2 text-light"
-                    style={{
-                      borderRadius: "5px",
-                      backgroundColor: "#e36ac8",
-                    }}
-                    onClick={() => {
-                      localStorage.setItem(
-                        "COURSE_NAME_CREATE_CLASS",
-                        `${course.courseName}`
-                      );
-                    }}
+        <div className="main--content">
+          <section class="staff-list-area p-0 mt-2 px-4">
+            <div className="text-start">
+              <NavLink
+                to={"/staff/classManagement"}
+                className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                style={{ fontSize: "18px", fontWeight: "500" }}
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+                <span className="mx-2">Back</span>
+              </NavLink>
+            </div>
+            <div className="">
+              <h2 className="m-0 p-0 text-center">Classes Detail</h2>
+              <h5 className="m-0 p-0 py-1 my-3 mt-0 text-center">
+                Course Name: {course.courseName}{" "}
+              </h5>
+            </div>
+            <div className="row flex justify-content-center">
+              <div className="course-detail-classes col-10">
+                <div className=" my-2 mt-0 flex justify-content-between align-items-end p-0">
+                  <div
+                    className="p-0 m-0 flex align-items-end"
+                    // style={{ color: "#7C903A" }}
                   >
-                    Create New Class
-                  </NavLink>
+                    {viewAllButton ? (
+                      <h4 className="p-0 m-0">Current Classes</h4>
+                    ) : (
+                      <h4 className="p-0 m-0">Finished Classes</h4>
+                    )}
+                  </div>
+                  <div className="flex">
+                    {viewAllButton &&
+                    [...courseClasses].filter(
+                      (item) => new Date(item.endDate) - new Date() < 0
+                    ).length > 0 ? (
+                      <div className="text-end">
+                        <button
+                          className="border-0 mt-2 mx-1
+                   py-1 px-2"
+                          style={{
+                            borderRadius: "5px",
+                            backgroundColor: "#e36ac8",
+                            fontWeight: "500",
+                          }}
+                          onClick={() => {
+                            setViewAllButton(false);
+                            setHideButton(true);
+                            setAvailable(true);
+                          }}
+                        >
+                          View Finished Classes
+                        </button>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {hideButton ? (
+                      <div className="text-end">
+                        <button
+                          className="border-0 mt-2 mx-1
+                    text-light bg-black bg-opacity-75 py-1 px-2"
+                          style={{ borderRadius: "5px" }}
+                          onClick={() => {
+                            setViewAllButton(true);
+                            setHideButton(false);
+                            if (!markAvailable) {
+                              setAvailable(false);
+                            }
+                          }}
+                        >
+                          View Current Classes
+                        </button>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    <NavLink
+                      to={`/staff/createClass/${param.id}`}
+                      className="border-0 mt-2 mx-1
+                     py-1 px-2 text-light"
+                      style={{
+                        borderRadius: "5px",
+                        backgroundColor: "#e36ac8",
+                      }}
+                      onClick={() => {
+                        localStorage.setItem(
+                          "COURSE_NAME_CREATE_CLASS",
+                          `${course.courseName}`
+                        );
+                      }}
+                    >
+                      Create New Class
+                    </NavLink>
+                  </div>
                 </div>
-              </div>
-              {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
-              !available ? (
-                <p
-                  className="text-danger text-center p-0 m-0"
-                  style={{ fontSize: "18px", fontWeight: "600" }}
-                >
-                  No current class is available!
-                </p>
-              ) : (
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
-                      <TableRow className=" bg-dark">
-                        <StyledTableCell>No.</StyledTableCell>
-                        <StyledTableCell align="left">Name</StyledTableCell>
-                        <StyledTableCell align="center">
-                          Start Date
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          End Date
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Trainer
-                        </StyledTableCell>
-                        <StyledTableCell align="center">Room</StyledTableCell>
-                        <StyledTableCell align="left">Schedule</StyledTableCell>
-                        <StyledTableCell align="center">
-                          Quantity
-                        </StyledTableCell>
-                        {/* {viewAllButton ? (
+                {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
+                !available ? (
+                  <p
+                    className="text-danger text-center p-0 m-0"
+                    style={{ fontSize: "18px", fontWeight: "600" }}
+                  >
+                    No current class is available!
+                  </p>
+                ) : (
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow className=" bg-dark">
+                          <StyledTableCell>No.</StyledTableCell>
+                          <StyledTableCell align="left">Name</StyledTableCell>
+                          <StyledTableCell align="center">
+                            Start Date
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            End Date
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            Trainer
+                          </StyledTableCell>
+                          <StyledTableCell align="center">Room</StyledTableCell>
+                          <StyledTableCell align="left">
+                            Schedule
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            Quantity
+                          </StyledTableCell>
+                          {/* {viewAllButton ? (
                           <>
                             <StyledTableCell align="center">
                               Edit
@@ -271,119 +274,125 @@ export default function ClassDetail() {
                         ) : (
                           <></>
                         )} */}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {viewAllButton ? (
-                        <>
-                          {courseClasses
-                            .filter(
-                              (item) => new Date(item.endDate) - new Date() > 0
-                            )
-                            .sort((a, b) => {
-                              if (!viewAllButton) {
-                                return moment(new Date(`${b.endDate}`)) >
-                                  moment(new Date(`${a.endDate}`))
-                                  ? 1
-                                  : -1;
-                              }
-                              if (viewAllButton) {
-                                return moment(new Date(`${b.startDate}`)) >
-                                  moment(new Date(`${a.startDate}`))
-                                  ? 1
-                                  : -1;
-                              }
-                            })
-                            .map(
-                              (
-                                {
-                                  classId,
-                                  trainerId,
-                                  className,
-                                  startDate,
-                                  endDate,
-                                  firstname,
-                                  lastname,
-                                  schedule,
-                                  room,
-                                  numberTrainee,
-                                },
-                                index
-                              ) => {
-                                // if (numberTrainee == undefined) {
-                                //   numberTrainee = 3;
-                                // }
-                                let current = moment(new Date()).format(
-                                  "DD-MM-YYYY"
-                                );
-                                let start = moment(
-                                  new Date(`${startDate}`)
-                                ).format("DD-MM-YYYY");
-                                let end = moment(new Date(`${endDate}`)).format(
-                                  "DD-MM-YYYY"
-                                );
-                                // if (
-                                //   moment(new Date()) >
-                                //     moment(new Date(`${endDate}`)) &&
-                                //   viewAllButton
-                                // ) {
-                                //   return <></>;
-                                // }
-                                // if (
-                                //   (moment(new Date()) <
-                                //     moment(new Date(`${endDate}`)) ||
-                                //     current == end) &&
-                                //   !viewAllButton
-                                // ) {
-                                //   return <></>;
-                                // }
-                                return (
-                                  <StyledTableRow key={index}>
-                                    <StyledTableCell align="left">
-                                      {countNo++}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="left">
-                                      {className}
-                                    </StyledTableCell>
-                                    <StyledTableCell
-                                      align="center"
-                                      className={`${
-                                        moment(new Date()) >
-                                        moment(new Date(`${startDate}`))
-                                          ? "bg-warning bg-opacity-10"
-                                          : ""
-                                      }`}
-                                    >
-                                      {start}
-                                    </StyledTableCell>
-                                    <StyledTableCell
-                                      align="center"
-                                      className={`${
-                                        moment(new Date()) >
-                                        moment(new Date(`${endDate}`))
-                                          ? "bg-warning bg-opacity-10"
-                                          : ""
-                                      }`}
-                                    >
-                                      {end}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {firstname} {lastname}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {room}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="left">
-                                      {schedule.map(({ date, time }, index) => (
-                                        <p className="p-0 m-0 py-1" key={index}>
-                                          {date}, {time}
-                                        </p>
-                                      ))}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {numberTrainee}
-                                    </StyledTableCell>
-                                    {/* {viewAllButton ? (
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {viewAllButton ? (
+                          <>
+                            {courseClasses
+                              .filter(
+                                (item) =>
+                                  new Date(item.endDate) - new Date() > 0
+                              )
+                              .sort((a, b) => {
+                                if (!viewAllButton) {
+                                  return moment(new Date(`${b.endDate}`)) >
+                                    moment(new Date(`${a.endDate}`))
+                                    ? 1
+                                    : -1;
+                                }
+                                if (viewAllButton) {
+                                  return moment(new Date(`${b.startDate}`)) >
+                                    moment(new Date(`${a.startDate}`))
+                                    ? 1
+                                    : -1;
+                                }
+                              })
+                              .map(
+                                (
+                                  {
+                                    classId,
+                                    trainerId,
+                                    className,
+                                    startDate,
+                                    endDate,
+                                    firstname,
+                                    lastname,
+                                    schedule,
+                                    room,
+                                    numberTrainee,
+                                  },
+                                  index
+                                ) => {
+                                  // if (numberTrainee == undefined) {
+                                  //   numberTrainee = 3;
+                                  // }
+                                  let current = moment(new Date()).format(
+                                    "DD-MM-YYYY"
+                                  );
+                                  let start = moment(
+                                    new Date(`${startDate}`)
+                                  ).format("DD-MM-YYYY");
+                                  let end = moment(
+                                    new Date(`${endDate}`)
+                                  ).format("DD-MM-YYYY");
+                                  // if (
+                                  //   moment(new Date()) >
+                                  //     moment(new Date(`${endDate}`)) &&
+                                  //   viewAllButton
+                                  // ) {
+                                  //   return <></>;
+                                  // }
+                                  // if (
+                                  //   (moment(new Date()) <
+                                  //     moment(new Date(`${endDate}`)) ||
+                                  //     current == end) &&
+                                  //   !viewAllButton
+                                  // ) {
+                                  //   return <></>;
+                                  // }
+                                  return (
+                                    <StyledTableRow key={index}>
+                                      <StyledTableCell align="left">
+                                        {countNo++}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="left">
+                                        {className}
+                                      </StyledTableCell>
+                                      <StyledTableCell
+                                        align="center"
+                                        className={`${
+                                          moment(new Date()) >
+                                          moment(new Date(`${startDate}`))
+                                            ? "bg-warning bg-opacity-10"
+                                            : ""
+                                        }`}
+                                      >
+                                        {start}
+                                      </StyledTableCell>
+                                      <StyledTableCell
+                                        align="center"
+                                        className={`${
+                                          moment(new Date()) >
+                                          moment(new Date(`${endDate}`))
+                                            ? "bg-warning bg-opacity-10"
+                                            : ""
+                                        }`}
+                                      >
+                                        {end}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {firstname} {lastname}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {room}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="left">
+                                        {schedule.map(
+                                          ({ date, time }, index) => (
+                                            <p
+                                              className="p-0 m-0 py-1"
+                                              key={index}
+                                            >
+                                              {date}, {time}
+                                            </p>
+                                          )
+                                        )}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {numberTrainee}
+                                      </StyledTableCell>
+                                      {/* {viewAllButton ? (
                                       <>
                                         <StyledTableCell align="center">
                                           <button
@@ -419,166 +428,173 @@ export default function ClassDetail() {
                                     ) : (
                                       <></>
                                     )} */}
-                                  </StyledTableRow>
-                                );
-                              }
-                            )}
-                        </>
-                      ) : (
-                        <>
-                          {[...courseClasses, ...courseFinishedClasses]
-                            .filter(
-                              (item) => new Date(item.endDate) - new Date() < 0
-                            )
-                            .sort((a, b) => {
-                              if (!viewAllButton) {
-                                return moment(new Date(`${b.endDate}`)) >
-                                  moment(new Date(`${a.endDate}`))
-                                  ? 1
-                                  : -1;
-                              }
-                              if (viewAllButton) {
-                                return moment(new Date(`${b.startDate}`)) >
-                                  moment(new Date(`${a.startDate}`))
-                                  ? 1
-                                  : -1;
-                              }
-                            })
-                            .map(
-                              (
-                                {
-                                  classId,
-                                  trainerId,
-                                  className,
-                                  startDate,
-                                  endDate,
-                                  firstname,
-                                  lastname,
-                                  schedule,
-                                  room,
-                                  numberTrainee,
-                                },
-                                index
-                              ) => {
-                                // if (numberTrainee == undefined) {
-                                //   numberTrainee = 3;
-                                // }
-                                let current = moment(new Date()).format(
-                                  "DD-MM-YYYY"
-                                );
-                                let start = moment(
-                                  new Date(`${startDate}`)
-                                ).format("DD-MM-YYYY");
-                                let end = moment(new Date(`${endDate}`)).format(
-                                  "DD-MM-YYYY"
-                                );
-                                // if (
-                                //   moment(new Date()) >
-                                //     moment(new Date(`${endDate}`)) &&
-                                //   viewAllButton
-                                // ) {
-                                //   return <></>;
-                                // }
-                                // if (
-                                //   (moment(new Date()) <
-                                //     moment(new Date(`${endDate}`)) ||
-                                //     current == end) &&
-                                //   !viewAllButton
-                                // ) {
-                                //   return <></>;
-                                // }
-                                return (
-                                  <StyledTableRow key={index}>
-                                    <StyledTableCell align="left">
-                                      {countNo++}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="left">
-                                      {className}
-                                    </StyledTableCell>
-                                    <StyledTableCell
-                                      align="center"
-                                      className={`${
-                                        moment(new Date()) >
-                                        moment(new Date(`${startDate}`))
-                                          ? "bg-warning bg-opacity-10"
-                                          : ""
-                                      }`}
-                                    >
-                                      {start}
-                                    </StyledTableCell>
-                                    <StyledTableCell
-                                      align="center"
-                                      className={`${
-                                        moment(new Date()) >
-                                        moment(new Date(`${endDate}`))
-                                          ? "bg-warning bg-opacity-10"
-                                          : ""
-                                      }`}
-                                    >
-                                      {end}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {firstname} {lastname}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {room}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="left">
-                                      {schedule.map(({ date, time }, index) => (
-                                        <p className="p-0 m-0 py-1" key={index}>
-                                          {date}, {time}
-                                        </p>
-                                      ))}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="center">
-                                      {numberTrainee}
-                                    </StyledTableCell>
-                                    {viewAllButton ? (
-                                      <>
-                                        <StyledTableCell align="center">
-                                          <button
-                                            className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
-                                            style={{
-                                              borderRadius: "50%",
-                                              fontSize: "15px",
-                                            }}
-                                          >
-                                            <NavLink
-                                              className="px-2 py-1 "
-                                              to={``}
+                                    </StyledTableRow>
+                                  );
+                                }
+                              )}
+                          </>
+                        ) : (
+                          <>
+                            {[...courseClasses, ...courseFinishedClasses]
+                              .filter(
+                                (item) =>
+                                  new Date(item.endDate) - new Date() < 0
+                              )
+                              .sort((a, b) => {
+                                if (!viewAllButton) {
+                                  return moment(new Date(`${b.endDate}`)) >
+                                    moment(new Date(`${a.endDate}`))
+                                    ? 1
+                                    : -1;
+                                }
+                                if (viewAllButton) {
+                                  return moment(new Date(`${b.startDate}`)) >
+                                    moment(new Date(`${a.startDate}`))
+                                    ? 1
+                                    : -1;
+                                }
+                              })
+                              .map(
+                                (
+                                  {
+                                    classId,
+                                    trainerId,
+                                    className,
+                                    startDate,
+                                    endDate,
+                                    firstname,
+                                    lastname,
+                                    schedule,
+                                    room,
+                                    numberTrainee,
+                                  },
+                                  index
+                                ) => {
+                                  // if (numberTrainee == undefined) {
+                                  //   numberTrainee = 3;
+                                  // }
+                                  let current = moment(new Date()).format(
+                                    "DD-MM-YYYY"
+                                  );
+                                  let start = moment(
+                                    new Date(`${startDate}`)
+                                  ).format("DD-MM-YYYY");
+                                  let end = moment(
+                                    new Date(`${endDate}`)
+                                  ).format("DD-MM-YYYY");
+                                  // if (
+                                  //   moment(new Date()) >
+                                  //     moment(new Date(`${endDate}`)) &&
+                                  //   viewAllButton
+                                  // ) {
+                                  //   return <></>;
+                                  // }
+                                  // if (
+                                  //   (moment(new Date()) <
+                                  //     moment(new Date(`${endDate}`)) ||
+                                  //     current == end) &&
+                                  //   !viewAllButton
+                                  // ) {
+                                  //   return <></>;
+                                  // }
+                                  return (
+                                    <StyledTableRow key={index}>
+                                      <StyledTableCell align="left">
+                                        {countNo++}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="left">
+                                        {className}
+                                      </StyledTableCell>
+                                      <StyledTableCell
+                                        align="center"
+                                        className={`${
+                                          moment(new Date()) >
+                                          moment(new Date(`${startDate}`))
+                                            ? "bg-warning bg-opacity-10"
+                                            : ""
+                                        }`}
+                                      >
+                                        {start}
+                                      </StyledTableCell>
+                                      <StyledTableCell
+                                        align="center"
+                                        className={`${
+                                          moment(new Date()) >
+                                          moment(new Date(`${endDate}`))
+                                            ? "bg-warning bg-opacity-10"
+                                            : ""
+                                        }`}
+                                      >
+                                        {end}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {firstname} {lastname}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {room}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="left">
+                                        {schedule.map(
+                                          ({ date, time }, index) => (
+                                            <p
+                                              className="p-0 m-0 py-1"
+                                              key={index}
                                             >
-                                              <i className="fa-solid fa-pen-to-square py-2" />
-                                            </NavLink>
-                                          </button>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                          <button
-                                            className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0  text-center"
-                                            style={{
-                                              borderRadius: "50%",
-                                              fontSize: "15px",
-                                            }}
-                                            onClick={() => {}}
-                                          >
-                                            <i className="fa-solid fa-trash" />
-                                          </button>
-                                        </StyledTableCell>
-                                      </>
-                                    ) : (
-                                      <></>
-                                    )}
-                                  </StyledTableRow>
-                                );
-                              }
-                            )}
-                        </>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
+                                              {date}, {time}
+                                            </p>
+                                          )
+                                        )}
+                                      </StyledTableCell>
+                                      <StyledTableCell align="center">
+                                        {numberTrainee}
+                                      </StyledTableCell>
+                                      {viewAllButton ? (
+                                        <>
+                                          <StyledTableCell align="center">
+                                            <button
+                                              className="text-decoration-none text-primary bg-primary bg-opacity-10 border-0  text-center"
+                                              style={{
+                                                borderRadius: "50%",
+                                                fontSize: "15px",
+                                              }}
+                                            >
+                                              <NavLink
+                                                className="px-2 py-1 "
+                                                to={``}
+                                              >
+                                                <i className="fa-solid fa-pen-to-square py-2" />
+                                              </NavLink>
+                                            </button>
+                                          </StyledTableCell>
+                                          <StyledTableCell align="center">
+                                            <button
+                                              className="px-2 py-1 text-decoration-none text-danger bg-danger bg-opacity-10 border-0  text-center"
+                                              style={{
+                                                borderRadius: "50%",
+                                                fontSize: "15px",
+                                              }}
+                                              onClick={() => {}}
+                                            >
+                                              <i className="fa-solid fa-trash" />
+                                            </button>
+                                          </StyledTableCell>
+                                        </>
+                                      ) : (
+                                        <></>
+                                      )}
+                                    </StyledTableRow>
+                                  );
+                                }
+                              )}
+                          </>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </>

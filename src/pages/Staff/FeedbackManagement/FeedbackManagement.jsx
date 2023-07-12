@@ -343,91 +343,95 @@ export default function FeedbackManagement() {
       <HeaderStaff />
       <section className="main bg-light" id="staff-feedback-management-area">
         <MenuStaff />
-        <div className={`main--content px-4 pt-3 ${!viewData ? "d-none" : ""}`}>
-          <div
-            className="flex justify-content-between align-items-end"
-            style={{ width: "97%", margin: "0 auto" }}
-          >
-            <div className="my-1">
-              <span className="px-2">Search by Name</span>
-              <input
-                type="search"
-                placeholder="Enter part of name..."
-                style={{
-                  borderRadius: "5px",
-                  border: "1px solid gray",
-                  outline: "none",
-                }}
-                className="px-1"
-                value={searchedName}
-                onChange={(e) => {
-                  setSearchedName(e.target.value);
-                }}
-              />
+        <div className={`main--content  ${!viewData ? "d-none" : ""}`}>
+          <section class="staff-list-area p-0 mt-2 px-4">
+            <div
+              className="flex justify-content-between align-items-end"
+              style={{ width: "97%", margin: "0 auto" }}
+            >
+              <div className="my-1">
+                <span className="px-2">Search by Name</span>
+                <input
+                  type="search"
+                  placeholder="Enter part of name..."
+                  style={{
+                    borderRadius: "5px",
+                    border: "1px solid gray",
+                    outline: "none",
+                  }}
+                  className="px-1"
+                  value={searchedName}
+                  onChange={(e) => {
+                    setSearchedName(e.target.value);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <table>
-            <thead className="table-head">
-              <tr>
-                <th>No.</th>
-                <th>Image</th>
-                <th style={{ textAlign: "left" }}>
-                  Name
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(sortedName)} symbol-sorting ${
-                        !priority.includes("sortedName") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedName"
-                    id="sortedName"
-                    className="selection-button"
-                    value={sortedName}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedName(e.target.value);
-                      if (e.target.value != "Unsort") setPriority("sortedName");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="A-Z">A-Z</option>
-                    <option value="Z-A">Z-A</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                </th>
-                {/* s */}
-                <th style={{ textAlign: "right" }}>
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(
-                        sortedPending
-                      )} symbol-sorting ${
-                        !priority.includes("sortedPending") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedPending"
-                    id="sortedPending"
-                    className="selection-button"
-                    value={sortedPending}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedPending(e.target.value);
-                      if (e.target.value != "Unsort")
-                        setPriority("sortedPending");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                  Number Of Pending
-                </th>
-                {/* <th style={{ textAlign: "center" }}>
+            <table>
+              <thead className="table-head">
+                <tr>
+                  <th>No.</th>
+                  <th>Image</th>
+                  <th style={{ textAlign: "left" }}>
+                    Name
+                    <span style={{ marginLeft: "5px" }}>
+                      <i
+                        className={`${symbolSorting(
+                          sortedName
+                        )} symbol-sorting ${
+                          !priority.includes("sortedName") ? "d-none" : ""
+                        }`}
+                      />
+                    </span>
+                    <select
+                      name="sortedName"
+                      id="sortedName"
+                      className="selection-button"
+                      value={sortedName}
+                      onChange={(e) => {
+                        unsortAll();
+                        setSortedName(e.target.value);
+                        if (e.target.value != "Unsort")
+                          setPriority("sortedName");
+                      }}
+                      style={{ width: "20px" }}
+                    >
+                      <option value="A-Z">A-Z</option>
+                      <option value="Z-A">Z-A</option>
+                      <option value="Unsort">Unsort</option>
+                    </select>
+                  </th>
+                  {/* s */}
+                  <th style={{ textAlign: "right" }}>
+                    <span style={{ marginLeft: "5px" }}>
+                      <i
+                        className={`${symbolSorting(
+                          sortedPending
+                        )} symbol-sorting ${
+                          !priority.includes("sortedPending") ? "d-none" : ""
+                        }`}
+                      />
+                    </span>
+                    <select
+                      name="sortedPending"
+                      id="sortedPending"
+                      className="selection-button"
+                      value={sortedPending}
+                      onChange={(e) => {
+                        unsortAll();
+                        setSortedPending(e.target.value);
+                        if (e.target.value != "Unsort")
+                          setPriority("sortedPending");
+                      }}
+                      style={{ width: "20px" }}
+                    >
+                      <option value="ASC">ASC</option>
+                      <option value="DESC">DESC</option>
+                      <option value="Unsort">Unsort</option>
+                    </select>
+                    Number Of Pending
+                  </th>
+                  {/* <th style={{ textAlign: "center" }}>
                   Censored
                   <span style={{ marginLeft: "5px" }}>
                     <i
@@ -514,116 +518,117 @@ export default function FeedbackManagement() {
                     <option value="Unsort">Unsort</option>
                   </select>
                 </th> */}
-                <th style={{ textAlign: "center" }}>
-                  Rate
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(
-                        sortedRating
-                      )} symbol-sorting ${
-                        !priority.includes("sortedRating") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedRating"
-                    id="sortedRating"
-                    className="selection-button"
-                    value={sortedRating}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedRating(e.target.value);
-                      if (e.target.value != "Unsort")
-                        setPriority("sortedRating");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                </th>
-                <th style={{ textAlign: "center" }}>Detail</th>
-              </tr>
-            </thead>
-            <tbody style={{ height: "auto" }}>
-              {renderCourseList
-                .filter((item) =>
-                  item.courseName
-                    .trim()
-                    .toLowerCase()
-                    .includes(searchedName.trim().toLowerCase())
-                )
-                .filter((item) => item.levelName.includes(sortedLevel))
-                .map(
-                  (
-                    {
-                      courseID,
-                      courseName,
-                      price,
-                      discount,
-                      levelId,
-                      levelName,
-                      description,
-                      courseImg,
-                      feedbackInfo,
-                      deleted,
-                      pending,
-                      censored,
-                      deletedFb,
-                      rating,
-                    },
-                    index
-                  ) => {
-                    return (
-                      <>
-                        <tr
-                          key={courseID}
-                          className={`row-bg-${index % 2}`}
-                          // {`${
-                          //   pending <= 0 ? `row-bg-${index % 2}` : ""
-                          // }
-                          //                       ${
-                          //                         pending > 0
-                          //                           ? `row-bg-pending-warning-${
-                          //                               index % 2
-                          //                             }`
-                          //                           : ""
-                          //                       }`}
-                        >
-                          <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                          {/* <td>{courseID}</td> */}
-                          <td>
-                            <img
-                              src={courseImg}
-                              alt={`${courseName}`}
-                              style={{
-                                width: "50px",
-                                height: "30px",
-                                borderRadius: "10px",
-                              }}
-                            />
-                          </td>
-                          <td style={{ textAlign: "left" }}>{courseName}</td>
-                          {/* <td style={{ textAlign: "left" }}>{levelName}</td> */}
-                          <td
-                            className={`${pending > 0 ? "text-danger" : ""}`}
-                            style={{
-                              textAlign: "right",
-                              fontWeight: `${pending > 0 ? "bolder" : ""}`,
-                              fontSize: "16px",
-                              // fontSize: `${pending > 0 ? "18px" : ""}`,
-                            }}
+                  <th style={{ textAlign: "center" }}>
+                    Rate
+                    <span style={{ marginLeft: "5px" }}>
+                      <i
+                        className={`${symbolSorting(
+                          sortedRating
+                        )} symbol-sorting ${
+                          !priority.includes("sortedRating") ? "d-none" : ""
+                        }`}
+                      />
+                    </span>
+                    <select
+                      name="sortedRating"
+                      id="sortedRating"
+                      className="selection-button"
+                      value={sortedRating}
+                      onChange={(e) => {
+                        unsortAll();
+                        setSortedRating(e.target.value);
+                        if (e.target.value != "Unsort")
+                          setPriority("sortedRating");
+                      }}
+                      style={{ width: "20px" }}
+                    >
+                      <option value="ASC">ASC</option>
+                      <option value="DESC">DESC</option>
+                      <option value="Unsort">Unsort</option>
+                    </select>
+                  </th>
+                  <th style={{ textAlign: "center" }}>Detail</th>
+                </tr>
+              </thead>
+              <tbody style={{ height: "auto" }}>
+                {renderCourseList
+                  .filter((item) =>
+                    item.courseName
+                      .trim()
+                      .toLowerCase()
+                      .includes(searchedName.trim().toLowerCase())
+                  )
+                  .filter((item) => item.levelName.includes(sortedLevel))
+                  .map(
+                    (
+                      {
+                        courseID,
+                        courseName,
+                        price,
+                        discount,
+                        levelId,
+                        levelName,
+                        description,
+                        courseImg,
+                        feedbackInfo,
+                        deleted,
+                        pending,
+                        censored,
+                        deletedFb,
+                        rating,
+                      },
+                      index
+                    ) => {
+                      return (
+                        <>
+                          <tr
+                            key={courseID}
+                            className={`row-bg-${index % 2}`}
+                            // {`${
+                            //   pending <= 0 ? `row-bg-${index % 2}` : ""
+                            // }
+                            //                       ${
+                            //                         pending > 0
+                            //                           ? `row-bg-pending-warning-${
+                            //                               index % 2
+                            //                             }`
+                            //                           : ""
+                            //                       }`}
                           >
-                            {pending}
-                          </td>
-                          {feedbackInfo != null && feedbackInfo != undefined ? (
+                            <td style={{ fontWeight: "600" }}>{index + 1}</td>
+                            {/* <td>{courseID}</td> */}
+                            <td>
+                              <img
+                                src={courseImg}
+                                alt={`${courseName}`}
+                                style={{
+                                  width: "50px",
+                                  height: "30px",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                            </td>
+                            <td style={{ textAlign: "left" }}>{courseName}</td>
+                            {/* <td style={{ textAlign: "left" }}>{levelName}</td> */}
                             <td
+                              className={`${pending > 0 ? "text-danger" : ""}`}
                               style={{
-                                textAlign: "center",
-                                fontWeight: "bold",
+                                textAlign: "right",
+                                fontWeight: `${pending > 0 ? "bolder" : ""}`,
+                                fontSize: "16px",
+                                // fontSize: `${pending > 0 ? "18px" : ""}`,
                               }}
-                              className={`
+                            >
+                              {pending}
+                            </td>
+                            {feedbackInfo != null &&
+                            feedbackInfo != undefined ? (
+                              <td
+                                style={{
+                                  textAlign: "center",
+                                  fontWeight: "bold",
+                                }}
+                                className={`
                               ${
                                 feedbackInfo.length > 0 && rating >= 4
                                   ? "text-success"
@@ -642,51 +647,52 @@ export default function FeedbackManagement() {
                                     : ""
                                 }
                               `}
-                            >
-                              {feedbackInfo.length > 0 ? (
-                                <>
-                                  <p className="p-0 m-0 text-center">
-                                    {rating}
-                                  </p>
-                                  <p className="p-0 m-0 text-center">
-                                    {" "}
-                                    <Rating
-                                      name="half-rating-read"
-                                      defaultValue={rating}
-                                      precision={0.5}
-                                      readOnly
-                                      style={{ fontSize: "14px" }}
-                                    />
-                                  </p>
-                                </>
-                              ) : (
-                                "Not yet"
-                              )}
-                            </td>
-                          ) : (
-                            <td></td>
-                          )}
-                          <td style={{ textAlign: "center" }}>
-                            <button
-                              className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"
-                              style={{ borderRadius: "50%" }}
-                            >
-                              <NavLink
-                                className="px-2 py-1 text-dark bg-dark bg-opacity-10"
-                                style={{ borderRadius: "50%" }}
-                                to={`/staff/feedbackManagement/${courseID}`}
                               >
-                                <i className="fa-solid fa-eye" />
-                              </NavLink>
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  }
-                )}
-            </tbody>
-          </table>
+                                {feedbackInfo.length > 0 ? (
+                                  <>
+                                    <p className="p-0 m-0 text-center">
+                                      {rating}
+                                    </p>
+                                    <p className="p-0 m-0 text-center">
+                                      {" "}
+                                      <Rating
+                                        name="half-rating-read"
+                                        defaultValue={rating}
+                                        precision={0.5}
+                                        readOnly
+                                        style={{ fontSize: "14px" }}
+                                      />
+                                    </p>
+                                  </>
+                                ) : (
+                                  "Not yet"
+                                )}
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                            <td style={{ textAlign: "center" }}>
+                              <button
+                                className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"
+                                style={{ borderRadius: "50%" }}
+                              >
+                                <NavLink
+                                  className="px-2 py-1 text-dark bg-dark bg-opacity-10"
+                                  style={{ borderRadius: "50%" }}
+                                  to={`/staff/feedbackManagement/${courseID}`}
+                                >
+                                  <i className="fa-solid fa-eye" />
+                                </NavLink>
+                              </button>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    }
+                  )}
+              </tbody>
+            </table>
+          </section>
         </div>
       </section>
     </>

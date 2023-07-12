@@ -419,308 +419,315 @@ export default function StaffClassCreate() {
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
-        <div className="main--content pt-3 px-5 staff-template-none-scss">
-          <div className="row justify-content-center">
-            <div className="col-12">
-              <NavLink
-                to={comeback}
-                className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
-                style={{ fontSize: "18px", fontWeight: "500" }}
-              >
-                <i className="fa-solid fa-arrow-left"></i>
-                <span className="mx-2">Back</span>
-              </NavLink>
-            </div>{" "}
-          </div>
+        <div className="main--content staff-template-none-scss">
+          <section class="staff-list-area p-0 mt-2 px-5">
+            <div className="row justify-content-center">
+              <div className="col-12">
+                <NavLink
+                  to={comeback}
+                  className="course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                  style={{ fontSize: "18px", fontWeight: "500" }}
+                >
+                  <i className="fa-solid fa-arrow-left"></i>
+                  <span className="mx-2">Back</span>
+                </NavLink>
+              </div>{" "}
+            </div>
 
-          <div
-            className="title flex-column m-0 p-0"
-            style={{ color: "#e36ac8" }}
-          >
-            <h2 className="m-0 p-0">Create New Class</h2>
-            <h5 className="m-0 p-0 pt-1">Course Name: {courseName}</h5>
-          </div>
-
-          <div className="row create-course-content mt-4">
-            <Form
-              onFinish={formik.handleSubmit}
-              {...formItemLayout}
-              form={form}
-              size="large"
-              autoComplete="off"
+            <div
+              className="title flex-column m-0 p-0"
+              style={{ color: "#e36ac8" }}
             >
-              <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Class Name:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    name="className"
-                    label={``}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Class Name cannot be blank",
-                      },
-                      {
-                        max: 50,
-                        message: "Class Name must not be over 50 characters",
-                      },
-                      {
-                        whitespace: true,
-                        message: "Class Name cannot be empty",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Input
-                      style={{ width: "100%" }}
+              <h2 className="m-0 p-0">Create New Class</h2>
+              <h5 className="m-0 p-0 pt-1">Course Name: {courseName}</h5>
+            </div>
+
+            <div className="row create-course-content mt-4">
+              <Form
+                onFinish={formik.handleSubmit}
+                {...formItemLayout}
+                form={form}
+                size="large"
+                autoComplete="off"
+              >
+                <div className="row flex align-items-start justify-content-between">
+                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                    <span className="text-danger px-1">
+                      <i
+                        className="fa-solid fa-star-of-life"
+                        style={{
+                          fontSize: "6px",
+                          verticalAlign: "middle",
+                        }}
+                      ></i>{" "}
+                    </span>
+                    Class Name:
+                  </p>
+                  <div className="col-10">
+                    <Form.Item
                       name="className"
-                      value={formik.values.className}
-                      onChange={formik.handleChange}
-                      placeholder="Enter Class Name"
-                    />
-                  </Form.Item>
-                </div>
-              </div>
-
-              <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Start Date:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    name="startDate"
-                    label={``}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Start Date cannot be blank",
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (getFieldValue("endDate")) {
-                            formik.setFieldValue(
-                              "endDate",
-                              getFieldValue("endDate")
-                            );
-                            form.setFieldValue(
-                              "endDate",
-                              getFieldValue("endDate")
-                            );
-                          }
-                          if (!(currentDate < styleRealDate(value)) && value) {
-                            return Promise.reject(
-                              "Start Date cannot be before or equal to Current Date"
-                            );
-                          }
-                          if (
-                            !value ||
-                            !getFieldValue("endDate") ||
-                            (!(
-                              styleRealDate(value) >
-                              styleRealDate(getFieldValue("endDate"))
-                            ) &&
-                              !(
-                                styleInputDate(getFieldValue("endDate")) ==
-                                styleInputDate(value)
-                              ))
-                          ) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            "Start Date cannot be after or equal to End Date"
-                          );
+                      label={``}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Class Name cannot be blank",
                         },
-                      }),
-                    ]}
-                    hasFeedback
-                  >
-                    <DatePicker
-                      name="startDate"
-                      className="w-100"
-                      format={"DD-MM-YYYY, dddd"}
-                      value={formik.values.startDate}
-                      onChange={handleChangeStartDate}
-                      placeholder="Enter Start Date (DD-MM-YYYY)"
-                    />
-                  </Form.Item>
-                </div>
-              </div>
-
-              <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  End Date:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    name="endDate"
-                    label={``}
-                    rules={[
-                      {
-                        required: true,
-                        message: "End Date cannot be blank",
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (getFieldValue("startDate")) {
-                            formik.setFieldValue(
-                              "startDate",
-                              getFieldValue("startDate")
-                            );
-                            form.setFieldValue(
-                              "startDate",
-                              getFieldValue("startDate")
-                            );
-                          }
-                          if (!(currentDate < styleRealDate(value)) && value) {
-                            return Promise.reject(
-                              "End Date cannot be before or equal to Current Date"
-                            );
-                          }
-                          if (
-                            !value ||
-                            !getFieldValue("startDate") ||
-                            (!(
-                              styleRealDate(getFieldValue("startDate")) >
-                              styleRealDate(value)
-                            ) &&
-                              !(
-                                styleInputDate(getFieldValue("startDate")) ==
-                                styleInputDate(value)
-                              ))
-                          ) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            "Start Date cannot be after or equal to End Date"
-                          );
+                        {
+                          max: 50,
+                          message: "Class Name must not be over 50 characters",
                         },
-                      }),
-                    ]}
-                    hasFeedback
-                  >
-                    <DatePicker
-                      name="endDate"
-                      className="w-100"
-                      format={"DD-MM-YYYY, dddd"}
-                      value={formik.values.endDate}
-                      onChange={handleChangeEndDate}
-                      placeholder="Enter End Date (DD-MM-YYYY)"
-                    />
-                  </Form.Item>
-                </div>
-              </div>
-
-              <div className="row flex align-items-start justify-content-between">
-                <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                  <span className="text-danger px-1">
-                    <i
-                      className="fa-solid fa-star-of-life"
-                      style={{
-                        fontSize: "6px",
-                        verticalAlign: "middle",
-                      }}
-                    ></i>{" "}
-                  </span>
-                  Room:
-                </p>
-                <div className="col-10">
-                  <Form.Item
-                    label=""
-                    name="room"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Room must be selected",
-                      },
-                    ]}
-                    hasFeedback
-                  >
-                    <Select
-                      name="room"
-                      width="200px"
-                      placeholder="Select Room"
-                      value={formik.values.room}
-                      onChange={handleChangeRoom}
+                        {
+                          whitespace: true,
+                          message: "Class Name cannot be empty",
+                        },
+                      ]}
+                      hasFeedback
                     >
-                      {listOfRoom.map((room, index) => {
-                        return (
-                          <Select.Option key={index} value={room}>
-                            {room}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
-                  </Form.Item>
-                </div>
-              </div>
-
-              {courseRoom != "" &&
-              courseStartDate != "" &&
-              courseEndDate != "" ? (
-                <>
-                  <div className="row flex align-items-start justify-content-between">
-                    <p className="col-12 p-0 m-0 px-3 my-2 mt-0 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      Schedule:
-                    </p>
+                      <Input
+                        style={{ width: "100%" }}
+                        name="className"
+                        value={formik.values.className}
+                        onChange={formik.handleChange}
+                        placeholder="Enter Class Name"
+                      />
+                    </Form.Item>
                   </div>
-                  <table className="table-bordered text-center ">
-                    <thead>
-                      <tr className="bg-light-gray">
-                        <th className="text-uppercase">Time</th>
-                        {listOfDay.map((day) => {
-                          return <th className="text-uppercase">{day}</th>;
+                </div>
+
+                <div className="row flex align-items-start justify-content-between">
+                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                    <span className="text-danger px-1">
+                      <i
+                        className="fa-solid fa-star-of-life"
+                        style={{
+                          fontSize: "6px",
+                          verticalAlign: "middle",
+                        }}
+                      ></i>{" "}
+                    </span>
+                    Start Date:
+                  </p>
+                  <div className="col-10">
+                    <Form.Item
+                      name="startDate"
+                      label={``}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Start Date cannot be blank",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (getFieldValue("endDate")) {
+                              formik.setFieldValue(
+                                "endDate",
+                                getFieldValue("endDate")
+                              );
+                              form.setFieldValue(
+                                "endDate",
+                                getFieldValue("endDate")
+                              );
+                            }
+                            if (
+                              !(currentDate < styleRealDate(value)) &&
+                              value
+                            ) {
+                              return Promise.reject(
+                                "Start Date cannot be before or equal to Current Date"
+                              );
+                            }
+                            if (
+                              !value ||
+                              !getFieldValue("endDate") ||
+                              (!(
+                                styleRealDate(value) >
+                                styleRealDate(getFieldValue("endDate"))
+                              ) &&
+                                !(
+                                  styleInputDate(getFieldValue("endDate")) ==
+                                  styleInputDate(value)
+                                ))
+                            ) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              "Start Date cannot be after or equal to End Date"
+                            );
+                          },
+                        }),
+                      ]}
+                      hasFeedback
+                    >
+                      <DatePicker
+                        name="startDate"
+                        className="w-100"
+                        format={"DD-MM-YYYY, dddd"}
+                        value={formik.values.startDate}
+                        onChange={handleChangeStartDate}
+                        placeholder="Enter Start Date (DD-MM-YYYY)"
+                      />
+                    </Form.Item>
+                  </div>
+                </div>
+
+                <div className="row flex align-items-start justify-content-between">
+                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                    <span className="text-danger px-1">
+                      <i
+                        className="fa-solid fa-star-of-life"
+                        style={{
+                          fontSize: "6px",
+                          verticalAlign: "middle",
+                        }}
+                      ></i>{" "}
+                    </span>
+                    End Date:
+                  </p>
+                  <div className="col-10">
+                    <Form.Item
+                      name="endDate"
+                      label={``}
+                      rules={[
+                        {
+                          required: true,
+                          message: "End Date cannot be blank",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (getFieldValue("startDate")) {
+                              formik.setFieldValue(
+                                "startDate",
+                                getFieldValue("startDate")
+                              );
+                              form.setFieldValue(
+                                "startDate",
+                                getFieldValue("startDate")
+                              );
+                            }
+                            if (
+                              !(currentDate < styleRealDate(value)) &&
+                              value
+                            ) {
+                              return Promise.reject(
+                                "End Date cannot be before or equal to Current Date"
+                              );
+                            }
+                            if (
+                              !value ||
+                              !getFieldValue("startDate") ||
+                              (!(
+                                styleRealDate(getFieldValue("startDate")) >
+                                styleRealDate(value)
+                              ) &&
+                                !(
+                                  styleInputDate(getFieldValue("startDate")) ==
+                                  styleInputDate(value)
+                                ))
+                            ) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              "Start Date cannot be after or equal to End Date"
+                            );
+                          },
+                        }),
+                      ]}
+                      hasFeedback
+                    >
+                      <DatePicker
+                        name="endDate"
+                        className="w-100"
+                        format={"DD-MM-YYYY, dddd"}
+                        value={formik.values.endDate}
+                        onChange={handleChangeEndDate}
+                        placeholder="Enter End Date (DD-MM-YYYY)"
+                      />
+                    </Form.Item>
+                  </div>
+                </div>
+
+                <div className="row flex align-items-start justify-content-between">
+                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                    <span className="text-danger px-1">
+                      <i
+                        className="fa-solid fa-star-of-life"
+                        style={{
+                          fontSize: "6px",
+                          verticalAlign: "middle",
+                        }}
+                      ></i>{" "}
+                    </span>
+                    Room:
+                  </p>
+                  <div className="col-10">
+                    <Form.Item
+                      label=""
+                      name="room"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Room must be selected",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Select
+                        name="room"
+                        width="200px"
+                        placeholder="Select Room"
+                        value={formik.values.room}
+                        onChange={handleChangeRoom}
+                      >
+                        {listOfRoom.map((room, index) => {
+                          return (
+                            <Select.Option key={index} value={room}>
+                              {room}
+                            </Select.Option>
+                          );
                         })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {listOfTimeFrame.map((timeFrame) => (
-                        <tr key={timeFrame.id}>
-                          <td className="align-middle">
-                            {timeFrame.timeFrame1}
-                          </td>
-                          {listOfDay.map((dayOfTheWeek, index) => {
-                            return (
-                              <td
-                                key={dayOfTheWeek}
-                                className={`m-0 p-0 py-1 bg-opacity-25
+                      </Select>
+                    </Form.Item>
+                  </div>
+                </div>
+
+                {courseRoom != "" &&
+                courseStartDate != "" &&
+                courseEndDate != "" ? (
+                  <>
+                    <div className="row flex align-items-start justify-content-between">
+                      <p className="col-12 p-0 m-0 px-3 my-2 mt-0 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        Schedule:
+                      </p>
+                    </div>
+                    <table className="table-bordered text-center ">
+                      <thead>
+                        <tr className="bg-light-gray">
+                          <th className="text-uppercase">Time</th>
+                          {listOfDay.map((day) => {
+                            return <th className="text-uppercase">{day}</th>;
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {listOfTimeFrame.map((timeFrame) => (
+                          <tr key={timeFrame.id}>
+                            <td className="align-middle">
+                              {timeFrame.timeFrame1}
+                            </td>
+                            {listOfDay.map((dayOfTheWeek, index) => {
+                              return (
+                                <td
+                                  key={dayOfTheWeek}
+                                  className={`m-0 p-0 py-1 bg-opacity-25
                                 ${
                                   slotDto.findIndex(
                                     (item) =>
@@ -751,119 +758,149 @@ export default function StaffClassCreate() {
                                     ? "bg-danger"
                                     : ""
                                 }`}
-                                style={{
-                                  position: "relative",
-                                  verticalAlign: "middle",
-                                }}
-                              >
-                                <div className="p-0 m-0">
-                                  {timetable
-                                    .filter(
-                                      (s) =>
-                                        s.schedule.date
+                                  style={{
+                                    position: "relative",
+                                    verticalAlign: "middle",
+                                  }}
+                                >
+                                  <div className="p-0 m-0">
+                                    {timetable
+                                      .filter(
+                                        (s) =>
+                                          s.schedule.date
+                                            .trim()
+                                            .toLowerCase()
+                                            .includes(
+                                              `${dayOfTheWeek}`
+                                                .trim()
+                                                .toLowerCase()
+                                            ) &&
+                                          s.schedule.timeframeId == timeFrame.id
+                                      )
+                                      .filter((item) =>
+                                        item.room
                                           .trim()
                                           .toLowerCase()
                                           .includes(
-                                            `${dayOfTheWeek}`
-                                              .trim()
-                                              .toLowerCase()
-                                          ) &&
-                                        s.schedule.timeframeId == timeFrame.id
-                                    )
-                                    .filter((item) =>
-                                      item.room
-                                        .trim()
-                                        .toLowerCase()
-                                        .includes(
-                                          `${courseRoom}`.trim().toLowerCase()
-                                        )
-                                    )
-                                    .filter((item) => {
-                                      if (courseStartDate == "") {
-                                        return true;
-                                      }
-                                      if (
-                                        styleInputDate(courseStartDate) ==
-                                        styleInputDate(item.endDate)
-                                      ) {
-                                        return true;
-                                      }
+                                            `${courseRoom}`.trim().toLowerCase()
+                                          )
+                                      )
+                                      .filter((item) => {
+                                        if (courseStartDate == "") {
+                                          return true;
+                                        }
+                                        if (
+                                          styleInputDate(courseStartDate) ==
+                                          styleInputDate(item.endDate)
+                                        ) {
+                                          return true;
+                                        }
+                                        return (
+                                          styleRealDate(courseStartDate) <=
+                                          styleRealDate(item.endDate)
+                                        );
+                                      }).length <= 0 &&
+                                    slotDto.filter((item) => {
                                       return (
-                                        styleRealDate(courseStartDate) <=
-                                        styleRealDate(item.endDate)
+                                        item.dayOfWeek.trim().toLowerCase() ==
+                                          dayOfTheWeek.trim().toLowerCase() &&
+                                        item.timeFrameId == timeFrame.id
                                       );
-                                    }).length <= 0 &&
-                                  slotDto.filter((item) => {
-                                    return (
-                                      item.dayOfWeek.trim().toLowerCase() ==
-                                        dayOfTheWeek.trim().toLowerCase() &&
-                                      item.timeFrameId == timeFrame.id
-                                    );
-                                    // aa;
-                                  }).length <= 0 ? (
-                                    <>
-                                      <i
-                                        className="fa-solid fa-plus bg-success text-success bg-opacity-10 p-2 mx-2"
-                                        style={{
-                                          borderRadius: "50%",
-                                          cursor: "pointer",
-                                        }}
-                                        onClick={() => {
-                                          handleAddSlot(
-                                            dayOfTheWeek,
-                                            timeFrame.id
-                                          );
-                                        }}
-                                      ></i>
-                                    </>
-                                  ) : (
-                                    <></>
-                                  )}
+                                      // aa;
+                                    }).length <= 0 ? (
+                                      <>
+                                        <i
+                                          className="fa-solid fa-plus bg-success text-success bg-opacity-10 p-2 mx-2"
+                                          style={{
+                                            borderRadius: "50%",
+                                            cursor: "pointer",
+                                          }}
+                                          onClick={() => {
+                                            handleAddSlot(
+                                              dayOfTheWeek,
+                                              timeFrame.id
+                                            );
+                                          }}
+                                        ></i>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
 
-                                  {timetable
-                                    .filter(
-                                      (s) =>
-                                        s.schedule.date
+                                    {timetable
+                                      .filter(
+                                        (s) =>
+                                          s.schedule.date
+                                            .trim()
+                                            .toLowerCase()
+                                            .includes(
+                                              `${dayOfTheWeek}`
+                                                .trim()
+                                                .toLowerCase()
+                                            ) &&
+                                          s.schedule.timeframeId == timeFrame.id
+                                      )
+                                      .filter((item) =>
+                                        item.room
                                           .trim()
                                           .toLowerCase()
                                           .includes(
-                                            `${dayOfTheWeek}`
-                                              .trim()
-                                              .toLowerCase()
-                                          ) &&
-                                        s.schedule.timeframeId == timeFrame.id
-                                    )
-                                    .filter((item) =>
-                                      item.room
+                                            `${courseRoom}`.trim().toLowerCase()
+                                          )
+                                      )
+                                      .filter((item) => {
+                                        if (courseStartDate == "") {
+                                          return true;
+                                        }
+                                        if (
+                                          styleInputDate(courseStartDate) ==
+                                          styleInputDate(item.endDate)
+                                        ) {
+                                          return true;
+                                        }
+                                        return (
+                                          styleRealDate(courseStartDate) <=
+                                          styleRealDate(item.endDate)
+                                        );
+                                      }).length <= 0 &&
+                                    slotDto.filter((item) => {
+                                      return (
+                                        item.dayOfWeek.trim().toLowerCase() ==
+                                          dayOfTheWeek.trim().toLowerCase() &&
+                                        item.timeFrameId == timeFrame.id
+                                      );
+                                    }).length > 0 ? (
+                                      <>
+                                        <i
+                                          className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                                          style={{
+                                            borderRadius: "50%",
+                                            cursor: "pointer",
+                                          }}
+                                          onClick={() => {
+                                            handleDeleteSlot(
+                                              dayOfTheWeek,
+                                              timeFrame.id
+                                            );
+                                          }}
+                                        ></i>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  {slotDto.findIndex(
+                                    (item) =>
+                                      item.dayOfWeek
                                         .trim()
                                         .toLowerCase()
                                         .includes(
-                                          `${courseRoom}`.trim().toLowerCase()
-                                        )
-                                    )
-                                    .filter((item) => {
-                                      if (courseStartDate == "") {
-                                        return true;
-                                      }
-                                      if (
-                                        styleInputDate(courseStartDate) ==
-                                        styleInputDate(item.endDate)
-                                      ) {
-                                        return true;
-                                      }
-                                      return (
-                                        styleRealDate(courseStartDate) <=
-                                        styleRealDate(item.endDate)
-                                      );
-                                    }).length <= 0 &&
-                                  slotDto.filter((item) => {
-                                    return (
-                                      item.dayOfWeek.trim().toLowerCase() ==
-                                        dayOfTheWeek.trim().toLowerCase() &&
-                                      item.timeFrameId == timeFrame.id
-                                    );
-                                  }).length > 0 ? (
-                                    <>
+                                          dayOfTheWeek.trim().toLowerCase()
+                                        ) &&
+                                      item.timeFrameId == timeFrame.id &&
+                                      !item.validSlot
+                                  ) >= 0 ? (
+                                    <div className="p-0 m-0">
                                       <i
                                         className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
                                         style={{
@@ -877,170 +914,144 @@ export default function StaffClassCreate() {
                                           );
                                         }}
                                       ></i>
-                                    </>
+                                    </div>
                                   ) : (
                                     <></>
                                   )}
-                                </div>
-                                {slotDto.findIndex(
-                                  (item) =>
-                                    item.dayOfWeek
-                                      .trim()
-                                      .toLowerCase()
-                                      .includes(
-                                        dayOfTheWeek.trim().toLowerCase()
-                                      ) &&
-                                    item.timeFrameId == timeFrame.id &&
-                                    !item.validSlot
-                                ) >= 0 ? (
-                                  <div className="p-0 m-0">
-                                    <i
-                                      className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
-                                      style={{
-                                        borderRadius: "50%",
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={() => {
-                                        handleDeleteSlot(
-                                          dayOfTheWeek,
-                                          timeFrame.id
-                                        );
-                                      }}
-                                    ></i>
-                                  </div>
-                                ) : (
-                                  <></>
-                                )}
 
-                                {timetable
-                                  .filter(
-                                    (s) =>
-                                      s.schedule.date
+                                  {timetable
+                                    .filter(
+                                      (s) =>
+                                        s.schedule.date
+                                          .trim()
+                                          .toLowerCase()
+                                          .includes(
+                                            `${dayOfTheWeek}`
+                                              .trim()
+                                              .toLowerCase()
+                                          ) &&
+                                        s.schedule.timeframeId == timeFrame.id
+                                    )
+                                    .filter((item) =>
+                                      item.room
                                         .trim()
                                         .toLowerCase()
                                         .includes(
-                                          `${dayOfTheWeek}`.trim().toLowerCase()
-                                        ) &&
-                                      s.schedule.timeframeId == timeFrame.id
-                                  )
-                                  .filter((item) =>
-                                    item.room
-                                      .trim()
-                                      .toLowerCase()
-                                      .includes(
-                                        `${courseRoom}`.trim().toLowerCase()
-                                      )
-                                  )
-                                  .filter((item) => {
-                                    if (courseStartDate == "") {
-                                      return true;
-                                    }
-                                    if (
-                                      styleInputDate(courseStartDate) ==
-                                      styleInputDate(item.endDate)
-                                    ) {
-                                      return true;
-                                    }
-                                    return (
-                                      styleRealDate(courseStartDate) <=
-                                      styleRealDate(item.endDate)
-                                    );
-                                  })
-                                  .map((filteredItem, index) => (
-                                    <div
-                                      className="content"
-                                      key={`${dayOfTheWeek}+${timeFrame.id}+${filteredItem.startDate}`}
-                                    >
-                                      {index != 0 ? (
-                                        <hr className="my-1 mt-2" />
-                                      ) : (
-                                        <></>
-                                      )}
-                                      {/* <hr className="m-0 p-0 mt-1" /> */}
-                                      <p
-                                        className="p-0 m-0"
-                                        style={{
-                                          fontWeight: "bold",
-                                          cursor: "pointer",
-                                        }}
+                                          `${courseRoom}`.trim().toLowerCase()
+                                        )
+                                    )
+                                    .filter((item) => {
+                                      if (courseStartDate == "") {
+                                        return true;
+                                      }
+                                      if (
+                                        styleInputDate(courseStartDate) ==
+                                        styleInputDate(item.endDate)
+                                      ) {
+                                        return true;
+                                      }
+                                      return (
+                                        styleRealDate(courseStartDate) <=
+                                        styleRealDate(item.endDate)
+                                      );
+                                    })
+                                    .map((filteredItem, index) => (
+                                      <div
+                                        className="content"
+                                        key={`${dayOfTheWeek}+${timeFrame.id}+${filteredItem.startDate}`}
                                       >
-                                        {filteredItem.courseName}
-                                      </p>
-                                      <p className="p-0 m-0">
-                                        Class: {filteredItem.className}
-                                      </p>
-                                      <p className="p-0 m-0">
-                                        Start:{" "}
-                                        {styleViewDate(filteredItem.startDate)}
-                                      </p>
-                                      <p className="p-0 m-0">
-                                        End:{" "}
-                                        {styleViewDate(filteredItem.endDate)}
-                                      </p>
-                                    </div>
-                                  ))}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <p
-                    style={{ fontSize: "15px", fontWeight: "500" }}
-                    className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
-                      slotDto.length > 0 &&
-                      slotDto.filter((item) =>
-                        realCourseStartDate
-                          .trim()
-                          .toLowerCase()
-                          .includes(item.dayOfWeek.trim().toLowerCase())
-                      ).length > 0
-                        ? "text-success"
-                        : ""
-                    }`}
-                  >
-                    {`Start Date:${"  "}${realCourseStartDate}`}
-                    <span className="px-2 text-danger">
-                      {slotDto.length > 0 &&
-                      slotDto.filter((item) =>
-                        realCourseStartDate
-                          .trim()
-                          .toLowerCase()
-                          .includes(item.dayOfWeek.trim().toLowerCase())
-                      ).length <= 0
-                        ? "(Start Date are not contained in schedule)"
-                        : ""}
-                    </span>
-                  </p>
-                  <p
-                    style={{ fontSize: "15px", fontWeight: "500" }}
-                    className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
-                      slotDto.length > 0 &&
-                      slotDto.filter((item) =>
-                        realCourseEndDate
-                          .trim()
-                          .toLowerCase()
-                          .includes(item.dayOfWeek.trim().toLowerCase())
-                      ).length > 0
-                        ? "text-success"
-                        : ""
-                    }`}
-                  >
-                    {`End Date:${"  "}${realCourseEndDate}`}
-                    <span className="px-2 text-danger">
-                      {slotDto.length > 0 &&
-                      slotDto.filter((item) =>
-                        realCourseEndDate
-                          .trim()
-                          .toLowerCase()
-                          .includes(item.dayOfWeek.trim().toLowerCase())
-                      ).length <= 0
-                        ? "(End Date are not contained in schedule)"
-                        : ""}
-                    </span>
-                  </p>
-                  {/* {slotDto.length > 0 && !suitableScheDuleAndDate ? (
+                                        {index != 0 ? (
+                                          <hr className="my-1 mt-2" />
+                                        ) : (
+                                          <></>
+                                        )}
+                                        {/* <hr className="m-0 p-0 mt-1" /> */}
+                                        <p
+                                          className="p-0 m-0"
+                                          style={{
+                                            fontWeight: "bold",
+                                            cursor: "pointer",
+                                          }}
+                                        >
+                                          {filteredItem.courseName}
+                                        </p>
+                                        <p className="p-0 m-0">
+                                          Class: {filteredItem.className}
+                                        </p>
+                                        <p className="p-0 m-0">
+                                          Start:{" "}
+                                          {styleViewDate(
+                                            filteredItem.startDate
+                                          )}
+                                        </p>
+                                        <p className="p-0 m-0">
+                                          End:{" "}
+                                          {styleViewDate(filteredItem.endDate)}
+                                        </p>
+                                      </div>
+                                    ))}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <p
+                      style={{ fontSize: "15px", fontWeight: "500" }}
+                      className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
+                        slotDto.length > 0 &&
+                        slotDto.filter((item) =>
+                          realCourseStartDate
+                            .trim()
+                            .toLowerCase()
+                            .includes(item.dayOfWeek.trim().toLowerCase())
+                        ).length > 0
+                          ? "text-success"
+                          : ""
+                      }`}
+                    >
+                      {`Start Date:${"  "}${realCourseStartDate}`}
+                      <span className="px-2 text-danger">
+                        {slotDto.length > 0 &&
+                        slotDto.filter((item) =>
+                          realCourseStartDate
+                            .trim()
+                            .toLowerCase()
+                            .includes(item.dayOfWeek.trim().toLowerCase())
+                        ).length <= 0
+                          ? "(Start Date are not contained in schedule)"
+                          : ""}
+                      </span>
+                    </p>
+                    <p
+                      style={{ fontSize: "15px", fontWeight: "500" }}
+                      className={`col-12 p-0 m-0 px-4 mt-1 mt-0 flex ${
+                        slotDto.length > 0 &&
+                        slotDto.filter((item) =>
+                          realCourseEndDate
+                            .trim()
+                            .toLowerCase()
+                            .includes(item.dayOfWeek.trim().toLowerCase())
+                        ).length > 0
+                          ? "text-success"
+                          : ""
+                      }`}
+                    >
+                      {`End Date:${"  "}${realCourseEndDate}`}
+                      <span className="px-2 text-danger">
+                        {slotDto.length > 0 &&
+                        slotDto.filter((item) =>
+                          realCourseEndDate
+                            .trim()
+                            .toLowerCase()
+                            .includes(item.dayOfWeek.trim().toLowerCase())
+                        ).length <= 0
+                          ? "(End Date are not contained in schedule)"
+                          : ""}
+                      </span>
+                    </p>
+                    {/* {slotDto.length > 0 && !suitableScheDuleAndDate ? (
                     <p
                       style={{ fontSize: "15px", fontWeight: "500" }}
                       className="col-12 p-0 m-0 px-4 mt-1 mt-0 flex text-danger"
@@ -1051,151 +1062,153 @@ export default function StaffClassCreate() {
                   ) : (
                     <></>
                   )} */}
-                  <div className="m-0 p-0">
-                    {slotDto.length > 0 ? (
-                      <p
-                        style={{ fontSize: "15px", fontWeight: "500" }}
-                        className="m-0 p-0 px-4 mt-1"
-                      >
-                        Preview Schedule
-                      </p>
-                    ) : (
-                      <></>
-                    )}
-                    {slotDto.map((slot, index) => {
-                      return (
+                    <div className="m-0 p-0">
+                      {slotDto.length > 0 ? (
                         <p
-                          className={`p-0 m-0 px-4 mt-2 
-                          ${!slot.validSlot ? "text-danger" : ""}`}
-                          style={{ fontWeight: "500" }}
+                          style={{ fontSize: "15px", fontWeight: "500" }}
+                          className="m-0 p-0 px-4 mt-1"
                         >
-                          <span>
-                            <i
-                              className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
-                              style={{
-                                borderRadius: "50%",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                handleDeleteSlot(
-                                  slot.dayOfWeek,
-                                  slot.timeFrameId
-                                );
-                              }}
-                            ></i>
-                          </span>
-                          <span className="px-2">{slot.dayOfWeek},</span>{" "}
-                          <span>
-                            {
-                              listOfTimeFrame[
-                                listOfTimeFrame.findIndex(
-                                  (item) => item.id == slot.timeFrameId
-                                )
-                              ].timeFrame1
-                            }
-                          </span>
-                          {!slot.validSlot ? (
-                            <span className="px-3">
-                              {"(Duplicate Schedule)"}
-                            </span>
-                          ) : (
-                            ""
-                          )}
+                          Preview Schedule
                         </p>
-                      );
-                    })}
-                    <hr className="m-0 p-0 my-3 mt-2" />
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-
-              {courseStartDate != "" &&
-              courseEndDate != "" &&
-              courseRoom != "" ? (
-                <div className="row flex align-items-start justify-content-between">
-                  <p className="col-2 p-0 m-0 px-3 mt-2 flex">
-                    <span className="text-danger px-1">
-                      <i
-                        className="fa-solid fa-star-of-life"
-                        style={{
-                          fontSize: "6px",
-                          verticalAlign: "middle",
-                        }}
-                      ></i>{" "}
-                    </span>
-                    Trainer:
-                  </p>
-                  <div className="col-10">
-                    <Form.Item
-                      label=""
-                      name="trainerId"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Trainer must be selected",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Select
-                        name="trainerId"
-                        width="200px"
-                        placeholder="Select Trainer"
-                        value={formik.values.trainerId}
-                        onChange={handleChangeTrainer}
-                      >
-                        {listOfTrainer.map((item, index) => {
-                          return (
-                            <Select.Option key={index} value={item.accountID}>
-                              {item.fullname}
-                            </Select.Option>
-                          );
-                        })}
-                      </Select>
-                    </Form.Item>
-                  </div>
-                </div>
-              ) : (
-                <></>
-              )}
-
-              {selectedTrainer.accountID == null ||
-              selectedTrainer.accountID == undefined ? (
-                <></>
-              ) : (
-                <table className="table-bordered text-center ">
-                  <thead>
-                    <tr className="bg-light-gray">
-                      <th
-                        className="text-uppercase text-dark"
-                        style={{ background: "#ec88ad" }}
-                      >
-                        Time
-                      </th>
-                      {listOfDay.map((item) => {
+                      ) : (
+                        <></>
+                      )}
+                      {slotDto.map((slot, index) => {
                         return (
-                          <th
-                            key={item}
-                            className="text-uppercase text-dark"
-                            style={{ background: "#ec88ad" }}
+                          <p
+                            className={`p-0 m-0 px-4 mt-2 
+                          ${!slot.validSlot ? "text-danger" : ""}`}
+                            style={{ fontWeight: "500" }}
                           >
-                            {item}
-                          </th>
+                            <span>
+                              <i
+                                className="fa-solid fa-trash bg-danger text-danger bg-opacity-10 p-2 mx-2"
+                                style={{
+                                  borderRadius: "50%",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  handleDeleteSlot(
+                                    slot.dayOfWeek,
+                                    slot.timeFrameId
+                                  );
+                                }}
+                              ></i>
+                            </span>
+                            <span className="px-2">{slot.dayOfWeek},</span>{" "}
+                            <span>
+                              {
+                                listOfTimeFrame[
+                                  listOfTimeFrame.findIndex(
+                                    (item) => item.id == slot.timeFrameId
+                                  )
+                                ].timeFrame1
+                              }
+                            </span>
+                            {!slot.validSlot ? (
+                              <span className="px-3">
+                                {"(Duplicate Schedule)"}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </p>
                         );
                       })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listOfTimeFrame.map((timeFrame) => (
-                      <tr key={timeFrame.id}>
-                        <td className="align-middle">{timeFrame.timeFrame1}</td>
-                        {listOfDay.map((theDay, index) => {
+                      <hr className="m-0 p-0 my-3 mt-2" />
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+                {courseStartDate != "" &&
+                courseEndDate != "" &&
+                courseRoom != "" ? (
+                  <div className="row flex align-items-start justify-content-between">
+                    <p className="col-2 p-0 m-0 px-3 mt-2 flex">
+                      <span className="text-danger px-1">
+                        <i
+                          className="fa-solid fa-star-of-life"
+                          style={{
+                            fontSize: "6px",
+                            verticalAlign: "middle",
+                          }}
+                        ></i>{" "}
+                      </span>
+                      Trainer:
+                    </p>
+                    <div className="col-10">
+                      <Form.Item
+                        label=""
+                        name="trainerId"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Trainer must be selected",
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Select
+                          name="trainerId"
+                          width="200px"
+                          placeholder="Select Trainer"
+                          value={formik.values.trainerId}
+                          onChange={handleChangeTrainer}
+                        >
+                          {listOfTrainer.map((item, index) => {
+                            return (
+                              <Select.Option key={index} value={item.accountID}>
+                                {item.fullname}
+                              </Select.Option>
+                            );
+                          })}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                {selectedTrainer.accountID == null ||
+                selectedTrainer.accountID == undefined ? (
+                  <></>
+                ) : (
+                  <table className="table-bordered text-center ">
+                    <thead>
+                      <tr className="bg-light-gray">
+                        <th
+                          className="text-uppercase text-dark"
+                          style={{ background: "#ec88ad" }}
+                        >
+                          Time
+                        </th>
+                        {listOfDay.map((item) => {
                           return (
-                            <td
-                              key={theDay + index}
-                              className={`p-0 m-0 bg-opacity-25
+                            <th
+                              key={item}
+                              className="text-uppercase text-dark"
+                              style={{ background: "#ec88ad" }}
+                            >
+                              {item}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listOfTimeFrame.map((timeFrame) => (
+                        <tr key={timeFrame.id}>
+                          <td className="align-middle">
+                            {timeFrame.timeFrame1}
+                          </td>
+                          {listOfDay.map((theDay, index) => {
+                            return (
+                              <td
+                                key={theDay + index}
+                                className={`p-0 m-0 bg-opacity-25
                             ${
                               slotDto.filter((item) => {
                                 return (
@@ -1258,56 +1271,57 @@ export default function StaffClassCreate() {
                                 ? "bg-danger"
                                 : ""
                             }`}
-                            >
-                              {selectedSchedule
-                                .filter(
-                                  (item) =>
-                                    (styleInputDate(item.endDate) ==
-                                      styleInputDate(currentDate) ||
-                                      styleRealDate(item.endDate) >=
-                                        styleRealDate(currentDate)) &&
-                                    item.schedule.some(
-                                      (s) =>
-                                        s.date == `${theDay}` &&
-                                        s.timeframeId === timeFrame.id
-                                    )
-                                )
-                                .map((filteredItem) => (
-                                  <div
-                                    className="content m-0 p-0"
-                                    key={filteredItem.courseId}
-                                  >
-                                    {/* <Link
+                              >
+                                {selectedSchedule
+                                  .filter(
+                                    (item) =>
+                                      (styleInputDate(item.endDate) ==
+                                        styleInputDate(currentDate) ||
+                                        styleRealDate(item.endDate) >=
+                                          styleRealDate(currentDate)) &&
+                                      item.schedule.some(
+                                        (s) =>
+                                          s.date == `${theDay}` &&
+                                          s.timeframeId === timeFrame.id
+                                      )
+                                  )
+                                  .map((filteredItem) => (
+                                    <div
+                                      className="content m-0 p-0"
+                                      key={filteredItem.courseId}
+                                    >
+                                      {/* <Link
                                       className="title m-0 p-0"
                                       to={`/trainer/classDetail/${filteredItem.classId}`}
                                     > */}
-                                    <p
-                                      className="p-0 m-0"
-                                      style={{ fontWeight: "bolder" }}
-                                    >
-                                      {filteredItem.courseName}
-                                    </p>
-                                    {/* </Link> */}
+                                      <p
+                                        className="p-0 m-0"
+                                        style={{ fontWeight: "bolder" }}
+                                      >
+                                        {filteredItem.courseName}
+                                      </p>
+                                      {/* </Link> */}
 
-                                    <p className="p-0 m-0">
-                                      Class: {filteredItem.className}
-                                    </p>
-                                    <p className="p-0 m-0">
-                                      Room: {filteredItem.room}
-                                    </p>
-                                    <p className="p-0 m-0">
-                                      Start:{" "}
-                                      {styleViewDate(filteredItem.startDate)}
-                                    </p>
-                                    <p className="p-0 m-0">
-                                      End: {styleViewDate(filteredItem.endDate)}
-                                    </p>
-                                  </div>
-                                ))}
-                            </td>
-                          );
-                        })}
-                        {/* <td>
+                                      <p className="p-0 m-0">
+                                        Class: {filteredItem.className}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        Room: {filteredItem.room}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        Start:{" "}
+                                        {styleViewDate(filteredItem.startDate)}
+                                      </p>
+                                      <p className="p-0 m-0">
+                                        End:{" "}
+                                        {styleViewDate(filteredItem.endDate)}
+                                      </p>
+                                    </div>
+                                  ))}
+                              </td>
+                            );
+                          })}
+                          {/* <td>
                       {selectedSchedule
                         .filter((item) =>
                           item.schedule.some(
@@ -1453,43 +1467,47 @@ export default function StaffClassCreate() {
                           </div>
                         ))}
                     </td> */}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
 
-              <div className="row">
-                <div className="col-6">
-                  <button
-                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                <div className="row">
+                  <div className="col-6">
+                    <button
+                      className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg mt-3 text-dark"
-                    type="submit"
-                    style={{ backgroundColor: "#d08fba", fontWeight: "bolder" }}
-                  >
-                    Create
-                  </button>
-                </div>
-                <div className="col-6">
-                  <button
-                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                      type="submit"
+                      style={{
+                        backgroundColor: "#d08fba",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      Create
+                    </button>
+                  </div>
+                  <div className="col-6">
+                    <button
+                      className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg mt-3 bg-black text-light"
-                    type="reset"
-                    onClick={() => {
-                      setCourseEndDate("");
-                      setCourseStartDate("");
-                      setCourseRoom("");
-                      setSelectedTrainer({});
-                    }}
-                  >
-                    Reset
-                  </button>
+                      type="reset"
+                      onClick={() => {
+                        setCourseEndDate("");
+                        setCourseStartDate("");
+                        setCourseRoom("");
+                        setSelectedTrainer({});
+                      }}
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </Form>
-          </div>
+              </Form>
+            </div>
+          </section>
         </div>
       </section>
     </>
