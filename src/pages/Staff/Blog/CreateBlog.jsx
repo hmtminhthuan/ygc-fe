@@ -10,10 +10,14 @@ import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import moment from "moment/moment";
 import { alert } from "../../../component/AlertComponent/Alert";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../constants/firebase";
+import { v4 } from "uuid";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -21,34 +25,56 @@ export default function CreateBlog() {
 
   const formik = useFormik({
     initialValues: {
-      userId: "",
+      userId: 0,
       date: moment(new Date()).format("YYYY-MM-DD"),
       header: "",
       content: "",
       img: "",
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      api
-        .post("/Blog/CreateBlog", values)
-        .then((res) => {
-          //  blog created successfully
-          const createdBlog = res.data;
-          // Reset the form after successful creation
-          resetForm();
-          setSubmitting(false);
-          alert.alertSuccessWithTime(
-            "Create Blog Successfully",
-            "",
-            2000,
-            "30",
-            () => {
-              navigate("/staff/blogManagement");
-            }
-          );
-        })
-        .catch((err) => {
-          setSubmitting(false);
+      if (previewImg == "") {
+        alert.alertFailedWithTime(
+          "Failed To Create",
+          "Image cannot be blank",
+          2500,
+          "25",
+          () => {}
+        );
+      } else {
+        const imageRef = ref(storage, `blogImages/${imageUpload.name + v4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              values.img = url;
+              values.userId = parseInt(
+                JSON.parse(localStorage.getItem("USER_LOGIN")).accountID
+              );
+            })
+            .finally(() => {
+              api
+                .post("/Blog/CreateBlog", values)
+                .then((res) => {
+                  //  blog created successfully
+                  const createdBlog = res.data;
+                  // Reset the form after successful creation
+                  resetForm();
+                  setSubmitting(false);
+                  alert.alertSuccessWithTime(
+                    "Create Blog Successfully",
+                    "",
+                    2000,
+                    "30",
+                    () => {
+                      navigate("/staff/blogManagement");
+                    }
+                  );
+                })
+                .catch((err) => {
+                  setSubmitting(false);
+                });
+            });
         });
+      }
     },
   });
 
@@ -75,46 +101,6 @@ export default function CreateBlog() {
                       autoComplete="off"
                     >
                       <div className="row mx-4">
-                        <div className="col-md-12">
-                          <div className="form-group">
-                            <div className="row flex align-items-start justify-content-between">
-                              <p className="col-4 p-0 m-0 px-3 mt-2 flex">
-                                <span className="text-danger px-1">
-                                  <i
-                                    className="fa-solid fa-star-of-life"
-                                    style={{
-                                      fontSize: "6px",
-                                      verticalAlign: "middle",
-                                    }}
-                                  ></i>{" "}
-                                </span>
-                                <span>UserId:</span>
-                              </p>
-                              <div className="col-8">
-                                <Form.Item
-                                  label=""
-                                  name="userId"
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Header cannot be blank",
-                                    },
-                                    { whitespace: true },
-                                  ]}
-                                  hasFeedback
-                                >
-                                  <Input
-                                    name="userId"
-                                    value={formik.values.userId}
-                                    onChange={formik.handleChange}
-                                    placeholder="Enter UserId"
-                                  />
-                                </Form.Item>
-                              </div>{" "}
-                            </div>{" "}
-                          </div>
-                        </div>
-
                         <div className="col-md-12">
                           <div className="form-group">
                             <div className="row flex align-items-start justify-content-between">
@@ -212,25 +198,74 @@ export default function CreateBlog() {
                                 <span>Image:</span>
                               </p>
                               <div className="col-8">
+                                <div
+                                  className="text-center m-0 p-0 flex 
+                    justify-content-start"
+                                >
+                                  <p
+                                    className="m-0 p-0 mt-1 px-3 py-1"
+                                    style={{
+                                      cursor: "pointer",
+                                      fontSize: "16px",
+                                      fontWeight: "bolder",
+                                      width: "fit-content",
+                                      borderRadius: "20px",
+                                      color: "#fff",
+                                      backgroundColor: "#d291bc",
+                                    }}
+                                    onClick={() => {
+                                      document.getElementById("imgInp").click();
+                                    }}
+                                  >
+                                    <i className="fa-solid fa-image mx-3 ms-0"></i>
+                                    {previewImg == ""
+                                      ? "Choose Photo"
+                                      : "Choose Another Photo"}
+                                  </p>
+                                </div>
                                 <Form.Item
                                   label=""
                                   name="img"
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Image cannot be blank",
-                                    },
-                                  ]}
+                                  rules={
+                                    [
+                                      // {
+                                      //   required: true,
+                                      //   message: "Image cannot be blank",
+                                      // },
+                                    ]
+                                  }
+                                  style={{ display: "none" }}
                                   hasFeedback
                                 >
                                   <Input
+                                    style={{
+                                      width: "100%",
+                                      cursor: "pointer",
+                                      display: "none",
+                                    }}
                                     name="img"
                                     value={formik.values.img}
-                                    onChange={formik.handleChange}
-                                    onInput={(e) => {
-                                      setPreviewImg(e.target.value);
+                                    placeholder="Select Image"
+                                    id="imgInp"
+                                    type="file"
+                                    onChange={(e) => {
+                                      if (
+                                        e.target.files[0] != null &&
+                                        e.target.files[0] != undefined
+                                      ) {
+                                        setImageUpload(e.target.files[0]);
+                                        const [file] = imgInp.files;
+                                        if (
+                                          e.target.files &&
+                                          e.target.files[0]
+                                        ) {
+                                          const link =
+                                            URL.createObjectURL(file);
+                                          setPreviewImg(link);
+                                          formik.setFieldValue("img", link);
+                                        }
+                                      }
                                     }}
-                                    placeholder="Enter Image URL"
                                   />
                                 </Form.Item>
                               </div>
@@ -245,9 +280,13 @@ export default function CreateBlog() {
                             >
                               <img
                                 id="blah"
-                                className=""
+                                className=" ps-0 ms-0"
                                 src={previewImg}
-                                style={{ width: "100%", borderRadius: "5px" }}
+                                style={{
+                                  width: "100%",
+                                  borderRadius: "5px",
+                                  transform: "translateX(-20px)",
+                                }}
                               />
                             </Form.Item>
                           )}

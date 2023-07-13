@@ -7,7 +7,17 @@ import "./CourseRevenue.scss";
 export default function CourseRevenue() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const handleYearSelection = (year) => {
+    // let interval = setInterval(() => {
+    //   var chartExist = Chart.getChart("my-chart");
+    //   if (chartExist != undefined) {
+    //     chartExist.clear();
+    //     chartExist.destroy();
+    //     // delete chart;
+    //   } else {
     setSelectedYear(year);
+    //     clearInterval(interval);
+    //   }
+    // }, 5000);
   };
   const MONTHS = [
     "January",
@@ -38,7 +48,7 @@ export default function CourseRevenue() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 10000,
+      timer: 5000,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -58,14 +68,6 @@ export default function CourseRevenue() {
         setRevenueDetail(res.data);
         setAvailable(true);
         setIsDataLoaded(true);
-        // if (res.data) {
-        //   setRevenueDetail(res.data);
-        //   setAvailable(true);
-        //   setIsDataLoaded(true);
-        // } else {
-        //   setAvailable(false);
-        //   setIsDataLoaded(true);
-        // }
       })
       .catch((err) => {
         console.error(err);
@@ -169,8 +171,11 @@ export default function CourseRevenue() {
                       <h4>Monthly Reports</h4>
                       <div className="year-selection mx-3">
                         <select
+                          id="year-select"
                           value={selectedYear}
-                          onChange={handleYearSelection}
+                          onChange={(e) => {
+                            handleYearSelection(parseInt(e.target.value));
+                          }}
                         >
                           <option value={new Date().getFullYear() - 1}>
                             2022
@@ -197,6 +202,7 @@ export default function CourseRevenue() {
                               <canvas
                                 data-type="line"
                                 data-color-datalabels="#2e2a2a"
+                                id="my-chart"
                                 ref={(ref) => {
                                   if (ref) {
                                     const { type, colorDatalabels } =
@@ -261,8 +267,12 @@ export default function CourseRevenue() {
                                         },
                                       },
                                     };
-
-                                    new Chart(ref, config);
+                                    var chartExist = Chart.getChart("my-chart");
+                                    if (chartExist != undefined) {
+                                      chartExist.destroy();
+                                    } else {
+                                      chartExist = new Chart(ref, config);
+                                    }
                                   }
                                 }}
                               />
@@ -279,7 +289,7 @@ export default function CourseRevenue() {
         </div>
       ) : (
         <>
-          <h1>Not yet</h1>
+          <h1 className="mt-5 ms-5 text-center">Not yet</h1>
         </>
       )}
     </>

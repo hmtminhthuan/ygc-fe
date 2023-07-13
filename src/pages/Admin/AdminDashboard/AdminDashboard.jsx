@@ -12,7 +12,7 @@ export default function AdminDashboard() {
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 10000,
+      timer: 1000,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();

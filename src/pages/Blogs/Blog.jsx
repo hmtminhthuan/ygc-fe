@@ -24,6 +24,7 @@ function Blog() {
     localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
   }
   useEffect(() => {
+    window.scrollTo(0, 0);
     let timerInterval;
     Swal.fire({
       title: "Loading...",
@@ -60,6 +61,7 @@ function Blog() {
 
     return `${day}-${month}-${year}`;
   };
+
   Aos.init();
   return (
     <div>

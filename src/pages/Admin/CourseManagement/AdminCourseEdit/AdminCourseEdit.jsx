@@ -8,15 +8,20 @@ import { useFormik } from "formik";
 import { api } from "../../../../constants/api";
 import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../../../component/AlertComponent/Alert";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../../constants/firebase";
+import { v4 } from "uuid";
 import "./EditCourse.scss";
 
 export default function AdminCourseEdit() {
   const param = useParams();
   const [editedCourse, setEditedCourse] = useState({});
   const [previewImg, setPreviewImg] = useState("");
+  const [currentImg, setCurrentImg] = useState("");
   const [previewPrice, setPreviewPrice] = useState(-1);
   const [previewDiscount, setPreviewDiscount] = useState(-1);
   const [levelList, setLevelList] = useState([]);
+  const [imageUpload, setImageUpload] = useState(null);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -59,21 +64,39 @@ export default function AdminCourseEdit() {
       }).then((result) => {
         if (result.isDenied === true || result.isDismissed === true) {
         } else if (result.isConfirmed === true) {
-          api
-            .put(
-              `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
-              values
-            )
-            .then((res) => {
-              alert.alertSuccessWithTime(
-                "Edit Course Successfully",
-                "",
-                2000,
-                "25",
-                () => {}
-              );
-            })
-            .catch((err) => {});
+          const imageRef = ref(
+            storage,
+            `courseImages/${
+              "--courseImage--" +
+              editedCourse.courseID +
+              "--" +
+              imageUpload.name +
+              v4()
+            }`
+          );
+          uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                values.img = url;
+              })
+              .finally(() => {
+                api
+                  .put(
+                    `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
+                    values
+                  )
+                  .then((res) => {
+                    alert.alertSuccessWithTime(
+                      "Edit Course Successfully",
+                      "",
+                      2000,
+                      "25",
+                      () => {}
+                    );
+                  })
+                  .catch((err) => {});
+              });
+          });
         }
       });
     },
@@ -87,6 +110,7 @@ export default function AdminCourseEdit() {
       .then((res) => {
         setEditedCourse(res.data);
         setPreviewImg(res.data.courseImg);
+        setCurrentImg(res.data.courseImg);
         setPreviewPrice(res.data.price);
         setPreviewDiscount(res.data.discount);
       })
@@ -414,53 +438,93 @@ export default function AdminCourseEdit() {
                         Image:
                       </p>
                       <div className="col-10">
+                        <div
+                          className="text-center m-0 p-0 flex 
+                    justify-content-start"
+                        >
+                          <p
+                            className="m-0 p-0 mt-1 px-3 py-1"
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "16px",
+                              fontWeight: "bolder",
+                              width: "fit-content",
+                              borderRadius: "20px",
+                              color: "#fff",
+                              backgroundColor: "#d291bc",
+                            }}
+                            onClick={() => {
+                              document.getElementById("imgInp").click();
+                            }}
+                          >
+                            <i className="fa-solid fa-image mx-3 ms-0"></i>
+                            {imageUpload == null
+                              ? "Choose Photo"
+                              : "Choose Another Photo"}
+                          </p>
+                          <p
+                            className="m-0 p-0 mt-1 px-3 py-1 ms-3"
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "16px",
+                              fontWeight: "bolder",
+                              width: "fit-content",
+                              borderRadius: "20px",
+                              color: "#fff",
+                              backgroundColor: "#000",
+                              display: `${imageUpload == null ? "none" : ""}`,
+                            }}
+                            onClick={() => {
+                              setPreviewImg(currentImg);
+                              setImageUpload(null);
+                            }}
+                          >
+                            Reset Current Photo
+                          </p>
+                        </div>
                         <Form.Item
                           name="img"
                           label=""
-                          rules={[
-                            {
-                              required: true,
-                              message: "Image cannot be blank",
-                            },
-                            {
-                              whitespace: true,
-                              message: "Image cannot be empty",
-                            },
-                          ]}
+                          rules={
+                            [
+                              // {
+                              //   required: true,
+                              //   message: "Image cannot be blank",
+                              // },
+                              // {
+                              //   whitespace: true,
+                              //   message: "Image cannot be empty",
+                              // },
+                            ]
+                          }
                           hasFeedback
-                          initialValue={editedCourse.courseImg}
+                          style={{ display: "none" }}
                         >
-                          {/* <Input
-                                    style={{ width: "100%" }}
-                                    name="img"
-                                    value={formik.values.img}
-                                    onChange={formik.handleChange}
-                                    onInput={(e) => {
-                                        console.log(e.target.files[0]);
-                                        const [file] = imgInp.files
-                                        if (e.target.files && e.target.files[0]) {
-                                            blah.src = URL.createObjectURL(file);
-                                            console.log(blah.src);
-                                        }
-                                    }}
-                                    placeholder="Select Image"
-                                    id="imgInp"
-                                    type="file"
-                                    accept="image/png, image/jpeg, image/jpg"
-                                /> */}
                           <Input
-                            style={{ width: "100%" }}
+                            style={{
+                              width: "100%",
+                              cursor: "pointer",
+                              display: "none",
+                            }}
                             name="img"
                             value={formik.values.img}
-                            onChange={formik.handleChange}
-                            onInput={(e) => {
-                              if (e.target.value.trim() === "") {
-                                setPreviewImg("");
-                              } else {
-                                setPreviewImg(e.target.value);
+                            placeholder="Select Image"
+                            id="imgInp"
+                            type="file"
+                            onChange={(e) => {
+                              if (
+                                e.target.files[0] != null &&
+                                e.target.files[0] != undefined
+                              ) {
+                                setImageUpload(e.target.files[0]);
+                                const [file] = imgInp.files;
+                                if (e.target.files && e.target.files[0]) {
+                                  const link = URL.createObjectURL(file);
+                                  setPreviewImg(link);
+                                  formik.setFieldValue("img", link);
+                                }
                               }
                             }}
-                            placeholder="Enter Link Of Image (optional)"
                           />
                         </Form.Item>
                       </div>
@@ -476,6 +540,7 @@ export default function AdminCourseEdit() {
                         <img
                           id="blah"
                           src={previewImg}
+                          className="mt-3"
                           style={{ width: "50%", borderRadius: "5px" }}
                         />
                       </Form.Item>

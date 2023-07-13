@@ -31,6 +31,7 @@ export default function Course() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     let timerInterval;
     Swal.fire({
       title: "Loading...",

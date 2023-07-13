@@ -339,10 +339,15 @@ export default function CourseClasses({
         title: `<strong style="color:#d291bc">Failed Registration</strong>`,
         html: `
           <p style="text-align:justify; margin:0;">
-          You have booked a class without being paid yet. Therefore, you could not register for another class now.</br></br>
-          In case that you want to register for another class and cancel the current class you have booked,
-          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
-          Thank you very much for choosing our service.
+          You have booked a class without being paid yet. Therefore, you could not register for another class now.<br /><br />  
+          In case you have some question, please contact us via phone number: <b>
+            <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+            or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+            Or via our Email: <b> 
+            <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+            </br></br>
+            Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+            </br> Our center is open from 4:30 A.M to 10:00 P.M. 
           </p>
           `,
         showCloseButton: true,
@@ -363,10 +368,15 @@ export default function CourseClasses({
         title: `<strong style="color:#d291bc">Failed Registration</strong>`,
         html: `
           <p style="text-align:center; margin:0;">
-          You have a class being not finished at the present.</br></br>
-          In case that you want to register for another class,
-          please contact us via our hot line:</br> <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
-          Thank you very much for choosing our service.
+          You have a class being not finished at the present.<br /><br />  
+          In case you have some question, please contact us via phone number: <b>
+            <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+            or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+            Or via our Email: <b> 
+            <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+            </br></br>
+            Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+            </br> Our center is open from 4:30 A.M to 10:00 P.M. 
           </p>
           `,
         showCloseButton: true,
@@ -393,10 +403,15 @@ export default function CourseClasses({
         title: `<strong style="color:#d291bc">Failed Booking</strong>`,
         html: `
           <p style="text-align:justify; margin:0;">
-          You have booked a class without being paid yet. Therefore, you could not book for another class now.</br></br>
-          In case that you want to register for another class and cancel the current class you have booked,
-          please contact us via our hot line: <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
-          Thank you very much for choosing our service.
+          You have booked a class without being paid yet. Therefore, you could not book for another class now.<br /><br />  
+          In case you have some question, please contact us via phone number: <b>
+            <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+            or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+            Or via our Email: <b> 
+            <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+            </br></br>
+            Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+            </br> Our center is open from 4:30 A.M to 10:00 P.M. 
           </p>
           `,
         showCloseButton: false,
@@ -418,10 +433,15 @@ export default function CourseClasses({
         title: `<strong style="color:#d291bc">Failed Booking</strong>`,
         html: `
           <p style="text-align:center; margin:0;">
-          You have a class being not finished at the present.</br></br>
-          In case that you want to register for another class,
-          please contact us via our hot line:</br> <b><a href="">0989 545 545</a></b> or<b> <a href="">0989 565 565</a></b></br></br>
-          Thank you very much for choosing our service.
+          You have a class being not finished at the present.<br /><br />  
+          In case you have some question, please contact us via phone number: <b>
+            <a style="text-decoration:none" href="tel: +84989545545">0989 545 545</a></b>
+            or <b><a style="text-decoration:none" href="tel: +84989565565">0989 565 565</a></b></br>
+            Or via our Email: <b> 
+            <a style="text-decoration:none" href="mailto:yogacenter.contact@gmail.com" target="_blank">yogacenter.contact@gmail.com</a> </b>
+            </br></br>
+            Our Address: E12a, Long Thanh My Ward, District 9, Ho Chi Minh City.
+            </br> Our center is open from 4:30 A.M to 10:00 P.M. 
           </p>
           `,
         showCloseButton: true,

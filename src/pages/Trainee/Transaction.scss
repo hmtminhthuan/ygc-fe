@@ -4,3 +4,9 @@
     background-color: #33333330 !important;
   }
 }
+@media only screen and (min-width: 1000px) {
+  .history-responsive {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}

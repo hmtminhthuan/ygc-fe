@@ -9,10 +9,15 @@ import "./UpdateBlog.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../constants/firebase";
+import { v4 } from "uuid";
 
 export default function UpdateBlog() {
   const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
+  const [currentImg, setCurrentImg] = useState("");
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -48,6 +53,7 @@ export default function UpdateBlog() {
         setContent(res.data.content);
         setImg(res.data.img);
         setPreviewImg(res.data.img);
+        setCurrentImg(res.data.img);
       })
       .catch((err) => {
         console.log(err);
@@ -61,22 +67,34 @@ export default function UpdateBlog() {
       img: "",
     },
     onSubmit: (values) => {
-      api
-        .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
-        .then((res) => {
-          alert.alertSuccessWithTime(
-            "Update Blog Successfully",
-            "",
-            2000,
-            "30",
-            () => {
-              navigate("/staff/blogManagement");
-            }
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const imageRef = ref(
+        storage,
+        `blogImages/${"--blogImage--" + id + "--" + imageUpload.name + v4()}`
+      );
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            values.img = url;
+          })
+          .finally(() => {
+            api
+              .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
+              .then((res) => {
+                alert.alertSuccessWithTime(
+                  "Update Blog Successfully",
+                  "",
+                  2000,
+                  "30",
+                  () => {
+                    navigate("/staff/blogManagement");
+                  }
+                );
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+      });
     },
   });
 
@@ -207,6 +225,52 @@ export default function UpdateBlog() {
                                 <span>Image:</span>
                               </p>
                               <div className="col-8">
+                                <div
+                                  className="text-center m-0 p-0 flex 
+                    justify-content-start"
+                                >
+                                  <p
+                                    className="m-0 p-0 mt-1 px-3 py-1"
+                                    style={{
+                                      cursor: "pointer",
+                                      fontSize: "16px",
+                                      fontWeight: "bolder",
+                                      width: "fit-content",
+                                      borderRadius: "20px",
+                                      color: "#fff",
+                                      backgroundColor: "#d291bc",
+                                    }}
+                                    onClick={() => {
+                                      document.getElementById("imgInp").click();
+                                    }}
+                                  >
+                                    <i className="fa-solid fa-image mx-3 ms-0"></i>
+                                    {imageUpload == null
+                                      ? "Choose Photo"
+                                      : "Choose Another Photo"}
+                                  </p>
+                                  <p
+                                    className="m-0 p-0 mt-1 px-3 py-1 ms-3"
+                                    style={{
+                                      cursor: "pointer",
+                                      fontSize: "16px",
+                                      fontWeight: "bolder",
+                                      width: "fit-content",
+                                      borderRadius: "20px",
+                                      color: "#fff",
+                                      backgroundColor: "#000",
+                                      display: `${
+                                        imageUpload == null ? "none" : ""
+                                      }`,
+                                    }}
+                                    onClick={() => {
+                                      setPreviewImg(currentImg);
+                                      setImageUpload(null);
+                                    }}
+                                  >
+                                    Reset
+                                  </p>
+                                </div>
                                 <Form.Item
                                   label=""
                                   name="img"
@@ -216,17 +280,38 @@ export default function UpdateBlog() {
                                       message: "Image cannot be blank",
                                     },
                                   ]}
-                                  initialValue={blog.img}
+                                  style={{ display: "none" }}
                                   hasFeedback
                                 >
                                   <Input
+                                    style={{
+                                      width: "100%",
+                                      cursor: "pointer",
+                                      display: "none",
+                                    }}
                                     name="img"
                                     value={formik.values.img}
-                                    onChange={formik.handleChange}
-                                    onInput={(e) => {
-                                      setPreviewImg(e.target.value);
+                                    placeholder="Select Image"
+                                    id="imgInp"
+                                    type="file"
+                                    onChange={(e) => {
+                                      if (
+                                        e.target.files[0] != null &&
+                                        e.target.files[0] != undefined
+                                      ) {
+                                        setImageUpload(e.target.files[0]);
+                                        const [file] = imgInp.files;
+                                        if (
+                                          e.target.files &&
+                                          e.target.files[0]
+                                        ) {
+                                          const link =
+                                            URL.createObjectURL(file);
+                                          setPreviewImg(link);
+                                          formik.setFieldValue("img", link);
+                                        }
+                                      }
                                     }}
-                                    placeholder="Enter Image URL"
                                   />
                                 </Form.Item>
                               </div>
@@ -241,8 +326,13 @@ export default function UpdateBlog() {
                               >
                                 <img
                                   id="blah"
+                                  className=" ps-0 ms-0 mt-3"
                                   src={previewImg}
-                                  style={{ width: "100%", borderRadius: "5px" }}
+                                  style={{
+                                    width: "100%",
+                                    borderRadius: "5px",
+                                    transform: "translateX(-20px)",
+                                  }}
                                 />
                               </Form.Item>
                             )}

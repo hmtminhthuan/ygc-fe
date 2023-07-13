@@ -91,7 +91,7 @@ export default function HomeContent() {
             data-aos="fade-left"
           >
             <img
-              src="https://www.meghantelpner.com/wp-content/uploads/2011/09/Yoga_Thailand_Resort_Anantara.jpg"
+              src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/homeContentImages%2FHomeContent-1.jpg?alt=media&token=6ec2435c-b59c-4e13-ac99-89f98dca3775"
               alt="..."
               onClick={showModal}
               style={{
@@ -151,7 +151,7 @@ export default function HomeContent() {
                 >
                   <div className="left col-span-5">
                     <img
-                      src="https://www.justrunlah.com/wp-content/uploads/2016/11/sport-girl-do-yoga-in-the-park-asian-beauty-woman.jpg"
+                      src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/homeContentImages%2FHomeContent-2.jpg?alt=media&token=24a71235-8275-4193-b127-c6338039dc96"
                       className="slider-img-content  d-md-none d-sm-none d-none d-lg-block"
                       alt="..."
                     />
@@ -178,7 +178,7 @@ export default function HomeContent() {
                 >
                   <div className="left col-span-5">
                     <img
-                      src="http://www.yogajournal.com/wp-content/uploads/sites/17/2018/07/yin4.jpg"
+                      src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/homeContentImages%2FHomeContent-3.jpg?alt=media&token=cb2015a5-aa7a-4ab3-97f8-5cabfa81b270"
                       className="slider-img-content  d-md-none d-sm-none d-none d-lg-block"
                       alt="..."
                     />
@@ -204,7 +204,7 @@ export default function HomeContent() {
                 >
                   <div className="left col-span-5">
                     <img
-                      src="https://images.unsplash.com/photo-1591228127791-8e2eaef098d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                      src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/homeContentImages%2FHomeContent-4.jpg?alt=media&token=89b8a2dc-c29c-4042-bc02-41098deed54a"
                       className="slider-img-content  d-md-none d-sm-none d-none d-lg-block"
                       alt="..."
                     />
@@ -229,7 +229,7 @@ export default function HomeContent() {
                 >
                   <div className="left col-span-5">
                     <img
-                      src="https://i.pinimg.com/originals/42/e6/32/42e6320117931b984290b56812a73bba.jpg"
+                      src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/homeContentImages%2FHomeContent-5.jpg?alt=media&token=437ea9dc-918b-4fb7-bd42-fdcb022181dc"
                       className="slider-img-content  d-md-none d-sm-none d-none d-lg-block"
                       alt="..."
                     />

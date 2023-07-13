@@ -540,327 +540,330 @@ export default function Transaction() {
       <div className="mt-5 pt-3">
         <h1 className="m-0 p-0 my-3 text-center">Billing History</h1>
         <div
-          className="main--content transaction-trainee m-0 px-5 w-100"
+          className="main--content transaction-trainee w-100"
           style={{ margin: "0 auto" }}
         >
-          <table
-            data-aos="zoom-in"
-            data-aos-duration="300"
-            data-aos-delay="1100"
-          >
-            <thead>
-              <tr>
-                <th style={{ textAlign: "left" }}>No.</th>
-                <th style={{ textAlign: "left" }}>Course</th>
-                <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
-                <th style={{ textAlign: "center" }}>Status</th>
-                <th style={{ textAlign: "center" }}>Booking Time</th>
-                <th style={{ textAlign: "center" }}>Note</th>
-              </tr>
-            </thead>
+          <section class="staff-list-area p-0 mt-2 px-4 history-responsive">
+            <table
+              data-aos="zoom-in"
+              data-aos-duration="300"
+              data-aos-delay="1100"
+            >
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "left" }}>No.</th>
+                  <th style={{ textAlign: "left" }}>Course</th>
+                  <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
+                  <th style={{ textAlign: "center" }}>Status</th>
+                  <th style={{ textAlign: "center" }}>Booking Time</th>
+                  <th style={{ textAlign: "center" }}>Note</th>
+                </tr>
+              </thead>
 
-            <tbody style={{ height: "auto" }}>
-              {listOfBooking
-                // .filter((item) => {
-                //   if (item.status == 2) {
-                //     return (
-                //       localStorage.getItem("trainee_list_booking") != null &&
-                //       localStorage.getItem("trainee_list_booking") !=
-                //         undefined &&
-                //       localStorage
-                //         .getItem("trainee_list_booking")
-                //         .split(",")
-                //         .filter(
-                //           (theItem) => theItem.toString() == item.id.toString()
-                //         ).length > 0
-                //     );
-                //   }
-                //   return true;
-                // })
-                .map(
-                  (
-                    {
-                      id,
-                      bookingDate,
-                      amount,
-                      status,
-                      course,
-                      account,
-                      payDate,
-                      refundDate,
-                      linkPayment,
-                      classId,
-                      ...restParams
-                    },
-                    index
-                  ) => {
-                    let { courseName, courseID } = course;
-                    return (
-                      <tr
-                        key={index}
-                        data-aos="zoom-out"
-                        data-aos-duration="100"
-                        data-aos-delay="0"
-                        data-aos-offset="0"
-                      >
-                        <td style={{ textAlign: "left" }}>{index + 1}</td>
-                        <td style={{ textAlign: "left" }}>
-                          {course.courseName}
-                        </td>
-                        <td style={{ textAlign: "right" }}>
-                          {formatPrice(amount)}
-                        </td>
-                        <td style={{ textAlign: "center" }}>
-                          {status === 5 ? (
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
-                              >
-                                Booking
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {status === 0 ? (
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-secondary bg-opacity-10 text-secondary"
-                              >
-                                Pending
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {status === 1 || status === 8 || status === 3 ? (
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
-                              >
-                                Paid
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {status === 7 ? (
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-info bg-opacity-10 text-info"
-                              >
-                                Confirming
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {status === 2 ? (
-                            // &&
-                            // localStorage.getItem("trainee_list_booking") !=
-                            //   null &&
-                            // localStorage.getItem("trainee_list_booking") !=
-                            //   undefined &&
-                            // localStorage
-                            //   .getItem("trainee_list_booking")
-                            //   .split(",")
-                            //   .filter(
-                            //     (theItem) => theItem.toString() == id.toString()
-                            //   ).length > 0
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
-                              >
-                                Cancel
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {status === 4 || status === 6 || status === 9 ? (
-                            <>
-                              <span
-                                style={{
-                                  borderRadius: "10px",
-                                  fontWeight: "bolder",
-                                }}
-                                className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
-                              >
-                                Refund
-                              </span>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </td>
-                        {/* <td style={{ textAlign: "center" }}>Action</td> */}
-                        <td style={{ textAlign: "center" }}>
-                          {styleDateAndTime(bookingDate)}
-                        </td>
-                        <td>
-                          {!payWay && status === 5 ? (
-                            <>
-                              {(status === 5 && payingTime >= 0) ||
-                              status === 0 ? (
-                                <>
-                                  <span
-                                    style={{ fontWeight: "bolder" }}
-                                    className="text-success "
-                                  >
-                                    Time Left To Pay
-                                  </span>
-                                  <p
-                                    style={{
-                                      fontWeight: "bolder",
-                                      fontSize: "18px",
-                                    }}
-                                    className="text-success p-0 m-0"
-                                    id={`timeleft-id-${id}`}
-                                  ></p>
-                                  <button
-                                    className="p-0 m-0 bg-success text-light border-0 px-3 py-1 "
-                                    style={{
-                                      borderRadius: "15px",
-                                      fontSize: "16px",
-                                      fontWeight: "450",
-                                    }}
-                                    onClick={() => {
-                                      setIdBookingPayNow(id);
-                                      setPayWay(true);
-                                    }}
-                                  >
-                                    {status === 5 ? "Pay Now" : "Pay Again"}
-                                  </button>
-                                  <br></br>
-                                  <b className="p-0 m-0"> or</b>
-                                  <button
-                                    className="p-0 m-0 mt-0 bg-transparent 
-                                text-danger border-0 mt-1 px-1"
-                                    style={{
-                                      borderRadius: "15px",
-                                      fontSize: "14px",
-                                      fontWeight: "450",
-                                    }}
-                                    onClick={() => {
-                                      handleCancelBooking(id);
-                                    }}
-                                  >
-                                    Cancel
-                                  </button>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {(status === 1 ||
-                            status === 8 ||
-                            status === 7 ||
-                            status === 3) &&
-                          payDate != null &&
-                          payDate != undefined &&
-                          payDate != "" ? (
-                            <>
-                              Payment Time:
-                              <br />
-                              {styleDateAndTime(payDate)}
-                              <br />
-                              {status === 1 || status === 8 ? (
-                                <button
-                                  className="p-0 m-0 px-2 py-1 text-primary
-                              bg-primary bg-opacity-10 border-0"
+              <tbody style={{ height: "auto" }}>
+                {listOfBooking
+                  // .filter((item) => {
+                  //   if (item.status == 2) {
+                  //     return (
+                  //       localStorage.getItem("trainee_list_booking") != null &&
+                  //       localStorage.getItem("trainee_list_booking") !=
+                  //         undefined &&
+                  //       localStorage
+                  //         .getItem("trainee_list_booking")
+                  //         .split(",")
+                  //         .filter(
+                  //           (theItem) => theItem.toString() == item.id.toString()
+                  //         ).length > 0
+                  //     );
+                  //   }
+                  //   return true;
+                  // })
+                  .map(
+                    (
+                      {
+                        id,
+                        bookingDate,
+                        amount,
+                        status,
+                        course,
+                        account,
+                        payDate,
+                        refundDate,
+                        linkPayment,
+                        classId,
+                        ...restParams
+                      },
+                      index
+                    ) => {
+                      let { courseName, courseID } = course;
+                      return (
+                        <tr
+                          key={index}
+                          data-aos="zoom-out"
+                          data-aos-duration="100"
+                          data-aos-delay="0"
+                          data-aos-offset="0"
+                        >
+                          <td style={{ textAlign: "left" }}>{index + 1}</td>
+                          <td style={{ textAlign: "left" }}>
+                            {course.courseName}
+                          </td>
+                          <td style={{ textAlign: "right" }}>
+                            {formatPrice(amount)}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {status === 5 ? (
+                              <>
+                                <span
                                   style={{
-                                    borderRadius: "20px",
-                                    display: `${
-                                      isRefundAvailableView(payDate)
-                                        ? ""
-                                        : "none"
-                                    }`,
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
                                   }}
-                                  onClick={() => {
-                                    Swal.fire({
-                                      title: `Are you sure to refund?`,
-                                      icon: "info",
-                                      showCancelButton: true,
-                                      showConfirmButton: true,
-                                      confirmButtonText: "Yes",
-                                      cancelButtonText: "No",
-                                      allowOutsideClick: false,
-                                      focusCancel: true,
-                                      focusConfirm: false,
-                                      confirmButtonColor: "red",
-                                      cancelButtonColor: "green",
-                                    }).then((result) => {
-                                      if (
-                                        result.isDenied === true ||
-                                        result.isDismissed === true
-                                      ) {
-                                      } else if (result.isConfirmed === true) {
-                                        handleRefund(id, status);
-                                      }
-                                    });
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
+                                >
+                                  Booking
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {status === 0 ? (
+                              <>
+                                <span
+                                  style={{
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
                                   }}
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-secondary bg-opacity-10 text-secondary"
+                                >
+                                  Pending
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {status === 1 || status === 8 || status === 3 ? (
+                              <>
+                                <span
+                                  style={{
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
+                                  }}
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
+                                >
+                                  Paid
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {status === 7 ? (
+                              <>
+                                <span
+                                  style={{
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
+                                  }}
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-info bg-opacity-10 text-info"
+                                >
+                                  Confirming
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {status === 2 ? (
+                              // &&
+                              // localStorage.getItem("trainee_list_booking") !=
+                              //   null &&
+                              // localStorage.getItem("trainee_list_booking") !=
+                              //   undefined &&
+                              // localStorage
+                              //   .getItem("trainee_list_booking")
+                              //   .split(",")
+                              //   .filter(
+                              //     (theItem) => theItem.toString() == id.toString()
+                              //   ).length > 0
+                              <>
+                                <span
+                                  style={{
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
+                                  }}
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
+                                >
+                                  Cancel
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {status === 4 || status === 6 || status === 9 ? (
+                              <>
+                                <span
+                                  style={{
+                                    borderRadius: "10px",
+                                    fontWeight: "bolder",
+                                  }}
+                                  className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
                                 >
                                   Refund
-                                </button>
-                              ) : (
-                                ""
-                              )}
-                            </>
-                          ) : (
-                            ""
-                          )}
-                          {status === 6 ||
-                          (status === 9 &&
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          {/* <td style={{ textAlign: "center" }}>Action</td> */}
+                          <td style={{ textAlign: "center" }}>
+                            {styleDateAndTime(bookingDate)}
+                          </td>
+                          <td>
+                            {!payWay && status === 5 ? (
+                              <>
+                                {(status === 5 && payingTime >= 0) ||
+                                status === 0 ? (
+                                  <>
+                                    <span
+                                      style={{ fontWeight: "bolder" }}
+                                      className="text-success "
+                                    >
+                                      Time Left To Pay
+                                    </span>
+                                    <p
+                                      style={{
+                                        fontWeight: "bolder",
+                                        fontSize: "18px",
+                                      }}
+                                      className="text-success p-0 m-0"
+                                      id={`timeleft-id-${id}`}
+                                    ></p>
+                                    <button
+                                      className="p-0 m-0 bg-success text-light border-0 px-3 py-1 "
+                                      style={{
+                                        borderRadius: "15px",
+                                        fontSize: "16px",
+                                        fontWeight: "450",
+                                      }}
+                                      onClick={() => {
+                                        setIdBookingPayNow(id);
+                                        setPayWay(true);
+                                      }}
+                                    >
+                                      {status === 5 ? "Pay Now" : "Pay Again"}
+                                    </button>
+                                    <br></br>
+                                    <b className="p-0 m-0"> or</b>
+                                    <button
+                                      className="p-0 m-0 mt-0 bg-transparent 
+                                text-danger border-0 mt-1 px-1"
+                                      style={{
+                                        borderRadius: "15px",
+                                        fontSize: "14px",
+                                        fontWeight: "450",
+                                      }}
+                                      onClick={() => {
+                                        handleCancelBooking(id);
+                                      }}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {(status === 1 ||
+                              status === 8 ||
+                              status === 7 ||
+                              status === 3) &&
                             payDate != null &&
                             payDate != undefined &&
-                            payDate != "") ? (
-                            <span className="text-primary">Pending...</span>
-                          ) : (
-                            ""
-                          )}
-                          {status === 4 &&
-                          refundDate != null &&
-                          refundDate != undefined &&
-                          refundDate != "" ? (
-                            <>
-                              Refund Time:
-                              <br />
-                              {styleDateAndTime(refundDate)}
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
-            </tbody>
-          </table>
-
+                            payDate != "" ? (
+                              <>
+                                Payment Time:
+                                <br />
+                                {styleDateAndTime(payDate)}
+                                <br />
+                                {status === 1 || status === 8 ? (
+                                  <button
+                                    className="p-0 m-0 px-2 py-1 text-primary
+                              bg-primary bg-opacity-10 border-0"
+                                    style={{
+                                      borderRadius: "20px",
+                                      display: `${
+                                        isRefundAvailableView(payDate)
+                                          ? ""
+                                          : "none"
+                                      }`,
+                                    }}
+                                    onClick={() => {
+                                      Swal.fire({
+                                        title: `Are you sure to refund?`,
+                                        icon: "info",
+                                        showCancelButton: true,
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Yes",
+                                        cancelButtonText: "No",
+                                        allowOutsideClick: false,
+                                        focusCancel: true,
+                                        focusConfirm: false,
+                                        confirmButtonColor: "red",
+                                        cancelButtonColor: "green",
+                                      }).then((result) => {
+                                        if (
+                                          result.isDenied === true ||
+                                          result.isDismissed === true
+                                        ) {
+                                        } else if (
+                                          result.isConfirmed === true
+                                        ) {
+                                          handleRefund(id, status);
+                                        }
+                                      });
+                                    }}
+                                  >
+                                    Refund
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+                              </>
+                            ) : (
+                              ""
+                            )}
+                            {status === 6 ||
+                            (status === 9 &&
+                              payDate != null &&
+                              payDate != undefined &&
+                              payDate != "") ? (
+                              <span className="text-primary">Pending...</span>
+                            ) : (
+                              ""
+                            )}
+                            {status === 4 &&
+                            refundDate != null &&
+                            refundDate != undefined &&
+                            refundDate != "" ? (
+                              <>
+                                Refund Time:
+                                <br />
+                                {styleDateAndTime(refundDate)}
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
+              </tbody>
+            </table>
+          </section>
           {payWay ? (
             <div
               className="bg-light"

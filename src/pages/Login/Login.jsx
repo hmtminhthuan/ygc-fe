@@ -70,9 +70,10 @@ export default function Login() {
     onSubmit: (values) => {
       let timerInterval;
       Swal.fire({
-        title: "Loading...",
-        timer: 1500,
-        timerProgressBar: true,
+        title: "Loading",
+        html: "Please wait a few seconds...",
+        timer: 10000,
+        timerProgressBar: false,
         didOpen: () => {
           Swal.showLoading();
         },
@@ -86,34 +87,35 @@ export default function Login() {
         .then((res) => {
           localStorage.removeItem("USER_LOGIN");
           localStorage.setItem("USER_LOGIN", JSON.stringify(res.data));
-
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            // title: `Log In Successfully</br> Welcome ${res.data.firstName} ${res.data.lastName}`,
-            title: `Log In Successfully`,
-            html: `Welcome ${res.data.firstName} ${res.data.lastName}`,
-            showConfirmButton: false,
-            timer: 1600,
-          }).then(function () {
-            if (res.data.role.id == 1) {
-              navigate("/admin");
-            } else if (res.data.role.id == 2) {
-              navigate("/staff");
-            } else if (res.data.role.id == 3) {
-              if (redirect) {
-                navigate(redirect);
-              } else {
-                navigate("/");
+          Swal.close();
+          setTimeout(() => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `<h1>Welcome ${res.data.firstName} ${res.data.lastName}</h1>`,
+              html: ``,
+              showConfirmButton: false,
+              timer: 1600,
+            }).then(function () {
+              if (res.data.role.id == 1) {
+                navigate("/admin");
+              } else if (res.data.role.id == 2) {
+                navigate("/staff");
+              } else if (res.data.role.id == 3) {
+                if (redirect) {
+                  navigate(redirect);
+                } else {
+                  navigate("/");
+                }
+              } else if (res.data.role.id == 4) {
+                if (redirect) {
+                  navigate(redirect);
+                } else {
+                  navigate("/");
+                }
               }
-            } else if (res.data.role.id == 4) {
-              if (redirect) {
-                navigate(redirect);
-              } else {
-                navigate("/");
-              }
-            }
-          });
+            });
+          }, 200);
         })
         .catch((err) => {
           alert.alertFailedWithTime(
@@ -155,8 +157,8 @@ export default function Login() {
           }).then(function () {
             let timerInterval;
             Swal.fire({
-              title: "Loading...",
-              html: "Please wait a few seconds",
+              title: "Loading",
+              html: "Please wait a few seconds...",
               timer: 1500,
               timerProgressBar: true,
               didOpen: () => {
@@ -262,8 +264,8 @@ export default function Login() {
           if (checkEmail) {
             let timerInterval;
             Swal.fire({
-              title: "Loading...",
-              html: "Please wait a few seconds",
+              title: "Loading",
+              html: "Please wait a few seconds...",
               timer: 1200,
               timerProgressBar: true,
               didOpen: () => {
@@ -323,7 +325,9 @@ export default function Login() {
                 data-aos="fade-up-right"
                 data-aos-delay="50"
               >
-                <video src={video} autoPlay muted loop></video>
+                <video src={video} autoPlay muted loop>
+                  <source src={video} type="video/mp4" />
+                </video>
 
                 <div className="textDiv py-2">
                   <h2 className="title">Log In</h2>

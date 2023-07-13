@@ -43,37 +43,59 @@ export default function AdminCourseCreate() {
     },
 
     onSubmit: (values) => {
-      if (values.discount == "") {
-        values.discount = 0;
-      }
-      Swal.fire({
-        title: `Are you sure to create new course?`,
-        inputAttributes: {
-          autocapitalize: "off",
-        },
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonText: "Confirm",
-        cancelButtonText: "Cancel",
-        preConfirm: (login) => {},
-        allowOutsideClick: true,
-      }).then((result) => {
-        if (result.isDenied === true || result.isDismissed === true) {
-        } else if (result.isConfirmed === true) {
-          api
-            .post("Course/CreateCourse", values)
-            .then((res) => {
-              alert.alertSuccessWithTime(
-                "Create Course Successfully",
-                "",
-                2000,
-                "25",
-                () => {}
-              );
-            })
-            .catch((err) => {});
+      if (previewImg == "") {
+        alert.alertFailedWithTime(
+          "Failed To Create",
+          "Image cannot be blank",
+          2500,
+          "25",
+          () => {}
+        );
+      } else {
+        if (values.discount == "") {
+          values.discount = 0;
         }
-      });
+        Swal.fire({
+          title: `Are you sure to create new course?`,
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          preConfirm: (login) => {},
+          allowOutsideClick: true,
+        }).then((result) => {
+          if (result.isDenied === true || result.isDismissed === true) {
+          } else if (result.isConfirmed === true) {
+            const imageRef = ref(
+              storage,
+              `courseImages/${imageUpload.name + v4()}`
+            );
+            uploadBytes(imageRef, imageUpload).then((snapshot) => {
+              getDownloadURL(snapshot.ref)
+                .then((url) => {
+                  values.img = url;
+                })
+                .finally(() => {
+                  api
+                    .post("Course/CreateCourse", values)
+                    .then((res) => {
+                      alert.alertSuccessWithTime(
+                        "Create Course Successfully",
+                        "",
+                        2000,
+                        "25",
+                        () => {}
+                      );
+                    })
+                    .catch((err) => {});
+                });
+            });
+          }
+        });
+      }
     },
   });
   const handleChangeLevel = (levelId) => {
@@ -380,7 +402,7 @@ export default function AdminCourseCreate() {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="row flex align-items-start justify-content-between">
+                  <div className="hide-form-item row flex align-items-start justify-content-between">
                     <p className="col-2 p-0 m-0 px-3 mt-2 flex">
                       <span className="text-danger px-1">
                         <i
@@ -394,55 +416,75 @@ export default function AdminCourseCreate() {
                       Image:
                     </p>
                     <div className="col-10">
+                      <div
+                        className="text-center m-0 p-0 flex 
+                    justify-content-start"
+                      >
+                        <p
+                          className="m-0 p-0 mt-1 px-3 py-1"
+                          style={{
+                            cursor: "pointer",
+                            fontSize: "16px",
+                            fontWeight: "bolder",
+                            width: "fit-content",
+                            borderRadius: "20px",
+                            color: "#fff",
+                            backgroundColor: "#d291bc",
+                          }}
+                          onClick={() => {
+                            document.getElementById("imgInp").click();
+                          }}
+                        >
+                          <i className="fa-solid fa-image mx-3 ms-0"></i>
+                          {previewImg == ""
+                            ? "Choose Photo"
+                            : "Choose Another Photo"}
+                        </p>
+                      </div>
                       <Form.Item
                         name="img"
                         label=""
-                        rules={[
-                          {
-                            required: true,
-                            message: "Image cannot be blank",
-                          },
-                          {
-                            whitespace: true,
-                            message: "Image cannot be empty",
-                          },
-                        ]}
+                        rules={
+                          [
+                            // {
+                            //   required: true,
+                            //   message: "Image cannot be blank",
+                            // },
+                            // {
+                            //   whitespace: true,
+                            //   message: "Image cannot be empty",
+                            // },
+                          ]
+                        }
+                        style={{ display: "none" }}
                         hasFeedback
                       >
-                        {/* <Input
-                                    style={{ width: "100%" }}
-                                    name="img"
-                                    value={formik.values.img}
-                                    onChange={formik.handleChange}
-                                    onInput={(e) => {
-                                        console.log(e.target.files[0]);
-                                        const [file] = imgInp.files
-                                        if (e.target.files && e.target.files[0]) {
-                                            blah.src = URL.createObjectURL(file);
-                                            console.log(blah.src);
-                                        }
-                                    }}
-                                    placeholder="Select Image"
-                                    id="imgInp"
-                                    type="file"
-                                    accept="image/png, image/jpeg, image/jpg"
-                                /> */}
-                        {/* <Input
-                          style={{ width: "100%" }}
+                        <Input
+                          style={{
+                            width: "100%",
+                            cursor: "pointer",
+                            display: "none",
+                          }}
                           name="img"
                           value={formik.values.img}
-                          onChange={formik.handleChange}
-                          onInput={(e) => {
-                            console.log(e.target.files[0]);
-                            const [file] = imgInp.files;
-                            if (e.target.files && e.target.files[0]) {
-                              blah.src = URL.createObjectURL(file);
-                              console.log(blah.src);
-                              setPreviewImg(blah.src);
+                          placeholder="Select Image"
+                          id="imgInp"
+                          type="file"
+                          onChange={(e) => {
+                            if (
+                              e.target.files[0] != null &&
+                              e.target.files[0] != undefined
+                            ) {
+                              setImageUpload(e.target.files[0]);
+                              const [file] = imgInp.files;
+                              if (e.target.files && e.target.files[0]) {
+                                const link = URL.createObjectURL(file);
+                                setPreviewImg(link);
+                                formik.setFieldValue("img", link);
+                              }
                             }
                           }}
-                          placeholder="Enter Link Of Image"
-                        /> */}
+                        />
                       </Form.Item>
                     </div>
                   </div>
@@ -454,7 +496,8 @@ export default function AdminCourseCreate() {
                       label="Preview Image"
                     >
                       <img
-                        id="blah"
+                        className="mt-3"
+                        id="avatarImg"
                         src={previewImg}
                         style={{ width: "50%", borderRadius: "5px" }}
                       />

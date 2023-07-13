@@ -13,7 +13,7 @@ import ChangePasswordVerifyEmail from "./ChangePasswordVerifyEmail";
 import { alert } from "../../component/AlertComponent/Alert";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../../constants/firebase";
-import { v4 } from "uuid";
+import { stringify, v4 } from "uuid";
 import Aos from "aos";
 export default function UpdateProfile() {
   const navigate = useNavigate();
@@ -32,9 +32,10 @@ export default function UpdateProfile() {
   const [firstname, setFirstname] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [roleName, setRoleName] = useState("");
+  const [currentAvatar, setCurrentAvatar] = useState("");
   const [previewImg, setPreviewImg] = useState("");
   const [changePasswordMoniter, setChangePasswordMoniter] = useState(false);
+  const [oldAvatarList, setOldAvatarList] = useState([]);
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const [form] = Form.useForm();
@@ -55,8 +56,9 @@ export default function UpdateProfile() {
       navigate("/");
     }
   }
-
+  const imageListRef = ref(storage, "userImages/");
   useEffect(() => {
+    setOldAvatarList([]);
     api
       .get("/Account/GetUserProfile", {
         params: { id: id },
@@ -65,6 +67,7 @@ export default function UpdateProfile() {
         if (res.data.img != "male" && res.data.img != "female") {
           setPreviewImg(res.data.img);
         }
+        setCurrentAvatar(res.data.img);
         const userProfile = res.data;
         setProfile(userProfile);
         setPhone(res.data.phoneNumber);
@@ -76,21 +79,19 @@ export default function UpdateProfile() {
           address: userProfile.address,
           img: userProfile.img,
         });
+        listAll(imageListRef).then((response) => {
+          response.items.forEach((item) => {
+            getDownloadURL(item).then((url) => {
+              if (url.includes(`--userImage--${id}`) && url != res.data.img) {
+                setOldAvatarList((prev) => [...prev, url]);
+              }
+            });
+          });
+        });
       })
       .catch((err) => {});
   }, [updateDone]);
-  const uploadImage = () => {
-    // if (imageUpload == null) {
-    //   return;
-    // }
-    // const imageRef = ref(storage, `testImages/${imageUpload.name + v4()}`);
-    // uploadBytes(imageRef, imageUpload).then((snapshot) => {
-    //   getDownloadURL(snapshot.ref).then((url) => {
-    //     console.log(url);
-    //     //   setImageList((prev) => [...prev, url]);
-    //   });
-    // });
-  };
+
   const handleUpdateAccount = (values) => {
     api
       .put(`/Account/UpdateAccount?id=${profile.id}`, values)
@@ -99,6 +100,7 @@ export default function UpdateProfile() {
         api
           .get("/Account/AccountList")
           .then((res) => {
+            // Swal.close();
             let userList = [];
             userList = res.data;
             localStorage.removeItem("USER_LOGIN");
@@ -115,40 +117,24 @@ export default function UpdateProfile() {
                 ]
               )
             );
-            alert.alertSuccessWithTime(
-              "Update Profile Successfully",
-              "",
-              2000,
-              "30",
-              () => {
+            setTimeout(() => {
+              setImageUpload(null);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `Update Successfully`,
+                showConfirmButton: false,
+                timer: 900,
+              }).finally(() => {
                 navigate("/updateProfile");
-              }
-            );
+              });
+            }, 300);
           })
           .catch((err) => {});
-        // const Toast = Swal.mixin({
-        //   // toast: true,
-        //   position: "middle",
-        //   width: `30rem`,
-        //   padding: "1rem",
-        //   background: "#eef6ec",
-        //   showConfirmButton: false,
-        //   timer: 1000,
-        //   // timerProgressBar: true,
-        //   didOpen: (toast) => {
-        //     // toast.addEventListener("mouseenter", Swal.stopTimer);
-        //     toast.addEventListener("mouseleave", Swal.resumeTimer);
-        //   },
-        // });
-
-        // Toast.fire({
-        //   icon: "success",
-        //   title: `Update Successfully`,
-        //   html: ``,
-        // });
       })
       .catch((err) => {});
   };
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -158,6 +144,18 @@ export default function UpdateProfile() {
       img: "",
     },
     onSubmit: (values) => {
+      Swal.fire({
+        title: "Loading...",
+        html: "Please wait a few seconds",
+        timer: 10000,
+        timerProgressBar: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      });
       if (values.img == "") {
         values.img = "female";
         if (profile.gender) {
@@ -165,22 +163,28 @@ export default function UpdateProfile() {
         }
       }
       if (values.img != "") {
-        const imageRef = ref(
-          storage,
-          `userImages/${"userImage-" + id + "-" + imageUpload.name + v4()}`
-        );
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-          getDownloadURL(snapshot.ref)
-            .then((url) => {
-              values.img = url;
-            })
-            .finally(() => {
-              handleUpdateAccount(values);
-              console.log(values);
-            });
-        });
-      } else {
-        handleUpdateAccount(values);
+        if (
+          !(previewImg == "female" || previewImg == "male") &&
+          oldAvatarList.filter((item) => item == previewImg).length <= 0
+        ) {
+          const imageRef = ref(
+            storage,
+            `userImages/${
+              "--userImage--" + id + "--" + imageUpload.name + v4()
+            }`
+          );
+          uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                values.img = url;
+              })
+              .finally(() => {
+                handleUpdateAccount(values);
+              });
+          });
+        } else {
+          handleUpdateAccount(values);
+        }
       }
     },
   });
@@ -190,7 +194,9 @@ export default function UpdateProfile() {
   }
 
   Aos.init();
-
+  const setPreviewAvatar = (url) => {
+    document.getElementById("avatarImg").src = url;
+  };
   return (
     <>
       {accept ? (
@@ -251,9 +257,13 @@ export default function UpdateProfile() {
                         <span className="mx-2">Back</span>
                       </NavLink>
                     </div>
-                    <div className="img-circle text-center mb-3 mt-4">
+                    <div
+                      className="img-circle text-center mb-2 mt-4"
+                      style={{ position: "relative" }}
+                    >
                       {profile.img == null ||
-                      (profile.img == "male" && previewImg == "") ? (
+                      (profile.img == "male" && previewImg == "") ||
+                      previewImg == "male" ? (
                         <img
                           id="avatarImg"
                           src={male}
@@ -268,9 +278,10 @@ export default function UpdateProfile() {
                       ) : (
                         <></>
                       )}
-                      {profile.img != null &&
-                      profile.img == "female" &&
-                      previewImg == "" ? (
+                      {(profile.img != null &&
+                        profile.img == "female" &&
+                        previewImg == "") ||
+                      previewImg == "female" ? (
                         <img
                           src={female}
                           id="avatarImg"
@@ -301,13 +312,166 @@ export default function UpdateProfile() {
                         />
                       )}
                     </div>
+
+                    <div
+                      className="text-center m-0 p-0 flex 
+                    justify-content-center"
+                    >
+                      <p
+                        className="m-0 p-0 mt-2 px-3 py-1"
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "16px",
+                          fontWeight: "bolder",
+                          width: "fit-content",
+                          borderRadius: "20px",
+                          color: "#fff",
+                          backgroundColor: "#d291bc",
+                        }}
+                        onClick={() => {
+                          if (oldAvatarList.length > 0) {
+                            Swal.fire({
+                              title: `<h1 style="color: #d291bc;">Change Avatar</h1>`,
+                              html: `
+                            <div style="text-algin:center; display:flex; justify-content:center">
+                            <p
+                            id="upload-photo-button"
+                        style="
+                          cursor: pointer;
+                          font-size: 16px;
+                          font-weight: bolder;
+                          width: fit-content;
+                          border-radius: 20px;
+                          color: #fff;
+                          background-color: #000;
+                          padding: 5px 10px;">Upload Photo</p></div>
+                          <b>- - - OR - - -</b><br>
+                              <div id="old_photo_container"  style="margin-top:10px; width: 100%">
+                                <h5>Choose Your Old Photo</h5>
+                                <div id="old-photo-area" style="display:flex; justify-content:space-between;
+                                flex-wrap: nowrap; gap: 10px"></div>
+                              </div>
+                          `,
+                              showCancelButton: true,
+                              showConfirmButton: false,
+                              focusCancel: false,
+                              didOpen: () => {
+                                const updateButton =
+                                  Swal.getHtmlContainer().querySelector(
+                                    "p#upload-photo-button"
+                                  );
+                                updateButton.addEventListener("click", () => {
+                                  document.getElementById("imgInp").click();
+                                });
+                                if (oldAvatarList.length > 0) {
+                                  const old_photo_area =
+                                    Swal.getHtmlContainer().querySelector(
+                                      "div#old-photo-area"
+                                    );
+                                  let htmlString = "";
+                                  oldAvatarList.forEach((url) => {
+                                    htmlString += `<img style="width:100px; height:100px; border-radius: 5px;
+                                    cursor: pointer" src=${url} 
+                                    class="old_img_btn"/>`;
+                                  });
+                                  old_photo_area.innerHTML = htmlString;
+                                  let imageList =
+                                    document.getElementsByClassName(
+                                      "old_img_btn"
+                                    );
+                                  for (let i = 0; i < imageList.length; i++) {
+                                    imageList[i].addEventListener(
+                                      "click",
+                                      (e) => {
+                                        const url = e.target.src;
+                                        Swal.close();
+                                        setPreviewAvatar(url);
+                                        formik.setFieldValue("img", url);
+                                        setPreviewImg(url);
+                                      }
+                                    );
+                                  }
+                                } else {
+                                  const old_photo_container =
+                                    Swal.getHtmlContainer().querySelector(
+                                      "div#old_photo_container"
+                                    );
+                                  old_photo_container.style.display = "none";
+                                }
+                              },
+                              preConfirm: (login) => {},
+                              allowOutsideClick: false,
+                            }).then((result) => {});
+                          } else {
+                            document.getElementById("imgInp").click();
+                          }
+                        }}
+                      >
+                        <i className="fa-solid fa-image mx-3 ms-0"></i>
+                        {imageUpload == null
+                          ? "Change Avatar"
+                          : "Choose Another Photo"}
+                      </p>
+                    </div>
+
+                    <div
+                      className="flex justify-content-center"
+                      style={{
+                        gap: "5px",
+                        display: `${previewImg != currentAvatar ? "" : "none"}`,
+                      }}
+                    >
+                      <div
+                        className="text-center m-0 p-0 flex 
+                    justify-content-center"
+                      >
+                        <p
+                          className="m-0 p-0 mt-2 px-3 py-1"
+                          style={{
+                            cursor: "pointer",
+                            fontSize: "16px",
+                            fontWeight: "bolder",
+                            width: "fit-content",
+                            borderRadius: "20px",
+                            color: "#fff",
+                            backgroundColor: "#000",
+                          }}
+                          onClick={formik.handleSubmit}
+                        >
+                          Save
+                        </p>
+                      </div>
+                      <div
+                        className="text-center m-0 p-0 flex 
+                    justify-content-center"
+                      >
+                        <p
+                          className="m-0 p-0 mt-2 px-3 py-1 bg-black"
+                          style={{
+                            cursor: "pointer",
+                            fontSize: "16px",
+                            fontWeight: "bolder",
+                            width: "fit-content",
+                            borderRadius: "20px",
+                            color: "#fff",
+                          }}
+                          onClick={() => {
+                            setPreviewImg(currentAvatar);
+                            avatarImg.src = currentAvatar;
+                            setImageUpload(null);
+                          }}
+                        >
+                          Reset
+                        </p>
+                      </div>
+                    </div>
                     <h2
-                      className="text-center"
+                      className="text-center mt-3"
                       style={{ color: "rgba(210, 145, 188, 1)" }}
                     >
                       {profile.firstname} {profile.lastname}
                     </h2>
-                    <h5 className="text-center mt-3" style={{}}>
+                    <h5 className="text-center mt-2" style={{}}>
                       Phone: {profile.phoneNumber}
                     </h5>
                     <h5 className="text-center" style={{}}>
@@ -524,7 +688,10 @@ export default function UpdateProfile() {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-md-12">
+                            <div
+                              className="col-md-12 mb-3"
+                              style={{ display: "none" }}
+                            >
                               <div className="form-group w-100">
                                 <div className="row flex align-items-start justify-content-between">
                                   <p className="col-md-3 col-sm-12 p-0 m-0 px-3 mt-2 flex">
@@ -538,77 +705,44 @@ export default function UpdateProfile() {
                                       className="w-100"
                                       rules={[]}
                                       hasFeedback
-                                      // initialValue={`${
-                                      //   profile.img != "male" &&
-                                      //   profile.img != "female"
-                                      //     ? profile.img
-                                      //     : ""
-                                      // }`}
                                     >
-                                      {/* <TextArea
-                                        style={{
-                                          width: "100%",
-                                          height: "75px",
-                                        }}
-                                        name="img"
-                                        value={formik.values.img}
-                                        onChange={formik.handleChange}
-                                        onInput={(e) => {
-                                          setPreviewImg(e.target.value);
-                                        }}
-                                        placeholder="Enter Link Of Image"
-                                      /> */}
                                       <Input
                                         style={{
                                           width: "100%",
                                           cursor: "pointer",
+                                          display: "none",
                                         }}
                                         name="img"
                                         value={formik.values.img}
-                                        // onChange={formik.handleChange}
                                         placeholder="Select Image"
                                         id="imgInp"
                                         type="file"
                                         onChange={(e) => {
-                                          // console.log(e.target.files[0]);
-                                          setImageUpload(e.target.files[0]);
-                                          const [file] = imgInp.files;
                                           if (
-                                            e.target.files &&
-                                            e.target.files[0]
+                                            e.target.files[0] != null &&
+                                            e.target.files[0] != undefined
                                           ) {
-                                            const link =
-                                              URL.createObjectURL(file);
-                                            avatarImg.src = link;
-
-                                            formik.setFieldValue("img", link);
-                                            // console.log(avatarImg);
+                                            setImageUpload(e.target.files[0]);
+                                            const [file] = imgInp.files;
+                                            if (
+                                              e.target.files &&
+                                              e.target.files[0]
+                                            ) {
+                                              const link =
+                                                URL.createObjectURL(file);
+                                              document.getElementById(
+                                                "avatarImg"
+                                              ).src = link;
+                                              formik.setFieldValue("img", link);
+                                              setPreviewImg(link);
+                                            }
                                           }
+                                          Swal.close();
                                         }}
                                       />
-                                      {/* <Input
-                                        style={{ width: "100%" }}
-                                        name="img"
-                                        value={formik.values.img}
-                                        onChange={formik.handleChange}
-                                        onInput={(e) => {
-                                          console.log(e.target.files[0]);
-                                          const [file] = imgInp.files;
-                                          if (
-                                            e.target.files &&
-                                            e.target.files[0]
-                                          ) {
-                                            blah.src =
-                                              URL.createObjectURL(file);
-                                            console.log(blah.src);
-                                            setPreviewImg(blah.src);
-                                          }
-                                        }}
-                                        placeholder="Enter Link Of Image"
-                                      /> */}
                                     </Form.Item>
-                                  </div>{" "}
-                                </div>{" "}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>

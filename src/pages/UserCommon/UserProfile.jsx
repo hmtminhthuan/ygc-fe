@@ -118,7 +118,7 @@ function UserProfile() {
                 <div className="col-xl-6 col-md-12 mt-md-4">
                   <div className="card user-card-full mt-md-4">
                     <div className="row m-l-0 m-r-0">
-                      <div className="col-sm-4 bg-c-lite-green user-profile">
+                      <div className=" col-md-4 bg-c-lite-green user-profile">
                         <div className="card-block text-center">
                           <div className="m-b-25">
                             {linkImg == "male" ? (
@@ -128,8 +128,8 @@ function UserProfile() {
                                 className="shadow img-user-profile"
                                 style={{
                                   borderRadius: "50%",
-                                  width: "130px",
-                                  height: "130px",
+                                  width: "100%",
+                                  height: "100%",
                                 }}
                               />
                             ) : (
@@ -176,16 +176,17 @@ function UserProfile() {
                             UserID: {id}
                           </p>
                           <div className="iconp-0 m-0 mt-3 text-center flex justify-content-center">
-                            <div
-                              className="p-0 m-0 px-2 py-1 bg-black text-light border-0"
-                              style={{
-                                width: "fit-content",
-                                borderRadius: "20px",
-                              }}
+                            <NavLink
+                              to={`/updateProfile`}
+                              className="updateInfo text-light px-1"
                             >
-                              <NavLink
-                                to={`/updateProfile`}
-                                className="updateInfo text-light"
+                              {" "}
+                              <div
+                                className="p-0 m-0 px-3 py-1 update-button-area bg-black text-light border-0"
+                                style={{
+                                  width: "fit-content",
+                                  borderRadius: "20px",
+                                }}
                               >
                                 <span
                                   className="m-0 p-0"
@@ -194,15 +195,15 @@ function UserProfile() {
                                   Update
                                 </span>{" "}
                                 <i
-                                  className="ri-edit-2-line mx-0 px-0 mt-2 text-light"
+                                  className="fa-solid fa-pen-to-square mx-0 px-0 mt-2 ms-2  text-light"
                                   style={{ fontSize: "14px" }}
                                 ></i>
-                              </NavLink>
-                            </div>
+                              </div>
+                            </NavLink>
                           </div>
                         </div>
                       </div>
-                      <div className="col-sm-8 align-items-center my-5">
+                      <div className=" col-md-8 align-items-center my-5">
                         <div className="card-block my-2 mx-4 align-items-center">
                           <h5
                             className="m-b-20 p-b-5 b-b-default f-w-600"

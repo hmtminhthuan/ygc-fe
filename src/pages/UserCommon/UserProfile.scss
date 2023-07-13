@@ -121,9 +121,7 @@
     transition: transform 0.3s ease-in-out !important;
 
     &:hover {
-      color: green;
       cursor: pointer;
-      transform: scale(2) !important;
     }
   }
 
@@ -231,4 +229,16 @@
       }
     }
   }
+}
+.update-button-area:hover {
+  background-color: #de94c7 !important;
+  span,
+  i {
+    color: #3a3a3a !important;
+  }
+  transition: all 0.3 ease-in-out;
+}
+.update-button-area {
+  background-color: #000 !important;
+  transition: all 0.3 ease-in-out;
 }

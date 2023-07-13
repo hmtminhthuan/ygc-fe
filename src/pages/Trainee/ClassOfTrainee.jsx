@@ -96,53 +96,66 @@ export default function ClassOfTrainee() {
                       <span className="mx-2">Back</span>
                     </NavLink>
                   </div>
-                  <div className="col-md-4 col-sm-12 text-center mt-5">
+                  <div className="col-lg-4 col-md-12 col-sm-12 text-center mt-5">
                     <img
                       src={classDetail.courseImg}
                       alt={classDetail.courseName}
                       className="header-avatar"
                     />
                   </div>
-                  <div className="col-md-8 col-sm-12 profile-info ">
+                  <div className="col-lg-8 col-md-12 col-sm-12 profile-info text-center my-0 py-0">
                     <div
                       className="header-fullname"
                       style={{ fontSize: "24px", fontWeight: "bold" }}
                     >
                       Class: {classDetail.className}
                     </div>
-                    <a
-                      href="#"
-                      className="btn btn-palegreen btn-sm  btn-follow mt-3"
-                    >
-                      <i className="fa fa-check" />
-                      Active
-                    </a>
                     <div
                       className="header-information"
                       style={{ fontSize: "20px" }}
                     >
-                      <p>Course name: {classDetail.courseName}</p>
-                      <p>Room: {classDetail.room}</p>
-                      <p>
+                      <p className="m-0 p-0 my-0 text-center">
+                        Course name: {classDetail.courseName}
+                      </p>
+                      <p className="m-0 p-0 my-2 text-center">
+                        Room: {classDetail.room}
+                      </p>
+                      <p className="m-0 p-0 my-2 text-center">
                         Trainer: {classDetail.firstName} {classDetail.lastName}
                       </p>
-                      <p>Phone: {classDetail.phone}</p>
+                      <p className="m-0 p-0 my-2 text-center">
+                        Phone: {classDetail.phone}
+                      </p>
                     </div>
                   </div>
-                  <div className="col-md-12 col-sm-12 col-xs-12 profile-stats">
+                  <div
+                    className="col-md-12 col-sm-12 col-xs-12 profile-stats
+                 "
+                  >
                     <div className="row">
-                      <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div className="stats-value pink">{levelName}</div>
+                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                        <div
+                          className="stats-value pink"
+                          style={{ fontSize: "20px" }}
+                        >
+                          {levelName}
+                        </div>
                         <div className="stats-title">LEVEL</div>
                       </div>
-                      <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div className="stats-value pink">
+                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                        <div
+                          className="stats-value pink"
+                          style={{ fontSize: "20px" }}
+                        >
                           {formatDate(classDetail.startDate)}
                         </div>
                         <div className="stats-title">START DATE</div>
                       </div>
-                      <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div className="stats-value pink">
+                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                        <div
+                          className="stats-value pink"
+                          style={{ fontSize: "20px" }}
+                        >
                           {formatDate(classDetail.endDate)}
                         </div>
                         <div className="stats-title">END DATE</div>

@@ -63,7 +63,10 @@ export default function HeaderHome() {
             id="basic-navbar-nav"
             className="flex justify-content-end px-3 py-2 pt-0 header-small navbar-item"
           >
-            <Nav className="" style={{ transform: "translateY(5px)" }}>
+            <Nav
+              className="nav-item-area"
+              style={{ transform: "translateY(5px)" }}
+            >
               <NavLink
                 to="/"
                 className={`px-4 nav-item
@@ -89,13 +92,6 @@ export default function HeaderHome() {
                 onClick={() => {
                   navigateTo("/course");
                 }}
-
-                // className={`px-4 nav-item ${
-                //   menuActive === "home-course" ? "nav-item-after-login" : ""
-                // }`}
-                // onClick={() => {
-                //   navigateTo("home-course");
-                // }}
               >
                 Course
               </NavLink>
@@ -257,6 +253,14 @@ export default function HeaderHome() {
                     localStorage.removeItem("MENU_ACTIVE");
                     USER = {};
                     setUserLogin({});
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: `<h1>Log Out Successfully</h1>`,
+                      html: ``,
+                      showConfirmButton: false,
+                      timer: 1000,
+                    });
                   }}
                 >
                   <div className="flex p-0 m-0">LogOut</div>
