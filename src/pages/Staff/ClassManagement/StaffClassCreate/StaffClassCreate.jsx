@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import { useFormik } from "formik";
-import { DatePicker, Form, Input, Select } from "antd";
+import { AutoComplete, DatePicker, Form, Input, Select } from "antd";
 import { useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
@@ -42,6 +42,7 @@ export default function StaffClassCreate() {
   const [suitableTrainer, setSuitableTrainer] = useState(true);
   const [selectedTrainer, setSelectedTrainer] = useState({});
   const [selectedSchedule, setSelectedSchedule] = useState([]);
+  const [trainerOptions, setTrainerOptions] = useState([]);
 
   const styleInputDate = (date) => {
     return moment(new Date(`${date}`)).format("YYYY-MM-DD");
@@ -114,13 +115,14 @@ export default function StaffClassCreate() {
             },
           ];
         });
-        alert.alertSuccess("Create Class Successfully", "", () => {});
         api
           .post(`/Class/CreateClass`, {
             classDTO: values,
             slotDTOs: theSlotDTOs,
           })
-          .then((res) => {})
+          .then((res) => {
+            alert.alertSuccess("Create Class Successfully", "", () => {});
+          })
           .catch((err) => {});
       }
     },
@@ -196,8 +198,24 @@ export default function StaffClassCreate() {
       .catch((err) => {})
       .finally(() => {
         setListOfTrainer([...listTrainer].filter((item) => !item.deleted));
+        [...listTrainer]
+          .filter((item) => !item.deleted)
+          .forEach((account) => {
+            setTrainerOptions((prev) => [
+              ...prev,
+              {
+                value:
+                  account.firstName +
+                  " " +
+                  account.lastName +
+                  " - ID: " +
+                  account.accountID,
+              },
+            ]);
+          });
       });
   }, []);
+
   useEffect(() => {
     setSlotDto([]);
   }, [courseRoom]);
@@ -414,6 +432,7 @@ export default function StaffClassCreate() {
       setSlotDto([...listOfSlot].filter((item) => item.dayOfWeek != ""));
     }
   };
+  const options = trainerOptions;
   return (
     <>
       <HeaderStaff />
@@ -1150,7 +1169,7 @@ export default function StaffClassCreate() {
                         ]}
                         hasFeedback
                       >
-                        <Select
+                        {/* <Select
                           name="trainerId"
                           width="200px"
                           placeholder="Select Trainer"
@@ -1164,7 +1183,23 @@ export default function StaffClassCreate() {
                               </Select.Option>
                             );
                           })}
-                        </Select>
+                        </Select> */}
+                        <AutoComplete
+                          // style={{ width: 200 }}
+                          name="trainerId"
+                          options={options}
+                          onSelect={(value) => {
+                            handleChangeTrainer(
+                              parseInt(value.split("ID:")[1].trim())
+                            );
+                          }}
+                          placeholder="Select Trainer"
+                          filterOption={(inputValue, option) =>
+                            option.value
+                              .toUpperCase()
+                              .indexOf(inputValue.toUpperCase()) !== -1
+                          }
+                        />
                       </Form.Item>
                     </div>
                   </div>

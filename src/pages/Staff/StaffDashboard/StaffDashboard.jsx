@@ -42,6 +42,7 @@ export default function Dashboard() {
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
         const filteredTrainers = res.data
+          .filter((item) => !item.deleted)
           .sort((a, b) => b.accountID - a.accountID)
           .slice(0, 7);
         setTrainerList(filteredTrainers);
@@ -55,9 +56,9 @@ export default function Dashboard() {
     api
       .get("/Account/AccountListByRole?id=4")
       .then((res) => {
-        const filteredTrainees = res.data.sort(
-          (a, b) => b.accountID - a.accountID
-        );
+        const filteredTrainees = res.data
+          .filter((item) => !item.deleted)
+          .sort((a, b) => b.accountID - a.accountID);
         setTraineeList(filteredTrainees);
       })
       .catch((err) => {});
