@@ -347,8 +347,11 @@ export default function ScheduleTrainer() {
               </table>
             </div>
 
-            <p>
-              Current Class:
+            <p
+              className="m-0 p-0 mt-1 ms-3"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              Current Class:{" "}
               {
                 schedule.filter(
                   (classItem) => new Date(classItem.endDate) >= new Date()
