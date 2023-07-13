@@ -383,7 +383,8 @@ export default function AdminSetting() {
                                     hasFeedback
                                   >
                                     <p>
-                                      {navigation == 1 || navigation == 2 ? (
+                                      {(navigation == 1 || navigation == 2) &&
+                                      preactiveValue >= 1 / 60 ? (
                                         <>
                                           {Math.floor(preactiveValue) < 10
                                             ? `0${Math.floor(preactiveValue)}`
@@ -408,7 +409,23 @@ export default function AdminSetting() {
                                               )}`}
                                         </>
                                       ) : (
+                                        <></>
+                                      )}
+
+                                      {(navigation == 1 || navigation == 2) &&
+                                      preactiveValue < 1 / 60 ? (
+                                        <>
+                                          {Math.floor(preactiveValue * 3600)}
+                                          {" seconds"}
+                                        </>
+                                      ) : (
+                                        <></>
+                                      )}
+
+                                      {navigation == 3 || navigation == 4 ? (
                                         <>{preactiveValue}</>
+                                      ) : (
+                                        <></>
                                       )}
                                     </p>
                                   </Form.Item>

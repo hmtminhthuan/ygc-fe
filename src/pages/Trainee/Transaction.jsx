@@ -239,7 +239,12 @@ export default function Transaction() {
         .filter((item) => item.status === 5)
         .forEach((item) => {
           timeLeft.getTimeLeft(item.bookingDate, item.id, payingTime, () => {
-            setTimeout(() => {}, 3500);
+            setTimeout(() => {
+              renderBookingAgain();
+              setTimeout(() => {
+                renderBookingAgain();
+              }, 3000);
+            }, 3000);
           });
         });
     }
