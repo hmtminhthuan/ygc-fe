@@ -36,7 +36,7 @@ function UserProfile() {
         let timerInterval;
         Swal.fire({
           title: "Loading...",
-          timer: 900,
+          timer: 1500,
           allowOutsideClick: false,
           didOpen: () => {
             Swal.showLoading();

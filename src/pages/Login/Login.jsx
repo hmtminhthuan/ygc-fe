@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Login.scss";
 import Swal from "sweetalert2";
@@ -16,6 +16,9 @@ import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 import { alert } from "../../component/AlertComponent/Alert";
+import GoogleButton from "react-google-button";
+import { UserAuth } from "../../constants/AuthContext";
+
 import Aos from "aos";
 
 export default function Login() {
@@ -27,7 +30,9 @@ export default function Login() {
       USER_LOGIN == null ||
       USER_LOGIN == undefined ||
       USER.accountID == undefined
-    )
+    ) &&
+    (localStorage.getItem("USER_LOGIN_GMAIL_ACTION") == null ||
+      localStorage.getItem("USER_LOGIN_GMAIL_ACTION") == undefined)
   ) {
     const Toast = Swal.mixin({
       toast: true,
@@ -49,11 +54,82 @@ export default function Login() {
       title: `You have logged in already.`,
     });
     return <Navigate to="/" />;
+  } else if (
+    !(
+      localStorage.getItem("USER_LOGIN_GMAIL_ACTION") == null ||
+      localStorage.getItem("USER_LOGIN_GMAIL_ACTION") == undefined
+    )
+  ) {
+    localStorage.removeItem("USER_LOGIN_GMAIL_ACTION");
   }
   localStorage.setItem("MENU_ACTIVE", "/login");
   const location = useLocation();
   const redirect = new URLSearchParams(location.search).get("redirect");
+
+  const { googleSignIn, user, logOut } = UserAuth();
   const navigate = useNavigate();
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (user != null) {
+      api
+        .get(`/Account/AccountList`)
+        .then((res) => {
+          let arr = [];
+          arr = res.data;
+          let pos = arr.findIndex(
+            (account) =>
+              account.email.trim().toString() == user.email.trim().toString() &&
+              !account.deleted
+          );
+          if (pos >= 0) {
+            localStorage.removeItem("USER_LOGIN");
+            localStorage.setItem("USER_LOGIN", JSON.stringify(arr[pos]));
+            localStorage.setItem("USER_LOGIN_GMAIL_ACTION", "true");
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `<h1>Welcome ${arr[pos].firstName} ${arr[pos].lastName}</h1>`,
+              html: `<h3>Log In Successfully</h3>`,
+              showConfirmButton: false,
+              timer: 1600,
+            }).then(function () {
+              if (arr[pos].role.id == 1) {
+                navigate("/admin");
+              } else if (arr[pos].role.id == 2) {
+                navigate("/staff");
+              } else if (arr[pos].role.id == 3) {
+                navigate("/");
+              } else if (arr[pos].role.id == 4) {
+                navigate("/");
+              }
+            });
+          } else {
+            alert.alertFailedWithTime(
+              "Failed To Log In",
+              "This Email has not been registered",
+              3300,
+              "33",
+              () => {}
+            );
+          }
+        })
+        .catch((err) => {})
+        .finally(async () => {
+          await logOut();
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    document.querySelector("#google_button span").innerHTML =
+      "Log In With Gmail";
+  }, []);
 
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -93,7 +169,7 @@ export default function Login() {
               position: "center",
               icon: "success",
               title: `<h1>Welcome ${res.data.firstName} ${res.data.lastName}</h1>`,
-              html: ``,
+              html: `<h3>Log In Successfully</h3>`,
               showConfirmButton: false,
               timer: 1600,
             }).then(function () {
@@ -159,8 +235,8 @@ export default function Login() {
             Swal.fire({
               title: "Loading",
               html: "Please wait a few seconds...",
-              timer: 1500,
-              timerProgressBar: true,
+              timer: 10000,
+              timerProgressBar: false,
               didOpen: () => {
                 Swal.showLoading();
               },
@@ -266,8 +342,8 @@ export default function Login() {
             Swal.fire({
               title: "Loading",
               html: "Please wait a few seconds...",
-              timer: 1200,
-              timerProgressBar: true,
+              timer: 10000,
+              timerProgressBar: false,
               didOpen: () => {
                 Swal.showLoading();
               },
@@ -344,114 +420,137 @@ export default function Login() {
                 </div>
               </div>
               <div
-                className="form-container form-login-container flex justify-content-center"
+                className="form-container form-login-container flex justify-content-center row"
                 data-aos="fade-down-left"
                 data-aos-delay="50"
               >
-                <Form
-                  onFinish={formik.handleSubmit}
-                  {...formItemLayout}
-                  form={form}
-                  size="large"
-                  autoComplete="off"
-                >
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Phone Number:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="phoneNumber"
-                      // label="Phone Number"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Phone cannot be blank",
-                        },
-                        {
-                          message: "Phone must be 10-11 numbers",
-                          pattern: /^([0-9]{10,11})$/,
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        style={{ width: "100%" }}
+                <div className="col-11 flex justify-content-center">
+                  <Form
+                    onFinish={formik.handleSubmit}
+                    {...formItemLayout}
+                    form={form}
+                    size="large"
+                    autoComplete="off"
+                  >
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Phone Number:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
                         name="phoneNumber"
-                        value={formik.values.phoneNumber}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Phone Number"
-                      />
-                    </Form.Item>
-                  </div>
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Password:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="password"
-                      label=""
-                      rules={[
-                        {
-                          required: true,
-                          message: "Password cannot be blank",
-                        },
-                        {
-                          min: 6,
-                          message: "Password must be at least 6 characters",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input.Password
+                        // label="Phone Number"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Phone cannot be blank",
+                          },
+                          {
+                            message: "Phone must be 10-11 numbers",
+                            pattern: /^([0-9]{10,11})$/,
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Input
+                          style={{ width: "100%" }}
+                          name="phoneNumber"
+                          value={formik.values.phoneNumber}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Phone Number"
+                        />
+                      </Form.Item>
+                    </div>
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Password:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
                         name="password"
-                        type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Password"
-                      />
-                    </Form.Item>{" "}
-                  </div>
-                  <button
-                    className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Password cannot be blank",
+                          },
+                          {
+                            min: 6,
+                            message: "Password must be at least 6 characters",
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Input.Password
+                          name="password"
+                          type="password"
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Password"
+                        />
+                      </Form.Item>{" "}
+                    </div>
+                    <button
+                      className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg mt-3 pt-1"
-                    type="submit"
-                  >
-                    Log In
-                  </button>
-                  <div className="text-center mt-3">
-                    <span className="text-black" style={{ fontWeight: "500" }}>
-                      Forget Password?
-                    </span>{" "}
-                    <NavLink
-                      onClick={handleForgetPassword}
-                      className="mt-3 text-center text-decoration-none text-danger text-forget-password"
-                      style={{ fontWeight: "bolder" }}
+                      type="submit"
                     >
-                      Click here
-                    </NavLink>
-                  </div>
-                </Form>
+                      Log In
+                    </button>
+                    <div className="text-center mt-3">
+                      <span
+                        className="text-black"
+                        style={{ fontWeight: "500" }}
+                      >
+                        Forget Password?
+                      </span>{" "}
+                      <NavLink
+                        onClick={handleForgetPassword}
+                        className="mt-3 text-center text-decoration-none text-danger text-forget-password"
+                        style={{ fontWeight: "bolder" }}
+                      >
+                        Click here
+                      </NavLink>
+                    </div>
+                  </Form>
+                </div>
+                <h3
+                  className="text-center my-3"
+                  style={{
+                    fontWeight: "bolder",
+                  }}
+                >
+                  OR
+                </h3>
+                <div className="col-11 flex justify-content-center">
+                  <GoogleButton
+                    className="border-0 "
+                    id="google_button"
+                    style={{
+                      backgroundColor: "#000",
+                    }}
+                    onClick={handleGoogleSignIn}
+                  />
+                </div>
               </div>
             </div>
           </div>

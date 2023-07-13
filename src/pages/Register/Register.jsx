@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Register.scss";
 import Swal from "sweetalert2";
@@ -19,9 +19,13 @@ import FooterHome from "../../component/FooterHome/FooterHome";
 import TextArea from "antd/es/input/TextArea";
 import { alert } from "../../component/AlertComponent/Alert";
 import Aos from "aos";
+import GoogleButton from "react-google-button";
+import { UserAuth } from "../../constants/AuthContext";
 
 export default function Register() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
+  const [registerByEmail, setRegisterByEmail] = useState(false);
+  const [emailRegisterByEmail, setEmailRegisterByEmail] = useState("");
   let USER = {};
   USER = JSON.parse(USER_LOGIN);
   if (
@@ -57,7 +61,15 @@ export default function Register() {
   localStorage.setItem("MENU_ACTIVE", "/register");
   const location = useLocation();
   const redirect = new URLSearchParams(location.search).get("redirect");
+  const { googleSignIn, user, logOut } = UserAuth();
   const navigate = useNavigate();
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
@@ -68,16 +80,18 @@ export default function Register() {
   const handleRegister = (values) => {
     const roleId = 4;
     values = { ...values, roleId };
-    values.img = "female";
+    values.img =
+      "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--female.jpg?alt=media&token=f58778d6-9193-453b-93e4-ddbab5db5e37";
     if (values.gender) {
-      values.img = "male";
+      values.img =
+        "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112";
     }
     let timerInterval;
     Swal.fire({
-      title: "Loading...",
-      html: "Please wait a few seconds",
-      timer: 1600,
-      timerProgressBar: true,
+      title: "Loading",
+      html: "Please wait a few seconds...",
+      timer: 10000,
+      timerProgressBar: false,
       didOpen: () => {
         Swal.showLoading();
       },
@@ -138,6 +152,7 @@ export default function Register() {
         );
       });
   };
+
   const handleEnterVerifyCode = (values, validationCode, email, time) => {
     Swal.fire({
       title: `Verify your Account`,
@@ -225,10 +240,10 @@ export default function Register() {
   const handleVerifyEmail = (values) => {
     let timerInterval;
     Swal.fire({
-      title: "Loading...",
-      html: "Please wait a few seconds",
-      timer: 1800,
-      timerProgressBar: true,
+      title: "Loading",
+      html: "Please wait a few seconds...",
+      timer: 10000,
+      timerProgressBar: false,
       didOpen: () => {
         Swal.showLoading();
       },
@@ -259,9 +274,71 @@ export default function Register() {
     },
 
     onSubmit: async (values) => {
-      handleVerifyEmail(values);
+      if (registerByEmail) {
+        handleRegister(values);
+      } else {
+        handleVerifyEmail(values);
+      }
     },
   });
+
+  useEffect(() => {
+    if (user != null) {
+      setRegisterByEmail(false);
+      api
+        .get(`/Account/AccountList`)
+        .then((res) => {
+          let arr = [];
+          arr = res.data;
+          let pos = arr.findIndex(
+            (account) =>
+              account.email.trim().toString() == user.email.trim().toString() &&
+              !account.deleted
+          );
+          if (pos >= 0) {
+            alert.alertInfoNotiForTrainee(
+              "This Email has been already registered",
+              "",
+              3300,
+              "33",
+              () => {}
+            );
+          } else {
+            // let fullname = user.displayName.split(" ");
+            // let firstname = fullname[0];
+            // let lastname = "";
+            // for (let i = 1; i < fullname.length; i++) {
+            //   lastname += fullname[i];
+            // }
+            // document.querySelector("input#email").value = user.email;
+            // formik.setFieldValue("firstname", firstname);
+            // formik.setFieldValue("lastname", lastname);
+            // if (user.phoneNumber != null && user.phoneNumber != undefined) {
+            //   formik.setFieldValue("phoneNumber", user.phoneNumber);
+            // }
+            formik.setFieldValue("email", user.email);
+            setRegisterByEmail(true);
+            setEmailRegisterByEmail(user.email);
+            alert.alertSuccessWithTime(
+              "Verify Email Successfully",
+              "Please complete other informatio to finish your registration",
+              6000,
+              "38",
+              () => {}
+            );
+          }
+        })
+        .catch((err) => {})
+        .finally(async () => {
+          await logOut();
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    document.querySelector("#google_button span").innerHTML =
+      "Register With Gmail";
+  }, []);
 
   const handleChangeGender = (gender) => {
     formik.setFieldValue("gender", gender);
@@ -284,344 +361,362 @@ export default function Register() {
           <div className="inner-box inner-register flex align-items-center">
             <div className="container flex justify-content-center align-items-center">
               <div
-                className="form-container form-register-container flex justify-content-center"
+                className="row form-container form-register-container flex justify-content-center"
                 data-aos="fade-down-right"
                 data-aos-delay="50"
               >
-                <Form
-                  onFinish={formik.handleSubmit}
-                  {...formItemLayout}
-                  form={form}
-                  size="large"
-                  autoComplete="off"
-                >
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Firstname:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="firstname"
-                      label=""
-                      rules={[
-                        {
-                          required: true,
-                          message: "Firstname cannot be blank",
-                        },
-                        {
-                          message: "Firstname is not in correct form",
-                          pattern:
-                            /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
-                        },
-                        // { min: 3, message: '' },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
+                <div className="col-11 flex justify-content-center">
+                  <Form
+                    onFinish={formik.handleSubmit}
+                    {...formItemLayout}
+                    form={form}
+                    size="large"
+                    autoComplete="off"
+                  >
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Firstname:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
                         name="firstname"
-                        value={formik.values.firstname}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Firstname"
-                      />
-                    </Form.Item>
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Lastname:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="lastname"
-                      label=""
-                      rules={[
-                        {
-                          required: true,
-                          message: "Lastname cannot be blank",
-                        },
-                        {
-                          message: "Lastname is not in correct form",
-                          pattern:
-                            /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
-                        },
-                        // { min: 3, message: '' },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        name="lastname"
-                        value={formik.values.lastname}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Lastname"
-                      />
-                    </Form.Item>{" "}
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Phone Number:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="phoneNumber"
-                      label=""
-                      rules={[
-                        // {
-                        //   required: true,
-                        //   message: "Phone Number cannot be blank",
-                        // },
-                        // {
-                        //   message: "Phone is not in correct form",
-                        //   pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
-                        // },
-                        // { min: 10, message: "Phone must be 10-11 numbers" },
-                        // {
-                        //   max: 11,
-                        //   message: "Phone must be 10-11 numbers",
-                        // },
-                        {
-                          message: "Phone must be 10-11 numbers",
-                          pattern: /^([0-9]{10,11})$/,
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        style={{ width: "100%" }}
-                        name="phoneNumber"
-                        value={formik.values.phoneNumber}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Phone Number"
-                      />
-                    </Form.Item>
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Email:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="email"
-                      label=""
-                      rules={[
-                        {
-                          required: true,
-                          message: "Email cannot be blank",
-                        },
-                        {
-                          type: "email",
-                          message: "Email is not in correct form",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        name="email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Email"
-                      />
-                    </Form.Item>
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Password:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="password"
-                      label=""
-                      rules={[
-                        {
-                          required: true,
-                          message: "Password cannot be blank",
-                        },
-                        {
-                          min: 6,
-                          message: "Password is at least 6 characters",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input.Password
-                        name="password"
-                        type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Password"
-                      />
-                    </Form.Item>{" "}
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Confirm Password:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="confirm_password"
-                      label=""
-                      dependencies={["password"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Confirm Password cannot be blank",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (!value || getFieldValue("password") === value) {
-                              return Promise.resolve();
-                            }
-                            return Promise.reject(
-                              "Confirm Password does not match"
-                            );
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Firstname cannot be blank",
                           },
-                        }),
-                      ]}
-                      hasFeedback
-                    >
-                      <Input.Password
-                        name="confirm_password"
-                        type="password"
-                        placeholder="Enter Password Again"
-                      />
-                    </Form.Item>
-                  </div>
-
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1">
-                        <i
-                          className="fa-solid fa-star-of-life text-danger"
-                          style={{
-                            fontSize: "6px",
-                            verticalAlign: "middle",
-                          }}
-                        ></i>{" "}
-                      </span>
-                      <span>Gender:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      label=""
-                      name="gender"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Gender must be selected",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Select
-                        name="gender"
-                        width="200px"
-                        placeholder="Select Gender"
-                        value={formik.values.gender}
-                        onChange={handleChangeGender}
+                          {
+                            message: "Firstname is not in correct form",
+                            pattern:
+                              /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
+                          },
+                          // { min: 3, message: '' },
+                        ]}
+                        hasFeedback
                       >
-                        <Select.Option value={true}>Male</Select.Option>
-                        <Select.Option value={false}>Female</Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </div>
+                        <Input
+                          name="firstname"
+                          value={formik.values.firstname}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Firstname"
+                        />
+                      </Form.Item>
+                    </div>
 
-                  <div className="flex row align-items-start justify-content-between">
-                    <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
-                      <span className="text-danger px-1"></span>
-                      <span>Address:</span>
-                    </p>
-                    <Form.Item
-                      className="mx-0 px-0 col-sm-12 col-md-7"
-                      name="address"
-                      label=""
-                      rules={[
-                        {
-                          required: false,
-                        },
-                        {
-                          pattern: /^(([]{0,0})|([\w]{1,1}[\w\s,]{0,}))$/,
-                          message: "Address is not in correct form",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <TextArea
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Lastname:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        name="lastname"
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Lastname cannot be blank",
+                          },
+                          {
+                            message: "Lastname is not in correct form",
+                            pattern:
+                              /^(([\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{0,}[\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,})|([\S^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,1}))$/,
+                          },
+                          // { min: 3, message: '' },
+                        ]}
+                        hasFeedback
+                      >
+                        <Input
+                          name="lastname"
+                          value={formik.values.lastname}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Lastname"
+                        />
+                      </Form.Item>{" "}
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5  p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Phone Number:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        name="phoneNumber"
+                        label=""
+                        rules={[
+                          // {
+                          //   required: true,
+                          //   message: "Phone Number cannot be blank",
+                          // },
+                          // {
+                          //   message: "Phone is not in correct form",
+                          //   pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
+                          // },
+                          // { min: 10, message: "Phone must be 10-11 numbers" },
+                          // {
+                          //   max: 11,
+                          //   message: "Phone must be 10-11 numbers",
+                          // },
+                          {
+                            message: "Phone must be 10-11 numbers",
+                            pattern: /^([0-9]{10,11})$/,
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Input
+                          style={{ width: "100%" }}
+                          name="phoneNumber"
+                          value={formik.values.phoneNumber}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Phone Number"
+                        />
+                      </Form.Item>
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Email:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        name="email"
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Email cannot be blank",
+                          },
+                          {
+                            type: "email",
+                            message: "Email is not in correct form",
+                          },
+                        ]}
+                        style={{
+                          display: `${registerByEmail ? "none" : ""}`,
+                        }}
+                        hasFeedback
+                      >
+                        <Input
+                          name="email"
+                          value={formik.values.email}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Email"
+                        />
+                      </Form.Item>
+                      <p
+                        className="p-0 m-0 col-sm-12 col-md-7 mb-4"
+                        style={{
+                          display: `${!registerByEmail ? "none" : ""}`,
+                          transform: "translateY(5px)",
+                        }}
+                      >
+                        {emailRegisterByEmail}
+                      </p>
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Password:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        name="password"
+                        label=""
+                        rules={[
+                          {
+                            required: true,
+                            message: "Password cannot be blank",
+                          },
+                          {
+                            min: 6,
+                            message: "Password is at least 6 characters",
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Input.Password
+                          name="password"
+                          type="password"
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Password"
+                        />
+                      </Form.Item>{" "}
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Confirm Password:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        name="confirm_password"
+                        label=""
+                        dependencies={["password"]}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Confirm Password cannot be blank",
+                          },
+                          ({ getFieldValue }) => ({
+                            validator(_, value) {
+                              if (
+                                !value ||
+                                getFieldValue("password") === value
+                              ) {
+                                return Promise.resolve();
+                              }
+                              return Promise.reject(
+                                "Confirm Password does not match"
+                              );
+                            },
+                          }),
+                        ]}
+                        hasFeedback
+                      >
+                        <Input.Password
+                          name="confirm_password"
+                          type="password"
+                          placeholder="Enter Password Again"
+                        />
+                      </Form.Item>
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1">
+                          <i
+                            className="fa-solid fa-star-of-life text-danger"
+                            style={{
+                              fontSize: "6px",
+                              verticalAlign: "middle",
+                            }}
+                          ></i>{" "}
+                        </span>
+                        <span>Gender:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
+                        label=""
+                        name="gender"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Gender must be selected",
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <Select
+                          name="gender"
+                          width="200px"
+                          placeholder="Select Gender"
+                          value={formik.values.gender}
+                          onChange={handleChangeGender}
+                        >
+                          <Select.Option value={true}>Male</Select.Option>
+                          <Select.Option value={false}>Female</Select.Option>
+                        </Select>
+                      </Form.Item>
+                    </div>
+
+                    <div className="flex row align-items-start justify-content-between">
+                      <p className="col-sm-12 col-md-5 p-0 m-0 px-2 pt-2 flex">
+                        <span className="text-danger px-1"></span>
+                        <span>Address:</span>
+                      </p>
+                      <Form.Item
+                        className="mx-0 px-0 col-sm-12 col-md-7"
                         name="address"
-                        value={formik.values.address}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Address (Optional)"
-                      />
-                    </Form.Item>
-                  </div>
+                        label=""
+                        rules={[
+                          {
+                            required: false,
+                          },
+                          {
+                            pattern: /^(([]{0,0})|([\w]{1,1}[\w\s,]{0,}))$/,
+                            message: "Address is not in correct form",
+                          },
+                        ]}
+                        hasFeedback
+                      >
+                        <TextArea
+                          name="address"
+                          value={formik.values.address}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Address (Optional)"
+                        />
+                      </Form.Item>
+                    </div>
 
-                  <Form.Item className="text-center">
-                    <button
-                      className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
+                    <Form.Item className="text-center">
+                      <button
+                        className="bg-green-500 text-gray-100 text-xl p-2 w-96 rounded-full tracking-wide
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg"
-                      type="submit"
-                    >
-                      Register
-                    </button>
-                  </Form.Item>
-                </Form>
+                        type="submit"
+                        onClick={formik.handleSubmit}
+                      >
+                        Register
+                      </button>
+                    </Form.Item>
+                  </Form>
+                </div>
               </div>
               <div
                 className="videoDiv d-none d-lg-flex d-md-none d-sm-none"
@@ -638,6 +733,24 @@ export default function Register() {
                 </div>
 
                 <div className="footerDiv flex">
+                  <div
+                    className=" flex justify-content-center w-100"
+                    style={{
+                      position: "absolute",
+                      left: "0",
+                    }}
+                  >
+                    <GoogleButton
+                      className="border-0 "
+                      id="google_button"
+                      style={{
+                        backgroundColor: "#000",
+                        transform: "translateY(-65px)",
+                        width: "100%",
+                      }}
+                      onClick={handleGoogleSignIn}
+                    />
+                  </div>
                   <span className="text">Already have an account?</span>
                   <NavLink to={"/login"}>
                     <button className="btn flex">Log In</button>

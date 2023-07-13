@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import user from "../../../assets/images/user.jpg";
 import maleImg from "../../../assets/images/avt-male.jpg";
@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 export default function HeaderAdmin({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
+  const [img, setImg] = useState("");
   const navigate = useNavigate();
+
   return (
     <section className="headerdb bg-black border-0 p-0">
       <div className="logo mt-2">
