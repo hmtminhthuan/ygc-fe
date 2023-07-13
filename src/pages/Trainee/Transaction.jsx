@@ -545,13 +545,14 @@ export default function Transaction() {
         >
           <section class="staff-list-area p-0 mt-2 px-4 history-responsive">
             <table
+              className="responsive-font"
               data-aos="zoom-in"
               data-aos-duration="300"
               data-aos-delay="1100"
             >
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left" }}>No.</th>
+                  <th style={{ textAlign: "left" }}>ID</th>
                   <th style={{ textAlign: "left" }}>Course</th>
                   <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
                   <th style={{ textAlign: "center" }}>Status</th>
@@ -604,7 +605,11 @@ export default function Transaction() {
                           data-aos-delay="0"
                           data-aos-offset="0"
                         >
-                          <td style={{ textAlign: "left" }}>{index + 1}</td>
+                          <td style={{ textAlign: "left" }}>
+                            B{id.toString().length == 1 ? "00" : <></>}
+                            {id.toString().length == 2 ? "0" : ""}
+                            {id}
+                          </td>
                           <td style={{ textAlign: "left" }}>
                             {course.courseName}
                           </td>

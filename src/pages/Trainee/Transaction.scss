@@ -10,3 +10,9 @@
     padding-right: 80px !important;
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .responsive-font {
+    font-size: 13px !important;
+  }
+}

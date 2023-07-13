@@ -57,6 +57,7 @@ export default function AdminSetting() {
         activeValue: settingDetail.activeValue,
         activeDate: settingDetail.activeDate,
         preactiveValue: settingDetail.preactiveValue,
+        activeMinute: 0,
       });
     }
   }, [id, updateDone]);
@@ -67,17 +68,21 @@ export default function AdminSetting() {
       activeValue: "",
       activeDate: "",
       preactiveValue: "",
+      activeMinute: 0,
     },
     onSubmit: (values) => {
       const formattedDate =
         moment(new Date(values.activeDate)).format("YYYY-MM-DDTHH:mm:ss.SSS") +
         "Z";
-
+      if (navigation == 1 || navigation == 2) {
+        values.activeValue =
+          parseFloat(values.activeValue) + parseFloat(values.activeMinute) / 60;
+      }
       api
         .post("/api/AdminRepositoryAPI/UpdateSetting", [
           {
-            id: values.id,
-            activeValue: values.activeValue,
+            id: parseInt(values.id),
+            activeValue: parseFloat(values.activeValue),
             activeDate: formattedDate,
           },
         ])
@@ -124,7 +129,7 @@ export default function AdminSetting() {
               </h2>
               <div className="card overflow-hidden">
                 <div className="row no-gutters row-bordered row-border-light">
-                  <div className="col-md-4 pt-0">
+                  <div className="col-md-3 pt-0">
                     <div className="list-group list-group-flush account-settings-links">
                       {menuSetting.map((setting) => (
                         <NavLink
@@ -145,10 +150,10 @@ export default function AdminSetting() {
                           style={{ cursor: "pointer" }}
                         >
                           {parseInt(setting.id) == 1
-                            ? "Paying Time (hour)"
+                            ? "Paying Time (hour : minute)"
                             : ""}
                           {parseInt(setting.id) == 2
-                            ? "Refund Time (hour)"
+                            ? "Refund Time (hour : minute)"
                             : ""}
                           {parseInt(setting.id) == 3
                             ? "Minimum trainee per class (trainee)"
@@ -160,7 +165,7 @@ export default function AdminSetting() {
                       ))}
                     </div>
                   </div>
-                  <div className="col-md-8">
+                  <div className="col-md-9">
                     <div className="tab-content">
                       <div
                         className={`tab-pane fade active show ${
@@ -179,7 +184,7 @@ export default function AdminSetting() {
                           <div className="card-body row mx-4">
                             <div className="form-group col-md-12">
                               <div className="row flex align-items-start justify-content-between">
-                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <p className="col-5 p-0 m-0 px-3 mt-2 flex">
                                   <span className="text-danger px-1">
                                     <i
                                       className="fa-solid fa-star-of-life"
@@ -192,7 +197,7 @@ export default function AdminSetting() {
                                   <span>Active Date:</span>
                                 </p>
 
-                                <div className="col-8">
+                                <div className="col-7">
                                   <Form.Item
                                     name="activeDate"
                                     label=""
@@ -228,7 +233,7 @@ export default function AdminSetting() {
                               <div className="row flex align-items-start justify-content-between">
                                 {/* Other form elements */}
 
-                                <div className="col-8">
+                                <div className="col-7">
                                   <Form.Item
                                     name="id"
                                     label=""
@@ -244,7 +249,7 @@ export default function AdminSetting() {
 
                             <div className="form-group col-md-12">
                               <div className="row flex align-items-start justify-content-between">
-                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <p className="col-5 p-0 m-0 px-3 mt-2 flex">
                                   <span className="text-danger px-1">
                                     <i
                                       className="fa-solid fa-star-of-life"
@@ -257,7 +262,7 @@ export default function AdminSetting() {
                                   <span>
                                     Active Value
                                     {navigation == 1 || navigation == 2
-                                      ? ` (hour)`
+                                      ? ` (hour : minute)`
                                       : ``}
                                     {navigation == 3 || navigation == 4
                                       ? ` (trainee)`
@@ -266,32 +271,69 @@ export default function AdminSetting() {
                                   </span>
                                 </p>
 
-                                <div className="col-8">
+                                <div className="col-7">
                                   <Form.Item
                                     name="activeValue"
                                     label=""
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: "Active value cannot be blank",
-                                      },
-                                      {
-                                        pattern:
-                                          /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
-                                        message:
-                                          "Active value must be a positive number",
-                                      },
-                                    ]}
+                                    rules={
+                                      [
+                                        // {
+                                        //   required: true,
+                                        //   message: "Active value cannot be blank",
+                                        // },
+                                        // {
+                                        //   pattern:
+                                        //     /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/,
+                                        //   message:
+                                        //     "Active value must be a positive number",
+                                        // },
+                                      ]
+                                    }
                                     initialValue={initialValues.activeValue}
                                     hasFeedback
                                   >
-                                    <InputNumber
-                                      style={{ width: "100%" }}
-                                      name="activeValue"
-                                      value={formik.values.activeValue}
-                                      onChange={handleChangeActiveValue}
-                                      placeholder="Enter new value"
-                                    />
+                                    {navigation == 1 || navigation == 2 ? (
+                                      <>
+                                        <InputNumber
+                                          style={{ width: "48%" }}
+                                          name="activeValue"
+                                          value={formik.values.activeValue}
+                                          onChange={handleChangeActiveValue}
+                                          placeholder="Enter hour"
+                                        />
+                                        <p
+                                          className="m-0 p-0 text-center"
+                                          style={{
+                                            width: "4%",
+                                            display: "inline-block",
+                                            transform: "translateY(5px)",
+                                          }}
+                                        >
+                                          {" "}
+                                          :{" "}
+                                        </p>
+                                        <InputNumber
+                                          style={{ width: "48%" }}
+                                          name="activeMinute"
+                                          value={formik.values.activeMinute}
+                                          onChange={(value) => {
+                                            formik.setFieldValue(
+                                              "activeMinute",
+                                              value
+                                            );
+                                          }}
+                                          placeholder="Enter minute"
+                                        />
+                                      </>
+                                    ) : (
+                                      <InputNumber
+                                        style={{ width: "48%" }}
+                                        name="activeValue"
+                                        value={formik.values.activeValue}
+                                        onChange={handleChangeActiveValue}
+                                        placeholder="Enter new value"
+                                      />
+                                    )}
                                   </Form.Item>
                                 </div>
                               </div>
@@ -299,12 +341,12 @@ export default function AdminSetting() {
 
                             <div className="form-group col-md-12">
                               <div className="row flex align-items-start justify-content-between">
-                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <p className="col-5 p-0 m-0 px-3 mt-2 flex">
                                   <span className="text-danger px-1"></span>
                                   <span>Last Update:</span>
                                 </p>
 
-                                <div className="col-8">
+                                <div className="col-7">
                                   <Form.Item
                                     name="activeDate"
                                     label=""
@@ -319,12 +361,12 @@ export default function AdminSetting() {
 
                             <div className="form-group col-md-12">
                               <div className="row flex align-items-start justify-content-between">
-                                <p className="col-4 p-0 m-0 px-3 mt-2 flex">
+                                <p className="col-5 p-0 m-0 px-3 mt-2 flex">
                                   <span className="text-danger px-1"></span>
                                   <span>
                                     Current Value
                                     {navigation == 1 || navigation == 2
-                                      ? ` (hour)`
+                                      ? ` (hour : minute)`
                                       : ``}
                                     {navigation == 3 || navigation == 4
                                       ? ` (trainee)`
@@ -333,14 +375,42 @@ export default function AdminSetting() {
                                   </span>
                                 </p>
 
-                                <div className="col-8">
+                                <div className="col-7">
                                   <Form.Item
                                     name="preactiveValue"
                                     label=""
                                     initialValue={initialValues.preactiveValue}
                                     hasFeedback
                                   >
-                                    <p>{preactiveValue}</p>
+                                    <p>
+                                      {navigation == 1 || navigation == 2 ? (
+                                        <>
+                                          {Math.floor(preactiveValue) < 10
+                                            ? `0${Math.floor(preactiveValue)}`
+                                            : `${Math.floor(
+                                                preactiveValue
+                                              )}`}{" "}
+                                          :{" "}
+                                          {Math.floor(
+                                            (preactiveValue -
+                                              Math.floor(preactiveValue)) *
+                                              60
+                                          ) < 10
+                                            ? `0${Math.floor(
+                                                (preactiveValue -
+                                                  Math.floor(preactiveValue)) *
+                                                  60
+                                              )}`
+                                            : `${Math.floor(
+                                                (preactiveValue -
+                                                  Math.floor(preactiveValue)) *
+                                                  60
+                                              )}`}
+                                        </>
+                                      ) : (
+                                        <>{preactiveValue}</>
+                                      )}
+                                    </p>
                                   </Form.Item>
                                 </div>
                                 <button type="submit" className="mx-3">

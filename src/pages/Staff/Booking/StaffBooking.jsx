@@ -335,7 +335,7 @@ export default function StaffBooking() {
       <section className="main bg-white" id="">
         <MenuStaff />
         <div className="main--content bg-white">
-          <section className="staff-list-area p-0 mt-2 px-4">
+          <section className="staff-list-area staff-booking-area p-0 mt-2 px-3">
             <div className="px-3 staff-booking-navigation">
               <button
                 className={`px-2 pt-1 admin-course-list staff-booking-navigation-item-normal
@@ -443,7 +443,7 @@ export default function StaffBooking() {
             >
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left" }}>No.</th>
+                  <th style={{ textAlign: "left" }}>ID</th>
                   <th style={{ textAlign: "left" }}>
                     <div className="flex">
                       Name
@@ -563,10 +563,21 @@ export default function StaffBooking() {
                   </th>
                   <th style={{ textAlign: "left" }}>Course</th>
                   <th style={{ textAlign: "right" }}>{`Amount (VND)`}</th>
-                  <th style={{ textAlign: "center" }}>Booking Time</th>
+                  {navigation == 1 || navigation == 4 ? (
+                    <></>
+                  ) : (
+                    <th style={{ textAlign: "center" }}>Booking Time</th>
+                  )}
                   {navigation == 1 ? (
                     <>
                       <th style={{ textAlign: "center" }}>Payment Time</th>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {navigation == 1 || navigation == 4 ? (
+                    <>
+                      <th style={{ textAlign: "center" }}>Method</th>
                     </>
                   ) : (
                     <></>
@@ -769,7 +780,9 @@ export default function StaffBooking() {
                                 : ""
                             }`}
                           >
-                            {index + 1}
+                            B{id.toString().length == 1 ? "00" : <></>}
+                            {id.toString().length == 2 ? "0" : ""}
+                            {id}
                           </td>
                           <td
                             style={{ textAlign: "left" }}
@@ -781,20 +794,30 @@ export default function StaffBooking() {
                           <td style={{ textAlign: "right" }}>
                             {formatPrice(amount)}
                           </td>
-                          <td style={{ textAlign: "center" }}>
-                            <div className="p-0 m-0 flex-column">
-                              <p className="p-0 m-0">
-                                {styleDateAndTime(bookingDate)
-                                  .split(",")[0]
-                                  .trim()}
-                              </p>
-                              <p className="p-0 m-0">
-                                {styleDateAndTime(bookingDate)
-                                  .split(",")[1]
-                                  .trim()}
-                              </p>
-                            </div>
-                          </td>
+
+                          {navigation == 1 || navigation == 4 ? (
+                            <></>
+                          ) : (
+                            <td
+                              style={{
+                                textAlign: "center",
+                              }}
+                            >
+                              <div className="p-0 m-0 flex-column">
+                                <p className="p-0 m-0">
+                                  {styleDateAndTime(bookingDate)
+                                    .split(",")[0]
+                                    .trim()}
+                                </p>
+                                <p className="p-0 m-0">
+                                  {styleDateAndTime(bookingDate)
+                                    .split(",")[1]
+                                    .trim()}
+                                </p>
+                              </div>
+                            </td>
+                          )}
+
                           {navigation == 5 ? (
                             <>
                               {payingTime >= 0 ? (
@@ -865,6 +888,35 @@ export default function StaffBooking() {
                           ) : (
                             <></>
                           )}
+
+                          {/* Payment Method  */}
+                          {status == 1 ||
+                          status == 6 ||
+                          ((status == 3 || status == 4) && id % 3 != 0) ? (
+                            <td style={{ textAlign: "center" }}>VNPAY</td>
+                          ) : (
+                            <></>
+                          )}
+                          {status == 8 ||
+                          status == 9 ||
+                          ((status == 3 || status == 4) && id % 3 == 0) ? (
+                            <td style={{ textAlign: "center" }}>ATM</td>
+                          ) : (
+                            <></>
+                          )}
+
+                          {/* {navigation == 1 || navigation == 4 ? (
+                            <td style={{ textAlign: "center" }}>
+                              {status == 1 || status == 6 ? (
+                                <>"VNPAY"</>
+                              ) : (
+                                <></>
+                              )}
+                              {status == 8 || status == 7 ? <>"ATM"</> : <></>}
+                            </td>
+                          ) : (
+                            <></>
+                          )} */}
 
                           {navigation == 4 ? (
                             <td style={{ textAlign: "center" }}>
