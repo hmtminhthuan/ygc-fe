@@ -751,8 +751,10 @@ export default function Register() {
                       onClick={handleGoogleSignIn}
                     />
                   </div>
-                  <span className="text">Already have an account?</span>
-                  <NavLink to={"/login"}>
+                  <span className="text" style={{ zIndex: "999" }}>
+                    Already have an account?
+                  </span>
+                  <NavLink to={"/login"} style={{ zIndex: "999" }}>
                     <button className="btn flex">Log In</button>
                   </NavLink>
                 </div>

@@ -47,13 +47,14 @@ video {
 }
 #google_button:hover {
   background-color: #d291bf !important;
-  box-shadow: none !important;
   color: #000 !important;
+  box-shadow: none !important;
   transition: all ease 0.3s;
 }
 #google_button {
   background-color: #000 !important;
   box-shadow: none !important;
+  font-weight: bolder;
   transition: all ease 0.3s;
   div {
     transform: scaleX(1.08) scaleY(1.055) !important;
@@ -218,7 +219,7 @@ label {
         transition: 0.3s ease;
 
         &:hover {
-          background: var(--hoverColor);
+          background-color: #d291bf;
           color: var(--blackColor);
         }
       }
