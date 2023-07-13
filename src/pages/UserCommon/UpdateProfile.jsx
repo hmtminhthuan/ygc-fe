@@ -82,7 +82,10 @@ export default function UpdateProfile() {
         listAll(imageListRef).then((response) => {
           response.items.forEach((item) => {
             getDownloadURL(item).then((url) => {
-              if (url.includes(`--userImage--${id}`) && url != res.data.img) {
+              if (
+                url.includes(`--userImage--${id.toString()}`) &&
+                url != res.data.img
+              ) {
                 setOldAvatarList((prev) => [...prev, url]);
               }
             });
@@ -90,8 +93,24 @@ export default function UpdateProfile() {
         });
       })
       .catch((err) => {});
+    // api.get(`/Account/AccountList`).then((res) => {
+    //   res.data.forEach((account) => {
+    //     const img = account.gender
+    //       ? "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112"
+    //       : "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--female.jpg?alt=media&token=f58778d6-9193-453b-93e4-ddbab5db5e37";
+    //     api
+    //       .put(`/Account/UpdateAccount?id=${account.accountID}`, {
+    //         firstname: account.firstName,
+    //         lastname: account.lastName,
+    //         phoneNumber: account.phoneNumber,
+    //         address: account.address,
+    //         img: img,
+    //       })
+    //       .then((res) => {});
+    //   });
+    // });
   }, [updateDone]);
-
+  console.log(oldAvatarList);
   const handleUpdateAccount = (values) => {
     api
       .put(`/Account/UpdateAccount?id=${profile.id}`, values)
@@ -331,8 +350,9 @@ export default function UpdateProfile() {
                         onClick={() => {
                           if (oldAvatarList.length > 0) {
                             Swal.fire({
-                              title: `<h1 style="color: #d291bc;">Change Avatar</h1>`,
+                              title: ``,
                               html: `
+                              <h3 style="color: #d291bc;">Upload Your New Photo</h3>
                             <div style="text-algin:center; display:flex; justify-content:center">
                             <p
                             id="upload-photo-button"
@@ -344,11 +364,11 @@ export default function UpdateProfile() {
                           border-radius: 20px;
                           color: #fff;
                           background-color: #000;
-                          padding: 5px 10px;">Upload Photo</p></div>
+                          padding: 5px 10px;">Upload New Photo</p></div>
                           <b>- - - OR - - -</b><br>
                               <div id="old_photo_container"  style="margin-top:10px; width: 100%">
-                                <h5>Choose Your Old Photo</h5>
-                                <div id="old-photo-area" style="display:flex; justify-content:space-between;
+                              <h3 style="color: #d291bc;">Choose Your Old Photo</h3>
+                                <div id="old-photo-area" style="display:flex; justify-content:start;
                                 flex-wrap: nowrap; gap: 10px"></div>
                               </div>
                           `,

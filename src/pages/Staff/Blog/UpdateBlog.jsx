@@ -67,34 +67,54 @@ export default function UpdateBlog() {
       img: "",
     },
     onSubmit: (values) => {
-      const imageRef = ref(
-        storage,
-        `blogImages/${"--blogImage--" + id + "--" + imageUpload.name + v4()}`
-      );
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            values.img = url;
+      if (previewImg == currentImg) {
+        values.img = currentImg;
+        api
+          .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
+          .then((res) => {
+            alert.alertSuccessWithTime(
+              "Update Blog Successfully",
+              "",
+              2000,
+              "30",
+              () => {
+                navigate("/staff/blogManagement");
+              }
+            );
           })
-          .finally(() => {
-            api
-              .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
-              .then((res) => {
-                alert.alertSuccessWithTime(
-                  "Update Blog Successfully",
-                  "",
-                  2000,
-                  "30",
-                  () => {
-                    navigate("/staff/blogManagement");
-                  }
-                );
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+          .catch((err) => {
+            console.log(err);
           });
-      });
+      } else {
+        const imageRef = ref(
+          storage,
+          `blogImages/${"--blogImage--" + id + "--" + imageUpload.name + v4()}`
+        );
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              values.img = url;
+            })
+            .finally(() => {
+              api
+                .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
+                .then((res) => {
+                  alert.alertSuccessWithTime(
+                    "Update Blog Successfully",
+                    "",
+                    2000,
+                    "30",
+                    () => {
+                      navigate("/staff/blogManagement");
+                    }
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            });
+        });
+      }
     },
   });
 

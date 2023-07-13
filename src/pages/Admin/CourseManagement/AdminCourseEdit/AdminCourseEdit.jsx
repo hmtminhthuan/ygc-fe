@@ -64,39 +64,58 @@ export default function AdminCourseEdit() {
       }).then((result) => {
         if (result.isDenied === true || result.isDismissed === true) {
         } else if (result.isConfirmed === true) {
-          const imageRef = ref(
-            storage,
-            `courseImages/${
-              "--courseImage--" +
-              editedCourse.courseID +
-              "--" +
-              imageUpload.name +
-              v4()
-            }`
-          );
-          uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref)
-              .then((url) => {
-                values.img = url;
+          if (previewImg == currentImg) {
+            values.img = currentImg;
+            api
+              .put(
+                `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
+                values
+              )
+              .then((res) => {
+                alert.alertSuccessWithTime(
+                  "Edit Course Successfully",
+                  "",
+                  2000,
+                  "25",
+                  () => {}
+                );
               })
-              .finally(() => {
-                api
-                  .put(
-                    `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
-                    values
-                  )
-                  .then((res) => {
-                    alert.alertSuccessWithTime(
-                      "Edit Course Successfully",
-                      "",
-                      2000,
-                      "25",
-                      () => {}
-                    );
-                  })
-                  .catch((err) => {});
-              });
-          });
+              .catch((err) => {});
+          } else {
+            const imageRef = ref(
+              storage,
+              `courseImages/${
+                "--courseImage--" +
+                editedCourse.courseID +
+                "--" +
+                imageUpload.name +
+                v4()
+              }`
+            );
+            uploadBytes(imageRef, imageUpload).then((snapshot) => {
+              getDownloadURL(snapshot.ref)
+                .then((url) => {
+                  values.img = url;
+                })
+                .finally(() => {
+                  api
+                    .put(
+                      `/Course/UpdateCourse?Courseid=${editedCourse.courseID}`,
+                      values
+                    )
+                    .then((res) => {
+                      alert.alertSuccessWithTime(
+                        "Edit Course Successfully",
+                        "",
+                        2000,
+                        "25",
+                        () => {}
+                      );
+                    })
+                    .catch((err) => {});
+                });
+            });
+          }
         }
       });
     },
