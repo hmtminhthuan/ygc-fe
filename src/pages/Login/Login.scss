@@ -50,6 +50,9 @@ video {
   color: #000 !important;
   box-shadow: none !important;
   transition: all ease 0.3s;
+  div {
+    box-shadow: 1px 1px 2px 1px #d291bf;
+  }
 }
 #google_button {
   background-color: #000 !important;
@@ -57,8 +60,15 @@ video {
   font-weight: bolder;
   transition: all ease 0.3s;
   div {
-    transform: scaleX(1.08) scaleY(1.055) !important;
+    transform: scaleX(1.05) scaleY(1) !important;
+    border-top-left-radius: 50px !important;
+    border-bottom-left-radius: 50px !important;
+    box-shadow: 1px 1px 2px 1px #000;
   }
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+  border-top-right-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
 }
 .container .heading h2 {
   font-size: 2.1rem;

@@ -471,10 +471,10 @@ export default function Register() {
                         name="phoneNumber"
                         label=""
                         rules={[
-                          // {
-                          //   required: true,
-                          //   message: "Phone Number cannot be blank",
-                          // },
+                          {
+                            required: true,
+                            message: "Phone Number cannot be blank",
+                          },
                           // {
                           //   message: "Phone is not in correct form",
                           //   pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
@@ -528,9 +528,11 @@ export default function Register() {
                             message: "Email is not in correct form",
                           },
                         ]}
-                        style={{
-                          display: `${registerByEmail ? "none" : ""}`,
-                        }}
+                        style={
+                          {
+                            // display: `${registerByEmail ? "none" : ""}`,
+                          }
+                        }
                         hasFeedback
                       >
                         <Input
@@ -710,7 +712,11 @@ export default function Register() {
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg"
                         type="submit"
-                        onClick={formik.handleSubmit}
+                        onClick={() => {
+                          if (registerByEmail) {
+                            formik.handleSubmit();
+                          }
+                        }}
                       >
                         Register
                       </button>

@@ -130,6 +130,31 @@ export default function MenuStaff() {
             <span className="sidebar--item">Class</span>
           </NavLink>
         </li>
+
+        <li>
+          <NavLink
+            className={`${
+              menu_active != null && menu_active == "/staff/timetable"
+                ? "sidebar--items--active"
+                : ""
+            }`}
+            onClick={() => {
+              navigateTo("/staff/timetable");
+            }}
+            to="/staff/timetable"
+          >
+            <span className="icon" style={{ color: "greenyellow" }}>
+              <i className="fa-solid fa-calendar-days"></i>
+            </span>
+            <span
+              className="sidebar--item"
+              style={{ transform: "translateX(4px)" }}
+            >
+              Timetable
+            </span>
+          </NavLink>
+        </li>
+
         <li>
           <NavLink
             className={`${
@@ -171,6 +196,7 @@ export default function MenuStaff() {
             <span className="sidebar--item">Blog</span>
           </NavLink>
         </li>
+
         <li>
           <NavLink
             className={`${
@@ -190,13 +216,13 @@ export default function MenuStaff() {
               className="sidebar--item"
               style={{ transform: "translateX(-4px)" }}
             >
-              Booking
+              Request
             </span>
           </NavLink>
         </li>
       </ul>
       <ul className="sidebar--bottom-items">
-        <li>
+        {/* <li>
           <NavLink
             to="/"
             onClick={() => {
@@ -209,7 +235,7 @@ export default function MenuStaff() {
             </span>
             <span className="sidebar--item">Home</span>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             to={`/profile`}

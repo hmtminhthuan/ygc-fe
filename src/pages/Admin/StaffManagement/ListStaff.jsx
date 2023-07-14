@@ -204,6 +204,7 @@ export default function ListStaff() {
               <table style={{ fontSize: "13px" }}>
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>
@@ -432,6 +433,7 @@ export default function ListStaff() {
                     })
                     .map((staff) => (
                       <tr key={staff.accountID}>
+                        <td>{`${staff.accountID}`}</td>
                         <td>{`${staff.firstName}`}</td>
                         <td>{`${staff.lastName}`}</td>
                         <td>{`${staff.gender ? "Male" : "Female"}`}</td>

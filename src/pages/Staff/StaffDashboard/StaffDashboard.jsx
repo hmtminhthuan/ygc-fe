@@ -174,6 +174,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
+
               <div className="trainers">
                 <div className="title">
                   <h2 className="section--title">Trainers</h2>
@@ -269,7 +270,7 @@ export default function Dashboard() {
                       <tr>
                         <th style={{ textAlign: "left" }}>Name</th>
                         <th style={{ textAlign: "left" }}>Phone</th>
-                        <th style={{ textAlign: "left" }}>Gender</th>
+                        <th style={{ textAlign: "left" }}>Email</th>
                         <th style={{ textAlign: "left" }}>Address</th>
                       </tr>
                     </thead>
@@ -282,9 +283,9 @@ export default function Dashboard() {
                           <td
                             style={{ textAlign: "left" }}
                           >{`${trainee.phoneNumber}`}</td>
-                          <td style={{ textAlign: "left" }}>{`${
-                            trainee.gender ? "Male" : "Female"
-                          }`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainee.email}`}</td>
                           <td
                             style={{ textAlign: "left" }}
                           >{`${trainee.address}`}</td>

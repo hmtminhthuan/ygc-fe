@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./HeaderStaff.scss";
 export default function HeaderStaff({ background, ...restParams }) {
   const navigate = useNavigate();
@@ -31,18 +31,32 @@ export default function HeaderStaff({ background, ...restParams }) {
         }}
         className="search--notification--profile flex justify-content-end"
       >
+        <NavLink
+          to="/"
+          className="text-decoration-none py-1 px-3"
+          style={{
+            borderRadius: "20px",
+            backgroundColor: "#ec88ad",
+          }}
+        >
+          <span className="icon icon-4">
+            <i className="fa-solid fa-house" style={{ color: "#fff" }}></i>{" "}
+          </span>
+          <span className="sidebar--item" style={{ color: "#fff" }}>
+            Home
+          </span>
+        </NavLink>
         <div className="notification--profile">
           <div
-            className="picon bell text-warning py-1"
+            className="picon bell text-warning py-1 ms-3"
             style={{
               fontSize: "20px",
-              transform: "scaleX(1.2)",
+              // transform: "scaleX(1.2)",
               position: "relative",
             }}
           >
             <i className="ri-notification-2-line" />
           </div>
-
           <div className="picon profile">
             {USER.img == "male" ? (
               <img
@@ -77,11 +91,11 @@ export default function HeaderStaff({ background, ...restParams }) {
           </div>
           <div className="px-2 flex align-items-center">
             <h5
-              className="p-0 px-3 m-0"
+              className="p-0 px-3 m-0 ms-2"
               style={{
                 fontWeight: "800",
                 transform: "scale(1.3)",
-                color: "rgb(227,106,200)",
+                color: "#ec88ad",
               }}
             >{`${USER.firstName} ${USER.lastName}`}</h5>
           </div>

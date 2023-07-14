@@ -941,7 +941,7 @@ export default function Transaction() {
                         <td className="row flex">
                           <div className="col-4 text-end">
                             <img
-                              src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
+                              src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/paymentImages%2FIcon-VNPAY-QR-1024x800.png?alt=media&token=4bd7ae20-65c6-43f8-b3f1-10a36d5b9810"
                               alt=""
                               style={{
                                 width: "30px",
@@ -968,7 +968,7 @@ export default function Transaction() {
                         <td className="row flex">
                           <div className="col-4 text-end">
                             <img
-                              src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
+                              src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/paymentImages%2Fcredit_card_PNG60.png?alt=media&token=c1e6480b-326b-46ac-82d3-e1bccb64337d"
                               alt=""
                               style={{
                                 width: "30px",

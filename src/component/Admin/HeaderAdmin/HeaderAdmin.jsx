@@ -3,7 +3,7 @@ import logo from "../../../assets/images/logo.png";
 import user from "../../../assets/images/user.jpg";
 import maleImg from "../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../assets/images/avt-female.jpg";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 export default function HeaderAdmin({ background, ...restParams }) {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const USER = JSON.parse(USER_LOGIN);
@@ -31,13 +31,29 @@ export default function HeaderAdmin({ background, ...restParams }) {
           <span>Center</span>
         </h2>
       </div>
+
       <div
         className="search--notification--profile
              flex justify-content-end"
       >
+        <NavLink
+          to="/"
+          className="text-decoration-none py-1 px-3"
+          style={{
+            borderRadius: "20px",
+            backgroundColor: "#ec88ad",
+          }}
+        >
+          <span className="icon icon-4">
+            <i className="fa-solid fa-house" style={{ color: "#000" }}></i>{" "}
+          </span>
+          <span className="sidebar--item" style={{ color: "#000" }}>
+            Home
+          </span>
+        </NavLink>
         <div className="notification--profile">
-          <div className="picon bell">
-            <i className="ri-notification-2-line" />
+          <div className="picon bell ms-4">
+            <i className="ri-notification-2-line text-warning" />
           </div>
 
           <div className="picon profile">
@@ -74,11 +90,11 @@ export default function HeaderAdmin({ background, ...restParams }) {
           </div>
           <div className="px-2 flex align-items-center">
             <h5
-              className="p-0 px-3 m-0"
+              className="p-0 px-3 m-0 ms-2"
               style={{
                 fontWeight: "800",
                 transform: "scale(1.3)",
-                color: "rgb(227,106,200)",
+                color: "#ec88ad",
               }}
             >{`${USER.firstName} ${USER.lastName}`}</h5>
           </div>

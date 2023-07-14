@@ -829,7 +829,7 @@ export default function CourseClasses({
                     <td className="row flex">
                       <div className="col-4 text-end">
                         <img
-                          src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR-1024x800.png"
+                          src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/paymentImages%2FIcon-VNPAY-QR-1024x800.png?alt=media&token=4bd7ae20-65c6-43f8-b3f1-10a36d5b9810"
                           alt=""
                           style={{ width: "30px", height: "30px" }}
                           className="mx-0"
@@ -851,7 +851,7 @@ export default function CourseClasses({
                     <td className="row flex">
                       <div className="col-4 text-end">
                         <img
-                          src="https://pngimg.com/uploads/credit_card/credit_card_PNG60.png"
+                          src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/paymentImages%2Fcredit_card_PNG60.png?alt=media&token=c1e6480b-326b-46ac-82d3-e1bccb64337d"
                           alt=""
                           style={{ width: "30px", height: "30px" }}
                           className="mx-0"
@@ -873,7 +873,7 @@ export default function CourseClasses({
                     <td className="row flex">
                       <div className="col-4 text-end">
                         <img
-                          src="https://cdn3.iconfinder.com/data/icons/money-and-credit-card/100/money_pay_payment_dollar-08-512.png"
+                          src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/paymentImages%2F4581056.png?alt=media&token=caae4a32-2d5c-488a-8c90-29719233c7b0"
                           alt=""
                           style={{ width: "30px", height: "30px" }}
                           className="mx-0"

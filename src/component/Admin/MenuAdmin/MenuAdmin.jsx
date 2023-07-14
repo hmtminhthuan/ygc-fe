@@ -106,14 +106,14 @@ export default function MenuAdmin() {
         </li>
       </ul>
       <ul className="sidebar--bottom-items">
-        <li>
+        {/* <li>
           <NavLink to="/">
             <span className="icon icon-4">
               <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
             </span>
             <span className="sidebar--item">Home</span>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to={`/profile`}>
             <span className="icon icon-7">

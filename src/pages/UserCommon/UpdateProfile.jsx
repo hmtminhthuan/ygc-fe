@@ -91,6 +91,25 @@ export default function UpdateProfile() {
             });
           });
         });
+        if (
+          res.data.gender &&
+          res.data.img !=
+            "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112"
+        ) {
+          setOldAvatarList((prev) => [
+            ...prev,
+            "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112",
+          ]);
+        } else if (
+          !res.data.gender &&
+          res.data.img !=
+            "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--female.jpg?alt=media&token=f58778d6-9193-453b-93e4-ddbab5db5e37"
+        ) {
+          setOldAvatarList((prev) => [
+            ...prev,
+            "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--female.jpg?alt=media&token=f58778d6-9193-453b-93e4-ddbab5db5e37",
+          ]);
+        }
       })
       .catch((err) => {});
     // api.get(`/Account/AccountList`).then((res) => {
@@ -183,6 +202,7 @@ export default function UpdateProfile() {
       }
       if (values.img != "") {
         if (
+          imageUpload != null &&
           !(previewImg == "female" || previewImg == "male") &&
           oldAvatarList.filter((item) => item == previewImg).length <= 0 &&
           previewImg !=

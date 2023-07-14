@@ -126,13 +126,6 @@ export default function ClassOfTrainer() {
                         >
                           Class: {classDetail.className}
                         </div>
-                        {/* <a
-                          href="#"
-                          className="btn btn-palegreen btn-sm  btn-follow mt-3"
-                        >
-                          <i className="fa fa-check" />
-                          Active
-                        </a> */}
                         <div
                           className="header-information"
                           style={{ fontSize: "20px" }}

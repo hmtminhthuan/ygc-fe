@@ -48,7 +48,7 @@ import StaffBooking from "../pages/Staff/Booking/StaffBooking";
 import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
 import CourseRevenue from "../pages/Admin/CourseManagement/CourseRevenue";
 import ClassMember from "../pages/Staff/ClassManagement/ClassMember/ClassMember";
-import Test from "../constants/test";
+import Timetable from "../pages/Staff/Timetable/Timetable";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -65,7 +65,6 @@ export default function Routers() {
         { path: "/register", element: <Register /> },
         { path: "/resetPassword", element: <ChangePasswordLogin /> },
         { path: "/transaction", element: <Transaction /> },
-        { path: "/test", element: <Test /> },
       ],
     },
     {
@@ -125,6 +124,10 @@ export default function Routers() {
         {
           path: "/staff/traineeOfClass/:id/:trainerId",
           element: <ClassMember />,
+        },
+        {
+          path: "/staff/timetable",
+          element: <Timetable />,
         },
       ],
     },
