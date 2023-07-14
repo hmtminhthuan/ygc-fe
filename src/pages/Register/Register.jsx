@@ -475,15 +475,6 @@ export default function Register() {
                             required: true,
                             message: "Phone Number cannot be blank",
                           },
-                          // {
-                          //   message: "Phone is not in correct form",
-                          //   pattern: /^[^ ](0|[1-9][0-9]*)[^ ]$/,
-                          // },
-                          // { min: 10, message: "Phone must be 10-11 numbers" },
-                          // {
-                          //   max: 11,
-                          //   message: "Phone must be 10-11 numbers",
-                          // },
                           {
                             message: "Phone must be 10-11 numbers",
                             pattern: /^([0-9]{10,11})$/,
