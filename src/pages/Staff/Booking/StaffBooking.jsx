@@ -890,33 +890,16 @@ export default function StaffBooking() {
                           )}
 
                           {/* Payment Method  */}
-                          {status == 1 ||
-                          status == 6 ||
-                          ((status == 3 || status == 4) && id % 3 != 0) ? (
+                          {status == 1 || status == 6 ? (
                             <td style={{ textAlign: "center" }}>VNPAY</td>
                           ) : (
                             <></>
                           )}
-                          {status == 8 ||
-                          status == 9 ||
-                          ((status == 3 || status == 4) && id % 3 == 0) ? (
+                          {status == 8 || status == 9 ? (
                             <td style={{ textAlign: "center" }}>ATM</td>
                           ) : (
                             <></>
                           )}
-
-                          {/* {navigation == 1 || navigation == 4 ? (
-                            <td style={{ textAlign: "center" }}>
-                              {status == 1 || status == 6 ? (
-                                <>"VNPAY"</>
-                              ) : (
-                                <></>
-                              )}
-                              {status == 8 || status == 7 ? <>"ATM"</> : <></>}
-                            </td>
-                          ) : (
-                            <></>
-                          )} */}
 
                           {navigation == 4 ? (
                             <td style={{ textAlign: "center" }}>
@@ -1097,108 +1080,6 @@ export default function StaffBooking() {
                           ) : (
                             <></>
                           )}
-                          {/* {status == 7 ? (
-                            <></>
-                          ) : (
-                            <td style={{ textAlign: "center" }}>
-                              {status == 6 ? (
-                                <span
-                                  style={{ borderRadius: "10px" }}
-                                  className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
-                                >
-                                  Pending
-                                </span>
-                              ) : (
-                                <></>
-                              )}
-                              {status == 5 ? (
-                                <>
-                                  <span
-                                    style={{ borderRadius: "10px" }}
-                                    className="m-0 p-0 py-1 px-2 border-0 bg-warning bg-opacity-10 text-warning"
-                                  >
-                                    Reserved
-                                  </span>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                              {status == 1 || status == 3 ? (
-                                <>
-                                  <span
-                                    style={{ borderRadius: "10px" }}
-                                    className="m-0 p-0 py-1 px-2 border-0 bg-success bg-opacity-10 text-success"
-                                  >
-                                    Paid
-                                  </span>
-                                  {status == 3 ? (
-                                    // <p
-                                    //   style={{ borderRadius: "10px" }}
-                                    //   className="m-0 p-0 py-1 px-2
-                                    //     border-0 text-danger text-center"
-                                    // >
-                                    //   Failed Refund
-                                    // </p>
-                                    <></>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                              {status == 2 ? (
-                                <>
-                                  {" "}
-                                  <span
-                                    style={{ borderRadius: "10px" }}
-                                    className="m-0 p-0 py-1 px-2 border-0 bg-danger bg-opacity-10 text-danger"
-                                  >
-                                    Cancel
-                                  </span>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                              {status == 4 ? (
-                                <>
-                                  <span
-                                    style={{ borderRadius: "10px" }}
-                                    className="m-0 p-0 py-1 px-2 border-0 bg-primary bg-opacity-10 text-primary"
-                                  >
-                                    Refund
-                                  </span>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                          )} */}
-
-                          {/* {navigation == 1 ? (
-                            <td style={{ textAlign: "center" }}>
-                              {status == 1 && isRefundAvailableView(payDate) ? (
-                                <div
-                                  className={`p-0 m-0`}
-                                  id={`refund-available-${id}`}
-                                >
-                                  <div className="m-0 p-0 flex-column text-center">
-                                    <p className="m-0 p-0 text-center">
-                                      {styleDateAndTimeExpiredRefund(payDate)}
-                                    </p>
-                                    <p
-                                      className="m-0 p-0 text-center"
-                                      id={`refund-timeleft-${id}`}
-                                    ></p>
-                                  </div>
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                            </td>
-                          ) : (
-                            <></>
-                          )} */}
                         </tr>
                       );
                     }
