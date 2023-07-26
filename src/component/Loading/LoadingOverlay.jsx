@@ -8,7 +8,7 @@ const LoadingOverlay = ({ loading }) => {
     <div className="loading-overlay">
       <div className="loading-content">
         <div className="loader" />
-        <span>Loading...</span>
+        <span>Please wait...</span>
       </div>
     </div>
   );

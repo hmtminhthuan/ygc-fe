@@ -190,7 +190,7 @@ export default function ListTrainer() {
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>No.</th>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>
@@ -424,7 +424,7 @@ export default function ListTrainer() {
                       })
                       .map((trainer) => (
                         <tr key={trainer.accountID}>
-                          <td>{`${trainer.accountID}`}</td>
+                          <td></td>
                           <td>{`${trainer.firstName}`}</td>
                           <td>{`${trainer.lastName}`}</td>
                           <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
