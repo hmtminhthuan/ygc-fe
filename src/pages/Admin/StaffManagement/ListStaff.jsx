@@ -10,6 +10,7 @@ import "./ListStaff.scss";
 import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { alert } from "../../../component/AlertComponent/Alert";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function ListStaff() {
   localStorage.setItem("MENU_ACTIVE", "/admin/listStaff");
   const [staffList, setStaffList] = useState([]);
@@ -22,35 +23,17 @@ export default function ListStaff() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Account/AccountListByRole?id=2")
       .then((res) => {
         setStaffList(res.data);
-        setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
-
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
 
   useEffect(() => {
     let sortedStaffs = [...staffList];
@@ -163,6 +146,7 @@ export default function ListStaff() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderAdmin />
       <section className="main" id="admin-list-staff-area">
         <MenuAdmin />
