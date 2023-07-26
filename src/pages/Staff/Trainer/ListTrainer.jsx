@@ -8,6 +8,7 @@ import "./ListTrainer.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function ListTrainer() {
   localStorage.setItem("MENU_ACTIVE", "/staff/listTrainer");
   const [trainerList, setTrainerList] = useState([]);
@@ -20,26 +21,15 @@ export default function ListTrainer() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
         setTrainerList(res.data);
-        setIsDataLoaded(true);
+
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
@@ -157,6 +147,7 @@ export default function ListTrainer() {
   };
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main bg-white" id="">
         <MenuStaff />
