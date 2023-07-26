@@ -8,45 +8,28 @@ import "./BlogPage.scss";
 import { NavLink } from "react-router-dom";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
-
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function BlogPage() {
   localStorage.setItem("MENU_ACTIVE", "/blog");
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Blog/GetBlogById", {
         params: { id: param.id },
       })
       .then((res) => {
         setBlogDetail(res.data);
-        setIsDataLoaded(true);
+
+        setLoading(false);
       })
       .catch((err) => {});
   }, [param.id]);
 
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
-
   if (blogDetail === null) {
-    return null;
+    return <LoadingOverlay loading={loading} />;
   }
 
   let {
@@ -100,6 +83,7 @@ export default function BlogPage() {
 
   return (
     <div>
+      <LoadingOverlay loading={loading} />
       <div className="header-top m-4 mx-0 mt-0">
         <HeaderHome />
       </div>
