@@ -142,7 +142,7 @@ export default function Transaction() {
       if (TRANSACTION_NOTIFICATION == "atm") {
         if (listOfBooking.filter((item) => item.status === 7).length > 0) {
           alert.alertSuccessWithTime(
-            "Confirm Payment Using ATM Successfully",
+            "Confirm Payment Using Mobile Banking Successfully",
             "",
             3000,
             "30",
@@ -394,7 +394,7 @@ export default function Transaction() {
   const handlePayAgainByAtm = (id) => {
     const booking = listOfBooking.filter((item) => item.id === id)[0];
     Swal.fire({
-      title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
+      title: `<strong style="color:#d291bc">Payment Using Mobile Banking</strong>`,
 
       html: `
       <p style="text-align:justify; margin:0;">
@@ -978,7 +978,9 @@ export default function Transaction() {
                             />
                           </div>
                           <div className="col-8 text-start">
-                            <h4 className="m-0 p-0">Payment Using ATM</h4>
+                            <h4 className="m-0 p-0">
+                              Payment Using Mobile Banking
+                            </h4>
                           </div>
                         </td>
                       </tr>

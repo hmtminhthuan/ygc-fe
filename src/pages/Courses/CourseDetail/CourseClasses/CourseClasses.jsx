@@ -93,7 +93,7 @@ export default function CourseClasses({
 
   const handlePayByAtm = (classId) => {
     Swal.fire({
-      title: `<strong style="color:#d291bc">Payment Using ATM</strong>`,
+      title: `<strong style="color:#d291bc">Payment Using Mobile Banking</strong>`,
       html: `
         <p style="text-align:justify; margin:0;">
         Thank you for choosing our service. You could complete your payment by banking to our following ATM accounts.</br></br>
@@ -858,7 +858,9 @@ export default function CourseClasses({
                         />
                       </div>
                       <div className="col-8 text-start">
-                        <h4 className="m-0 p-0">Payment Using ATM</h4>
+                        <h4 className="m-0 p-0">
+                          Payment Using Mobile Banking
+                        </h4>
                       </div>
                     </td>
                   </tr>
