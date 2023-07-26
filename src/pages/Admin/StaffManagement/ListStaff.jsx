@@ -153,10 +153,7 @@ export default function ListStaff() {
         <div className="main--content pt-3 bg-white">
           <div className=" row flex trainee-containe mt-2 mx-5 mb-5">
             <div className="headerlist mb-2">
-              <h1
-                className="m-0 p-0 mb-2"
-                // style={{ color: "#da25b3d5" }}
-              >
+              <h1 className="m-0 p-0 mb-2">
                 <i className="ri-bookmark-line"></i> List Staffs
               </h1>
             </div>
@@ -188,7 +185,7 @@ export default function ListStaff() {
               <table style={{ fontSize: "13px" }}>
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>No.</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>
@@ -415,9 +412,9 @@ export default function ListStaff() {
                         return true;
                       }
                     })
-                    .map((staff) => (
+                    .map((staff, index) => (
                       <tr key={staff.accountID}>
-                        <td>{`${staff.accountID}`}</td>
+                        <td>{index + 1}</td>
                         <td>{`${staff.firstName}`}</td>
                         <td>{`${staff.lastName}`}</td>
                         <td>{`${staff.gender ? "Male" : "Female"}`}</td>

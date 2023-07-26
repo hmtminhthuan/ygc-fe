@@ -57,46 +57,13 @@ thead th {
 
 tbody {
   overflow: auto;
-  height: 300px;
+  height: 100px;
   text-align: center;
 }
-
-// tbody tr:hover {
-//   background-color: rgba(255, 255, 255, 0.3);
-// }
 
 tbody td {
   position: relative;
 }
-
-// tbody td::before {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   top: 0;
-//   bottom: 0;
-//   background-color: rgba(255, 255, 255, 0.2);
-//   // z-index: -1;
-//   opacity: 0;
-//   transition: opacity 0.2s ease;
-// }
-
-// tbody td:hover td::before {
-//   opacity: 1;
-// }
-
-// tbody td:hover:before {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   top: -9999px;
-//   bottom: -9999px;
-//   background-color: rgba(255, 255, 255, 0.1);
-//   // z-index: -1;
-//   // opacity: 1;
-// }
 
 .btn-home {
   background-color: #71c55b;
@@ -117,7 +84,7 @@ tbody td {
 
 .setting {
   font-size: 18px;
-  // z-index: 1000 !important;
+
   .ri-edit-2-fill {
     color: rgb(0, 9, 111);
   }
@@ -131,7 +98,6 @@ tbody td {
     justify-content: center;
     align-items: center;
     color: red;
-    // z-index: 5000 !important;
   }
 }
 #admin-list-staff-area {
@@ -140,14 +106,13 @@ tbody td {
       tr {
         th {
           font-size: 16px !important;
-          // background-color: rgba(210, 145, 188, 1);
+
           background-color: #333333;
           color: #fff !important;
         }
       }
     }
     tbody tr:hover {
-      // background-color: rgba(255, 255, 255, 0.3) !important;
       background-color: rgba(248, 208, 230, 0.764) !important;
       color: #000 !important;
     }
