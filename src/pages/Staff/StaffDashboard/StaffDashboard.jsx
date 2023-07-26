@@ -9,22 +9,24 @@ import logo from "../../../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function Dashboard() {
   localStorage.setItem("MENU_ACTIVE", "/staff");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 800,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main--content");
@@ -35,43 +37,24 @@ export default function Dashboard() {
     };
   }, []);
 
-  //Trainerlist;
-  const [trainerList, setTrainerList] = useState([]);
-  useEffect(() => {
-    api
-      .get("/Account/AccountListByRole?id=3")
-      .then((res) => {
-        const filteredTrainers = res.data
-          .filter((item) => !item.deleted)
-          .sort((a, b) => b.accountID - a.accountID)
-          .slice(0, 7);
-        setTrainerList(filteredTrainers);
-      })
-      .catch((err) => {});
-  }, []);
+  const [countList, setCountList] = useState({
+    numOfTrainer: 0,
+    numOfTrainee: 0,
+    numOfCourse: 0,
+    numOfClass: 0,
+    numOfBlog: 0,
+    numOfFeedback: 0,
+    traineeList: [],
+    trainerList: [],
+  });
 
-  // Traineelist
-  const [traineeList, setTraineeList] = useState([]);
-  useEffect(() => {
-    api
-      .get("/Account/AccountListByRole?id=4")
-      .then((res) => {
-        const filteredTrainees = res.data
-          .filter((item) => !item.deleted)
-          .sort((a, b) => b.accountID - a.accountID);
-        setTraineeList(filteredTrainees);
-      })
-      .catch((err) => {});
-  }, []);
-
-  //Count
-  const [countList, setCountList] = useState([]);
   useEffect(() => {
     api
       .get("/api/AdminRepositoryAPI/GetOverallStatistics")
       .then((res) => {
-        const total = res.data;
-        setCountList(total);
+        const overallStats = res.data;
+        setCountList(overallStats);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
@@ -79,6 +62,7 @@ export default function Dashboard() {
   return (
     <>
       <div>
+        <LoadingOverlay loading={loading} />
         {/* Header */}
         <HeaderStaff />
 
@@ -92,7 +76,7 @@ export default function Dashboard() {
             style={{ overflowX: "hidden" }}
           >
             {/* Overview */}
-            <section class="staff-list-area p-0 mt-2 px-4">
+            <section className="staff-list-area p-0 mt-2 px-4">
               <div className="overview">
                 <div className="title">
                   <h2 className="section--title">Overview</h2>
@@ -178,16 +162,10 @@ export default function Dashboard() {
               <div className="trainers">
                 <div className="title">
                   <h2 className="section--title">Trainers</h2>
-                  {/* <div className="trainers--right--btns">
-                  <button className="add">
-                    <i className="ri-add-line" />
-                    Add Trainer
-                  </button>
-                </div> */}
                 </div>
                 <div className="trainers--container flex w-100">
                   <div className="trainers--cards" style={{ display: "flex" }}>
-                    {trainerList.map((trainer, index) => (
+                    {countList.trainerList.slice(0, 8).map((trainer) => (
                       <a
                         href="#"
                         className="trainer--card bg-dark"
@@ -198,10 +176,6 @@ export default function Dashboard() {
                           style={{ border: "2px solid #fff" }}
                         >
                           <div className="img--box">
-                            {/* <img
-                            src={`/path/to/images/${trainer.img}.png`}
-                            alt="Trainer"
-                          /> */}
                             {trainer.img == "male" ? (
                               <img
                                 src={maleImg}
@@ -259,10 +233,6 @@ export default function Dashboard() {
               <div className="recent--trainees">
                 <div className="title">
                   <h2 className="section--title">Recent Trainees</h2>
-                  {/* <button className="add">
-                  <i className="ri-add-line" />
-                  Add Trainee
-                </button> */}
                 </div>
                 <div className="table">
                   <table className="table-none-border-radius-head">
@@ -275,7 +245,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {traineeList.slice(0, 9).map((trainee) => (
+                      {countList.traineeList.slice(0, 9).map((trainee) => (
                         <tr key={trainee.accountID}>
                           <td
                             style={{ textAlign: "left" }}
