@@ -85,7 +85,7 @@ export default function CourseRevenue() {
                       </div>
                       <div className="col-md-4 col-sm-12 text-center mt-5">
                         <img
-                          src={revenueDetail.course.img}
+                          src={revenueDetail.course.courseImg}
                           className="header-avatar"
                         />
                       </div>
@@ -104,14 +104,14 @@ export default function CourseRevenue() {
                           <p>
                             Price: {formatPrice(revenueDetail.course.price)} VNĐ
                           </p>
-                          <p>Description: {revenueDetail.course.description}</p>
+                          <p>Level: {revenueDetail.course.levelName}</p>
                         </div>
                       </div>
                       <div className="col-md-12 col-sm-12 col-xs-12 profile-stats">
                         <div className="row">
                           <div className="col-md-4 col-sm-4 col-xs-12 stats-col">
                             <div className="stats-value pink">
-                              {formatPrice(revenueDetail.annualRevenue)}
+                              {formatPrice(revenueDetail.annualRevenue)} VNĐ
                             </div>
                             <div className="stats-title">Annual Revenue</div>
                           </div>
