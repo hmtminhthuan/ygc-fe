@@ -8,13 +8,15 @@ import "./BlogDetail.scss";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
 import Aos from "aos";
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 
 function Blog() {
   localStorage.setItem("MENU_ACTIVE", "/blog");
+  const [loading, setLoading] = useState(true);
   let [blogList, setBlogList] = useState([]);
   const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
   const userLogin = localStorage.getItem("USER_LOGIN");
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   if (
     redirectLink != null &&
     redirectLink != undefined &&
@@ -25,32 +27,15 @@ function Blog() {
   }
   useEffect(() => {
     window.scrollTo(0, 0);
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+
     api
       .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
-        setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
-
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -65,6 +50,7 @@ function Blog() {
   Aos.init();
   return (
     <div>
+      <LoadingOverlay loading={loading} />
       <HeaderHome />
       <Banner title={"Our Blog"} descripton={"Yoga Blog Series"} />
       <section className="w-100 bloglist-area py-0 px-md-4">
