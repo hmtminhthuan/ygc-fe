@@ -7,15 +7,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  .close {
-    a {
-      text-decoration: none;
-      margin-right: 10px;
-      color: rgb(208, 143, 186);
-    }
-    text-align: right;
-    margin: 10px 50px;
-  }
 
   .title {
     color: rgb(208, 143, 186);

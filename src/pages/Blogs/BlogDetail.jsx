@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
+import React from "react";
+import { Card } from "react-bootstrap";
 import "./BlogDetail.scss";
 import { NavLink } from "react-router-dom";
 export default function BlogDetail({
@@ -14,7 +14,6 @@ export default function BlogDetail({
   year,
   ...restParam
 }) {
-  // const navigate = useNavigate();
   return (
     <Card className="blog-entry justify-content-end my-5 mx-5 shadow-none shadow-none border-0">
       <div className="w-100 block-20">
@@ -48,7 +47,6 @@ export default function BlogDetail({
             <NavLink
               to={`/blogPage/${blogID}`}
               style={{ textDecoration: "none" }}
-              // onClick={() => navigate(`/blogPage/${blogID}`)}
             >
               {header}
             </NavLink>

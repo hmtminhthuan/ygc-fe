@@ -72,9 +72,6 @@ export default function BlogPage() {
 
   const formattedDate = formatDate(date);
 
-  const previousBlogID = blogID - 1;
-  const nextBlogID = blogID + 1;
-
   return (
     <div>
       <div className="header-top m-4 mx-0 mt-0">
@@ -83,9 +80,19 @@ export default function BlogPage() {
       <main className="pt-5">
         <div className={`box course-detail-area mt-5 my-5 px-5 pt-4`}>
           <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
-            <div className="close px-0 mx-0">
-              <NavLink to={"/blog"}>
-                <a href="">Close</a>
+            <div
+              className="close px-0 mx-0"
+              style={{ textAlign: "right", margin: "10px 50px" }}
+            >
+              <NavLink
+                to={"/blog"}
+                style={{
+                  textDecoration: "none",
+                  marginRight: "10px",
+                  color: "rgb(208, 143, 186)",
+                }}
+              >
+                Close
                 <i className="fa-solid fa-circle-xmark"></i>
               </NavLink>
             </div>

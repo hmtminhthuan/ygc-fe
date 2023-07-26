@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import Banner from "../../component/Banner/Banner";
 import BlogDetail from "./BlogDetail";
-import axios from "axios";
+
 import "./Blog.scss";
 import "./BlogDetail.scss";
 import { api } from "../../constants/api";
@@ -71,7 +71,6 @@ function Blog() {
         <div className="blog-contaier flex justify-content-center align-content-center">
           <div className="row">
             {blogList.map((blog) => {
-              const formattedDate = formatDate(blog.date);
               const dateObj = new Date(blog.date);
               const day = dateObj.getDate();
               const month = dateObj.toLocaleString("default", {
@@ -84,11 +83,9 @@ function Blog() {
                   data-aos="zoom-in-up"
                 >
                   <BlogDetail
-                    // key={index}
                     blogID={blog.blogID}
                     header={blog.header}
                     content={blog.content}
-                    // date={formattedDate}
                     day={day}
                     month={month}
                     year={year}
