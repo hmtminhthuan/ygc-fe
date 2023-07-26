@@ -15,18 +15,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // let timerInterval;
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 800,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // });
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main--content");

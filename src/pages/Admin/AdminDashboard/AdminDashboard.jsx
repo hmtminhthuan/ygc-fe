@@ -3,75 +3,42 @@ import HeaderAdmin from "../../../component/Admin/HeaderAdmin/HeaderAdmin";
 import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { api } from "../../../constants/api";
 import "./AdminDashboard.scss";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 
 export default function AdminDashboard() {
   localStorage.setItem("MENU_ACTIVE", "/admin");
-  const [countList, setCountList] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [countList, setCountList] = useState({
+    numOfTrainer: 0,
+    numOfTrainee: 0,
+    numOfCourse: 0,
+    numOfClass: 0,
+    numOfBlog: 0,
+    numOfFeedback: 0,
+    traineeList: [],
+    trainerList: [],
+  });
+
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 1000,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/api/AdminRepositoryAPI/GetOverallStatistics")
       .then((res) => {
-        const total = res.data;
-        setCountList(total);
-        setIsDataLoaded(true);
+        const overallStats = res.data;
+        setCountList(overallStats);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
 
-  //Trainerlist;
-  const [trainerList, setTrainerList] = useState([]);
-  useEffect(() => {
-    api
-      .get("/Account/AccountListByRole?id=3")
-      .then((res) => {
-        const filteredTrainers = res.data
-          .filter((item) => !item.deleted)
-          .sort((a, b) => b.accountID - a.accountID)
-          .slice(0, 7);
-        setTrainerList(filteredTrainers);
-      })
-      .catch((err) => {});
-  }, []);
-
-  // Traineelist
-  const [traineeList, setTraineeList] = useState([]);
-  useEffect(() => {
-    api
-      .get("/Account/AccountListByRole?id=4")
-      .then((res) => {
-        const filteredTrainees = res.data
-          .filter((item) => !item.deleted)
-          .sort((a, b) => b.accountID - a.accountID);
-        setTraineeList(filteredTrainees);
-      })
-      .catch((err) => {});
-  }, []);
-
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
         <div className="main--content">
-          <section class="staff-list-area p-0 mt-2 px-4">
+          <section className="staff-list-area p-0 mt-2 px-4">
             <div className="overview">
               <div className="title">
                 <h2 className="section--title">Overview</h2>
@@ -176,7 +143,7 @@ export default function AdminDashboard() {
               </div>
               <div className="trainers--container flex w-100">
                 <div className="trainers--cards" style={{ display: "flex" }}>
-                  {trainerList.map((trainer, index) => (
+                  {countList.trainerList.slice(0, 8).map((trainer) => (
                     <a
                       href="#"
                       className="trainer--card bg-dark"
@@ -233,8 +200,8 @@ export default function AdminDashboard() {
                     </a>
                   ))}
                 </div>
-
-                {/* <div className="more">
+                {/* 
+                <div className="more">
                     <NavLink to={`/staff/listTrainer`} className="updateInfo">
                       <i
                         className=" ri-arrow-right-s-line mx-4 mt-2 "
@@ -248,10 +215,6 @@ export default function AdminDashboard() {
             <div className="recent--trainees">
               <div className="title">
                 <h2 className="section--title">Recent Trainees</h2>
-                {/* <button className="add">
-                  <i className="ri-add-line" />
-                  Add Trainee
-                </button> */}
               </div>
               <div className="table">
                 <table className="table-none-border-radius-head">
@@ -264,7 +227,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {traineeList.slice(0, 9).map((trainee) => (
+                    {countList.traineeList.slice(0, 9).map((trainee) => (
                       <tr key={trainee.accountID}>
                         <td
                           style={{ textAlign: "left" }}
