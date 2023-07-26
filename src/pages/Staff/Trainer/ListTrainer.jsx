@@ -422,9 +422,9 @@ export default function ListTrainer() {
                           return true;
                         }
                       })
-                      .map((trainer) => (
+                      .map((trainer, index) => (
                         <tr key={trainer.accountID}>
-                          <td></td>
+                          <td>{index + 1}</td>
                           <td>{`${trainer.firstName}`}</td>
                           <td>{`${trainer.lastName}`}</td>
                           <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
