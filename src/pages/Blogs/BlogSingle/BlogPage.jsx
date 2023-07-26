@@ -72,6 +72,32 @@ export default function BlogPage() {
 
   const formattedDate = formatDate(date);
 
+  const formatContentWithBoldPhrases = (content) => {
+    return content.split("\n").map((paragraph, index) => {
+      const colonIndex = paragraph.indexOf(":");
+      if (colonIndex !== -1) {
+        const boldPart = paragraph.slice(0, colonIndex + 1); // Get the part before colon, including the colon itself
+        const normalPart = paragraph.slice(colonIndex + 1); // Get the part after colon
+        return (
+          <React.Fragment key={index}>
+            <strong style={{ fontSize: "20px" }}>{boldPart}</strong>
+            {normalPart}
+            <br />
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment key={index}>
+            {paragraph}
+            <br />
+          </React.Fragment>
+        );
+      }
+    });
+  };
+
+  const formattedContent = formatContentWithBoldPhrases(content);
+
   return (
     <div>
       <div className="header-top m-4 mx-0 mt-0">
@@ -107,7 +133,7 @@ export default function BlogPage() {
               </a>
 
               <div className="info">
-                <p>
+                <p style={{ margin: "0" }}>
                   {firstName} {lastName}
                 </p>
                 <p className="time"> {formattedDate}</p>
@@ -115,14 +141,7 @@ export default function BlogPage() {
             </div>
 
             <div className="content blog-content">
-              <p>
-                {content.split("\r\n").map((paragraph, index) => (
-                  <React.Fragment key={index}>
-                    {paragraph}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
+              <p>{formattedContent}</p>
 
               <p className="">
                 <img src={img} alt="" style={{ borderRadius: "25px" }} />

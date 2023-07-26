@@ -473,7 +473,6 @@ export default function ListTrainee() {
                               trainee.courseName ? trainee.courseName : "-"
                             }`}</td>
                             <td>{`${trainee.className}`}</td>
-                            {/* <td>{`${trainee.level}`}</td> */}
 
                             <td className="setting">
                               <i
