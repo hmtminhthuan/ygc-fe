@@ -28,7 +28,6 @@ export default function ListTrainer() {
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
         setTrainerList(res.data);
-
         setLoading(false);
       })
       .catch((err) => {});

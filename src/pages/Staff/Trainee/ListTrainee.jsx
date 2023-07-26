@@ -8,6 +8,7 @@ import "./ListTrainee.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function ListTrainee() {
   localStorage.setItem("MENU_ACTIVE", "/staff/listTrainee");
   const [traineeList, setTraineeList] = useState([]);
@@ -20,32 +21,22 @@ export default function ListTrainee() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [numberOfPage, setNumberOfPage] = useState(1);
   const [currentPagination, setCurrentPagination] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(8);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     let arr = [];
     api
       .get("/Trainee/GetAllInformationTraineeList")
       .then((res) => {
         arr = res.data;
         setTraineeList(res.data);
-        setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
@@ -77,11 +68,7 @@ export default function ListTrainee() {
           });
       });
   }, []);
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
+
   useEffect(() => {
     setNumberOfPage(-1);
     if (
@@ -188,6 +175,7 @@ export default function ListTrainee() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main bg-white" id="">
         <MenuStaff />
@@ -195,10 +183,7 @@ export default function ListTrainee() {
           <section className="staff-list-area pt-3 pb-3">
             <div className="row flex-column trainee-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1
-                  className="m-0 p-0 mb-2"
-                  // style={{ color: "#faa46a" }}
-                >
+                <h1 className="m-0 p-0 mb-2">
                   <i className="ri-bookmark-line"></i> List Trainees
                 </h1>
               </div>
@@ -230,7 +215,7 @@ export default function ListTrainee() {
                 <table style={{ fontSize: "12px" }}>
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>No.</th>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>
@@ -477,7 +462,7 @@ export default function ListTrainee() {
                         }
                         return (
                           <tr key={trainee.accountID}>
-                            <td>{`${trainee.accountID}`}</td>
+                            <td>{index + 1}</td>
                             <td>{`${trainee.firstName}`}</td>
                             <td>{`${trainee.lastName}`}</td>
                             <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
