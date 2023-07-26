@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import moment from "moment/moment";
 import ClassViewMore from "./ClassViewMore/ClassViewMore";
 import "./ClassManagement.scss";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 
 export default function ClassManagement() {
   localStorage.setItem("MENU_ACTIVE", "/staff/classManagement");
@@ -21,6 +22,7 @@ export default function ClassManagement() {
   const [viewData, setViewData] = useState(false);
   const [minTrainee, setMinTrainee] = useState(-1);
   const [maxTrainee, setMaxTrainee] = useState(-1);
+  const [loading, setLoading] = useState(true);
 
   const symbolSorting = (item) => {
     switch (item) {
@@ -99,19 +101,21 @@ export default function ClassManagement() {
 
   useEffect(() => {
     renderCourseForAdmin();
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        setViewData(true);
-      },
-    });
+
+    setViewData(true);
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 800,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //     setViewData(true);
+    //   },
+    // });
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -125,6 +129,7 @@ export default function ClassManagement() {
           .forEach((item) => {
             setMinTrainee(item.preactiveValue);
           });
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
@@ -227,6 +232,7 @@ export default function ClassManagement() {
   }, [sortedClasses]);
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
