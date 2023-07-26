@@ -154,10 +154,7 @@ export default function ListTrainer() {
           <section className="staff-list-area pt-3 pb-3">
             <div className="row flex trainer-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1
-                  className="m-0 p-0 mb-2"
-                  //  style={{ color: "#ff9aa2" }}
-                >
+                <h1 className="m-0 p-0 mb-2">
                   <i className="ri-bookmark-line"></i> List Trainers
                 </h1>
               </div>
