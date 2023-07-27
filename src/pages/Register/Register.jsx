@@ -321,7 +321,7 @@ export default function Register() {
             setEmailRegisterByEmail(user.email);
             alert.alertSuccessWithTime(
               "Verify Email Successfully",
-              "Please complete other informatio to finish your registration",
+              "Please complete other information to finish your registration",
               6000,
               "38",
               () => {}
