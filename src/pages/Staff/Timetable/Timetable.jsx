@@ -137,15 +137,16 @@ export default function Timetable() {
 
   useEffect(() => {
     if (viewDetailClassId >= 0) {
-      Swal.fire({
-        title: "Loading...",
-        timer: 800,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {},
-      });
+      // Swal.fire({
+      //   title: "Loading...",
+      //   timer: 800,
+      //   allowOutsideClick: false,
+      //   didOpen: () => {
+      //     Swal.showLoading();
+      //   },
+      //   willClose: () => {},
+      // });
+      setLoading(true);
       api
         .get("/Trainer/getListClassForTrainer", {
           params: {
@@ -159,6 +160,7 @@ export default function Timetable() {
           setClassDetail(list[0]);
           if (list[0].trainerId == viewDetailTrainerId) {
             setAvailable(true);
+            setLoading(false);
           }
         })
         .catch((err) => {});

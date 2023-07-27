@@ -26,6 +26,7 @@ export default function Transaction() {
   };
 
   const renderBooking = () => {
+    setLoading(true);
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
@@ -41,14 +42,17 @@ export default function Transaction() {
             );
           });
         setListOfBooking([...filteredBookings]);
+        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
-        setTimeout(renderBooking, 5000); // Call the API again after 5 seconds
+        setTimeout(renderBooking, 5000);
+        // // Call the API again after 5 seconds
       });
   };
 
   const renderSetting = () => {
+    setLoading(true);
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -83,10 +87,12 @@ export default function Transaction() {
               setRefundTime(item.activeValue);
             }
           });
+        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
-        setTimeout(renderSetting, 5000); // Call the API again after 5 seconds
+        setTimeout(renderSetting, 5000);
+        // Call the API again after 5 seconds
       });
   };
 
@@ -99,20 +105,20 @@ export default function Transaction() {
     } else {
       renderBooking();
       renderSetting();
-      let timerInterval;
-      Swal.fire({
-        title: "Loading...",
-        timer: 1000,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      });
+      setLoading(true);
 
-      setLoading(false);
+      // let timerInterval;
+      // Swal.fire({
+      //   title: "Loading...",
+      //   timer: 1000,
+      //   allowOutsideClick: false,
+      //   didOpen: () => {
+      //     Swal.showLoading();
+      //   },
+      //   willClose: () => {
+      //     clearInterval(timerInterval);
+      //   },
+      // });
     }
   }, []);
 
