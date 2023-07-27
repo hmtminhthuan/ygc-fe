@@ -26,7 +26,6 @@ export default function Transaction() {
   };
 
   const renderBooking = () => {
-    setLoading(true);
     api
       .get(`/CheckOutVNPAY/GetAllBooking`)
       .then((res) => {
@@ -42,7 +41,9 @@ export default function Transaction() {
             );
           });
         setListOfBooking([...filteredBookings]);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 200);
       })
       .catch((err) => {})
       .finally(() => {
@@ -52,7 +53,6 @@ export default function Transaction() {
   };
 
   const renderSetting = () => {
-    setLoading(true);
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -70,7 +70,6 @@ export default function Transaction() {
             ) {
               setPayingTime(item.activeValue);
             }
-            // setPayingTime(9.165);
           });
         res.data
           .filter((item) => item.id == 2)
@@ -87,7 +86,6 @@ export default function Transaction() {
               setRefundTime(item.activeValue);
             }
           });
-        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
@@ -106,19 +104,6 @@ export default function Transaction() {
       renderBooking();
       renderSetting();
       setLoading(true);
-
-      // let timerInterval;
-      // Swal.fire({
-      //   title: "Loading...",
-      //   timer: 1000,
-      //   allowOutsideClick: false,
-      //   didOpen: () => {
-      //     Swal.showLoading();
-      //   },
-      //   willClose: () => {
-      //     clearInterval(timerInterval);
-      //   },
-      // });
     }
   }, []);
 
@@ -564,7 +549,7 @@ export default function Transaction() {
               className="responsive-font"
               data-aos="zoom-in"
               data-aos-duration="300"
-              data-aos-delay="1100"
+              data-aos-delay="500"
             >
               <thead>
                 <tr>
