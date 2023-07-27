@@ -577,15 +577,15 @@ export default function StaffBooking() {
                   ) : (
                     <></>
                   )}
-                  {navigation == 1 || navigation == 4 ? (
-                    <>
-                      <th style={{ textAlign: "center" }}>Method</th>
-                    </>
+                  {navigation == 4 ? (
+                    <th style={{ textAlign: "center" }}>Refund Time</th>
                   ) : (
                     <></>
                   )}
-                  {navigation == 4 ? (
-                    <th style={{ textAlign: "center" }}>Refund Time</th>
+                  {navigation == 1 || navigation == 4 ? (
+                    <>
+                      <th style={{ textAlign: "left" }}>Method</th>
+                    </>
                   ) : (
                     <></>
                   )}
@@ -891,34 +891,6 @@ export default function StaffBooking() {
                             <></>
                           )}
 
-                          {/* Payment Method  */}
-                          {status == 1 || status == 6 ? (
-                            <td style={{ textAlign: "center" }}>VNPay</td>
-                          ) : (
-                            <></>
-                          )}
-                          {status == 8 || status == 9 ? (
-                            <td style={{ textAlign: "center" }}>
-                              Mobile Banking
-                            </td>
-                          ) : (
-                            <></>
-                          )}
-
-                          {(status == 3 || status == 4) && id % 5 != 0 ? (
-                            <td style={{ textAlign: "center" }}>VNPay</td>
-                          ) : (
-                            <></>
-                          )}
-
-                          {(status == 3 || status == 4) && id % 5 == 0 ? (
-                            <td style={{ textAlign: "center" }}>
-                              Mobile Banking
-                            </td>
-                          ) : (
-                            <></>
-                          )}
-
                           {navigation == 4 ? (
                             <td style={{ textAlign: "center" }}>
                               {refundDate != null &&
@@ -939,6 +911,7 @@ export default function StaffBooking() {
                               ) : (
                                 ""
                               )}
+
                               {status === 6 || status === 9 ? (
                                 <>
                                   <button
@@ -1023,6 +996,35 @@ export default function StaffBooking() {
                           ) : (
                             <></>
                           )}
+
+                          {/* Payment Method  */}
+                          {status == 1 || status == 6 ? (
+                            <td style={{ textAlign: "left" }}>VNPay</td>
+                          ) : (
+                            <></>
+                          )}
+                          {status == 8 || status == 9 ? (
+                            <td style={{ textAlign: "left" }}>
+                              Mobile Banking
+                            </td>
+                          ) : (
+                            <></>
+                          )}
+
+                          {(status == 3 || status == 4) && id % 5 != 0 ? (
+                            <td style={{ textAlign: "left" }}>VNPay</td>
+                          ) : (
+                            <></>
+                          )}
+
+                          {(status == 3 || status == 4) && id % 5 == 0 ? (
+                            <td style={{ textAlign: "left" }}>
+                              Mobile Banking
+                            </td>
+                          ) : (
+                            <></>
+                          )}
+
                           {navigation == 7 ? (
                             <td style={{ textAlign: "center" }}>
                               {refundDate != null &&
