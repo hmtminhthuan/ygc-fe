@@ -740,7 +740,10 @@ export default function StaffClassCreate() {
                       </thead>
                       <tbody>
                         {listOfTimeFrame.map((timeFrame) => (
-                          <tr key={timeFrame.id}>
+                          <tr
+                            key={timeFrame.id}
+                            style={{ borderBottom: "1px solid #000" }}
+                          >
                             <td className="align-middle">
                               {timeFrame.timeFrame1}
                             </td>
@@ -1238,7 +1241,10 @@ export default function StaffClassCreate() {
                     </thead>
                     <tbody>
                       {listOfTimeFrame.map((timeFrame) => (
-                        <tr key={timeFrame.id}>
+                        <tr
+                          key={timeFrame.id}
+                          style={{ borderBottom: "1px solid #000" }}
+                        >
                           <td className="align-middle">
                             {timeFrame.timeFrame1}
                           </td>
@@ -1336,7 +1342,7 @@ export default function StaffClassCreate() {
                                         className="p-0 m-0"
                                         style={{ fontWeight: "bolder" }}
                                       >
-                                        {filteredItem.courseName}
+                                        <b>{filteredItem.courseName}</b>
                                       </p>
                                       {/* </Link> */}
 
