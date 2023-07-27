@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
+import { menuAction } from "../../../component/Admin/MenuAdmin/MenuAction";
 export default function Dashboard() {
   localStorage.setItem("MENU_ACTIVE", "/staff");
   const [loading, setLoading] = useState(true);
@@ -69,7 +70,10 @@ export default function Dashboard() {
                 <div className="title">
                   <h2 className="section--title">Overview</h2>
                 </div>
-                <div className="row cards flex justify-content-lg-between">
+                <div
+                  className="row cards flex justify-content-lg-between"
+                  style={{ overflowX: "hidden" }}
+                >
                   <div
                     className="col-sm-3 mb-2 card card-1 text-center"
                     style={{ width: "28%" }}
@@ -222,7 +226,7 @@ export default function Dashboard() {
                 <div className="title">
                   <h2 className="section--title">Recent Trainees</h2>
                 </div>
-                <div className="table">
+                <div className="table" style={{ overflowX: "hidden" }}>
                   <table className="table-none-border-radius-head">
                     <thead>
                       <tr>

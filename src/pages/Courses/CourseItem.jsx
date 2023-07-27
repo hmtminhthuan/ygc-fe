@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./CourseItem.scss";
 import { useNavigate, NavLink } from "react-router-dom";
-import image from "../../assets/images/img-demo.jpg";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
 import { alert } from "../../component/AlertComponent/Alert";

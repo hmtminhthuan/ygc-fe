@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;500;600;700&display=swap");
 
-.hello-user {
-  font-size: 20px;
-  font-weight: 500;
-  color: rgba(210, 145, 188, 1) !important;
-}
 .header {
   position: fixed !important;
   z-index: 100 !important;
@@ -92,6 +87,16 @@
       color: rgba(210, 145, 188, 1) !important;
       transition: all ease 0.2s;
       font-weight: 500;
+      transform: scale(1.1);
+    }
+  }
+  .nav-item-md {
+    color: #fff;
+    font-size: 18px;
+    transition: all ease 0.2s;
+    &:hover {
+      transition: all ease 0.2s;
+      color: rgba(210, 145, 188, 1);
       transform: scale(1.1);
     }
   }

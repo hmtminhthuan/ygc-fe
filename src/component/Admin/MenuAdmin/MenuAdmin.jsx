@@ -11,7 +11,6 @@ export default function MenuAdmin() {
     const menu = document.querySelector(".menu");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main--content");
-
     menu.onclick = function () {
       sidebar.classList.toggle("active");
       mainContent.classList.toggle("active");
@@ -102,42 +101,6 @@ export default function MenuAdmin() {
             >
               Setting
             </span>
-          </NavLink>
-        </li>
-      </ul>
-      <ul className="sidebar--bottom-items">
-        {/* <li>
-          <NavLink to="/">
-            <span className="icon icon-4">
-              <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
-            </span>
-            <span className="sidebar--item">Home</span>
-          </NavLink>
-        </li> */}
-        <li>
-          <NavLink to={`/profile`}>
-            <span className="icon icon-7">
-              <i
-                className="fa-sharp fa-solid fa-address-card"
-                style={{ color: "#97a7e4" }}
-              ></i>{" "}
-            </span>
-            <span className="sidebar--item">Profile</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/"
-            onClick={() => {
-              localStorage.removeItem("USER_LOGIN");
-              localStorage.removeItem("MENU_ACTIVE");
-              navigate("/");
-            }}
-          >
-            <span className="icon icon-8">
-              <i className="ri-logout-box-r-line" />
-            </span>
-            <span className="sidebar--item">Log out</span>
           </NavLink>
         </li>
       </ul>

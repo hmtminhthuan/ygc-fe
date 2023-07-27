@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,YAAY,CAAC;EACX,KAAK,EAAE,kBAAkB;CAC1B;;AACD,AAAA,sCAAsC,CAAC;EACrC,OAAO,EAAE,eAAe;CACzB",
-    "sources": [
-        "../CourseFeedback/CourseFeedback.scss"
-    ],
-    "names": [],
-    "file": "CourseFeedback.css"
-}

@@ -29,35 +29,37 @@ export default function HeaderStaff({ background, ...restParams }) {
         style={{
           cursor: "pointer",
         }}
-        className="search--notification--profile flex justify-content-end"
+        className="search--notification--profile 
+        flex justify-content-end"
       >
-        <NavLink
-          to="/"
-          className="text-decoration-none py-1 px-3"
-          style={{
-            borderRadius: "20px",
-            backgroundColor: "#ec88ad",
-          }}
-        >
-          <span className="icon icon-4">
-            <i className="fa-solid fa-house" style={{ color: "#fff" }}></i>{" "}
-          </span>
-          <span className="sidebar--item" style={{ color: "#fff" }}>
-            Home
-          </span>
-        </NavLink>
         <div className="notification--profile">
+          <div>
+            <NavLink
+              to="/"
+              className="text-decoration-none py-2 px-2"
+              style={{
+                borderRadius: "20px",
+                backgroundColor: "#ec88ad",
+              }}
+            >
+              <span className="icon icon-4">
+                <i className="fa-solid fa-house" style={{ color: "#fff" }}></i>{" "}
+              </span>
+              <span
+                className="sidebar--item ms-1"
+                style={{ color: "#fff", fontWeight: "bolder" }}
+              >
+                Home
+              </span>
+            </NavLink>
+          </div>
           <div
-            className="picon bell text-warning py-1 ms-3"
-            style={{
-              fontSize: "20px",
-              // transform: "scaleX(1.2)",
-              position: "relative",
+            className="picon profile"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/profile");
             }}
           >
-            <i className="ri-notification-2-line" />
-          </div>
-          <div className="picon profile">
             {USER.img == "male" ? (
               <img
                 src={maleImg}
@@ -96,8 +98,34 @@ export default function HeaderStaff({ background, ...restParams }) {
                 fontWeight: "800",
                 transform: "scale(1.3)",
                 color: "#ec88ad",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                navigate("/profile");
               }}
             >{`${USER.firstName} ${USER.lastName}`}</h5>
+          </div>
+          <div className="flex">
+            <NavLink
+              className="text-decoration-none py-1 px-2 ms-1"
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#ec88ad",
+              }}
+              to="/"
+              onClick={() => {
+                localStorage.removeItem("USER_LOGIN");
+                localStorage.removeItem("MENU_ACTIVE");
+                navigate("/");
+              }}
+            >
+              <span className="icon icon-7">
+                <i
+                  className="ri-logout-box-r-line text-light"
+                  style={{ fontWeight: "bolder" }}
+                />
+              </span>
+            </NavLink>
           </div>
         </div>
       </div>

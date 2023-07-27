@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import "./HomeContent.scss";
 import { Modal } from "antd";
 import ReactPlayer from "react-player";
-import imgdemo from "../../assets/images/img-demo.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
   Autoplay,

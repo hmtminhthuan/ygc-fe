@@ -221,54 +221,6 @@ export default function MenuStaff() {
           </NavLink>
         </li>
       </ul>
-      <ul className="sidebar--bottom-items">
-        {/* <li>
-          <NavLink
-            to="/"
-            onClick={() => {
-              navigateTo("home-home");
-              // localStorage.setItem("MENU_ACTIVE", "home-home");
-            }}
-          >
-            <span className="icon icon-4">
-              <i className="fa-solid fa-house" style={{ color: "#ec88ad" }}></i>{" "}
-            </span>
-            <span className="sidebar--item">Home</span>
-          </NavLink>
-        </li> */}
-        <li>
-          <NavLink
-            to={`/profile`}
-            onClick={() => {
-              navigateTo("/profile");
-              //localStorage.setItem("MENU_ACTIVE", "home-profile");
-            }}
-          >
-            <span className="icon icon-7">
-              <i
-                className="fa-sharp fa-solid fa-address-card"
-                style={{ color: "#97a7e4" }}
-              ></i>{" "}
-            </span>
-            <span className="sidebar--item">Profile</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/"
-            onClick={() => {
-              localStorage.removeItem("USER_LOGIN");
-              localStorage.removeItem("MENU_ACTIVE");
-              navigate("/");
-            }}
-          >
-            <span className="icon icon-8">
-              <i className="ri-logout-box-r-line" />
-            </span>
-            <span className="sidebar--item">Log out</span>
-          </NavLink>
-        </li>
-      </ul>
     </div>
   );
 }

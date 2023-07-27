@@ -99,7 +99,7 @@ export default function HomeCarousel() {
       <div className="overlay2" />
       <div className="container">
         <div className="container row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-          <div className="col-md-8 ftco-animate">
+          <div className="col-12 col-lg-8 ftco-animate">
             <h1
               id="home-carousel-title"
               className="typewrite mb-3"
