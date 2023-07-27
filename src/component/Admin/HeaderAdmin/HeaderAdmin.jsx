@@ -36,27 +36,36 @@ export default function HeaderAdmin({ background, ...restParams }) {
         className="search--notification--profile
              flex justify-content-end"
       >
-        <NavLink
-          to="/"
-          className="text-decoration-none py-1 px-3"
-          style={{
-            borderRadius: "20px",
-            backgroundColor: "#ec88ad",
-          }}
-        >
-          <span className="icon icon-4">
-            <i className="fa-solid fa-house" style={{ color: "#000" }}></i>{" "}
-          </span>
-          <span className="sidebar--item" style={{ color: "#000" }}>
-            Home
-          </span>
-        </NavLink>
         <div className="notification--profile">
-          <div className="picon bell ms-4">
-            <i className="ri-notification-2-line text-warning" />
+          <div>
+            {" "}
+            <NavLink
+              to="/"
+              className="text-decoration-none py-2 px-2"
+              style={{
+                borderRadius: "20px",
+                backgroundColor: "#ec88ad",
+              }}
+            >
+              <span className="icon icon-4">
+                <i className="fa-solid fa-house" style={{ color: "#000" }}></i>{" "}
+              </span>
+              <span
+                className="sidebar--item ms-1"
+                style={{ color: "#000", fontWeight: "bolder" }}
+              >
+                Home
+              </span>
+            </NavLink>
           </div>
 
-          <div className="picon profile">
+          <div
+            className="picon profile"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             {USER.img == "male" ? (
               <img
                 src={maleImg}
@@ -88,15 +97,43 @@ export default function HeaderAdmin({ background, ...restParams }) {
               <></>
             )}
           </div>
-          <div className="px-2 flex align-items-center">
+          <div
+            className="px-2 flex align-items-center"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <h5
-              className="p-0 px-3 m-0 ms-2"
+              className="p-0 px-3 m-0"
               style={{
                 fontWeight: "800",
                 transform: "scale(1.3)",
                 color: "#ec88ad",
               }}
             >{`${USER.firstName} ${USER.lastName}`}</h5>
+          </div>
+          <div className="flex">
+            <NavLink
+              className="text-decoration-none py-1 px-2 ms-1"
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#ec88ad",
+              }}
+              to="/"
+              onClick={() => {
+                localStorage.removeItem("USER_LOGIN");
+                localStorage.removeItem("MENU_ACTIVE");
+                navigate("/");
+              }}
+            >
+              <span className="icon icon-7">
+                <i
+                  className="ri-logout-box-r-line"
+                  style={{ color: "#000", fontWeight: "bolder" }}
+                />
+              </span>
+            </NavLink>
           </div>
         </div>
       </div>

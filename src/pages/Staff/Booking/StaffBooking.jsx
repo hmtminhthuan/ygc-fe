@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
 import "./StaffBooking.scss";
 import { Pagination } from "antd";
+import { menuAction } from "../../../component/Admin/MenuAdmin/MenuAction";
 export default function StaffBooking() {
   localStorage.setItem("MENU_ACTIVE", "/staff/booking");
   const [listOfBooking, setListOfBooking] = useState([]);
@@ -97,6 +98,7 @@ export default function StaffBooking() {
   useEffect(() => {
     renderBooking();
     renderSetting();
+    menuAction.menuActive();
   }, []);
 
   useEffect(() => {

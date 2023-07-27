@@ -4,6 +4,7 @@ import MenuAdmin from "../../../component/Admin/MenuAdmin/MenuAdmin";
 import { api } from "../../../constants/api";
 import "./AdminDashboard.scss";
 import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
+import { menuAction } from "../../../component/Admin/MenuAdmin/MenuAction";
 
 export default function AdminDashboard() {
   localStorage.setItem("MENU_ACTIVE", "/admin");
@@ -43,7 +44,10 @@ export default function AdminDashboard() {
               <div className="title">
                 <h2 className="section--title">Overview</h2>
               </div>
-              <div className="row cards flex justify-content-between">
+              <div
+                className="row cards flex justify-content-lg-between justify-content-md-center"
+                style={{ overflow: "hidden" }}
+              >
                 <div
                   className="col-sm-3 card card-1 text-center"
                   style={{ width: "28%" }}
@@ -216,7 +220,7 @@ export default function AdminDashboard() {
               <div className="title">
                 <h2 className="section--title">Recent Trainees</h2>
               </div>
-              <div className="table">
+              <div className="table" style={{ overflowX: "hidden" }}>
                 <table className="table-none-border-radius-head">
                   <thead>
                     <tr>

@@ -548,7 +548,7 @@ export default function Transaction() {
           className="main--content transaction-trainee w-100"
           style={{ margin: "0 auto" }}
         >
-          <section class="staff-list-area p-0 mt-2 px-4 history-responsive">
+          <section className="staff-list-area p-0 mt-2 px-4 history-responsive">
             <table
               className="responsive-font"
               data-aos="zoom-in"

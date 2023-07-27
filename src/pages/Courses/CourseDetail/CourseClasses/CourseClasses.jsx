@@ -583,7 +583,7 @@ export default function CourseClasses({
     <section className="p-0">
       {!payWay ? (
         <div className={`row flex justify-content-center`}>
-          <div className="course-detail-classes col-10">
+          <div className="course-detail-classes col-11 col-lg-10">
             {classes.length <= 0 || !available ? (
               <p
                 className="text-danger text-center p-0 m-0"
@@ -597,15 +597,26 @@ export default function CourseClasses({
                   <TableHead>
                     <TableRow>
                       <StyledTableCell align="center">Register</StyledTableCell>
-                      <StyledTableCell align="left">Schedule</StyledTableCell>
                       <StyledTableCell
-                        className="mobile-schedule-guest-none"
+                        align="left"
+                        style={{ maxWidth: "150px" }}
+                      >
+                        Schedule
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="text-start mobile-schedule-guest-none d-table-cell d-lg-none"
+                        style={{ maxWidth: "90px" }}
+                      >
+                        Date
+                      </StyledTableCell>
+                      <StyledTableCell
+                        className="mobile-schedule-guest-none d-lg-table-cell d-none"
                         align="left"
                       >
                         Start Date
                       </StyledTableCell>
                       <StyledTableCell
-                        className="mobile-schedule-guest-none"
+                        className="mobile-schedule-guest-none d-lg-table-cell d-none"
                         align="left"
                       >
                         End Date
@@ -732,7 +743,10 @@ export default function CourseClasses({
                                 </button>
                               )}
                             </StyledTableCell>
-                            <StyledTableCell align="left">
+                            <StyledTableCell
+                              align="left"
+                              style={{ maxWidth: "150px" }}
+                            >
                               {schedule.map(({ date, time }, index) => (
                                 <p className="p-0 m-0 py-1" key={index}>
                                   {date}, {time}
@@ -754,7 +768,7 @@ export default function CourseClasses({
                               </div>
                             </StyledTableCell>
                             <StyledTableCell
-                              className="mobile-schedule-guest-none"
+                              className="mobile-schedule-guest-none d-none d-lg-table-cell"
                               align="left"
                             >
                               {moment(new Date(`${startDate}`)).format(
@@ -762,9 +776,25 @@ export default function CourseClasses({
                               )}
                             </StyledTableCell>
                             <StyledTableCell
-                              className="mobile-schedule-guest-none"
+                              className="mobile-schedule-guest-none d-none d-lg-table-cell"
                               align="left"
                             >
+                              {moment(new Date(`${endDate}`)).format(
+                                "DD-MM-YYYY"
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ maxWidth: "110px" }}
+                              className="w-100 m-0 text-start mobile-schedule-guest-none d-block d-lg-none"
+                            >
+                              <b>Start Date</b>
+                              <br></br>
+                              {moment(new Date(`${startDate}`)).format(
+                                "DD-MM-YYYY"
+                              )}
+                              <br></br>
+                              <b>End Date</b>
+                              <br></br>
                               {moment(new Date(`${endDate}`)).format(
                                 "DD-MM-YYYY"
                               )}

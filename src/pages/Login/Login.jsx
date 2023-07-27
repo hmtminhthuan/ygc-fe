@@ -494,7 +494,7 @@ export default function Login() {
                           },
                           {
                             min: 6,
-                            message: "Password must be at least 6 characters",
+                            message: "Password is at least 6 characters",
                           },
                         ]}
                         hasFeedback

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import HeaderHome from "../../../component/HeaderHome/HeaderHome";
 import axios from "axios";
-import image from "../../../assets/images/img-demo.jpg";
 import { NavLink } from "react-router-dom";
 import "./CourseDetail.scss";
 import { Button } from "react-bootstrap";
@@ -33,26 +32,21 @@ export default function CourseDetail() {
       currency: "VND",
     }).format(price);
   };
+  let arr = [];
   useEffect(() => {
     api
       .get("/Course/GetCourseByID", {
         params: { id: param.id },
       })
       .then((res) => {
-        setCourseDetail(res.data);
-      })
-      .catch((err) => {});
-    let arr = [];
-    api
-      .get("/Class/GetClassByCourseID", {
-        params: { courseid: param.id },
-      })
-      .then((res) => {
-        setCourseClasses(res.data);
-        arr = res.data;
+        setCourseDetail(res.data.course);
+        setCourseClasses(res.data.listClass);
+        setCourseFeedback(res.data.listFeedback);
+        arr = res.data.listClass;
       })
       .catch((err) => {})
       .finally(() => {
+        Swal.close();
         if (
           localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
           arr.length > 0
@@ -72,13 +66,11 @@ export default function CourseDetail() {
               localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS_NONE");
             }, 1300);
           } else {
-            setTimeout(() => {
-              alert.alertInfoNotiForTrainee(
-                "Please choose the class you want to register",
-                "",
-                () => {}
-              );
-            }, 1300);
+            alert.alertInfoNotiForTrainee(
+              "Please choose the class you want to register",
+              "",
+              () => {}
+            );
           }
           localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
         }
@@ -86,30 +78,19 @@ export default function CourseDetail() {
           localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
           arr.length == 0
         ) {
-          setTimeout(() => {
-            alert.alertInfoNotiForTrainee(
-              "We Are Sorry",
-              "This course does not have any classess at the present</br>Please contact with us for more support",
-              () => {}
-            );
-          }, 1200);
+          alert.alertInfoNotiForTrainee(
+            "We Are Sorry",
+            "This course does not have any classess at the present</br>Please contact with us for more support",
+            () => {}
+          );
           localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
         }
       });
 
-    api
-      .get("/Feedback/GetCourseFeedbackbyId", {
-        params: { courseid: param.id },
-      })
-      .then((res) => {
-        setCourseFeedback(res.data);
-      })
-      .catch((err) => {});
-
     let timerInterval;
     Swal.fire({
       title: "Loading...",
-      timer: 1300,
+      timer: 10000,
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();

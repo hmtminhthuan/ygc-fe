@@ -23,6 +23,8 @@ export default function HeaderHome() {
     setUserLogin(USER);
   }
   useEffect(() => {
+    USER = JSON.parse(USER_LOGIN);
+    setUserLogin(USER);
     document.addEventListener("scroll", () => {
       let header = document.getElementById("bg-header");
       if (window.scrollY > 50 && !(header == null)) {
@@ -55,10 +57,143 @@ export default function HeaderHome() {
               Yoga Center
             </Navbar.Brand>
           </div>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            className="header-toggle"
-          />
+
+          <div className="flex">
+            <div className="d-none d-lg-none d-md-flex mx-3 ms-0">
+              <NavLink
+                to="/"
+                className={`px-3 py-2 nav-item-md`}
+                style={{
+                  color: `${
+                    menu_active != null && menu_active == "home-home"
+                      ? "rgba(210, 145, 188, 1)"
+                      : ""
+                  }`,
+                  fontWeight: "bolder",
+                }}
+                onClick={() => {
+                  navigateTo("home-home");
+                }}
+              >
+                Home
+              </NavLink>
+
+              <NavLink
+                to="/course"
+                className={`px-3 py-2 nav-item-md`}
+                style={{
+                  color: `${
+                    menu_active != null && menu_active == "/course"
+                      ? "rgba(210, 145, 188, 1)"
+                      : ""
+                  }`,
+                  fontWeight: "bolder",
+                }}
+                onClick={() => {
+                  navigateTo("/course");
+                }}
+              >
+                Course
+              </NavLink>
+
+              {USER_LOGIN != null &&
+              userLogin.accountID != null &&
+              userLogin.accountID != undefined &&
+              (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
+                <NavLink
+                  to={userLogin.role.id == 1 ? "/admin" : "/staff"}
+                  className={`px-3 py-2 nav-item-md`}
+                  style={{
+                    fontWeight: "bolder",
+                  }}
+                  onClick={() => {
+                    navigateTo(userLogin.role.id == 1 ? "/admin" : "/staff");
+                  }}
+                >
+                  Dashboard
+                </NavLink>
+              ) : (
+                <></>
+              )}
+
+              {USER_LOGIN != null &&
+              userLogin.accountID != null &&
+              userLogin.accountID != undefined &&
+              userLogin.role.id == 3 ? (
+                <>
+                  <NavLink
+                    to="/trainer/schedule"
+                    className={`px-3 py-2 nav-item-md`}
+                    style={{
+                      color: `${
+                        menu_active != null &&
+                        menu_active == "/trainer/schedule"
+                          ? "rgba(210, 145, 188, 1)"
+                          : ""
+                      }`,
+                      fontWeight: "bolder",
+                    }}
+                    onClick={() => {
+                      navigateTo("/trainer/schedule");
+                    }}
+                  >
+                    Schedule
+                  </NavLink>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {USER_LOGIN != null &&
+              userLogin.accountID != null &&
+              userLogin.accountID != undefined &&
+              userLogin.role.id == 4 ? (
+                <>
+                  <NavLink
+                    to="/trainee/schedule"
+                    className={`px-3 py-2  nav-item-md`}
+                    style={{
+                      color: `${
+                        menu_active != null &&
+                        menu_active == "/trainee/schedule"
+                          ? "rgba(210, 145, 188, 1)"
+                          : ""
+                      }`,
+                      fontWeight: "bolder",
+                    }}
+                    onClick={() => {
+                      navigateTo("/trainee/schedule");
+                    }}
+                  >
+                    Schedule
+                  </NavLink>
+                  <NavLink
+                    to="/transaction"
+                    className={`px-3 py-2 nav-item-md`}
+                    style={{
+                      color: `${
+                        menu_active != null && menu_active == "/transaction"
+                          ? "rgba(210, 145, 188, 1)"
+                          : ""
+                      }`,
+                      fontWeight: "bolder",
+                    }}
+                    onClick={() => {
+                      navigateTo("/transaction");
+                    }}
+                  >
+                    History
+                  </NavLink>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            <Navbar.Toggle
+              aria-controls="basic-navbar-nav"
+              className="header-toggle"
+            />
+          </div>
           <Navbar.Collapse
             id="basic-navbar-nav"
             className="flex justify-content-end px-3 py-2 pt-0 header-small navbar-item"
@@ -69,7 +204,7 @@ export default function HeaderHome() {
             >
               <NavLink
                 to="/"
-                className={`px-4 nav-item
+                className={`px-4 nav-item d-lg-block d-md-none d-block
                 ${
                   menu_active != null && menu_active == "home-home"
                     ? "nav-item-after-login"
@@ -83,7 +218,7 @@ export default function HeaderHome() {
               </NavLink>
               <NavLink
                 to="/course"
-                className={`px-4 nav-item
+                className={`px-4 nav-item d-lg-block d-md-none d-block
                 ${
                   menu_active != null && menu_active == "/course"
                     ? "nav-item-after-login"
@@ -118,7 +253,7 @@ export default function HeaderHome() {
                   (userLogin.role.id == 1 || userLogin.role.id == 2) ? (
                     <NavLink
                       to={userLogin.role.id == 1 ? "/admin" : "/staff"}
-                      className={`px-4 nav-item`}
+                      className={`px-4 nav-item d-lg-block d-md-none d-block`}
                       onClick={() => {
                         navigateTo(
                           userLogin.role.id == 1 ? "/admin" : "/staff"
@@ -136,7 +271,7 @@ export default function HeaderHome() {
                     <>
                       <NavLink
                         to="/trainer/schedule"
-                        className={`px-4 nav-item
+                        className={`px-4 nav-item d-lg-block d-md-none d-block
                         ${
                           menu_active != null &&
                           menu_active == "/trainer/schedule"
@@ -159,7 +294,7 @@ export default function HeaderHome() {
                     <>
                       <NavLink
                         to="/trainee/schedule"
-                        className={`px-4 nav-item
+                        className={`px-4 nav-item d-lg-block d-md-none d-block
                         ${
                           menu_active != null &&
                           menu_active == "/trainee/schedule"
@@ -174,7 +309,7 @@ export default function HeaderHome() {
                       </NavLink>
                       <NavLink
                         to="/transaction"
-                        className={`px-4 nav-item
+                        className={`px-4 nav-item d-lg-block d-md-none d-block
                         ${
                           menu_active != null && menu_active == "/transaction"
                             ? "nav-item-after-login"
@@ -263,7 +398,7 @@ export default function HeaderHome() {
                     });
                   }}
                 >
-                  <div className="flex p-0 m-0">LogOut</div>
+                  <div className="flex p-0 m-0">Log Out</div>
                 </NavLink>
               ) : (
                 <></>

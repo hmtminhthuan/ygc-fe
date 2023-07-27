@@ -9,6 +9,7 @@ import "./AdminSetting.scss";
 import moment from "moment/moment";
 import { alert } from "../../../component/AlertComponent/Alert";
 import Swal from "sweetalert2";
+import { menuAction } from "../../../component/Admin/MenuAdmin/MenuAction";
 
 export default function AdminSetting() {
   localStorage.setItem("MENU_ACTIVE", "/admin/setting");
@@ -35,6 +36,7 @@ export default function AdminSetting() {
       setId(1);
       setNavigation(1);
     }, 1000);
+    menuAction.menuActive();
   }, []);
 
   useEffect(() => {
@@ -129,7 +131,7 @@ export default function AdminSetting() {
               </h2>
               <div className="card overflow-hidden">
                 <div className="row no-gutters row-bordered row-border-light">
-                  <div className="col-md-3 pt-0">
+                  <div className="col-lg-3 col-12 pt-0 text-center text-lg-start">
                     <div className="list-group list-group-flush account-settings-links">
                       {menuSetting.map((setting) => (
                         <NavLink
@@ -139,7 +141,7 @@ export default function AdminSetting() {
                           }
                         ${
                           parseInt(navigation) == parseInt(setting.id)
-                            ? "bg-dark bg-opacity-10"
+                            ? "bg-dark bg-opacity-25"
                             : ""
                         }`}
                           data-toggle="list"
@@ -165,7 +167,7 @@ export default function AdminSetting() {
                       ))}
                     </div>
                   </div>
-                  <div className="col-md-9">
+                  <div className="col-lg-9 col-12">
                     <div className="tab-content">
                       <div
                         className={`tab-pane fade active show ${
@@ -180,6 +182,7 @@ export default function AdminSetting() {
                           form={form}
                           size="large"
                           autoComplete="off"
+                          className="w-auto"
                         >
                           <div className="card-body row mx-4">
                             <div className="form-group col-md-12">
