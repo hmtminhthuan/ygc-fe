@@ -22,7 +22,6 @@ export default function BlogManagement() {
       .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
-
         setLoading(false);
       })
       .catch((err) => {});
