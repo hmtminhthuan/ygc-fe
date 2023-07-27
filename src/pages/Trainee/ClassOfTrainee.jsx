@@ -2,11 +2,12 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { api } from "../../constants/api";
 import Swal from "sweetalert2";
-
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 import "./ClassOfTrainee.scss";
 import Aos from "aos";
 
 export default function ClassOfTrainee() {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [classDetail, setClassDetail] = useState({});
   const { id } = useParams();
@@ -27,18 +28,18 @@ export default function ClassOfTrainee() {
   };
 
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 1000,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 1000,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
     api
       .get("/Trainee/getListClassForTrainee", {
         params: {
@@ -53,6 +54,7 @@ export default function ClassOfTrainee() {
         if (list[0] == null || list[0] == undefined) {
           comeBackHomeInvalid();
         }
+        setLoading(false);
       })
       .catch((err) => {
         comeBackHomeInvalid();
@@ -74,91 +76,95 @@ export default function ClassOfTrainee() {
   Aos.init();
 
   return (
-    <div className="main--content bg-white">
-      <section className="trainer-area pt-3 pb-3">
-        <div className="row flex trainer mt-2 mx-5 mb-5">
-          <div className="container bootstrap snippets bootdey">
-            <div className="col-md-12 ">
-              <div className="profile-container mx-5">
-                <div
-                  className="profile-header row"
-                  data-aos="zoom-in-up"
-                  data-aos-duration="150"
-                  data-aos-delay="600"
-                >
-                  <div className="">
-                    <NavLink
-                      to={"/trainee/schedule"}
-                      className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
-                      style={{ fontSize: "18px", fontWeight: "500" }}
-                    >
-                      <i className="fa-solid fa-arrow-left"></i>
-                      <span className="mx-2">Back</span>
-                    </NavLink>
-                  </div>
-                  <div className="col-lg-4 col-md-12 col-sm-12 text-center mt-5">
-                    <img
-                      src={classDetail.courseImg}
-                      alt={classDetail.courseName}
-                      className="header-avatar"
-                    />
-                  </div>
-                  <div className="col-lg-8 col-md-12 col-sm-12 profile-info text-center my-0 py-0">
-                    <div
-                      className="header-fullname"
-                      style={{ fontSize: "24px", fontWeight: "bold" }}
-                    >
-                      Class: {classDetail.className}
-                    </div>
-                    <div
-                      className="header-information"
-                      style={{ fontSize: "20px" }}
-                    >
-                      <p className="m-0 p-0 my-0 text-center">
-                        Course name: {classDetail.courseName}
-                      </p>
-                      <p className="m-0 p-0 my-2 text-center">
-                        Room: {classDetail.room}
-                      </p>
-                      <p className="m-0 p-0 my-2 text-center">
-                        Trainer: {classDetail.firstName} {classDetail.lastName}
-                      </p>
-                      <p className="m-0 p-0 my-2 text-center">
-                        Phone: {classDetail.phone}
-                      </p>
-                    </div>
-                  </div>
+    <>
+      <LoadingOverlay loading={loading} />
+      <div className="main--content bg-white">
+        <section className="trainer-area pt-3 pb-3">
+          <div className="row flex trainer mt-2 mx-5 mb-5">
+            <div className="container bootstrap snippets bootdey">
+              <div className="col-md-12 ">
+                <div className="profile-container mx-5">
                   <div
-                    className="col-md-12 col-sm-12 col-xs-12 profile-stats
-                 "
+                    className="profile-header row"
+                    data-aos="zoom-in-up"
+                    data-aos-duration="150"
+                    data-aos-delay="600"
                   >
-                    <div className="row">
-                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div
-                          className="stats-value pink"
-                          style={{ fontSize: "20px" }}
-                        >
-                          {levelName}
-                        </div>
-                        <div className="stats-title">LEVEL</div>
+                    <div className="">
+                      <NavLink
+                        to={"/trainee/schedule"}
+                        className="mx-4 mt-4 course-detail-come-back text-dark text-center text-decoration-none flex align-items-center"
+                        style={{ fontSize: "18px", fontWeight: "500" }}
+                      >
+                        <i className="fa-solid fa-arrow-left"></i>
+                        <span className="mx-2">Back</span>
+                      </NavLink>
+                    </div>
+                    <div className="col-lg-4 col-md-12 col-sm-12 text-center mt-5">
+                      <img
+                        src={classDetail.courseImg}
+                        alt={classDetail.courseName}
+                        className="header-avatar"
+                      />
+                    </div>
+                    <div className="col-lg-8 col-md-12 col-sm-12 profile-info text-center my-0 py-0">
+                      <div
+                        className="header-fullname"
+                        style={{ fontSize: "24px", fontWeight: "bold" }}
+                      >
+                        Class: {classDetail.className}
                       </div>
-                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div
-                          className="stats-value pink"
-                          style={{ fontSize: "20px" }}
-                        >
-                          {formatDate(classDetail.startDate)}
-                        </div>
-                        <div className="stats-title">START DATE</div>
+                      <div
+                        className="header-information"
+                        style={{ fontSize: "20px" }}
+                      >
+                        <p className="m-0 p-0 my-0 text-center">
+                          Course name: {classDetail.courseName}
+                        </p>
+                        <p className="m-0 p-0 my-2 text-center">
+                          Room: {classDetail.room}
+                        </p>
+                        <p className="m-0 p-0 my-2 text-center">
+                          Trainer: {classDetail.firstName}{" "}
+                          {classDetail.lastName}
+                        </p>
+                        <p className="m-0 p-0 my-2 text-center">
+                          Phone: {classDetail.phone}
+                        </p>
                       </div>
-                      <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div
-                          className="stats-value pink"
-                          style={{ fontSize: "20px" }}
-                        >
-                          {formatDate(classDetail.endDate)}
+                    </div>
+                    <div
+                      className="col-md-12 col-sm-12 col-xs-12 profile-stats
+                 "
+                    >
+                      <div className="row">
+                        <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div
+                            className="stats-value pink"
+                            style={{ fontSize: "20px" }}
+                          >
+                            {levelName}
+                          </div>
+                          <div className="stats-title">LEVEL</div>
                         </div>
-                        <div className="stats-title">END DATE</div>
+                        <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div
+                            className="stats-value pink"
+                            style={{ fontSize: "20px" }}
+                          >
+                            {formatDate(classDetail.startDate)}
+                          </div>
+                          <div className="stats-title">START DATE</div>
+                        </div>
+                        <div className="mb-0 col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div
+                            className="stats-value pink"
+                            style={{ fontSize: "20px" }}
+                          >
+                            {formatDate(classDetail.endDate)}
+                          </div>
+                          <div className="stats-title">END DATE</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -166,8 +172,8 @@ export default function ClassOfTrainee() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 }

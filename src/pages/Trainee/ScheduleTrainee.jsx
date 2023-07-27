@@ -16,7 +16,7 @@ export default function ScheduleTrainee() {
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const [listOfFinishedClasses, setListOfFinishedClasses] = useState([]);
   const [responsive, setResponsive] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(false);
