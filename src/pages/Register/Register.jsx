@@ -66,9 +66,7 @@ export default function Register() {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const formItemLayout = {
@@ -273,8 +271,9 @@ export default function Register() {
       img: "",
     },
 
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       if (registerByEmail) {
+        values.email = emailRegisterByEmail;
         handleRegister(values);
       } else {
         handleVerifyEmail(values);
@@ -304,19 +303,20 @@ export default function Register() {
               () => {}
             );
           } else {
-            // let fullname = user.displayName.split(" ");
-            // let firstname = fullname[0];
-            // let lastname = "";
-            // for (let i = 1; i < fullname.length; i++) {
-            //   lastname += fullname[i];
-            // }
-            // document.querySelector("input#email").value = user.email;
-            // formik.setFieldValue("firstname", firstname);
-            // formik.setFieldValue("lastname", lastname);
-            // if (user.phoneNumber != null && user.phoneNumber != undefined) {
-            //   formik.setFieldValue("phoneNumber", user.phoneNumber);
-            // }
+            let fullname = user.displayName.split(" ");
+            let firstname = fullname[0];
+            let lastname = "";
+            for (let i = 1; i < fullname.length; i++) {
+              lastname += fullname[i];
+            }
+            formik.setFieldValue("firstname", firstname);
+            formik.setFieldValue("lastname", lastname);
             formik.setFieldValue("email", user.email);
+            form.setFieldsValue({
+              firstname: firstname,
+              lastname: lastname,
+              email: user.email,
+            });
             setRegisterByEmail(true);
             setEmailRegisterByEmail(user.email);
             alert.alertSuccessWithTime(
@@ -525,6 +525,7 @@ export default function Register() {
                         hasFeedback
                       >
                         <Input
+                          id="input_email"
                           name="email"
                           value={formik.values.email}
                           onChange={formik.handleChange}
@@ -602,7 +603,7 @@ export default function Register() {
                         rules={[
                           {
                             required: true,
-                            message: "Confirm Password cannot be blank",
+                            message: "Confirm Password is required",
                           },
                           ({ getFieldValue }) => ({
                             validator(_, value) {
@@ -612,9 +613,7 @@ export default function Register() {
                               ) {
                                 return Promise.resolve();
                               }
-                              return Promise.reject(
-                                "Confirm Password does not match"
-                              );
+                              return Promise.reject("Confirm does not match");
                             },
                           }),
                         ]}
@@ -701,11 +700,6 @@ export default function Register() {
                           font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-green-600
                           shadow-lg"
                         type="submit"
-                        onClick={() => {
-                          if (registerByEmail) {
-                            formik.handleSubmit();
-                          }
-                        }}
                       >
                         Register
                       </button>
