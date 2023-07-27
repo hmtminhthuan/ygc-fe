@@ -893,13 +893,25 @@ export default function StaffBooking() {
 
                           {/* Payment Method  */}
                           {status == 1 || status == 6 ? (
-                            <td style={{ textAlign: "center" }}>VNPAY</td>
+                            <td style={{ textAlign: "center" }}>VNPay</td>
                           ) : (
                             <></>
                           )}
-                          {status == 8 ||
-                          status == 9 ||
-                          ((status == 3 || status == 4) && id % 3 == 0) ? (
+                          {status == 8 || status == 9 ? (
+                            <td style={{ textAlign: "center" }}>
+                              Mobile Banking
+                            </td>
+                          ) : (
+                            <></>
+                          )}
+
+                          {(status == 3 || status == 4) && id % 5 != 0 ? (
+                            <td style={{ textAlign: "center" }}>VNPay</td>
+                          ) : (
+                            <></>
+                          )}
+
+                          {(status == 3 || status == 4) && id % 5 == 0 ? (
                             <td style={{ textAlign: "center" }}>
                               Mobile Banking
                             </td>
