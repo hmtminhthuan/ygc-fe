@@ -519,11 +519,9 @@ export default function Register() {
                             message: "Email is not in correct form",
                           },
                         ]}
-                        style={
-                          {
-                            // display: `${registerByEmail ? "none" : ""}`,
-                          }
-                        }
+                        style={{
+                          display: `${registerByEmail ? "none" : ""}`,
+                        }}
                         hasFeedback
                       >
                         <Input
@@ -534,7 +532,7 @@ export default function Register() {
                         />
                       </Form.Item>
                       <p
-                        className="p-0 m-0 col-sm-12 col-md-7 mb-4"
+                        className="ps-1 p-0 m-0 col-sm-12 col-md-7 mb-4"
                         style={{
                           display: `${!registerByEmail ? "none" : ""}`,
                           transform: "translateY(5px)",
