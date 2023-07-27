@@ -8,42 +8,25 @@ import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import "./BlogManagement.scss";
 import { alert } from "../../../component/AlertComponent/Alert";
-
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function BlogManagement() {
   const navigate = useNavigate();
   localStorage.setItem("MENU_ACTIVE", "/staff/blogManagement");
   const [blogList, setBlogList] = useState([]);
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [dateSort, setDateSort] = useState("All");
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Blog/GetBlogList")
       .then((res) => {
         setBlogList(res.data);
-        setIsDataLoaded(true);
+
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
-
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
 
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -161,6 +144,7 @@ export default function BlogManagement() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main bg-white" id="">
         <MenuStaff />
@@ -168,10 +152,7 @@ export default function BlogManagement() {
           <section className="staff-list-area pt-3 pb-3">
             <div className="row flex blog-containe mt-1 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1
-                  className="m-0 p-0 mb-2"
-                  // style={{ color: "#97a7e4" }}
-                >
+                <h1 className="m-0 p-0 mb-2">
                   <i className="ri-bookmark-line"></i> Blogs Management
                 </h1>
               </div>
@@ -211,7 +192,7 @@ export default function BlogManagement() {
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>No.</th>
                       <th>Date</th>
                       <th></th>
                       <th>Header</th>
@@ -223,11 +204,11 @@ export default function BlogManagement() {
                     </tr>
                   </thead>
                   <tbody>
-                    {sortedBlogs.map((blog) => {
+                    {sortedBlogs.map((blog, index) => {
                       const formattedDate = formatDate(blog.date);
                       return (
                         <tr key={blog.blogID}>
-                          <td>{`${blog.blogID}`}</td>
+                          <td>{index + 1}</td>
                           <td colSpan={2}>{formattedDate}</td>
                           <td
                             style={{ fontSize: "12px" }}

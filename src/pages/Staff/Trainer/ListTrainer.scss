@@ -3,7 +3,7 @@
   padding: 0 !important;
   .staff-list-area {
     margin: 0;
-    // background: linear-gradient(45deg, #f2ced8, #f2acc6);
+
     background: #fff !important;
     font-family: "Montserrat", sans-serif;
     font-weight: 300;
@@ -40,37 +40,13 @@
 
       tbody {
         overflow: auto;
-        height: 300px;
+        height: 100px;
         text-align: center;
       }
-
-      // tbody tr:hover {
-      //   background-color: #ffe4e7;
-      // }
-
-      // tbody td {
-      //   position: relative;
-      // }
-
-      // tbody td:hover:before {
-      //   content: "";
-      //   position: absolute !important;
-      //   left: 0;
-      //   right: 0;
-      //   top: -9999px;
-      //   bottom: -9999px;
-      //   // background-color: rgba(255, 255, 255, 0.1);
-      //   z-index: -1;
-      //   // opacity: 1;
-      // }
-      // thead tr th:hover:before {
-      //   z-index: -1;
-      // }
     }
 
     .setting {
       font-size: 18px;
-      // z-index: 1000 !important;
 
       .ri-delete-bin-line {
         position: absolute;
@@ -82,20 +58,11 @@
         justify-content: center;
         align-items: center;
         color: red;
-        // z-index: 5000 !important;
       }
     }
   }
 }
-// .staff-template-scss .main--content {
-//   overflow-y: scroll !important;
-// }
-// .staff-template-scss table {
-//   overflow-y: scroll !important;
-// }
-// .staff-template-scss table {
-//   position: static !important;
-// }
+
 .staff-template-scss table tr {
   z-index: 0 !important;
 }
@@ -157,18 +124,3 @@
     overflow-y: scroll !important;
   }
 }
-// @media screen and (max-height: 2000px) {
-//   .main {
-//     display: flex !important;
-//     width: 100vw !important;
-//   }
-//   .main--content {
-//     // overflow-x: scroll !important;
-//     // overflow-y: scroll !important;
-//     width: 85vw !important;
-//   }
-//   .staff-list-area {
-//     overflow-x: scroll !important;
-//     width: 100% !important;
-//   }
-// }

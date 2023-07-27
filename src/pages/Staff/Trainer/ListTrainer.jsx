@@ -8,6 +8,7 @@ import "./ListTrainer.scss";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import { alert } from "../../../component/AlertComponent/Alert";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function ListTrainer() {
   localStorage.setItem("MENU_ACTIVE", "/staff/listTrainer");
   const [trainerList, setTrainerList] = useState([]);
@@ -20,26 +21,14 @@ export default function ListTrainer() {
   const [listOfSearchedName, setListOfSearchedName] = useState([]);
   const [viewPhoneSearch, setViewPhoneSearch] = useState(false);
   const [viewMailSearch, setViewMailSearch] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Account/AccountListByRole?id=3")
       .then((res) => {
         setTrainerList(res.data);
-        setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
@@ -157,6 +146,7 @@ export default function ListTrainer() {
   };
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main bg-white" id="">
         <MenuStaff />
@@ -164,10 +154,7 @@ export default function ListTrainer() {
           <section className="staff-list-area pt-3 pb-3">
             <div className="row flex trainer-containe mt-2 mx-5 mb-5">
               <div className="headerlist mb-2">
-                <h1
-                  className="m-0 p-0 mb-2"
-                  //  style={{ color: "#ff9aa2" }}
-                >
+                <h1 className="m-0 p-0 mb-2">
                   <i className="ri-bookmark-line"></i> List Trainers
                 </h1>
               </div>
@@ -199,7 +186,7 @@ export default function ListTrainer() {
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>No.</th>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>
@@ -431,9 +418,9 @@ export default function ListTrainer() {
                           return true;
                         }
                       })
-                      .map((trainer) => (
+                      .map((trainer, index) => (
                         <tr key={trainer.accountID}>
-                          <td>{`${trainer.accountID}`}</td>
+                          <td>{index + 1}</td>
                           <td>{`${trainer.firstName}`}</td>
                           <td>{`${trainer.lastName}`}</td>
                           <td>{`${trainer.gender ? "Male" : "Female"}`}</td>

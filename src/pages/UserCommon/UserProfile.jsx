@@ -9,7 +9,7 @@ import maleImg from "../../assets/images/avt-male.jpg";
 import femaleImg from "../../assets/images/avt-female.jpg";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import Aos from "aos";
-
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 function UserProfile() {
   localStorage.setItem("MENU_ACTIVE", "/profile");
   // const { paramID } = useParams();
@@ -20,6 +20,7 @@ function UserProfile() {
   let USER = {};
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!(USER_LOGIN != null && !accept)) {
@@ -33,19 +34,6 @@ function UserProfile() {
         USER.accountID != undefined &&
         USER.accountID.toString().trim() == paramID.toString().trim()
       ) {
-        let timerInterval;
-        Swal.fire({
-          title: "Loading...",
-          timer: 1500,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-          willClose: () => {
-            setAccept(true);
-            clearInterval(timerInterval);
-          },
-        });
       } else {
         navigate("/");
       }
@@ -57,12 +45,14 @@ function UserProfile() {
       .then((res) => {
         setLinkImg(res.data.img);
         setProfile(res.data);
+        setAccept(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
 
   if (profile === null) {
-    return null;
+    return <div>Profile not found or loading...</div>;
   }
 
   let {
@@ -92,6 +82,7 @@ function UserProfile() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <>
         <div
           className="w-100"

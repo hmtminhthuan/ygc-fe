@@ -8,45 +8,28 @@ import "./BlogPage.scss";
 import { NavLink } from "react-router-dom";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
-
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function BlogPage() {
   localStorage.setItem("MENU_ACTIVE", "/blog");
   const param = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
     api
       .get("/Blog/GetBlogById", {
         params: { id: param.id },
       })
       .then((res) => {
         setBlogDetail(res.data);
-        setIsDataLoaded(true);
+
+        setLoading(false);
       })
       .catch((err) => {});
   }, [param.id]);
 
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
-
   if (blogDetail === null) {
-    return null;
+    return <LoadingOverlay loading={loading} />;
   }
 
   let {
@@ -72,20 +55,54 @@ export default function BlogPage() {
 
   const formattedDate = formatDate(date);
 
-  const previousBlogID = blogID - 1;
-  const nextBlogID = blogID + 1;
+  const formatContentWithBoldPhrases = (content) => {
+    return content.split("\n").map((paragraph, index) => {
+      const colonIndex = paragraph.indexOf(":");
+      if (colonIndex !== -1) {
+        const boldPart = paragraph.slice(0, colonIndex + 1); // Get the part before colon, including the colon itself
+        const normalPart = paragraph.slice(colonIndex + 1); // Get the part after colon
+        return (
+          <React.Fragment key={index}>
+            <strong style={{ fontSize: "20px" }}>{boldPart}</strong>
+            {normalPart}
+            <br />
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment key={index}>
+            {paragraph}
+            <br />
+          </React.Fragment>
+        );
+      }
+    });
+  };
+
+  const formattedContent = formatContentWithBoldPhrases(content);
 
   return (
     <div>
+      <LoadingOverlay loading={loading} />
       <div className="header-top m-4 mx-0 mt-0">
         <HeaderHome />
       </div>
       <main className="pt-5">
         <div className={`box course-detail-area mt-5 my-5 px-5 pt-4`}>
           <div className="course-detail-info w-100 form-container flex-column justify-content-start align-items-start p-3">
-            <div className="close px-0 mx-0">
-              <NavLink to={"/blog"}>
-                <a href="">Close</a>
+            <div
+              className="close px-0 mx-0"
+              style={{ textAlign: "right", margin: "10px 50px" }}
+            >
+              <NavLink
+                to={"/blog"}
+                style={{
+                  textDecoration: "none",
+                  marginRight: "10px",
+                  color: "rgb(208, 143, 186)",
+                }}
+              >
+                Close
                 <i className="fa-solid fa-circle-xmark"></i>
               </NavLink>
             </div>
@@ -100,7 +117,7 @@ export default function BlogPage() {
               </a>
 
               <div className="info">
-                <p>
+                <p style={{ margin: "0" }}>
                   {firstName} {lastName}
                 </p>
                 <p className="time"> {formattedDate}</p>
@@ -108,14 +125,7 @@ export default function BlogPage() {
             </div>
 
             <div className="content blog-content">
-              <p>
-                {content.split("\r\n").map((paragraph, index) => (
-                  <React.Fragment key={index}>
-                    {paragraph}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
+              <p>{formattedContent}</p>
 
               <p className="">
                 <img src={img} alt="" style={{ borderRadius: "25px" }} />

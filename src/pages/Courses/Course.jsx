@@ -9,8 +9,11 @@ import axios from "axios";
 import { Select } from "antd";
 import { api } from "../../constants/api";
 import FooterHome from "../../component/FooterHome/FooterHome";
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
+
 export default function Course() {
   localStorage.setItem("MENU_ACTIVE", "/course");
+  const [loading, setLoading] = useState(true);
   const [courseList, setCourseList] = useState([]);
   const [renderCourseList, setRenderCourseList] = useState([]);
   const [levelSort, setLevelSort] = useState("All");
@@ -18,8 +21,6 @@ export default function Course() {
   const [discount, setDiscount] = useState("All");
   const redirectLink = localStorage.getItem("REDIRECT_LINK_BOOK_CLASS");
   const userLogin = localStorage.getItem("USER_LOGIN");
-
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   if (
     redirectLink != null &&
@@ -32,33 +33,34 @@ export default function Course() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 900,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 900,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
     api
       .get("/Course/GetAllCourseForAdmin")
       .then(async (res) => {
         setCourseList(res.data);
         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
-        setIsDataLoaded(true);
+        // setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
 
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
+  // useEffect(() => {
+  //   if (isDataLoaded) {
+  //     Swal.close();
+  //   }
+  // }, [isDataLoaded]);
 
   // useEffect(() => {
   //   setInterval(() => {
@@ -171,6 +173,7 @@ export default function Course() {
 
   return (
     <div>
+      <LoadingOverlay loading={loading} />
       <HeaderHome />
       <Banner title={"Yoga Courses"} descripton={"Yoga Healthy Courses"} />
       <section className="w-100 py-5 pt-2 courlist-area flex-column justify-content-center align-items-center">

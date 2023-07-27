@@ -6,7 +6,7 @@ import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import { Rating } from "@mui/material";
 import moment from "moment/moment";
-
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 export default function CourseView() {
   localStorage.setItem("MENU_ACTIVE", "/staff/course");
   const [courseList, setCourseList] = useState([]);
@@ -24,6 +24,7 @@ export default function CourseView() {
   const [renderCount, setRenderCount] = useState(0);
   const [renderCount2, setRenderCount2] = useState(0);
   const [viewData, setViewData] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
@@ -137,24 +138,26 @@ export default function CourseView() {
       .finally(() => {
         setRenderCourseList(courseListEnd);
         setCourseList(courseListEnd);
+        setLoading(false);
       });
   };
 
   useEffect(() => {
     renderCourseForAdmin();
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 1500,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        setViewData(true);
-      },
-    });
+    setViewData(true);
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 1500,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //     setViewData(true);
+    //   },
+    // });
   }, []);
 
   const resetSort = () => {
@@ -359,6 +362,7 @@ export default function CourseView() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
