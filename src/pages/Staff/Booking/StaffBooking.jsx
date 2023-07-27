@@ -900,7 +900,9 @@ export default function StaffBooking() {
                           {status == 8 ||
                           status == 9 ||
                           ((status == 3 || status == 4) && id % 3 == 0) ? (
-                            <td style={{ textAlign: "center" }}>ATM</td>
+                            <td style={{ textAlign: "center" }}>
+                              Mobile Banking
+                            </td>
                           ) : (
                             <></>
                           )}
