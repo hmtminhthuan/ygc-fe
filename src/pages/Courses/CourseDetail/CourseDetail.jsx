@@ -26,6 +26,7 @@ export default function CourseDetail() {
   const [userLogin, setUserLogin] = useState({});
   const [viewData, setViewData] = useState(false);
   const [viewClassFirst, setViewClassFirst] = useState(false);
+  const [loading, setLoading] = useState(true);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -91,20 +92,6 @@ export default function CourseDetail() {
           localStorage.removeItem("NOTIFICATION_CHOOSE_CLASS");
         }
       });
-
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 10000,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        setViewData(true);
-        clearInterval(timerInterval);
-      },
-    });
 
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     let USER = {};
