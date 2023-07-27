@@ -6,8 +6,10 @@ import femaleImg from "../../assets/images/avt-female.jpg";
 import "./ClassOfTrainer.scss";
 import Swal from "sweetalert2";
 import Aos from "aos";
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 
 export default function ClassOfTrainer() {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [classDetail, setClassDetail] = useState({});
   const [trainees, setTrainees] = useState([]);
@@ -29,18 +31,18 @@ export default function ClassOfTrainer() {
     });
   };
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 800,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
     const USER_ID = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
     api
       .get("/Trainer/getListClassForTrainer", {
@@ -59,6 +61,7 @@ export default function ClassOfTrainer() {
         if (list[0].trainerId == USER_ID) {
           setAvailable(true);
         }
+        setLoading(false);
       })
       .catch((err) => {
         comeBackHomeInvalid();
@@ -86,6 +89,7 @@ export default function ClassOfTrainer() {
   Aos.init();
   return (
     <>
+      <LoadingOverlay loading={loading} />
       {available ? (
         <div className="main--content bg-white">
           <section
