@@ -13,6 +13,7 @@ import FooterHome from "../../../component/FooterHome/FooterHome";
 import Swal from "sweetalert2";
 import { alert } from "../../../component/AlertComponent/Alert";
 import Aos from "aos";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 
 export default function CourseDetail() {
   localStorage.setItem("MENU_ACTIVE", "/course");
@@ -26,6 +27,7 @@ export default function CourseDetail() {
   const [userLogin, setUserLogin] = useState({});
   const [viewData, setViewData] = useState(false);
   const [viewClassFirst, setViewClassFirst] = useState(false);
+  const [loading, setLoading] = useState(true);
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -34,6 +36,7 @@ export default function CourseDetail() {
   };
   let arr = [];
   useEffect(() => {
+    window.scrollTo(0, 0);
     api
       .get("/Course/GetCourseByID", {
         params: { id: param.id },
@@ -43,6 +46,7 @@ export default function CourseDetail() {
         setCourseClasses(res.data.listClass);
         setCourseFeedback(res.data.listFeedback);
         arr = res.data.listClass;
+        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
@@ -87,20 +91,20 @@ export default function CourseDetail() {
         }
       });
 
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 10000,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        setViewData(true);
-        clearInterval(timerInterval);
-      },
-    });
-
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 10000,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     setViewData(true);
+    //     clearInterval(timerInterval);
+    //   },
+    // });
+    setViewData(true);
     const USER_LOGIN = localStorage.getItem("USER_LOGIN");
     let USER = {};
     if (USER_LOGIN != null) {
@@ -142,6 +146,7 @@ export default function CourseDetail() {
 
   return (
     <div>
+      <LoadingOverlay loading={loading} />
       <div className="header-top m-4 mx-0 mt-0">
         <HeaderHome />
       </div>
