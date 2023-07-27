@@ -5,13 +5,14 @@ import "./ScheduleTrainer.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
 import Swal from "sweetalert2";
 import Aos from "aos";
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 
 export default function ScheduleTrainer() {
+  const [loading, setLoading] = useState(true);
   localStorage.setItem("MENU_ACTIVE", "/trainer/schedule");
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
   const [classList, setClassList] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [responsive, setResponsive] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(false);
   const [scheduelTableWidth, setScheduelTableWidth] = useState(-1);
@@ -28,19 +29,19 @@ export default function ScheduleTrainer() {
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
 
   useEffect(() => {
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 1200,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    });
-
+    // let timerInterval;
+    // Swal.fire({
+    //   title: "Loading...",
+    //   timer: 1200,
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    //   willClose: () => {
+    //     clearInterval(timerInterval);
+    //   },
+    // });
+    setLoading(true);
     let schedule_table_area = document.querySelector("div#schedule-table-area");
 
     if (
@@ -88,16 +89,16 @@ export default function ScheduleTrainer() {
             (classItem) => new Date(classItem.endDate) >= new Date()
           )
         );
-        setIsDataLoaded(true);
+        setLoading(false);
       })
       .catch((err) => {});
   }, []);
 
-  useEffect(() => {
-    if (isDataLoaded) {
-      Swal.close();
-    }
-  }, [isDataLoaded]);
+  // useEffect(() => {
+  //   if (isDataLoaded) {
+  //     Swal.close();
+  //   }
+  // }, [isDataLoaded]);
 
   useEffect(() => {
     let schedule_table_area = document.querySelector("div#schedule-table-area");
@@ -165,6 +166,7 @@ export default function ScheduleTrainer() {
   Aos.init();
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <div className="header-top m-4 mx-0 mt-0">
         <HeaderHome />
       </div>
