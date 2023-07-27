@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./FeedbackManagement.scss";
 import { api } from "../../../constants/api";
-import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import MenuStaff from "../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../component/Staff/HeaderStaff";
 import { Rating } from "@mui/material";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 
 export default function FeedbackManagement() {
   localStorage.setItem("MENU_ACTIVE", "/staff/feedbackManagement");
@@ -21,6 +21,7 @@ export default function FeedbackManagement() {
   const [sortedRating, setSortedRating] = useState("Unsort");
   const [priority, setPriority] = useState("");
   const [viewData, setViewData] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const symbolSorting = (item) => {
     switch (item) {
@@ -44,105 +45,24 @@ export default function FeedbackManagement() {
   };
 
   const renderCourseForAdmin = () => {
-    let courseListStart = [];
-    let courseListEnd = [];
     api
-      .get("/Course/GetAllCourseForAdmin")
-      .then(async (res) => {
-        setCourseList(res.data);
-        setRenderCourseList(res.data);
-        courseListStart = res.data;
+      .get("/Feedback/GetCoursesFeedbackForAdminstrator")
+      .then((res) => {
+        let arr = res.data.sort((a, b) => b.numberPending - a.numberPending);
+        setCourseList(arr);
+        setRenderCourseList(arr);
       })
       .catch((err) => {})
       .finally(() => {
-        courseListStart.forEach((course) => {
-          api
-            .get("/Feedback/GetCourseFeedbackbyIdForStaff", {
-              params: { courseid: course.courseID },
-            })
-            .then((res) => {
-              let feedbackInfo = res.data;
-              let pending = feedbackInfo.filter(
-                (item) => item.status == 0
-              ).length;
-              let censored = feedbackInfo.filter(
-                (item) => item.status == 1
-              ).length;
-              let deletedFb = feedbackInfo.filter(
-                (item) => item.status == 2
-              ).length;
-              let rating = 0;
-              feedbackInfo.forEach((item) => {
-                rating += item.rating;
-              });
-              if (feedbackInfo.length > 0) {
-                rating = rating / feedbackInfo.length;
-                rating = rating.toFixed(2);
-              }
-              course = {
-                ...course,
-                feedbackInfo,
-                pending,
-                censored,
-                deletedFb,
-                rating,
-              };
-              courseListEnd = [...courseListEnd, course];
-            })
-            .catch((err) => {
-              let feedbackInfo = [];
-              let pending = 0;
-              let censored = 0;
-              let deletedFb = 0;
-              let rating = 0;
-              course = {
-                ...course,
-                feedbackInfo,
-                pending,
-                censored,
-                deletedFb,
-                rating,
-              };
-              courseListEnd = [...courseListEnd, course];
-            })
-            .finally(async () => {
-              let count = 0;
-              courseListEnd = await courseListEnd.sort(
-                (a, b) => a.courseID - b.courseID
-              );
-              courseListEnd = await courseListEnd.sort((a, b) => {
-                if (b.pending - a.pending != 0) {
-                  count++;
-                }
-                return b.pending - a.pending;
-              });
-              if (count == 0) {
-                courseListEnd = await courseListEnd.sort(
-                  (a, b) => a.courseID - b.courseID
-                );
-              }
-              setCourseList(courseListEnd);
-              setRenderCourseList(courseListEnd);
-            });
-        });
+        setViewData(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 100);
       });
   };
 
   useEffect(() => {
     renderCourseForAdmin();
-    let timerInterval;
-    Swal.fire({
-      title: "Loading...",
-      timer: 800,
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-        setViewData(true);
-      },
-    });
   }, []);
 
   const resetSort = () => {
@@ -217,12 +137,16 @@ export default function FeedbackManagement() {
     switch (sortedPending) {
       case "ASC":
         setRenderCourseList(
-          [...renderCourseList].sort((a, b) => a.pending - b.pending)
+          [...renderCourseList].sort(
+            (a, b) => a.numberPending - b.numberPending
+          )
         );
         break;
       case "DESC":
         setRenderCourseList(
-          [...renderCourseList].sort((a, b) => b.pending - a.pending)
+          [...renderCourseList].sort(
+            (a, b) => b.numberPending - a.numberPending
+          )
         );
         break;
       case "Unsort":
@@ -235,98 +159,23 @@ export default function FeedbackManagement() {
   }, [sortedPending]);
 
   useEffect(() => {
-    switch (sortedCensored) {
-      case "ASC":
-        setRenderCourseList(
-          [...renderCourseList].sort((a, b) => a.censored - b.censored)
-        );
-        break;
-      case "DESC":
-        setRenderCourseList(
-          [...renderCourseList].sort((a, b) => b.censored - a.censored)
-        );
-        break;
-      case "Unsort":
-        resetSort();
-        break;
-      default:
-        resetSort();
-        break;
-    }
-  }, [sortedCensored]);
-
-  useEffect(() => {
-    switch (sortedDeleted) {
-      case "ASC":
-        setRenderCourseList(
-          [...renderCourseList].sort((a, b) => a.deletedFb - b.deletedFb)
-        );
-        break;
-      case "DESC":
-        setRenderCourseList(
-          [...renderCourseList].sort((a, b) => b.deletedFb - a.deletedFb)
-        );
-        break;
-      case "Unsort":
-        resetSort();
-        break;
-      default:
-        resetSort();
-        break;
-    }
-  }, [sortedDeleted]);
-
-  useEffect(() => {
-    switch (sortedTotalFb) {
-      case "ASC":
-        setRenderCourseList(
-          [...renderCourseList].sort(
-            (a, b) => a.feedbackInfo.length - b.feedbackInfo.length
-          )
-        );
-        break;
-      case "DESC":
-        setRenderCourseList(
-          [...renderCourseList].sort(
-            (a, b) => b.feedbackInfo.length - a.feedbackInfo.length
-          )
-        );
-        break;
-      case "Unsort":
-        resetSort();
-        break;
-      default:
-        resetSort();
-        break;
-    }
-  }, [sortedTotalFb]);
-
-  useEffect(() => {
     switch (sortedRating) {
       case "ASC":
         setRenderCourseList(
           [...renderCourseList]
             .filter((item) => {
-              return (
-                item.feedbackInfo != null &&
-                item.feedbackInfo != undefined &&
-                item.feedbackInfo.length > 0
-              );
+              return item.averageRating != null;
             })
-            .sort((a, b) => a.rating - b.rating)
+            .sort((a, b) => a.averageRating - b.averageRating)
         );
         break;
       case "DESC":
         setRenderCourseList(
           [...renderCourseList]
             .filter((item) => {
-              return (
-                item.feedbackInfo != null &&
-                item.feedbackInfo != undefined &&
-                item.feedbackInfo.length > 0
-              );
+              return item.averageRating != null;
             })
-            .sort((a, b) => b.rating - a.rating)
+            .sort((a, b) => b.averageRating - a.averageRating)
         );
         break;
       case "Unsort":
@@ -340,11 +189,12 @@ export default function FeedbackManagement() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main bg-light" id="staff-feedback-management-area">
         <MenuStaff />
         <div className={`main--content  ${!viewData ? "d-none" : ""}`}>
-          <section class="staff-list-area p-0 mt-2 px-4">
+          <section className="staff-list-area p-0 mt-2 px-4">
             <div
               className="flex justify-content-between align-items-end"
               style={{ width: "97%", margin: "0 auto" }}
@@ -431,93 +281,6 @@ export default function FeedbackManagement() {
                     </select>
                     Number Of Pending
                   </th>
-                  {/* <th style={{ textAlign: "center" }}>
-                  Censored
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(
-                        sortedCensored
-                      )} symbol-sorting ${
-                        !priority.includes("sortedCensored") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedCensored"
-                    id="sortedCensored"
-                    className="selection-button"
-                    value={sortedCensored}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedCensored(e.target.value);
-                      if (e.target.value != "Unsort")
-                        setPriority("sortedCensored");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                </th>
-                <th style={{ textAlign: "center" }}>
-                  Deleted
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(
-                        sortedDeleted
-                      )} symbol-sorting ${
-                        !priority.includes("sortedDeleted") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedDeleted"
-                    id="sortedDeleted"
-                    className="selection-button"
-                    value={sortedDeleted}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedDeleted(e.target.value);
-                      if (e.target.value != "Unsort")
-                        setPriority("sortedDeleted");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                </th>
-                <th style={{ textAlign: "center" }}>
-                  Total
-                  <span style={{ marginLeft: "5px" }}>
-                    <i
-                      className={`${symbolSorting(
-                        sortedTotalFb
-                      )} symbol-sorting ${
-                        !priority.includes("sortedTotalFb") ? "d-none" : ""
-                      }`}
-                    />
-                  </span>
-                  <select
-                    name="sortedTotalFb"
-                    id="sortedTotalFb"
-                    className="selection-button"
-                    value={sortedTotalFb}
-                    onChange={(e) => {
-                      unsortAll();
-                      setSortedTotalFb(e.target.value);
-                      if (e.target.value != "Unsort")
-                        setPriority("sortedTotalFb");
-                    }}
-                    style={{ width: "20px" }}
-                  >
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                    <option value="Unsort">Unsort</option>
-                  </select>
-                </th> */}
                   <th style={{ textAlign: "center" }}>
                     Rate
                     <span style={{ marginLeft: "5px" }}>
@@ -570,33 +333,19 @@ export default function FeedbackManagement() {
                         levelName,
                         description,
                         courseImg,
-                        feedbackInfo,
-                        deleted,
-                        pending,
-                        censored,
-                        deletedFb,
-                        rating,
+                        numberPending,
+                        averageRating,
                       },
                       index
                     ) => {
+                      let pending = numberPending;
+                      if (averageRating != null) {
+                        averageRating = parseFloat(averageRating).toFixed(2);
+                      }
                       return (
                         <>
-                          <tr
-                            key={courseID}
-                            className={`row-bg-${index % 2}`}
-                            // {`${
-                            //   pending <= 0 ? `row-bg-${index % 2}` : ""
-                            // }
-                            //                       ${
-                            //                         pending > 0
-                            //                           ? `row-bg-pending-warning-${
-                            //                               index % 2
-                            //                             }`
-                            //                           : ""
-                            //                       }`}
-                          >
+                          <tr key={courseID} className={`row-bg-${index % 2}`}>
                             <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                            {/* <td>{courseID}</td> */}
                             <td>
                               <img
                                 src={courseImg}
@@ -609,68 +358,60 @@ export default function FeedbackManagement() {
                               />
                             </td>
                             <td style={{ textAlign: "left" }}>{courseName}</td>
-                            {/* <td style={{ textAlign: "left" }}>{levelName}</td> */}
                             <td
                               className={`${pending > 0 ? "text-danger" : ""}`}
                               style={{
                                 textAlign: "right",
                                 fontWeight: `${pending > 0 ? "bolder" : ""}`,
                                 fontSize: "16px",
-                                // fontSize: `${pending > 0 ? "18px" : ""}`,
                               }}
                             >
                               {pending}
                             </td>
-                            {feedbackInfo != null &&
-                            feedbackInfo != undefined ? (
-                              <td
-                                style={{
-                                  textAlign: "center",
-                                  fontWeight: "bold",
-                                }}
-                                className={`
+                            <td
+                              style={{
+                                textAlign: "center",
+                                fontWeight: "bold",
+                              }}
+                              className={`
                               ${
-                                feedbackInfo.length > 0 && rating >= 4
+                                averageRating != null && averageRating >= 4
                                   ? "text-success"
                                   : ""
                               }
                                 ${
-                                  feedbackInfo.length > 0 &&
-                                  rating >= 3 &&
-                                  rating < 4
+                                  averageRating != null &&
+                                  averageRating >= 3 &&
+                                  averageRating < 4
                                     ? "text-primary"
                                     : ""
                                 }
                                 ${
-                                  feedbackInfo.length > 0 && rating < 3
+                                  averageRating != null && averageRating < 3
                                     ? "text-danger"
                                     : ""
                                 }
                               `}
-                              >
-                                {feedbackInfo.length > 0 ? (
-                                  <>
-                                    <p className="p-0 m-0 text-center">
-                                      {rating}
-                                    </p>
-                                    <p className="p-0 m-0 text-center">
-                                      {" "}
-                                      <Rating
-                                        name="half-rating-read"
-                                        defaultValue={rating}
-                                        precision={0.5}
-                                        readOnly
-                                        style={{ fontSize: "14px" }}
-                                      />
-                                    </p>
-                                  </>
-                                ) : (
-                                  "Not yet"
-                                )}
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
+                            >
+                              {averageRating != null ? (
+                                <>
+                                  <p className="p-0 m-0 text-center">
+                                    {averageRating}
+                                  </p>
+                                  <p className="p-0 m-0 text-center">
+                                    <Rating
+                                      name="half-rating-read"
+                                      defaultValue={averageRating}
+                                      precision={0.5}
+                                      readOnly
+                                      style={{ fontSize: "14px" }}
+                                    />
+                                  </p>
+                                </>
+                              ) : (
+                                "Not yet"
+                              )}
+                            </td>
                             <td style={{ textAlign: "center" }}>
                               <button
                                 className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"

@@ -33,46 +33,17 @@ export default function Course() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // let timerInterval;
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 900,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // });
     api
       .get("/Course/GetAllCourseForAdmin")
-      .then(async (res) => {
+      .then((res) => {
         setCourseList(res.data);
         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
-        // setIsDataLoaded(true);
-        setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
-
-  // useEffect(() => {
-  //   if (isDataLoaded) {
-  //     Swal.close();
-  //   }
-  // }, [isDataLoaded]);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     api
-  //       .get("/Course/GetAllCourseForAdmin")
-  //       .then(async (res) => {
-  //         setCourseList(res.data);
-  //         setRenderCourseList(res.data.sort((a, b) => b.discount - a.discount));
-  //       })
-  //       .catch((err) => {});
-  //   }, 10000);
-  // }, []);
 
   useEffect(() => {
     let renderList = [...courseList];

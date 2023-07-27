@@ -20,8 +20,8 @@ export default function ClassManagement() {
   const [sortedClasses, setSortedClasses] = useState("Unsort");
   const [priority, setPriority] = useState("");
   const [viewData, setViewData] = useState(false);
-  const [minTrainee, setMinTrainee] = useState(-1);
-  const [maxTrainee, setMaxTrainee] = useState(-1);
+  const [minTrainee, setMinTrainee] = useState();
+  const [maxTrainee, setMaxTrainee] = useState();
   const [loading, setLoading] = useState(true);
 
   const symbolSorting = (item) => {
@@ -46,76 +46,58 @@ export default function ClassManagement() {
   };
 
   const renderCourseForAdmin = () => {
-    let courseListStart = [];
     let courseListEnd = [];
     api
       .get("/Course/GetAllCourseForAdmin")
       .then(async (res) => {
-        setCourseList(res.data);
-        setRenderCourseList(res.data);
-        courseListStart = res.data;
+        courseListEnd = res.data.sort((a, b) => a.courseID - b.courseID);
+        setCourseList(courseListEnd);
+        setRenderCourseList(courseListEnd);
+        setViewData(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 100);
+        courseListEnd.forEach((course) => {
+          api
+            .get(
+              `/Class/GetUnfinisedClassByCourseIDForAdmin?courseid=${course.courseID}`
+            )
+            .then((res) => {
+              if (res.data.length > 0) {
+                course.classInfo = res.data;
+              } else {
+                course.classInfo = [];
+              }
+            })
+            .catch((err) => {
+              course.classInfo = [];
+            });
+
+          api
+            .get(
+              `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
+            )
+            .then((res) => {
+              if (res.data.length > 0) {
+                course.classInfoFinished = res.data;
+              } else {
+                course.classInfoFinished = [];
+              }
+            })
+            .catch((err) => {
+              course.classInfoFinished = [];
+            });
+        });
       })
       .catch((err) => {})
       .finally(() => {
-        courseListStart.forEach((course) => {
-          api
-            .get(
-              `/Class/GetClassByCourseIDForAdmin?courseid=${course.courseID}`
-            )
-            .then((res) => {
-              let classInfo = res.data;
-              course = { ...course, classInfo };
-              // courseListEnd = [...courseListEnd, course];
-            })
-            .catch((err) => {
-              let classInfo = [];
-              course = { ...course, classInfo };
-              // courseListEnd = [...courseListEnd, course];
-            })
-            .finally(() => {
-              api
-                .get(
-                  `/Class/GetFinishedClassByCourseIDForAdmin?courseid=${course.courseID}`
-                )
-                .then((res) => {
-                  let classInfoFinished = [...res.data];
-                  course = { ...course, classInfoFinished };
-                  courseListEnd = [...courseListEnd, course];
-                })
-                .catch((err) => {
-                  let classInfoFinished = [];
-                  course = { ...course, classInfoFinished };
-                  courseListEnd = [...courseListEnd, course];
-                })
-                .finally(() => {
-                  courseListEnd = courseListEnd.sort(
-                    (a, b) => a.courseID - b.courseID
-                  );
-                  setCourseList(courseListEnd);
-                  setRenderCourseList(courseListEnd);
-                });
-            });
-        });
+        setRenderCourseList(courseListEnd);
+        setCourseList(courseListEnd);
       });
   };
-
+  console.log(renderCourseList);
   useEffect(() => {
     renderCourseForAdmin();
-
-    setViewData(true);
-    // let timerInterval;
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 800,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //     setViewData(true);
-    //   },
-    // });
     api
       .get(`/api/AdminRepositoryAPI/GetSettingList`)
       .then((res) => {
@@ -129,7 +111,6 @@ export default function ClassManagement() {
           .forEach((item) => {
             setMinTrainee(item.preactiveValue);
           });
-        setLoading(false);
       })
       .catch((err) => {});
   }, []);
@@ -190,36 +171,12 @@ export default function ClassManagement() {
     switch (sortedClasses) {
       case "ASC":
         setRenderCourseList(
-          [...renderCourseList].sort(
-            (a, b) =>
-              a.classInfo.filter((item) => {
-                return (
-                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
-                );
-              }).length -
-              b.classInfo.filter((item) => {
-                return (
-                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
-                );
-              }).length
-          )
+          [...renderCourseList].sort((a, b) => a.numberClass - b.numberClass)
         );
         break;
       case "DESC":
         setRenderCourseList(
-          [...renderCourseList].sort(
-            (a, b) =>
-              b.classInfo.filter((item) => {
-                return (
-                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
-                );
-              }).length -
-              a.classInfo.filter((item) => {
-                return (
-                  moment(new Date(`${item.endDate}`)) >= moment(new Date())
-                );
-              }).length
-          )
+          [...renderCourseList].sort((a, b) => b.numberClass - a.numberClass)
         );
         break;
       case "Unsort":
@@ -230,6 +187,7 @@ export default function ClassManagement() {
         break;
     }
   }, [sortedClasses]);
+
   return (
     <>
       <LoadingOverlay loading={loading} />
@@ -237,7 +195,7 @@ export default function ClassManagement() {
       <section className="main" id="admin-course-management-area">
         <MenuStaff />
         <div className={`main--content  ${!viewData ? "d-none" : ""}`}>
-          <section class="staff-list-area p-0 mt-2 px-4">
+          <section className="staff-list-area p-0 mt-2 px-4">
             <div
               className="flex justify-content-between align-items-end"
               style={{ width: "97%", margin: "0 auto" }}
@@ -400,9 +358,7 @@ export default function ClassManagement() {
                         courseImg,
                         classInfo,
                         classInfoFinished,
-                        feedbackInfo,
-                        deleted,
-                        rating,
+                        numberClass,
                       },
                       index
                     ) => {
@@ -413,7 +369,6 @@ export default function ClassManagement() {
                         <>
                           <tr key={courseID} className={`row-bg-${index % 2}`}>
                             <td style={{ fontWeight: "600" }}>{index + 1}</td>
-                            {/* <td>{courseID}</td> */}
                             <td>
                               <img
                                 src={courseImg}
@@ -431,32 +386,12 @@ export default function ClassManagement() {
                                 }}
                               />
                             </td>
-                            <td style={{ textAlign: "left" }}>
-                              {courseName} {courseID}
-                            </td>
+                            <td style={{ textAlign: "left" }}>{courseName}</td>
                             <td style={{ textAlign: "left" }}>{levelName}</td>
-                            {classInfo != null && classInfo != undefined ? (
-                              <td style={{ textAlign: "right" }}>
-                                {classInfo != null &&
-                                classInfo.filter((item) => {
-                                  return (
-                                    moment(new Date(`${item.endDate}`)) >=
-                                    moment(new Date())
-                                  );
-                                }).length > 0 ? (
-                                  classInfo.filter((item) => {
-                                    return (
-                                      moment(new Date(`${item.endDate}`)) >=
-                                      moment(new Date())
-                                    );
-                                  }).length
-                                ) : (
-                                  <span>Not yet</span>
-                                )}
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
+
+                            <td style={{ textAlign: "right" }}>
+                              {numberClass}
+                            </td>
 
                             <td style={{ textAlign: "center" }}>
                               {pos >= 0 ? (

@@ -12,6 +12,7 @@ import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../constants/firebase";
 import { v4 } from "uuid";
 import "./EditCourse.scss";
+import LoadingOverlay from "../../../../component/Loading/LoadingOverlay";
 
 export default function AdminCourseEdit() {
   const param = useParams();
@@ -22,6 +23,8 @@ export default function AdminCourseEdit() {
   const [previewDiscount, setPreviewDiscount] = useState(-1);
   const [levelList, setLevelList] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const formatPrice = (price) => {
     return Intl.NumberFormat("vi-VN", {
       // style: "currency",
@@ -127,13 +130,16 @@ export default function AdminCourseEdit() {
     api
       .get(`/Course/GetCourseByID?id=${param.id}`)
       .then((res) => {
-        setEditedCourse(res.data);
-        setPreviewImg(res.data.courseImg);
-        setCurrentImg(res.data.courseImg);
-        setPreviewPrice(res.data.price);
-        setPreviewDiscount(res.data.discount);
+        setEditedCourse(res.data.course);
+        setPreviewImg(res.data.course.courseImg);
+        setCurrentImg(res.data.course.courseImg);
+        setPreviewPrice(res.data.course.price);
+        setPreviewDiscount(res.data.course.discount);
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
 
     api
       .get("/Level/GetAllLevel")
@@ -143,9 +149,9 @@ export default function AdminCourseEdit() {
       .catch((err) => {});
   }, []);
 
-  const handleSubmitForm = (values) => {};
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
@@ -154,7 +160,7 @@ export default function AdminCourseEdit() {
         levelList != null &&
         levelList.length > 0 ? (
           <div
-            className="main--content "
+            className="main--content"
             id="admin-course-management-create-course"
           >
             <div className="editcourse mb-4">

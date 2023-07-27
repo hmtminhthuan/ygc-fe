@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../../constants/api";
-import Swal from "sweetalert2";
 import { NavLink, useParams } from "react-router-dom";
 import MenuStaff from "../../../../component/Staff/MenuStaff";
 import HeaderStaff from "../../../../component/Staff/HeaderStaff";
 import maleImg from "../../../../assets/images/avt-male.jpg";
 import femaleImg from "../../../../assets/images/avt-female.jpg";
+import LoadingOverlay from "../../../../component/Loading/LoadingOverlay";
 
 export default function FeedbackManagementDetail() {
   const [feedbackList, setFeedbackList] = useState([]);
@@ -16,6 +16,7 @@ export default function FeedbackManagementDetail() {
   const param = useParams();
   const [recently, setRecently] = useState([]);
   const [sortedRecently, setSortedRecently] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const renderCourseName = () => {
     api
@@ -58,6 +59,9 @@ export default function FeedbackManagementDetail() {
               newList = newList.sort((a, b) => a.courseId - b.courseId);
               newList = newList.sort((a, b) => a.status - b.status);
               setFeedbackList(newList);
+              setTimeout(() => {
+                setLoading(false);
+              }, 100);
             });
         });
       });
@@ -99,6 +103,7 @@ export default function FeedbackManagementDetail() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <HeaderStaff />
       <section className="main" id="staff-feedback-management-area">
         <MenuStaff />

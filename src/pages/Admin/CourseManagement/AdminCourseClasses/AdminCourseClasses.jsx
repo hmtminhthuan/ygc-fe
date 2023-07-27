@@ -106,7 +106,7 @@ export default function AdminCourseClasses({
             component={Paper}
             style={{
               height: `${
-                courseClasses.length >= 2 && viewAllButton ? "290px" : ""
+                courseClasses.length >= 2 && viewAllButton ? "260px" : ""
               }
               ${
                 [...courseClasses, ...courseFinishedClasses].length >= 2 &&
@@ -304,7 +304,7 @@ export default function AdminCourseClasses({
           </TableContainer>
         )}
         {viewAllButton &&
-        [...courseClasses].filter(
+        [...courseFinishedClasses].filter(
           (item) => new Date(item.endDate) - new Date() < 0
         ).length > 0 ? (
           <div className="text-end">

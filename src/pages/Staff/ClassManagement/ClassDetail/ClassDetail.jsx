@@ -58,7 +58,7 @@ export default function ClassDetail() {
     let arr = [];
     let arr2 = [];
     api
-      .get(`/Class/GetClassByCourseIDForAdmin?courseid=${param.id}`)
+      .get(`/Class/GetUnfinisedClassByCourseIDForAdmin?courseid=${param.id}`)
       .then((res) => {
         arr = res.data;
       })
@@ -168,7 +168,7 @@ export default function ClassDetail() {
                   </div>
                   <div className="flex">
                     {viewAllButton &&
-                    [...courseClasses].filter(
+                    [...courseFinishedClasses].filter(
                       (item) => new Date(item.endDate) - new Date() < 0
                     ).length > 0 ? (
                       <div className="text-end">

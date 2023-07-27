@@ -121,7 +121,7 @@ export default function ClassViewMore({
             No available class till present!
           </p>
         ) : (
-          <TableContainer component={Paper} style={{ height: "360px" }}>
+          <TableContainer component={Paper} style={{ height: "260px" }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow className=" bg-dark">
@@ -332,12 +332,9 @@ export default function ClassViewMore({
           </TableContainer>
         )}
         {viewAllButton &&
-        [...courseClasses].filter(
+        [...courseFinishedClasses].filter(
           (item) => new Date(item.endDate) - new Date() < 0
         ).length > 0 ? (
-          // [...courseClasses, ...courseFinishedClasses].length > 0 &&
-          // [...courseClasses, ...courseFinishedClasses].length >
-          //   [...courseFinishedClasses].length
           <div className="text-end">
             <button
               className="border-0 mt-2 mx-1
