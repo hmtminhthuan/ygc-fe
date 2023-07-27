@@ -324,7 +324,7 @@ export default function Timetable() {
                             key={timeFrame.id}
                             style={{
                               backgroundColor: `${
-                                index % 2 == 1 ? "#ebebeb" : ""
+                                index % 2 == 1 ? "#dadada" : ""
                               }`,
                             }}
                           >
@@ -450,7 +450,7 @@ export default function Timetable() {
                             key={timeFrame.id}
                             style={{
                               backgroundColor: `${
-                                index % 2 == 1 ? "#ebebeb" : ""
+                                index % 2 == 1 ? "#dadada" : ""
                               }`,
                             }}
                           >
