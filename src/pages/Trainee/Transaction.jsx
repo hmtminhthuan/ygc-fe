@@ -8,7 +8,9 @@ import { alert } from "../../component/AlertComponent/Alert";
 import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Aos from "aos";
+import LoadingOverlay from "../../component/Loading/LoadingOverlay";
 export default function Transaction() {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   localStorage.setItem("MENU_ACTIVE", "/transaction");
   const [payingTime, setPayingTime] = useState(-1);
@@ -109,6 +111,8 @@ export default function Transaction() {
           clearInterval(timerInterval);
         },
       });
+
+      setLoading(false);
     }
   }, []);
 
@@ -539,6 +543,7 @@ export default function Transaction() {
 
   return (
     <>
+      <LoadingOverlay loading={loading} />
       <div className=" m-0 p-0">
         <HeaderHome />
       </div>

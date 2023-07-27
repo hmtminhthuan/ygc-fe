@@ -22,7 +22,6 @@ export default function BlogPage() {
       })
       .then((res) => {
         setBlogDetail(res.data);
-
         setLoading(false);
       })
       .catch((err) => {});
