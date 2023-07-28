@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import "./BlogDetail.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 export default function BlogDetail({
   blogID,
   header,
@@ -14,8 +14,15 @@ export default function BlogDetail({
   year,
   ...restParam
 }) {
+  const navigate = useNavigate();
   return (
-    <Card className="blog-entry justify-content-end my-5 mx-5 shadow-none shadow-none border-0">
+    <Card
+      className="blog-entry justify-content-end my-5 mx-5 shadow-none shadow-none border-0"
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        navigate(`/blogPage/${blogID}`);
+      }}
+    >
       <div className="w-100 block-20">
         <Card.Img src={img} />
       </div>

@@ -134,6 +134,8 @@ export default function UpdateProfile() {
   }, [updateDone]);
 
   const handleUpdateAccount = (values) => {
+    values.email = JSON.parse(localStorage.getItem("USER_LOGIN")).email;
+    console.log(values);
     api
       .put(`/Account/UpdateAccount?id=${profile.id}`, values)
       .then((res) => {
@@ -193,9 +195,7 @@ export default function UpdateProfile() {
         didOpen: () => {
           Swal.showLoading();
         },
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
+        willClose: () => {},
       });
       if (values.img == "") {
         values.img = "female";
@@ -818,6 +818,9 @@ export default function UpdateProfile() {
                                 style={{ borderRadius: "10px" }}
                                 onClick={() => {
                                   form.resetFields();
+                                  setPreviewImg(currentAvatar);
+                                  avatarImg.src = currentAvatar;
+                                  setImageUpload(null);
                                 }}
                               >
                                 Reset

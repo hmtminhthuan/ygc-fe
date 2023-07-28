@@ -251,8 +251,7 @@ export default function FeedbackManagement() {
                       <option value="Unsort">Unsort</option>
                     </select>
                   </th>
-                  {/* s */}
-                  <th style={{ textAlign: "right" }}>
+                  <th style={{ textAlign: "right", width: "220px" }}>
                     <span style={{ marginLeft: "5px" }}>
                       <i
                         className={`${symbolSorting(
@@ -281,7 +280,7 @@ export default function FeedbackManagement() {
                     </select>
                     Number Of Pending
                   </th>
-                  <th style={{ textAlign: "center" }}>
+                  <th style={{ textAlign: "center", width: "250px" }}>
                     Rate
                     <span style={{ marginLeft: "5px" }}>
                       <i
@@ -415,7 +414,12 @@ export default function FeedbackManagement() {
                             <td style={{ textAlign: "center" }}>
                               <button
                                 className="text-decoration-none text-dark bg-dark bg-opacity-10 border-0 text-center"
-                                style={{ borderRadius: "50%" }}
+                                style={{
+                                  borderRadius: "50%",
+                                  display: `${
+                                    averageRating == null ? "none" : ""
+                                  }`,
+                                }}
                               >
                                 <NavLink
                                   className="px-2 py-1 text-dark bg-dark bg-opacity-10"

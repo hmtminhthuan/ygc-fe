@@ -64,20 +64,6 @@ export default function ScheduleTrainee() {
   };
 
   useEffect(() => {
-    // let timerInterval;
-
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 1000,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // });
-    setLoading(true);
     for (let i = 0; i <= 5; i++) {
       window.clearInterval(i);
     }
@@ -124,9 +110,11 @@ export default function ScheduleTrainee() {
       })
       .then((res) => {
         setSchedule(res.data);
-        setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
     renderFeedbacks();
   }, []);
 
