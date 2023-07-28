@@ -6,7 +6,7 @@ import { api } from "../../../constants/api";
 import AdminCourseClasses from "./AdminCourseClasses/AdminCourseClasses";
 import AdminCourseFeedback from "./AdminCourseFeedback/AdminCourseFeedback";
 import Swal from "sweetalert2";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 import { Rating, Stack } from "@mui/material";
 import { alert } from "../../../component/AlertComponent/Alert";
@@ -60,8 +60,6 @@ export default function CourseManagement() {
   };
 
   const renderCourseForAdmin = () => {
-    const sidebar = document.querySelector(".sidebar");
-    sidebar.classList.toggle("active");
     let courseListEnd = [];
     api
       .get("/Course/GetAllCourseForAdmin")
@@ -69,17 +67,11 @@ export default function CourseManagement() {
         courseListEnd = res.data.sort((a, b) => a.courseID - b.courseID);
         setRenderCourseList(courseListEnd);
         setCourseList(courseListEnd);
-
-        const mainContent = document.querySelector(".main--content");
         setViewData(true);
         setLoading(false);
-        setTimeout(() => {
-          mainContent.classList.toggle("active");
-        }, 100);
-
         courseListEnd.forEach(async (course) => {
           api
-            .get("/Class/GetClassByCourseIDForAdmin", {
+            .get("/Class/GetUnfinisedClassByCourseIDForAdmin", {
               params: { courseid: course.courseID },
             })
             .then((res) => {
@@ -337,23 +329,49 @@ export default function CourseManagement() {
     }
   }, [sortedRating]);
 
+  const navigate = useNavigate();
+
   const handleDeleteCourseByAdmin = (courseid) => {
+    setLoading(true);
     api
-      .put(`/Course/DeleteCourse?courseid=${courseid}`)
+      .put(`/Course/DeleteCourse?courseid=${parseInt(courseid)}`)
       .then((res) => {})
       .catch((err) => {})
       .finally(() => {
-        renderCourseForAdmin();
+        setTimeout(() => {
+          renderCourseForAdmin();
+          setIsDeleted(true);
+          setLoading(false);
+          alert.alertSuccessWithTime(
+            "Delete Successfully",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        }, 4000);
       });
   };
 
   const handleReactivateByAdmin = (courseid) => {
+    setLoading(true);
     api
       .put(`/Course/ReactivateCourse?CourseId=${parseInt(courseid)}`)
       .then((res) => {})
       .catch((err) => {})
       .finally(() => {
-        renderCourseForAdmin();
+        setTimeout(() => {
+          renderCourseForAdmin();
+          setIsDeleted(false);
+          setLoading(false);
+          alert.alertSuccessWithTime(
+            "Activate Successfully",
+            "",
+            2000,
+            "25",
+            () => {}
+          );
+        }, 4000);
       });
   };
 
@@ -823,13 +841,6 @@ export default function CourseManagement() {
                                         result.isDismissed === true
                                       ) {
                                       } else if (result.isConfirmed === true) {
-                                        alert.alertSuccessWithTime(
-                                          "Activate Successfully",
-                                          "",
-                                          2000,
-                                          "25",
-                                          () => {}
-                                        );
                                         handleReactivateByAdmin(`${courseID}`);
                                       }
                                     });
@@ -851,8 +862,8 @@ export default function CourseManagement() {
                                       classInfo != null &&
                                       classInfo.filter((item) => {
                                         return (
-                                          moment(new Date(`${item.endDate}`)) >=
-                                          moment(new Date())
+                                          new Date(`${item.endDate}`) >=
+                                          new Date()
                                         );
                                       }).length > 0
                                     ) {
@@ -883,13 +894,6 @@ export default function CourseManagement() {
                                         } else if (
                                           result.isConfirmed === true
                                         ) {
-                                          alert.alertSuccessWithTime(
-                                            "Delete Successfully",
-                                            "",
-                                            2000,
-                                            "25",
-                                            () => {}
-                                          );
                                           handleDeleteCourseByAdmin(
                                             `${courseID}`
                                           );
