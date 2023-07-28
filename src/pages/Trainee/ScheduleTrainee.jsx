@@ -56,7 +56,7 @@ export default function ScheduleTrainee() {
             .catch((err) => {})
             .finally(() => {
               setListOfFinishedClasses([...arr]);
-              setLoading(false);
+              //setLoading(false);
             });
         });
       })
