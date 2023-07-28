@@ -38,7 +38,6 @@ export default function UpdateBlog() {
       .then((res) => {
         const blogDetail = res.data;
         setBlog(blogDetail);
-
         setHeader(res.data.header);
         setContent(res.data.content);
         setImg(res.data.img);
@@ -70,7 +69,7 @@ export default function UpdateBlog() {
       if (previewImg == currentImg) {
         values.img = currentImg;
         api
-          .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
+          .put(`/Blog/UpdateBlog?id=${blog.blogID}`, values)
           .then((res) => {
             alert.alertSuccessWithTime(
               "Update Blog Successfully",
@@ -97,7 +96,7 @@ export default function UpdateBlog() {
             })
             .finally(() => {
               api
-                .put(`/Blog/UpdateBlog?id=${blog.id}`, values)
+                .put(`/Blog/UpdateBlog?id=${blog.blogID}`, values)
                 .then((res) => {
                   alert.alertSuccessWithTime(
                     "Update Blog Successfully",
