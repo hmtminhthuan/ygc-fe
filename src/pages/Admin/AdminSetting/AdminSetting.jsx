@@ -95,9 +95,7 @@ export default function AdminSetting() {
             "",
             2000,
             "30",
-            () => {
-              navigate("/admin");
-            }
+            () => {}
           );
         })
         .catch((err) => {});
@@ -105,7 +103,7 @@ export default function AdminSetting() {
   });
 
   const formatDate = (dateString) => {
-    return moment(new Date(dateString)).format("DD - MM - YYYY, HH:mm");
+    return moment(dateString).format("DD - MM - YYYY");
   };
 
   const formattedDate = formatDate(activeDate);
