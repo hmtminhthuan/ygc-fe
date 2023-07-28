@@ -94,7 +94,7 @@ export default function Login() {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: `<h1>Welcome ${arr[pos].firstName} ${arr[pos].lastName}</h1>`,
+              title: `<h1>Welcome</br>${arr[pos].firstName} ${arr[pos].lastName}</h1>`,
               html: `<h3>Log In Successfully</h3>`,
               showConfirmButton: false,
               timer: 1600,
@@ -168,7 +168,7 @@ export default function Login() {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: `<h1>Welcome ${res.data.firstName} ${res.data.lastName}</h1>`,
+              title: `<h1>Welcome</br>${res.data.firstName} ${res.data.lastName}</h1>`,
               html: `<h3>Log In Successfully</h3>`,
               showConfirmButton: false,
               timer: 1600,

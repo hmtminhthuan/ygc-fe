@@ -29,19 +29,6 @@ export default function ScheduleTrainer() {
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
 
   useEffect(() => {
-    // let timerInterval;
-    // Swal.fire({
-    //   title: "Loading...",
-    //   timer: 1200,
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // });
-    setLoading(true);
     let schedule_table_area = document.querySelector("div#schedule-table-area");
 
     if (
@@ -89,9 +76,11 @@ export default function ScheduleTrainer() {
             (classItem) => new Date(classItem.endDate) >= new Date()
           )
         );
-        setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   // useEffect(() => {
