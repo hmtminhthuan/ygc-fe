@@ -54,9 +54,7 @@ export default function UpdateBlog() {
         setPreviewImg(res.data.img);
         setCurrentImg(res.data.img);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [id]);
 
   const formik = useFormik({
@@ -81,9 +79,7 @@ export default function UpdateBlog() {
               }
             );
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       } else {
         const imageRef = ref(
           storage,
@@ -108,9 +104,7 @@ export default function UpdateBlog() {
                     }
                   );
                 })
-                .catch((err) => {
-                  console.log(err);
-                });
+                .catch((err) => {});
             });
         });
       }
