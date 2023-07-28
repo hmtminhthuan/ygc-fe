@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "remixicon/fonts/remixicon.css";
 import HeaderHome from "../../../component/HeaderHome/HeaderHome";
-import user from "../../../assets/images/user.jpg";
-
 import "./BlogPage.scss";
 import { NavLink } from "react-router-dom";
 import { api } from "../../../constants/api";
 import FooterHome from "../../../component/FooterHome/FooterHome";
 import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
+import moment from "moment/moment";
 export default function BlogPage() {
   localStorage.setItem("MENU_ACTIVE", "/blog");
   const param = useParams();
@@ -43,13 +42,7 @@ export default function BlogPage() {
   } = blogDetail;
 
   const formatDate = (dateString) => {
-    const dateObj = new Date(dateString);
-
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-
-    return `${day}-${month}-${year}`;
+    return moment(dateString).format("DD - MM - YYYY");
   };
 
   const formattedDate = formatDate(date);
@@ -98,11 +91,12 @@ export default function BlogPage() {
                 style={{
                   textDecoration: "none",
                   marginRight: "10px",
-                  color: "rgb(208, 143, 186)",
+                  color: "#000",
+                  fontWeight: "bolder",
                 }}
               >
                 Close
-                <i className="fa-solid fa-circle-xmark"></i>
+                <i className="fa-solid fa-circle-xmark ps-2"></i>
               </NavLink>
             </div>
 
@@ -112,14 +106,20 @@ export default function BlogPage() {
 
             <div className="user mb-3">
               <a className="avatar " href="">
-                <img src={user} alt="" />
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112"
+                  alt="avatar"
+                  style={{ border: "3px solid gray" }}
+                />
               </a>
 
-              <div className="info">
-                <p style={{ margin: "0" }}>
-                  {firstName} {lastName}
-                </p>
-                <p className="time"> {formattedDate}</p>
+              <div className="info" style={{ color: "#d08fba" }}>
+                <h3 style={{ margin: "0" }}>
+                  <b>
+                    {firstName} {lastName}
+                  </b>
+                </h3>
+                <p className="time">{formattedDate}</p>
               </div>
             </div>
 
