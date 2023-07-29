@@ -31,11 +31,6 @@ export default function ChangePassword({ userEmail, userId }) {
         },
         willClose: () => {},
       });
-      console.log({
-        password: values.password,
-        email: JSON.parse(localStorage.getItem("USER_LOGIN")).email,
-        phoneNumber: JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber,
-      });
       api
         .post(
           `/Account/CheckCurrentPassword?id=${userId}&password=${values.oldPassword}`
