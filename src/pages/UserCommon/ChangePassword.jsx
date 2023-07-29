@@ -21,6 +21,21 @@ export default function ChangePassword({ userEmail, userId }) {
     },
 
     onSubmit: (values) => {
+      Swal.fire({
+        title: "Loading...",
+        html: "Please wait a few seconds",
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {},
+      });
+      console.log({
+        password: values.password,
+        email: JSON.parse(localStorage.getItem("USER_LOGIN")).email,
+        phoneNumber: JSON.parse(localStorage.getItem("USER_LOGIN")).phoneNumber,
+      });
       api
         .post(
           `/Account/CheckCurrentPassword?id=${userId}&password=${values.oldPassword}`
@@ -30,28 +45,26 @@ export default function ChangePassword({ userEmail, userId }) {
             api
               .put(`/Account/UpdatePasswordAccount?id=${userId}`, {
                 password: values.password,
+                email: JSON.parse(localStorage.getItem("USER_LOGIN")).email,
+                phoneNumber: JSON.parse(localStorage.getItem("USER_LOGIN"))
+                  .phoneNumber,
               })
               .then((res) => {
-                if (res.status == 200) {
-                  // Swal.fire({
-                  //   position: "center",
-                  //   icon: "success",
-                  //   title: "Update Password Successfully",
-                  //   showConfirmButton: false,
-                  //   timer: 1200,
-                  // }).then(function () {
-                  //   window.location.href = `/updateProfile/${userId}`;
-                  // });
-                  alert.alertSuccessWithTime(
-                    "Update Password Successfully",
-                    "",
-                    2000,
-                    "30",
-                    () => {
-                      navigate("/profile");
-                    }
-                  );
-                }
+                Swal.close();
+                setTimeout(() => {
+                  if (res.status == 200) {
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: `<h3>Update Password Successfully</h3>`,
+                      html: ``,
+                      showConfirmButton: false,
+                      timer: 900,
+                    });
+                    form.resetFields();
+                    formik.resetForm();
+                  }
+                }, 100);
               })
               .catch((err) => {});
           } else {
@@ -160,7 +173,6 @@ export default function ChangePassword({ userEmail, userId }) {
   };
 
   const handleForgetPassword = () => {
-    let timerInterval;
     Swal.fire({
       title: "Loading...",
       html: "Please wait a few seconds",
@@ -169,9 +181,7 @@ export default function ChangePassword({ userEmail, userId }) {
       didOpen: () => {
         Swal.showLoading();
       },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
+      willClose: () => {},
     });
 
     api

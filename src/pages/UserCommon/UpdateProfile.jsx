@@ -364,6 +364,9 @@ export default function UpdateProfile() {
                     <div
                       className="text-center m-0 p-0 flex 
                     justify-content-center"
+                      style={{
+                        display: `${changePasswordMoniter ? "none" : ""}`,
+                      }}
                     >
                       <p
                         className="m-0 p-0 mt-2 px-3 py-1"
