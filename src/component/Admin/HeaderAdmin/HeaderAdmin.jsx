@@ -21,12 +21,12 @@ export default function HeaderAdmin({ background, ...restParams }) {
         </h2>
         <h2
           style={{ cursor: "pointer" }}
-          className="px-3"
+          className="px-3 header-management-brand"
           onClick={() => {
             navigate("/");
           }}
         >
-          <img src={logo} />
+          <img src={logo} style={{ width: "40px", height: "40px" }} />
           <span className="text-light">Yoga</span>
           <span>Center</span>
         </h2>
@@ -38,7 +38,6 @@ export default function HeaderAdmin({ background, ...restParams }) {
       >
         <div className="notification--profile">
           <div>
-            {" "}
             <NavLink
               to="/"
               className="text-decoration-none py-2 px-2"

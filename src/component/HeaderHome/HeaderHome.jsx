@@ -46,15 +46,16 @@ export default function HeaderHome() {
           <div className="flex align-items-center">
             <img
               src={logo}
-              style={{ height: "40px", width: "40px", marginRight: "10px" }}
+              style={{ height: "40px", width: "40px", marginRight: "5px" }}
             />
             <Navbar.Brand
               as={NavLink}
               to="/"
               className="header-brand"
+              id="header-home-brand"
               onClick={() => navigateTo("/")}
             >
-              Yoga Center
+              YogaCenter
             </Navbar.Brand>
           </div>
 

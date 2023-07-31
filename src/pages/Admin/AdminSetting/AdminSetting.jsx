@@ -10,6 +10,7 @@ import moment from "moment/moment";
 import { alert } from "../../../component/AlertComponent/Alert";
 import Swal from "sweetalert2";
 import { menuAction } from "../../../component/Admin/MenuAdmin/MenuAction";
+import LoadingOverlay from "../../../component/Loading/LoadingOverlay";
 
 export default function AdminSetting() {
   localStorage.setItem("MENU_ACTIVE", "/admin/setting");
@@ -20,48 +21,54 @@ export default function AdminSetting() {
   };
 
   const [updateDone, setUpdateDone] = useState(1);
-
+  const [loading, setLoading] = useState(true);
   const [id, setId] = useState(0);
   const [menuSetting, setMenuSetting] = useState([]);
   const [initialValues, setInitialValues] = useState({});
   const [activeValue, setActiveValue] = useState("");
   const [activeDate, setActiveDate] = useState("");
   const [preactiveValue, setPreactiveValue] = useState("");
-  const [navigation, setNavigation] = useState(-1);
+  const [navigation, setNavigation] = useState(0);
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
   useEffect(() => {
+    menuAction.menuActive();
+    // setId(1);
+    // setNavigation(1);
     setTimeout(() => {
       setId(1);
       setNavigation(1);
     }, 1000);
-    menuAction.menuActive();
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+    setActiveDate("");
+    setPreactiveValue("");
     api
       .get("/api/AdminRepositoryAPI/GetSettingList")
       .then((res) => {
         setMenuSetting(res.data);
+        setLoading(false);
+        const settingItem = menuSetting.filter((item) => item.id === id)[0];
+        if (settingItem != null && settingItem != undefined) {
+          const settingDetail = settingItem;
+          setInitialValues(settingDetail);
+          setActiveValue(settingDetail.activeValue);
+          setActiveDate(moment(settingDetail.activeDate));
+          setPreactiveValue(settingDetail.preactiveValue);
+          formik.setValues({
+            id: settingDetail.id,
+            activeValue: settingDetail.activeValue,
+            activeDate: settingDetail.activeDate,
+            preactiveValue: settingDetail.preactiveValue,
+            activeMinute: 0,
+          });
+        }
       })
-      .catch((err) => {});
-
-    const settingItem = menuSetting.filter((item) => item.id === id)[0];
-    if (settingItem != null && settingItem != undefined) {
-      const settingDetail = settingItem;
-      setInitialValues(settingDetail);
-      setActiveValue(settingDetail.activeValue);
-      setActiveDate(moment(settingDetail.activeDate));
-      setPreactiveValue(settingDetail.preactiveValue);
-      formik.setValues({
-        id: settingDetail.id,
-        activeValue: settingDetail.activeValue,
-        activeDate: settingDetail.activeDate,
-        preactiveValue: settingDetail.preactiveValue,
-        activeMinute: 0,
-      });
-    }
+      .catch((err) => {})
+      .finally(() => {});
   }, [id, updateDone]);
 
   const formik = useFormik({
@@ -70,7 +77,7 @@ export default function AdminSetting() {
       activeValue: "",
       activeDate: "",
       preactiveValue: "",
-      activeMinute: 0,
+      activeMinute: "",
     },
     onSubmit: (values) => {
       const formattedDate =
@@ -97,12 +104,15 @@ export default function AdminSetting() {
             "30",
             () => {}
           );
+          form.resetFields();
+          formik.resetForm();
         })
         .catch((err) => {});
     },
   });
 
   const formatDate = (dateString) => {
+    if (dateString == "") return "";
     return moment(dateString).format("DD - MM - YYYY");
   };
 
@@ -115,11 +125,15 @@ export default function AdminSetting() {
 
   return (
     <section className="pt-0" style={{ height: "100vh" }}>
+      <LoadingOverlay loading={loading} />
       <HeaderAdmin />
       <section className="main" id="admin-course-management-area">
         <MenuAdmin />
-        <div className={`main--content`}>
-          <section class="staff-list-area p-0 mt-2 px-4">
+        <div
+          className={`main--content`}
+          style={{ display: `${id == 0 ? "none" : ""}` }}
+        >
+          <section className="staff-list-area p-0 mt-2 px-4">
             <div className="container light-style flex-grow-1 container-p-y">
               <h2
                 className="py-2 pt-0 text-center"
@@ -168,9 +182,7 @@ export default function AdminSetting() {
                   <div className="col-lg-9 col-12">
                     <div className="tab-content">
                       <div
-                        className={`tab-pane fade active show ${
-                          id === 0 ? "d-none" : ""
-                        }`}
+                        className={`tab-pane fade active show`}
                         id="setting-payingtime"
                       >
                         <hr className="border-light m-0" />
@@ -195,7 +207,7 @@ export default function AdminSetting() {
                                       }}
                                     ></i>{" "}
                                   </span>
-                                  <span>Active Date:</span>
+                                  <span>Active Time:</span>
                                 </p>
 
                                 <div className="col-7">
@@ -354,7 +366,13 @@ export default function AdminSetting() {
                                     initialValue={formik.values.activeDate}
                                     hasFeedback
                                   >
-                                    <p>{formattedDate}</p>
+                                    <p className="p-0 m-0">
+                                      {activeDate == ""
+                                        ? ""
+                                        : moment(activeDate).format(
+                                            "DD - MM - YYYY"
+                                          )}
+                                    </p>
                                   </Form.Item>
                                 </div>
                               </div>
@@ -385,6 +403,7 @@ export default function AdminSetting() {
                                   >
                                     <p>
                                       {(navigation == 1 || navigation == 2) &&
+                                      preactiveValue.toString() != "" &&
                                       preactiveValue >= 1 / 60 ? (
                                         <>
                                           {Math.floor(preactiveValue) < 10
@@ -410,23 +429,25 @@ export default function AdminSetting() {
                                               )}`}
                                         </>
                                       ) : (
-                                        <></>
+                                        ""
                                       )}
 
                                       {(navigation == 1 || navigation == 2) &&
+                                      preactiveValue.toString() != "" &&
                                       preactiveValue < 1 / 60 ? (
                                         <>
                                           {Math.floor(preactiveValue * 3600)}
                                           {" seconds"}
                                         </>
                                       ) : (
-                                        <></>
+                                        ""
                                       )}
 
-                                      {navigation == 3 || navigation == 4 ? (
+                                      {(navigation == 3 || navigation == 4) &&
+                                      preactiveValue.toString() != "" ? (
                                         <>{preactiveValue}</>
                                       ) : (
-                                        <></>
+                                        ""
                                       )}
                                     </p>
                                   </Form.Item>

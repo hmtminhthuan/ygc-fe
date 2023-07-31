@@ -186,10 +186,10 @@ export default function ListTrainer() {
                 <table style={{ fontSize: "13px" }}>
                   <thead>
                     <tr>
-                      <th>No.</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>ID</th>
+                      <th style={{ textAlign: "left" }}>First Name</th>
+                      <th style={{ textAlign: "left" }}>Last Name</th>
+                      <th style={{ textAlign: "left" }}>
                         Gender
                         {!genderSort.trim().toLowerCase().includes("all") ? (
                           <i
@@ -217,7 +217,7 @@ export default function ListTrainer() {
                           <option value="all">All</option>
                         </select>
                       </th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>
                         Phone
                         <button
                           className="border-0 px-2 bg-transparent"
@@ -272,7 +272,7 @@ export default function ListTrainer() {
                           )}
                         </button>
                       </th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>
                         Email
                         <button
                           className="border-0 p-0 mx-2 bg-transparent"
@@ -332,7 +332,7 @@ export default function ListTrainer() {
                           )}
                         </button>
                       </th>
-                      <th>Address</th>
+                      <th style={{ textAlign: "left" }}>Address</th>
 
                       <th>
                         <NavLink
@@ -401,14 +401,12 @@ export default function ListTrainer() {
                             let fullname = `${item.firstName} ${item.lastName}`;
                             let fullnameReverse = `${item.lastName} ${item.firstName}`;
                             if (
-                              searchedName
-                                .trim()
+                              fullname
                                 .toLowerCase()
-                                .includes(fullname.toLowerCase()) ||
-                              searchedName
-                                .trim()
+                                .includes(searchedName.trim().toLowerCase()) ||
+                              fullnameReverse
                                 .toLowerCase()
-                                .includes(fullnameReverse.toLowerCase())
+                                .includes(searchedName.trim().toLowerCase())
                             ) {
                               return true;
                             }
@@ -418,15 +416,32 @@ export default function ListTrainer() {
                           return true;
                         }
                       })
+                      .sort((a, b) => {
+                        return a.accountID - b.accountID;
+                      })
                       .map((trainer, index) => (
                         <tr key={trainer.accountID}>
-                          <td>{index + 1}</td>
-                          <td>{`${trainer.firstName}`}</td>
-                          <td>{`${trainer.lastName}`}</td>
-                          <td>{`${trainer.gender ? "Male" : "Female"}`}</td>
-                          <td>{`${trainer.phoneNumber}`}</td>
-                          <td>{`${trainer.email}`}</td>
-                          <td>{`${trainer.address}`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.accountID}`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.firstName}`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.lastName}`}</td>
+                          <td style={{ textAlign: "left" }}>{`${
+                            trainer.gender ? "Male" : "Female"
+                          }`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.phoneNumber}`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.email}`}</td>
+                          <td
+                            style={{ textAlign: "left" }}
+                          >{`${trainer.address}`}</td>
 
                           <td className="setting">
                             <i

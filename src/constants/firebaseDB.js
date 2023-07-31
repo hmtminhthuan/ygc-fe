@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-
+import { getDatabase, ref, push, onValue } from "firebase/database";
+import { serverTimestamp } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyBKPQvbwWf_5mdzjfR5jLbCTZqxTuoinWU",
   authDomain: "yogacenter-66b48.firebaseapp.com",
@@ -15,5 +14,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export const auth = getAuth();
+const database = getDatabase(app);
+export { database, ref, push, onValue, serverTimestamp };

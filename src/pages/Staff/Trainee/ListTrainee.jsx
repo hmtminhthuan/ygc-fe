@@ -215,10 +215,10 @@ export default function ListTrainee() {
                 <table style={{ fontSize: "12px" }}>
                   <thead>
                     <tr>
-                      <th>No.</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>ID</th>
+                      <th style={{ textAlign: "left" }}>First Name</th>
+                      <th style={{ textAlign: "left" }}>Last Name</th>
+                      <th style={{ textAlign: "left" }}>
                         Gender
                         {!genderSort.trim().toLowerCase().includes("all") ? (
                           <i
@@ -246,7 +246,7 @@ export default function ListTrainee() {
                           <option value="female">Female</option>
                         </select>
                       </th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>
                         Phone
                         <button
                           className="border-0 px-2 bg-transparent"
@@ -301,7 +301,7 @@ export default function ListTrainee() {
                           )}
                         </button>
                       </th>
-                      <th>
+                      <th style={{ textAlign: "left" }}>
                         Email
                         <button
                           className="border-0 p-0 mx-2 bg-transparent"
@@ -361,9 +361,9 @@ export default function ListTrainee() {
                           )}
                         </button>
                       </th>
-                      <th>Address</th>
-                      <th>Course</th>
-                      <th>Class</th>
+                      <th style={{ textAlign: "left" }}>Address</th>
+                      <th style={{ textAlign: "left" }}>Course</th>
+                      <th style={{ textAlign: "left" }}>Class</th>
                       {/* <th>Level</th> */}
                       <th>
                         <NavLink
@@ -450,6 +450,12 @@ export default function ListTrainee() {
                           return true;
                         }
                       })
+                      .sort((a, b) => {
+                        if (!a.courseName && b.courseName) {
+                          return 1;
+                        }
+                        return a.accountID - b.accountID;
+                      })
                       .map((trainee, index) => {
                         let indexCompare = Math.floor(index / currentPageSize);
                         if (indexCompare > numberOfPage) {
@@ -462,17 +468,33 @@ export default function ListTrainee() {
                         }
                         return (
                           <tr key={trainee.accountID}>
-                            <td>{index + 1}</td>
-                            <td>{`${trainee.firstName}`}</td>
-                            <td>{`${trainee.lastName}`}</td>
-                            <td>{`${trainee.gender ? "Male" : "Female"}`}</td>
-                            <td>{`${trainee.phoneNumber}`}</td>
-                            <td>{`${trainee.email}`}</td>
-                            <td>{`${trainee.address}`}</td>
-                            <td>{`${
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.accountID}`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.firstName}`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.lastName}`}</td>
+                            <td style={{ textAlign: "left" }}>{`${
+                              trainee.gender ? "Male" : "Female"
+                            }`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.phoneNumber}`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.email}`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.address}`}</td>
+                            <td style={{ textAlign: "left" }}>{`${
                               trainee.courseName ? trainee.courseName : "-"
                             }`}</td>
-                            <td>{`${trainee.className}`}</td>
+                            <td
+                              style={{ textAlign: "left" }}
+                            >{`${trainee.className}`}</td>
 
                             <td className="setting">
                               <i

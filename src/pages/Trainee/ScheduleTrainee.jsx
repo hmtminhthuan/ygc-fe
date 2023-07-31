@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import "./ScheduleTrainee.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
@@ -10,17 +10,19 @@ import { Rating } from "@mui/material";
 import { alert } from "../../component/AlertComponent/Alert";
 import Aos from "aos";
 import LoadingOverlay from "../../component/Loading/LoadingOverlay";
+import Chatting from "./Chatting/Chatting";
 
 export default function ScheduleTrainee() {
   localStorage.setItem("MENU_ACTIVE", "/trainee/schedule");
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState([]);
   const [timeFrames, setTimeFrames] = useState([]);
-
+  const [classId, setClassId] = useState(0);
   const [listOfFinishedClasses, setListOfFinishedClasses] = useState([]);
   const [responsive, setResponsive] = useState(false);
   const [responsiveMobile, setResponsiveMobile] = useState(false);
   const [scheduelTableWidth, setScheduelTableWidth] = useState(-1);
+  const [viewChatting, setViewChatting] = useState(false);
   const id = JSON.parse(localStorage.getItem("USER_LOGIN")).accountID;
   const listOfDay = [
     "Monday",
@@ -291,18 +293,24 @@ export default function ScheduleTrainee() {
   };
 
   Aos.init();
-
+  const navigate = useNavigate();
   return (
     <>
       <LoadingOverlay loading={loading} />
-      <div className="header-top m-4 mx-0 mt-0">
+      <div
+        className="header-top m-4 mx-0 mt-0"
+        style={{ display: `${!viewChatting ? "" : "none"}` }}
+      >
         <HeaderHome />
       </div>
       <div className="main--content bg-white">
         {/* <div className="timetable-img text-center">
         <img src="img/content/timetable.png" alt />
       </div> */}
-        <section className="trainer-area pt-3 pb-3">
+        <section
+          className="trainer-area pt-3 pb-3"
+          style={{ display: `${viewChatting ? "none" : ""}` }}
+        >
           <div
             className={`row flex trainer mt-2 mb-4 
           ${responsive ? "mx-1" : "mx-5"}`}
@@ -314,6 +322,24 @@ export default function ScheduleTrainee() {
               >
                 <i className="ri-bookmark-line"></i> Schedule
               </h1>
+              <div className="flex justify-content-end">
+                <button
+                  className="mx-3 ms-0 my-2 mt-0
+                border-0 bg-black text-light px-2 py-1"
+                  style={{
+                    borderRadius: "10px",
+                    display: `${schedule.length > 0 ? "" : "none"}`,
+                  }}
+                  onClick={() => {
+                    setClassId(schedule[0].classId);
+                    navigate(
+                      `/chat/${schedule[0].classId}/${schedule[0].className}`
+                    );
+                  }}
+                >
+                  View Chat
+                </button>
+              </div>
             </div>
             {/* <div className="">
             <Link
@@ -377,7 +403,7 @@ export default function ScheduleTrainee() {
                 </thead>
                 <tbody>
                   {timeFrames.map((timeFrame) => (
-                    <tr key={timeFrame.id}>
+                    <tr key={timeFrame.id} style={{ border: "1px solid gray" }}>
                       <td
                         className="align-middle"
                         style={{

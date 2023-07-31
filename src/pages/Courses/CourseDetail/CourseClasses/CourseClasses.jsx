@@ -625,187 +625,194 @@ export default function CourseClasses({
                     </TableRow>
                   </TableHead>
                   <TableBody style={{ height: "auto" }}>
-                    {classes.map(
-                      (
-                        {
-                          classId,
-                          trainerId,
-                          startDate,
-                          endDate,
-                          firstname,
-                          lastname,
-                          schedule,
-                        },
-                        index
-                      ) => {
-                        return (
-                          <StyledTableRow key={index}>
-                            <StyledTableCell align="center">
-                              {availablePayment ? (
-                                <div className="p-0 m-0 flex-column">
-                                  <Button
-                                    className="my-1"
-                                    style={{
-                                      backgroundColor: "#d291bc",
-                                      border: "none",
-                                    }}
-                                    onClick={() => {
-                                      handleRegisterClass(classId);
-                                    }}
-                                  >
-                                    Pay Now
-                                  </Button>
-                                  <br></br>
-                                  <Button
-                                    className="my-1"
-                                    style={{
-                                      backgroundColor: "#000",
-                                      color: "#fff",
-                                      border: "none",
-                                    }}
-                                    onClick={() => {
-                                      handleBookingClass(classId);
-                                    }}
-                                  >
-                                    Booking
-                                  </Button>
-                                </div>
-                              ) : (
-                                <button
-                                  className="course-register-now m-0 mx-1 mt-1 border-0
+                    {classes
+                      .sort(
+                        (a, b) => new Date(b.startDate) - new Date(a.startDate)
+                      )
+                      .map(
+                        (
+                          {
+                            classId,
+                            trainerId,
+                            startDate,
+                            endDate,
+                            firstname,
+                            lastname,
+                            schedule,
+                          },
+                          index
+                        ) => {
+                          return (
+                            <StyledTableRow key={index}>
+                              <StyledTableCell align="center">
+                                {availablePayment ? (
+                                  <div className="p-0 m-0 flex-column">
+                                    <Button
+                                      className="my-1"
+                                      style={{
+                                        backgroundColor: "#d291bc",
+                                        border: "none",
+                                      }}
+                                      onClick={() => {
+                                        handleRegisterClass(classId);
+                                      }}
+                                    >
+                                      Pay Now
+                                    </Button>
+                                    <br></br>
+                                    <Button
+                                      className="my-1"
+                                      style={{
+                                        backgroundColor: "#000",
+                                        color: "#fff",
+                                        border: "none",
+                                      }}
+                                      onClick={() => {
+                                        handleBookingClass(classId);
+                                      }}
+                                    >
+                                      Booking
+                                    </Button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    className="course-register-now m-0 mx-1 mt-1 border-0
                 py-2 px-2"
-                                  variant=""
-                                  target="blank"
+                                    variant=""
+                                    target="blank"
+                                    style={{
+                                      borderRadius: "5px",
+                                      backgroundColor: "#d291bc",
+                                      color: "#fff",
+                                    }}
+                                    onClick={() => {
+                                      if (
+                                        userLogin.role == null ||
+                                        userLogin.role == undefined
+                                      ) {
+                                        Swal.fire({
+                                          title: `You need to log in first`,
+                                          html: `Do you want to log in or register now?`,
+                                          icon: "info",
+                                          confirmButtonText: "Log in now",
+                                          denyButtonText: "Register now",
+                                          showCancelButton: false,
+                                          showDenyButton: true,
+                                          showConfirmButton: true,
+                                          allowOutsideClick: false,
+                                          showCloseButton: true,
+                                          focusCancel: false,
+                                          focusConfirm: false,
+                                          focusDeny: false,
+                                          confirmButtonColor: "#42c4ee",
+                                          denyButtonColor: "#d08fba",
+                                        }).then((result) => {
+                                          if (result.isDenied === true) {
+                                            // localStorage.setItem(
+                                            //   "REDIRECT_LINK_BOOK_CLASS",
+                                            //   `/courseDetail/${courseId}`
+                                            // );
+                                            // window.location.href = "/register";
+                                            navigate(
+                                              `/register?redirect=/courseDetail/${courseId}`
+                                            );
+                                          } else if (
+                                            result.isConfirmed === true
+                                          ) {
+                                            // localStorage.setItem(
+                                            //   "REDIRECT_LINK_BOOK_CLASS",
+                                            //   `/courseDetail/${courseId}`
+                                            // );
+                                            // window.location.href = "/login";
+                                            navigate(
+                                              `/login?redirect=/courseDetail/${courseId}`
+                                            );
+                                          }
+                                        });
+                                      } else if (userLogin.role.id != 4) {
+                                        Swal.fire({
+                                          title: `Your account cannot register course.`,
+                                          icon: "info",
+                                          showCancelButton: false,
+                                          showConfirmButton: true,
+                                          confirmButtonText: "Confirm",
+                                          allowOutsideClick: true,
+                                        });
+                                      } else {
+                                        navigate(`/courseDetail/${courseId}`);
+                                      }
+                                    }}
+                                  >
+                                    Register
+                                  </button>
+                                )}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                align="left"
+                                style={{ maxWidth: "150px" }}
+                              >
+                                {schedule.map(({ date, time }, index) => (
+                                  <p className="p-0 m-0 py-1" key={index}>
+                                    {date}, {time}
+                                  </p>
+                                ))}
+                                <div
+                                  className="mobile-schedule-guest"
                                   style={{
-                                    borderRadius: "5px",
-                                    backgroundColor: "#d291bc",
-                                    color: "#fff",
-                                  }}
-                                  onClick={() => {
-                                    if (
-                                      userLogin.role == null ||
-                                      userLogin.role == undefined
-                                    ) {
-                                      Swal.fire({
-                                        title: `You need to log in first`,
-                                        html: `Do you want to log in or register now?`,
-                                        icon: "info",
-                                        confirmButtonText: "Log in now",
-                                        denyButtonText: "Register now",
-                                        showCancelButton: false,
-                                        showDenyButton: true,
-                                        showConfirmButton: true,
-                                        allowOutsideClick: false,
-                                        showCloseButton: true,
-                                        focusCancel: false,
-                                        focusConfirm: false,
-                                        focusDeny: false,
-                                        confirmButtonColor: "#42c4ee",
-                                        denyButtonColor: "#d08fba",
-                                      }).then((result) => {
-                                        if (result.isDenied === true) {
-                                          // localStorage.setItem(
-                                          //   "REDIRECT_LINK_BOOK_CLASS",
-                                          //   `/courseDetail/${courseId}`
-                                          // );
-                                          // window.location.href = "/register";
-                                          navigate(
-                                            `/register?redirect=/courseDetail/${courseId}`
-                                          );
-                                        } else if (
-                                          result.isConfirmed === true
-                                        ) {
-                                          // localStorage.setItem(
-                                          //   "REDIRECT_LINK_BOOK_CLASS",
-                                          //   `/courseDetail/${courseId}`
-                                          // );
-                                          // window.location.href = "/login";
-                                          navigate(
-                                            `/login?redirect=/courseDetail/${courseId}`
-                                          );
-                                        }
-                                      });
-                                    } else if (userLogin.role.id != 4) {
-                                      Swal.fire({
-                                        title: `Your account cannot register course.`,
-                                        icon: "info",
-                                        showCancelButton: false,
-                                        showConfirmButton: true,
-                                        confirmButtonText: "Confirm",
-                                        allowOutsideClick: true,
-                                      });
-                                    } else {
-                                      navigate(`/courseDetail/${courseId}`);
-                                    }
+                                    color: "#d291bc",
+                                    fontWeight: "500",
                                   }}
                                 >
-                                  Register
-                                </button>
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell
-                              align="left"
-                              style={{ maxWidth: "150px" }}
-                            >
-                              {schedule.map(({ date, time }, index) => (
-                                <p className="p-0 m-0 py-1" key={index}>
-                                  {date}, {time}
-                                </p>
-                              ))}
-                              <div
-                                className="mobile-schedule-guest"
-                                style={{ color: "#d291bc", fontWeight: "500" }}
+                                  Start Date:{" "}
+                                  {moment(new Date(`${startDate}`)).format(
+                                    "DD-MM-YYYY"
+                                  )}
+                                  <br></br>
+                                  End Date:{" "}
+                                  {moment(new Date(`${endDate}`)).format(
+                                    "DD-MM-YYYY"
+                                  )}
+                                </div>
+                              </StyledTableCell>
+                              <StyledTableCell
+                                className="mobile-schedule-guest-none d-none d-lg-table-cell"
+                                align="left"
                               >
-                                Start Date:{" "}
+                                {moment(new Date(`${startDate}`)).format(
+                                  "DD-MM-YYYY"
+                                )}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                className="mobile-schedule-guest-none d-none d-lg-table-cell"
+                                align="left"
+                              >
+                                {moment(new Date(`${endDate}`)).format(
+                                  "DD-MM-YYYY"
+                                )}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                style={{ maxWidth: "110px" }}
+                                className="w-100 m-0 text-start mobile-schedule-guest-none d-block d-lg-none"
+                              >
+                                <b>Start Date</b>
+                                <br></br>
                                 {moment(new Date(`${startDate}`)).format(
                                   "DD-MM-YYYY"
                                 )}
                                 <br></br>
-                                End Date:{" "}
+                                <b>End Date</b>
+                                <br></br>
                                 {moment(new Date(`${endDate}`)).format(
                                   "DD-MM-YYYY"
                                 )}
-                              </div>
-                            </StyledTableCell>
-                            <StyledTableCell
-                              className="mobile-schedule-guest-none d-none d-lg-table-cell"
-                              align="left"
-                            >
-                              {moment(new Date(`${startDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell
-                              className="mobile-schedule-guest-none d-none d-lg-table-cell"
-                              align="left"
-                            >
-                              {moment(new Date(`${endDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell
-                              style={{ maxWidth: "110px" }}
-                              className="w-100 m-0 text-start mobile-schedule-guest-none d-block d-lg-none"
-                            >
-                              <b>Start Date</b>
-                              <br></br>
-                              {moment(new Date(`${startDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                              <br></br>
-                              <b>End Date</b>
-                              <br></br>
-                              {moment(new Date(`${endDate}`)).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              {firstname} {lastname}
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        );
-                      }
-                    )}
+                              </StyledTableCell>
+                              <StyledTableCell align="left">
+                                {firstname} {lastname}
+                              </StyledTableCell>
+                            </StyledTableRow>
+                          );
+                        }
+                      )}
                   </TableBody>
                 </Table>
               </TableContainer>

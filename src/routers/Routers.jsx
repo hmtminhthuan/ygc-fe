@@ -49,6 +49,7 @@ import AdminSetting from "../pages/Admin/AdminSetting/AdminSetting";
 import CourseRevenue from "../pages/Admin/CourseManagement/CourseRevenue";
 import ClassMember from "../pages/Staff/ClassManagement/ClassMember/ClassMember";
 import Timetable from "../pages/Staff/Timetable/Timetable";
+import Chatting from "../pages/Trainee/Chatting/Chatting";
 
 export default function Routers() {
   const routing = useRoutes([
@@ -73,6 +74,7 @@ export default function Routers() {
         { path: "/profile", element: <UserProfile /> },
         { path: "/updateProfile", element: <UpdateProfile /> },
         { path: "/changePassword", element: <ChangePasswordVerifyEmail /> },
+        { path: "/chat/:id/:className", element: <Chatting /> },
       ],
     },
     {

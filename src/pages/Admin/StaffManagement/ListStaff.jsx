@@ -185,10 +185,10 @@ export default function ListStaff() {
               <table style={{ fontSize: "13px" }}>
                 <thead>
                   <tr>
-                    <th>No.</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>
+                    <th style={{ textAlign: "left" }}>ID</th>
+                    <th style={{ textAlign: "left" }}>First Name</th>
+                    <th style={{ textAlign: "left" }}>Last Name</th>
+                    <th style={{ textAlign: "left" }}>
                       Gender
                       {!genderSort.trim().toLowerCase().includes("all") ? (
                         <i
@@ -216,7 +216,7 @@ export default function ListStaff() {
                         <option value="all">All</option>
                       </select>
                     </th>
-                    <th>
+                    <th style={{ textAlign: "left" }}>
                       Phone
                       <button
                         className="border-0 p-0 mx-2 bg-transparent"
@@ -271,7 +271,7 @@ export default function ListStaff() {
                         )}
                       </button>
                     </th>
-                    <th>
+                    <th style={{ textAlign: "left" }}>
                       Email
                       <button
                         className="border-0 p-0 mx-2 bg-transparent"
@@ -331,7 +331,7 @@ export default function ListStaff() {
                         )}
                       </button>
                     </th>
-                    <th>Address</th>
+                    <th style={{ textAlign: "left" }}>Address</th>
                     <th>
                       <NavLink
                         to={"/admin/createStaff"}
@@ -414,13 +414,27 @@ export default function ListStaff() {
                     })
                     .map((staff, index) => (
                       <tr key={staff.accountID}>
-                        <td>{index + 1}</td>
-                        <td>{`${staff.firstName}`}</td>
-                        <td>{`${staff.lastName}`}</td>
-                        <td>{`${staff.gender ? "Male" : "Female"}`}</td>
-                        <td>{`${staff.phoneNumber}`}</td>
-                        <td>{`${staff.email}`}</td>
-                        <td>{`${staff.address}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.accountID}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.firstName}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.lastName}`}</td>
+                        <td style={{ textAlign: "left" }}>{`${
+                          staff.gender ? "Male" : "Female"
+                        }`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.phoneNumber}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.email}`}</td>
+                        <td
+                          style={{ textAlign: "left" }}
+                        >{`${staff.address}`}</td>
 
                         <td className="setting">
                           {/* <i className="ri-edit-2-fill mx-2"></i> */}

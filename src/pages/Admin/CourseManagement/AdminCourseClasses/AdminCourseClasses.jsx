@@ -89,10 +89,6 @@ export default function AdminCourseClasses({
         ) : (
           <></>
         )}
-        <p className="text-black p-0 m-0 mb-3">
-          Number of Total Classes:{" "}
-          {[...courseClasses, ...courseFinishedClasses].length}{" "}
-        </p>
         {[...courseClasses, ...courseFinishedClasses].length <= 0 ||
         !available ? (
           <p

@@ -25,6 +25,17 @@ export default function Login() {
   const USER_LOGIN = localStorage.getItem("USER_LOGIN");
   let USER = {};
   USER = JSON.parse(USER_LOGIN);
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const navigate = useNavigate();
+  const { googleSignIn, user, logOut } = UserAuth();
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (
     !(
       USER_LOGIN == null ||
@@ -49,11 +60,13 @@ export default function Login() {
       },
     });
 
-    Toast.fire({
-      icon: "info",
-      title: `You have logged in already.`,
-    });
-    return <Navigate to="/" />;
+    if (user != null) {
+      Toast.fire({
+        icon: "info",
+        title: `You have logged in already.`,
+      });
+      return <Navigate to="/" />;
+    }
   } else if (
     !(
       localStorage.getItem("USER_LOGIN_GMAIL_ACTION") == null ||
@@ -63,18 +76,6 @@ export default function Login() {
     localStorage.removeItem("USER_LOGIN_GMAIL_ACTION");
   }
   localStorage.setItem("MENU_ACTIVE", "/login");
-  const location = useLocation();
-  const redirect = new URLSearchParams(location.search).get("redirect");
-
-  const { googleSignIn, user, logOut } = UserAuth();
-  const navigate = useNavigate();
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     if (user != null) {
       api
@@ -88,27 +89,35 @@ export default function Login() {
               !account.deleted
           );
           if (pos >= 0) {
-            localStorage.removeItem("USER_LOGIN");
-            localStorage.setItem("USER_LOGIN", JSON.stringify(arr[pos]));
-            localStorage.setItem("USER_LOGIN_GMAIL_ACTION", "true");
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: `<h1>Welcome</br>${arr[pos].firstName} ${arr[pos].lastName}</h1>`,
-              html: `<h3>Log In Successfully</h3>`,
-              showConfirmButton: false,
-              timer: 1600,
-            }).then(function () {
-              if (arr[pos].role.id == 1) {
-                navigate("/admin");
-              } else if (arr[pos].role.id == 2) {
-                navigate("/staff");
-              } else if (arr[pos].role.id == 3) {
-                navigate("/");
-              } else if (arr[pos].role.id == 4) {
-                navigate("/");
+            let interval = setInterval(() => {
+              localStorage.removeItem("USER_LOGIN");
+              localStorage.setItem("USER_LOGIN", JSON.stringify(arr[pos]));
+              localStorage.setItem("USER_LOGIN_GMAIL_ACTION", "true");
+              if (
+                localStorage.getItem("USER_LOGIN") != null &&
+                localStorage.getItem("USER_LOGIN") != undefined
+              ) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: `<h1>Welcome</br>${arr[pos].firstName} ${arr[pos].lastName}</h1>`,
+                  html: `<h3>Log In Successfully</h3>`,
+                  showConfirmButton: false,
+                  timer: 1600,
+                }).then(function () {
+                  if (arr[pos].role.id == 1) {
+                    navigate("/admin");
+                  } else if (arr[pos].role.id == 2) {
+                    navigate("/staff");
+                  } else if (arr[pos].role.id == 3) {
+                    navigate("/");
+                  } else if (arr[pos].role.id == 4) {
+                    navigate("/");
+                  }
+                });
+                clearInterval(interval);
               }
-            });
+            }, 100);
           } else {
             alert.alertFailedWithTime(
               "Failed To Log In",

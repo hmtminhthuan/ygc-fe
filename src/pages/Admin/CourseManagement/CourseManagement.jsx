@@ -656,7 +656,7 @@ export default function CourseManagement() {
                       <option value="Unsort">Unsort</option>
                     </select>
                   </th>
-                  <th style={{ textAlign: "center" }}>More</th>
+                  <th style={{ textAlign: "center" }}>Detail</th>
                   {isDeleted ? (
                     <th style={{ textAlign: "center" }}>Activate</th>
                   ) : (

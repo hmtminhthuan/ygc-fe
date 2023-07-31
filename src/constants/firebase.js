@@ -9,6 +9,8 @@ const firebaseConfig = {
   messagingSenderId: "783554317293",
   appId: "1:783554317293:web:2b7f9bede027ca547635e4",
   measurementId: "G-FZ6SXDQFQT",
+  databaseURL:
+    "https://yogacenter-66b48-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 const app = initializeApp(firebaseConfig);

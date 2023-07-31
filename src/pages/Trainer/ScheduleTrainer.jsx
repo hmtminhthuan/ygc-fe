@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { api } from "../../constants/api";
 import "./ScheduleTrainer.scss";
 import HeaderHome from "../../component/HeaderHome/HeaderHome";
@@ -153,6 +153,7 @@ export default function ScheduleTrainer() {
   }, [scheduelTableWidth]);
 
   Aos.init();
+  const navigate = useNavigate();
   return (
     <>
       <LoadingOverlay loading={loading} />
@@ -235,7 +236,7 @@ export default function ScheduleTrainer() {
                 </thead>
                 <tbody>
                   {timeFrames.map((timeFrame) => (
-                    <tr key={timeFrame.id}>
+                    <tr key={timeFrame.id} style={{ border: "1px solid gray" }}>
                       <td
                         className="align-middle"
                         style={{
@@ -327,6 +328,23 @@ export default function ScheduleTrainer() {
                                   <p className="m-0 p-0">
                                     Room: {filteredItem.room}
                                   </p>
+                                  <button
+                                    className="
+                border-0 bg-black text-light px-2"
+                                    style={{
+                                      borderRadius: "10px",
+                                      display: `${
+                                        schedule.length > 0 ? "" : "none"
+                                      }`,
+                                    }}
+                                    onClick={() => {
+                                      navigate(
+                                        `/chat/${filteredItem.classId}/${filteredItem.className}`
+                                      );
+                                    }}
+                                  >
+                                    View Chat
+                                  </button>
                                 </div>
                               ))}
                           </td>

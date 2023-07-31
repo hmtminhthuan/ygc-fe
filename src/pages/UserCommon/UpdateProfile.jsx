@@ -115,22 +115,6 @@ export default function UpdateProfile() {
         }
       })
       .catch((err) => {});
-    // api.get(`/Account/AccountList`).then((res) => {
-    //   res.data.forEach((account) => {
-    //     const img = account.gender
-    //       ? "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--male.jpg?alt=media&token=b62e9e4f-0e8e-43f9-ae9d-fba29d67d112"
-    //       : "https://firebasestorage.googleapis.com/v0/b/yogacenter-66b48.appspot.com/o/userImages%2Fdefault--avt--female.jpg?alt=media&token=f58778d6-9193-453b-93e4-ddbab5db5e37";
-    //     api
-    //       .put(`/Account/UpdateAccount?id=${account.accountID}`, {
-    //         firstname: account.firstName,
-    //         lastname: account.lastName,
-    //         phoneNumber: account.phoneNumber,
-    //         address: account.address,
-    //         img: img,
-    //       })
-    //       .then((res) => {});
-    //   });
-    // });
   }, [updateDone]);
 
   const handleUpdateAccount = (values) => {

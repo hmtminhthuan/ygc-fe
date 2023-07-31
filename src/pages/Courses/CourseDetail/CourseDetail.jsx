@@ -41,18 +41,24 @@ export default function CourseDetail() {
         params: { id: param.id },
       })
       .then((res) => {
+        api
+          .get(
+            `/Class/GetUnfinisedClassByCourseIDForAdmin?courseid=${param.id}`
+          )
+          .then((res) => {
+            setCourseClasses(res.data);
+          })
+          .catch((err) => {})
+          .finally(() => {
+            setViewData(true);
+            setLoading(false);
+          });
         setCourseDetail(res.data.course);
-        setCourseClasses(res.data.listClass);
         setCourseFeedback(res.data.listFeedback);
         arr = res.data.listClass;
-        setLoading(false);
       })
       .catch((err) => {})
       .finally(() => {
-        setViewData(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 150);
         if (
           localStorage.getItem("NOTIFICATION_CHOOSE_CLASS") == "true" &&
           arr.length > 0

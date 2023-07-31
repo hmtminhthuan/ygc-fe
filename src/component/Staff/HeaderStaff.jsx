@@ -20,9 +20,15 @@ export default function HeaderStaff({ background, ...restParams }) {
           onClick={() => {
             navigate("/");
           }}
+          className="header-management-brand"
         >
-          <img src={logo} />
-          Yoga<span>Center</span>
+          <img
+            src={logo}
+            className="py-1 pt-0"
+            style={{ width: "38px", height: "38px" }}
+          />
+          Yoga
+          <span>Center</span>
         </h2>
       </div>
       <div
