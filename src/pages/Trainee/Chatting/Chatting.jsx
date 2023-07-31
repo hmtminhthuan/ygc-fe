@@ -56,7 +56,7 @@ export default function Chatting() {
   console.log(messageList);
   const navigate = useNavigate();
   return (
-    <div className="container">
+    <div className="chat-container">
       <div className="chat-detail">
         <div className="chat-detail__header flex justify-content-between">
           <div className="header__info">
